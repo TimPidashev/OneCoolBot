@@ -1,5 +1,7 @@
 import discord
 import asyncio
+import psutil
+import time
 from discord.ext import commands, tasks
 from discord.utils import get
 
@@ -61,6 +63,17 @@ class Commands(commands.Cog):
             except asyncio.TimeoutError:
                 await message.delete()
                 break
+
+    #ping
+    @commands.command()
+    async def ping(self, context):
+        print("commands(ping) used...")
+        """Bot Latency"""
+        start = time.perf_counter()
+        message = await context.send("Ping...")
+        end = time.perf_counter()
+        duration = (end - start) * 1000
+        await message.edit(content='Pong! {:.2f}ms'.format(duration))
 
     #version
     @commands.command()
