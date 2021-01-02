@@ -70,7 +70,7 @@ class Commands(commands.Cog):
         print("commands(ping) used...")
         """Bot Latency"""
         start = time.perf_counter()
-        message = await context.send("Ping...")
+        message = await context.send("...")
         end = time.perf_counter()
         duration = (end - start) * 1000
         await message.edit(content='Pong! {:.2f}ms'.format(duration))
