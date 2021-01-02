@@ -15,6 +15,10 @@ Token = os.getenv('BOT_TOKEN')
 client = commands.AutoShardedBot(command_prefix = '.', intents=intents)
 client.remove_command("help")
 
+@client.event
+async def on_shard_ready(shard_id):
+    print(f"Shard {shard_id} ready...")
+
 #cogs load command
 @client.command()
 @commands.has_permissions(administrator=True)
