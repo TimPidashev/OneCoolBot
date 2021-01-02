@@ -5,7 +5,6 @@ import asyncio
 import json
 from dotenv import load_dotenv
 from discord.ext import commands
-from pretty_help import PrettyHelp, Navigation
 import sqlite3
 intents = discord.Intents.default()
 intents.members = True
