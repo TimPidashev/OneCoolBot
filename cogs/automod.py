@@ -19,5 +19,14 @@ class AutoMod(commands.Cog):
                 await message.channel.purge(limit=1)
                 await message.channel.send(f"Cussing is not allowed! {message.author.mention}")
 
+    #advertising(needs fixing) but works...
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        advertising = ["https://discord.gg", "http://discord.gg", "discord.gg"]
+        for word in advertising:
+            if message.content.count(word) > 0:
+                await message.channel.purge(limit=1)
+                await message.channel.send(f"Advertising is not allowed! {message.author.mention}")
+
 def setup(client):
     client.add_cog(AutoMod(client))
