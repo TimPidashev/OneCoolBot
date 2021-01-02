@@ -34,7 +34,7 @@ class Commands(commands.Cog):
         changelogEmbed.add_field(name="Version 0.0.0", value="Created the bot! | added an event(Bot Startup) | added a command(version)", inline=False)
         await context.message.channel.send(embed=changelogEmbed)
 
-    #changelog update in the works...
+    #code i dont want to get rid of for reference...
     @commands.command()
     async def pages(self, context):
         contents = ["This is page 1!", "This is page 2!", "This is page 3!", "This is page 4!"]
