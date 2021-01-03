@@ -2,8 +2,13 @@ import discord
 import asyncio
 import psutil
 import time
+import os
 from discord.ext import commands, tasks
 from discord.utils import get
+from datetime import datetime, timedelta
+
+#uptime
+start_time = time.time()
 
 #roles
 moderator = (791161649901207572)
@@ -12,6 +17,7 @@ owner = (791163340323815435)
 class Commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.process = psutil.Process(os.getpid())
 
     #on_ready
     @commands.Cog.listener()
@@ -22,7 +28,25 @@ class Commands(commands.Cog):
     @commands.command()
     async def info(self, context):
         print("command(info) used...")
-        await context.message.channel.send("<@790701838164557854> is a discord bot written in Discord.py, owned and maintained by <@598625004279693460>")
+
+        """ About the bot """
+        ramUsage = self.process.memory_full_info().rss / 1024**2
+        avgmembers = round(len(self.bot.users) / len(self.bot.guilds))
+        embedColour = discord.Embed.Empty
+        if hasattr(context, 'guild') and context.guild is not None:
+            embedColour = context.me.top_role.colour
+        current_time = time.time()
+        difference = int(round(current_time - start_time))
+        text = str(timedelta(seconds=difference))
+        embed = discord.Embed(colour=embedColour)
+        embed.set_thumbnail(url=context.bot.user.avatar_url)
+        embed.add_field(name="Developer", value="𝓣𝓲𝓶𝓶𝔂#6955")
+        embed.add_field(name="Servers", value=f"{len(context.bot.guilds)}", inline=True)
+        embed.add_field(name="Uptime", value=text, inline=True)
+        embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
+
+        await context.send(embed=embed)
+
 
     #changelog
     @commands.command()
@@ -67,13 +91,12 @@ class Commands(commands.Cog):
     #ping
     @commands.command()
     async def ping(self, context):
-        print("commands(ping) used...")
-        """Bot Latency"""
-        start = time.perf_counter()
-        message = await context.send("...")
-        end = time.perf_counter()
-        duration = (end - start) * 1000
-        await message.edit(content='Pong! {:.2f}ms'.format(duration))
+        """ Pong! """
+        before = time.monotonic()
+        before_ws = int(round(self.bot.latency * 1000, 1))
+        message = await context.send("🏓 Pong")
+        ping = (time.monotonic() - before) * 1000
+        await message.edit(content=f"🏓 WS: {before_ws}ms  |  REST: {int(ping)}ms")
 
     #version
     @commands.command()
