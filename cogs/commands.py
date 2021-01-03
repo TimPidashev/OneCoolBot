@@ -53,7 +53,7 @@ class Commands(commands.Cog):
     async def changelog(self, context):
         print("command(changelog) used...")
         changelogEmbed = discord.Embed(title="Changelog", description="Bot Changelog", color=2105637)
-        changelogEmbed = discord.Embed(title="Version 0.0.5(In Development)", value="cool things coming soon...", inline=false)
+        changelogEmbed = discord.Embed(title="Version 0.0.5(In Development)", value="cool things coming soon...", inline=False)
         changelogEmbed.add_field(name="Version 0.0.4(Current)", value="Better info command  | ping command | Auto sharded bot | minor bug fixes", inline=False)
         changelogEmbed.add_field(name="Version 0.0.3", value="Added CommandErrorHandler cog | Added moderation(ban, unban, kick, clear) | Added xp cog(levels) | Changed bot profile | Minor bug fixes", inline=False)
         changelogEmbed.add_field(name="Version 0.0.2", value="Added cogs functionality | Added 2 cogs(commands, onMemberJoin)", inline=False)
