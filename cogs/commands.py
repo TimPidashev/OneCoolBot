@@ -53,8 +53,9 @@ class Commands(commands.Cog):
     async def changelog(self, context):
         print("command(changelog) used...")
         changelogEmbed = discord.Embed(title="Changelog", description="Bot Changelog", color=2105637)
-        changelogEmbed.add_field(name="Version 0.0.4(In Development)", value="Implement Database, autoshard bot, and other misc upgrades... ", inline=False)
-        changelogEmbed.add_field(name="Version 0.0.3(Current)", value="Added CommandErrorHandler cog | Added moderation(ban, unban, kick, clear) | Added xp cog(levels) | Changed bot profile | Minor bug fixes", inline=False)
+        changelogEmbed = discord.Embed(title="Version 0.0.5(In Development)", value="cool things coming soon...", inline=false)
+        changelogEmbed.add_field(name="Version 0.0.4(Current)", value="Better info command  | ping command | Auto sharded bot | minor bug fixes", inline=False)
+        changelogEmbed.add_field(name="Version 0.0.3", value="Added CommandErrorHandler cog | Added moderation(ban, unban, kick, clear) | Added xp cog(levels) | Changed bot profile | Minor bug fixes", inline=False)
         changelogEmbed.add_field(name="Version 0.0.2", value="Added cogs functionality | Added 2 cogs(commands, onMemberJoin)", inline=False)
         changelogEmbed.add_field(name="Version 0.0.1", value="Added a terminal output for all the bot interactions | Added a join message | added bot status(playing .help)", inline=False)
         changelogEmbed.add_field(name="Version 0.0.0", value="Created the bot! | added an event(Bot Startup) | added a command(version)", inline=False)
@@ -103,8 +104,8 @@ class Commands(commands.Cog):
     async def version(self, context):
         print("command(version) used...")
         versionEmbed = discord.Embed(title="Current Version", description="The bot is in version 0.0.3", color=2105637)
-        versionEmbed.add_field(name="Version Code:", value="v0.0.3", inline=False)
-        versionEmbed.add_field(name="Date Released:", value="December 23, 2020", inline=False)
+        versionEmbed.add_field(name="Version Code:", value="v0.0.4", inline=False)
+        versionEmbed.add_field(name="Date Released:", value="January 2, 2021", inline=False)
         await context.message.channel.send(embed=versionEmbed)
 
     #help
