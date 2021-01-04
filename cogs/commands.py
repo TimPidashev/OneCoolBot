@@ -93,16 +93,6 @@ class Commands(commands.Cog):
                 await message.delete()
                 break
 
-    #ping
-    @commands.command()
-    async def ping(self, context):
-        """ Pong! """
-        before = time.monotonic()
-        before_ws = int(round(self.bot.latency * 1000, 1))
-        message = await context.send("🏓 Pong")
-        ping = (time.monotonic() - before) * 1000
-        await message.edit(content=f"🏓 WS: {before_ws}ms  |  REST: {int(ping)}ms")
-
     #version
     @commands.command()
     async def version(self, context):
