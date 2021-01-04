@@ -7,7 +7,7 @@ import wavelink
 import datetime
 import humanize
 import itertools
-from discord.ext import commands, menus, buttons
+from discord.ext import commands, menus
 
 RURL = re.compile('https?:\/\/(?:www\.)?.+')
 
