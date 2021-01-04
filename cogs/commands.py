@@ -52,48 +52,6 @@ class Commands(commands.Cog):
         embed.set_footer(text="Copyright © 2021 Timothy Pidashev. All Rights Reserved.")
         await context.send(embed=embed)
 
-
-    #changelog
-    @commands.command()
-    async def changelog(self, context):
-        print("command(changelog) used...")
-        changelogEmbed = discord.Embed(title="Changelog", description="Bot Changelog", color=2105637)
-        changelogEmbed = discord.Embed(title="Version 0.0.5(In Development)", value="cool things coming soon...", inline=False)
-        changelogEmbed.add_field(name="Version 0.0.4(Current)", value="Better info command  | ping command | Auto sharded bot | minor bug fixes", inline=False)
-        changelogEmbed.add_field(name="Version 0.0.3", value="Added CommandErrorHandler cog | Added moderation(ban, unban, kick, clear) | Added xp cog(levels) | Changed bot profile | Minor bug fixes", inline=False)
-        changelogEmbed.add_field(name="Version 0.0.2", value="Added cogs functionality | Added 2 cogs(commands, onMemberJoin)", inline=False)
-        changelogEmbed.add_field(name="Version 0.0.1", value="Added a terminal output for all the bot interactions | Added a join message | added bot status(playing .help)", inline=False)
-        changelogEmbed.add_field(name="Version 0.0.0", value="Created the bot! | added an event(Bot Startup) | added a command(version)", inline=False)
-        await context.message.channel.send(embed=changelogEmbed)
-
-    #code i dont want to get rid of for reference...
-    @commands.command()
-    async def pages(self, context):
-        contents = ["This is page 1!", "This is page 2!", "This is page 3!", "This is page 4!"]
-        pages = 4
-        cur_page = 1
-        message = await context.send(f"Page {cur_page}/{pages}:\n{contents[cur_page-1]}")
-        await message.add_reaction("◀️")
-        await message.add_reaction("▶️")
-        def check(reaction, user):
-            return user == context.author and str(reaction.emoji) in ["◀️", "▶️"]
-        while True:
-            try:
-                reaction, user = await context.bot.wait_for("reaction_add", timeout=60, check=check)
-                if str(reaction.emoji) == "▶️" and cur_page != pages:
-                    cur_page += 1
-                    await message.edit(content=f"Page {cur_page}/{pages}:\n{contents[cur_page-1]}")
-                    await message.remove_reaction(reaction, user)
-                elif str(reaction.emoji) == "◀️" and cur_page > 1:
-                    cur_page -= 1
-                    await message.edit(content=f"Page {cur_page}/{pages}:\n{contents[cur_page-1]}")
-                    await message.remove_reaction(reaction, user)
-                else:
-                    await message.remove_reaction(reaction, user)
-            except asyncio.TimeoutError:
-                await message.delete()
-                break
-
     #help
     @commands.command()
     async def help(self, context):
@@ -176,6 +134,34 @@ class Commands(commands.Cog):
                 return
             else:
                 print(f"{context.author} tried to unban/unbanned {user.name}#{user.discriminator}, but internal error occured...")
+
+    #code i dont want to get rid of for reference...
+    @commands.command()
+    async def pages(self, context):
+        contents = ["This is page 1!", "This is page 2!", "This is page 3!", "This is page 4!"]
+        pages = 4
+        cur_page = 1
+        message = await context.send(f"Page {cur_page}/{pages}:\n{contents[cur_page-1]}")
+        await message.add_reaction("◀️")
+        await message.add_reaction("▶️")
+        def check(reaction, user):
+            return user == context.author and str(reaction.emoji) in ["◀️", "▶️"]
+        while True:
+            try:
+                reaction, user = await context.bot.wait_for("reaction_add", timeout=60, check=check)
+                if str(reaction.emoji) == "▶️" and cur_page != pages:
+                    cur_page += 1
+                    await message.edit(content=f"Page {cur_page}/{pages}:\n{contents[cur_page-1]}")
+                    await message.remove_reaction(reaction, user)
+                elif str(reaction.emoji) == "◀️" and cur_page > 1:
+                    cur_page -= 1
+                    await message.edit(content=f"Page {cur_page}/{pages}:\n{contents[cur_page-1]}")
+                    await message.remove_reaction(reaction, user)
+                else:
+                    await message.remove_reaction(reaction, user)
+            except asyncio.TimeoutError:
+                await message.delete()
+                break
 
 def setup(client):
     client.add_cog(Commands(client))
