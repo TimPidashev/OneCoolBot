@@ -30,6 +30,9 @@ class Commands(commands.Cog):
         print("command(info) used...")
 
         """ About the bot """
+        before = time.monotonic()
+        before_ws = int(round(self.bot.latency * 1000, 1))
+        ping = (time.monotonic() - before) * 1000
         ramUsage = self.process.memory_full_info().rss / 1024**2
         avgmembers = round(len(self.bot.users) / len(self.bot.guilds))
         embedColour = discord.Embed.Empty
