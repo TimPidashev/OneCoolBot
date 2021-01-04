@@ -2,7 +2,7 @@ import discord
 import asyncio
 from discord.ext import commands
 
-class AutoMod(commands.Cog):
+class automoderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -28,4 +28,4 @@ class AutoMod(commands.Cog):
                 print(f"{message.author} said {message.content} and was moderated...")
 
 def setup(client):
-    client.add_cog(AutoMod(client))
+    client.add_cog(automoderation(client))
