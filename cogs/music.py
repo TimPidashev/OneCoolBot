@@ -1,11 +1,8 @@
 import discord
+from wavelink
 from discord.ext import commands, tasks
-import youtube_dl
 
-#figure out what this line means...
-youtube_dl.utils.bug_reports_message = Lambda: ''
-
-class musicbot(commands.Cog):
+class music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -18,4 +15,4 @@ class musicbot(commands.Cog):
     
 
 def setup(client):
-    client.add_cog(musicbot(client))
+    client.add_cog(music(client))
