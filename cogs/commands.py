@@ -57,12 +57,12 @@ class Commands(commands.Cog):
     async def help(self, context):
         print('command(help) used...')
         helpEmbed = discord.Embed(title="Help", color=2105637)
-        helpEmbed.add_field(name="Bot Related", value="info, version, help, changelog")
+        helpEmbed.add_field(name="Bot Related", value="info, help")
         helpEmbed.add_field(name="AutoRole/Level/XP System(Coming Soon!)", value="rank, leaderboard", inline=False)
         helpEmbed.add_field(name="Economy(Coming Soon!)", value="bank, market, inventory", inline=False)
-        helpEmbed.add_field(name="Mod Commands(requires moderator role)", value="kick, mute, ban, unban(Doesn't exactly work yet...), clear", inline=False)
+        helpEmbed.add_field(name="Mod Commands(requires moderator role)", value="kick, mute, ban, unban, clear", inline=False)
         await context.message.channel.send(embed=helpEmbed)
-    
+
     #code i dont want to get rid of for reference...
     @commands.command()
     async def pages(self, context):
