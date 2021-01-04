@@ -2,10 +2,8 @@
 import discord
 import os
 import asyncio
-import json
 from dotenv import load_dotenv
 from discord.ext import commands
-import sqlite3
 intents = discord.Intents.default()
 intents.members = True
 load_dotenv()
@@ -46,12 +44,10 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
 
-    #Status
     await client.change_presence(status=discord.Status.online, activity=discord.Game('.help'))
 
     general = await client.fetch_channel(791160100567384098)
     await general.send('Bot is back up!')
     print("Bot is back up...")
 
-#bot_token
 client.run(Token)
