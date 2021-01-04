@@ -67,11 +67,6 @@ class moderation(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def unban(self, context, *, member):
-        unbanServerEmbed = discord.Embed(
-            colour = discord.Colour.green(),
-            title = f"{context.author} unbanned {user.name}#{user.discriminator}!",
-            description = f"**Reason:** Good Behavior **By:** {context.author.mention}",
-        )
         banned_users = await context.guild.bans()
         member_name, member_discriminator = member.split('#')
         for ban_entry in banned_users:
