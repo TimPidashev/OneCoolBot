@@ -46,8 +46,9 @@ class Commands(commands.Cog):
         embed.add_field(name="Developer", value="𝓣𝓲𝓶𝓶𝔂#6955")
         embed.add_field(name="Servers", value=f"{len(context.bot.guilds)}", inline=True)
         embed.add_field(name="Ping", value=f"{before_ws}ms")
-        embed.add_field(name="Uptime", value=text, inline=True)
         embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
+        embed.add_field(name="Uptime", value=text, inline=True)
+        embed.add_field(name="Version", value="Ver 0.0.4")
         embed.set_footer(text="Copyright © 2021 Timothy Pidashev. All Rights Reserved.")
         await context.send(embed=embed)
 
