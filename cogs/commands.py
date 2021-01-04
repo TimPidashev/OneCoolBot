@@ -46,6 +46,7 @@ class Commands(commands.Cog):
         embed.add_field(name="Developer", value="𝓣𝓲𝓶𝓶𝔂#6955")
         embed.add_field(name="Servers", value=f"{len(context.bot.guilds)}", inline=True)
         embed.add_field(name="Uptime", value=text, inline=True)
+        embed.add_field(name="Ping", value=f"WS: {before_ws}ms  |  REST: {int(ping)}ms")
         embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
 
         await context.send(embed=embed)
