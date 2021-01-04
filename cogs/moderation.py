@@ -78,6 +78,11 @@ class moderation(commands.Cog):
             user = ban_entry.user
             if (user.name, user.discriminator) == (member_name, member_discriminator):
                 await context.guild.unban(user)
+                unbanServerEmbed = discord.Embed(
+                    colour = discord.Colour.green(),
+                    title = f"{context.author} unbanned {user.name}#{user.discriminator}!",
+                    description = f"**Reason:** Good Behavior **By:** {context.author.mention}",
+                )
                 await context.channel.send(embed=unbanServerEmbed)
                 print(f"{context.author} unbanned {user.name}#{user.discriminator}...")
                 return
