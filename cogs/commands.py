@@ -94,15 +94,6 @@ class Commands(commands.Cog):
                 await message.delete()
                 break
 
-    #version
-    @commands.command()
-    async def version(self, context):
-        print("command(version) used...")
-        versionEmbed = discord.Embed(title="Current Version", description="The bot is in version 0.0.3", color=2105637)
-        versionEmbed.add_field(name="Version Code:", value="v0.0.4", inline=False)
-        versionEmbed.add_field(name="Date Released:", value="January 2, 2021", inline=False)
-        await context.message.channel.send(embed=versionEmbed)
-
     #help
     @commands.command()
     async def help(self, context):
