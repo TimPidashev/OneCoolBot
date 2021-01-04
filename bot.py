@@ -19,28 +19,25 @@ client.remove_command("help")
 async def on_shard_ready(shard_id):
     print(f"Shard {shard_id} ready...")
 
-#cogs load command
+#cogs related
 @client.command()
 @commands.has_permissions(administrator=True)
 async def load(context, extension):
     client.load_extension(f'cogs.{extension}')
     print("loaded "f'cogs.{extension}' + "...")
 
-#cogs unload command
 @client.command()
 @commands.has_permissions(administrator=True)
 async def unload(context, extension):
     client.unload_extension(f'cogs.{extension}')
     print("unloaded "f'cogs.{extension}' + "...")
 
-#cogs reload command
 @client.command()
 @commands.has_permissions(administrator=True)
 async def reload(context, extension):
     client.reload_extension(f'cogs.{extension}')
     print("reloaded "f'cogs.{extension}' + "...")
 
-#cogs loop
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
