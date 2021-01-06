@@ -22,10 +22,11 @@ class MusicController:
         self.next = asyncio.Event()
         self.queue = asyncio.Queue()
 
-        self.volume = 40
+        self.volume = 50
         self.now_playing = None
 
         self.bot.loop.create_task(self.controller_loop())
+
 
     async def controller_loop(self):
         await self.bot.wait_until_ready()
@@ -59,8 +60,6 @@ class Music(commands.Cog):
     async def start_nodes(self):
         await self.bot.wait_until_ready()
 
-        # Initiate our nodes. For this example we will use one server.
-        # Region should be a discord.py guild.region e.g sydney or us_central (Though this is not technically required)
         node = await self.bot.wavelink.initiate_node(host='127.0.0.1',
                                               port=2333,
                                               rest_uri='http://127.0.0.1:2333',
