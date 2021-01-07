@@ -3,7 +3,7 @@ import asyncio
 import json
 from discord.ext import commands
 
-class onMemberJoin(commands.Cog):
+class joinleave(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -49,4 +49,4 @@ class onMemberJoin(commands.Cog):
             print("Couldn't add role '{}' to {}".format(role.name, member.name) + "...")
 
 def setup(client):
-    client.add_cog(onMemberJoin(client))
+    client.add_cog(joinleave(client))
