@@ -1,7 +1,7 @@
 import discord
 import asyncio
 import json
-import time
+from datetime import datetime
 from discord.ext import commands
 
 class joinleave(commands.Cog):
@@ -51,7 +51,9 @@ class joinleave(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
-        print(f"{member.name}#{member.discriminator} left at ".format(time.time()) + "...")
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        print(f"{member.name}#{member.discriminator} left at " + current_time + "...")
 
 
 def setup(client):
