@@ -1,6 +1,7 @@
 import discord
 import asyncio
 import json
+import time
 from discord.ext import commands
 
 class joinleave(commands.Cog):
@@ -47,6 +48,11 @@ class joinleave(commands.Cog):
 
         except:
             print("Couldn't add role '{}' to {}".format(role.name, member.name) + "...")
+
+    @commands.Cog.listener()
+    async def on_member_remove(self, member):
+        print(f"{member.name}#{member.discriminator} left at ".format(time.time()) + "...")
+
 
 def setup(client):
     client.add_cog(joinleave(client))
