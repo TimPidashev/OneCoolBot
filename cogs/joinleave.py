@@ -11,7 +11,7 @@ class joinleave(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        print("cog onMemberJoin online...")
+        print("cog joinleave online...")
 
     #on_member_join
     @commands.Cog.listener()
