@@ -50,4 +50,4 @@ async def on_ready():
     await general.send('Bot is back up!')
     print("Bot is back up...")
 
-client.run(Token)
+client.run(Token, reconnect=True)
