@@ -10,7 +10,7 @@ load_dotenv()
 Token = os.getenv('BOT_TOKEN')
 
 #prefix/remove default help command/shard bot
-client = commands.AutoShardedBot(command_prefix = '.', intents=intents)
+client = commands.Bot(command_prefix = '.', intents=intents)
 client.remove_command("help")
 
 @client.event
@@ -44,10 +44,9 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
 
-    await client.change_presence(status=discord.Status.online, activity=discord.Game('.help'))
+    await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
 
     general = await client.fetch_channel(791160100567384098)
-    await general.send('Bot is back up!')
     print("Bot is back up...")
 
 client.run(Token, reconnect=True)

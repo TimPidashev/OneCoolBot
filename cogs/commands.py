@@ -14,7 +14,7 @@ start_time = time.time()
 moderator = (791161649901207572)
 owner = (791163340323815435)
 
-class Commands(commands.Cog):
+class commands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.process = psutil.Process(os.getpid())
@@ -92,4 +92,4 @@ class Commands(commands.Cog):
                 break
 
 def setup(client):
-    client.add_cog(Commands(client))
+    client.add_cog(commands(client))
