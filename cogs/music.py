@@ -16,7 +16,7 @@ class music(commands.Cog):
             await context.send("You are not connected to a voice channel.")
         else:
             channel = context.message.author.voice.channel
-            await channel.connect()    
+            await channel.connect()
 
 
 def setup(client):
