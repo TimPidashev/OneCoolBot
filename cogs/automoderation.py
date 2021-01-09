@@ -3,8 +3,8 @@ import asyncio
 from discord.ext import commands
 
 class automoderation(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
+    def __init__(self, client):
+        self.bot = client
 
     #on_ready
     @commands.Cog.listener()

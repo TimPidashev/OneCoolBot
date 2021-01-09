@@ -4,8 +4,8 @@ from discord.ext import commands, tasks
 from discord.utils import get
 
 class moderation(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
+    def __init__(self, client):
+        self.bot = client
 
     #on_ready
     @commands.Cog.listener()

@@ -15,8 +15,8 @@ moderator = (791161649901207572)
 owner = (791163340323815435)
 
 class commands(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
+    def __init__(self, client):
+        self.bot = client
         self.process = psutil.Process(os.getpid())
 
     #on_ready
