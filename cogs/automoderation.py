@@ -9,7 +9,7 @@ class automoderation(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        print("cog AutoMod online...")
+        print("cog automoderation online...")
 
     #bad words
     @commands.Cog.listener()
