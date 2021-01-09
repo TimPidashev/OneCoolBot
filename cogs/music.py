@@ -10,7 +10,7 @@ class music(commands.Cog):
     async def on_ready(self):
         print("cog music online...")
 
-    @commands.commmand()
+    @commands.command()
     async def play(self, context):
         if not context.message.author.voice:
             await context.send("You are not connected to a voice channel.")
