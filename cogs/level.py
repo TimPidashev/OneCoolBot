@@ -14,25 +14,18 @@ class level(commands.Cog):
         print("cog level online...")
 
     @commands.Cog.listener()
-    async def on_message(self, message):
+    async def on_member_join(self, member):
         with open("users.json", "r") as f:
             users = json.load(f)
 
-            if message.author.bot:
-                return
+        await update_data(users, member)
 
-            if message.channel.is_private:
-                return
+        with open("users.json", "w") as f:
+            json.dump(users, f)
 
-            else:
-                await update_data(users, message.author)
-                number = random.randint(1,10)
-                await add_experience(users, message.author, number)
-                await level_up(users, message.author, message.channel)
-
-            with open(users.json, "w") as f:
-                json.dump(users, f)
-            await bot.process_commands(message)
+    async def update_data(self, users, user):
+        if not user.id in users:
+            users[user.id] - {}
 
 def setup(client):
     client.add_cog(level(client))
