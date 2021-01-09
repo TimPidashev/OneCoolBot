@@ -1,4 +1,5 @@
 import discord
+import youtube_dl
 from discord.ext import commands
 
 class music(commands.Cog):
@@ -9,11 +10,13 @@ class music(commands.Cog):
     async def on_ready(self):
         print("cog music online...")
 
-    @commands.command()
-    async def connect(self, context):
-        voiceChannel = discord.utils.get(context.guild.voice_channels, name="Music")
-        voice = discord.utils.get(client.voice_clients, guild=context.guild)
-        await voiceChannel.connect()
+    @commands.commmand()
+    async def play(self, context):
+        if not context.message.author.voice:
+            await context.send("You are not connected to a voice channel.")
+        else:
+            channel = context.message.author.voice.channel
+            await channel.connect()    
 
 
 def setup(client):
