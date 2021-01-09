@@ -1,6 +1,5 @@
 import discord
 import asyncio
-import json
 from datetime import datetime
 from discord.ext import commands
 
