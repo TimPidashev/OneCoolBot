@@ -9,6 +9,10 @@ class level(commands.Cog):
         self.bot = client
 
     @commands.Cog.listener()
+    async def on_ready(self):
+        print("cog level online...")
+
+    @commands.Cog.listener()
     async def on_message(self, message):
         with open("users.json", "r", encoding="utf8") as f:
             user = json.load(f)
