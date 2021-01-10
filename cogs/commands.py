@@ -48,7 +48,7 @@ class commands(commands.Cog):
         embed.add_field(name="Ping", value=f"{before_ws}ms")
         embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
         embed.add_field(name="Uptime", value=text, inline=True)
-        embed.add_field(name="Version", value="Ver 0.0.5")
+        embed.add_field(name="Version", value="Ver 0.0.6")
         embed.set_footer(text="Copyright © 2021 Timothy Pidashev. All Rights Reserved.")
         await context.send(embed=embed)
 
@@ -61,6 +61,7 @@ class commands(commands.Cog):
         helpEmbed.add_field(name="AutoRole/Level/XP System(Coming Soon!)", value="rank, leaderboard", inline=False)
         helpEmbed.add_field(name="Economy(Coming Soon!)", value="bank, market, inventory", inline=False)
         helpEmbed.add_field(name="Mod Commands(requires moderator role)", value="kick, mute, ban, unban, clear", inline=False)
+        helpEmbed.add_field(name="Music(Coming Soon!)", value="play, skip(vote to skip song), mute(only mutes to person who asked),que(view que)")
         await context.message.channel.send(embed=helpEmbed)
 
     #code i dont want to get rid of for reference...
