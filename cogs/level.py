@@ -10,9 +10,9 @@ class level(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, message):
+        with open("users.json", "r", encoding="utf8") as f:
+            user = json.load(f)
         try:
-            with open("users.json", "r", encoding="utf8") as f:
-                user = json.load(f)
             with open("users.json", "w", encoding="utf8") as f:
                 user[str(message.author.id)]["xp"] = user[str(message.author.id)]["xp"]+1#make into random int from 1 to 10 later...
                 lvl_start = user[str(message.author.id)]["level"]
@@ -25,8 +25,6 @@ class level(commands.Cog):
                     return
                 json.dump(user,f,sort_keys=True,indent=4,ensure_ascii=False)
         except:
-            with open("users.json", "r", encoding="utf8") as f:
-                user = json.load(f)
             with open("users.json", "w", encoding="utf8") as f:
                 user = {}
                 user[str(message.author.id)] = {}
