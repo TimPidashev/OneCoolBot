@@ -9,7 +9,7 @@ class errorhandler(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, context, error):
-        if hassattr(context.command, "on_error"):
+        if hasattr(context.command, "on_error"):
             return
 
         cog = context.cog
