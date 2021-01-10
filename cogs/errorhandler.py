@@ -33,6 +33,12 @@ class errorhandler(commands.Cog):
             except discord.HTTPException:
                 pass
 
+        elif isinstance(error, commands.BadArgument):
+            if context.command.qualified_name == "tag list":
+                await context.send("I could not find that membe. Please try again.")
+
+        else:
+            return
 
 def setup(client):
     client.add_cog(errorhandler(client))
