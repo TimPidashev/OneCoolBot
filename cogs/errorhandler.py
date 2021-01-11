@@ -28,10 +28,7 @@ class errorhandler(commands.Cog):
             await context.send(f"{context.command} has been disabled :(")
 
         elif isinstance(error, commands.NoPrivateMessage):
-            try:
                 await context.author.send(f"{context.command} can not be used in private messages.")
-            except discord.HTTPException:
-                pass
 
         elif isinstance(error, commands.BadArgument):
             if context.command.qualified_name == "tag list":
