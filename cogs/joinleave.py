@@ -3,7 +3,7 @@ import asyncio
 import json
 from datetime import datetime
 from discord.ext import commands
-
+member_count = 0
 class joinleave(commands.Cog):
     def __init__(self, client):
         self.bot = client
@@ -16,9 +16,10 @@ class joinleave(commands.Cog):
     #on_member_join
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        with open("settings.json", "r", encoding="utf8") as f:
-            setting = json.load(f)
-    
+        with open("settings.json", "w", encoding="utf8"):
+            member_count[member_count:]+1
+            json.dump(member_count,f,sort_keys=True,indent=4,ensure_ascii=False)
+
         print(f"{member.name}#{member.discriminator} joined at {member.joined_at}" + "...")
         general = await self.bot.fetch_channel(791160100567384098)
 
