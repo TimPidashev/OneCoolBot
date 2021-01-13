@@ -48,7 +48,7 @@ class commands(commands.Cog):
         embed.add_field(name="Ping", value=f"{before_ws}ms")
         embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
         embed.add_field(name="Uptime", value=text, inline=True)
-        embed.add_field(name="Version", value="Ver 0.0.6")
+        embed.add_field(name="Version", value="Ver 0.0.7")
         embed.set_footer(text="Copyright © 2021 Timothy Pidashev. All Rights Reserved.")
         await context.send(embed=embed)
 

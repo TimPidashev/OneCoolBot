@@ -315,15 +315,16 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 await node.destroy()
 
         nodes = {
-                'MAIN':
-                        {'host': 'tranquil-journey-74197.herokuapp.com',
-                          'port': 80,
-                          'rest_uri': 'http://tranquil-journey-74197.herokuapp.com',
+                'LOCAL':
+                        {'host': '127.0.0.1',
+                          'port': 2333,
+                          'rest_uri': 'http://127.0.0.1:2333',
                           'password': 'youshallnotpass',
                           'identifier': 'MAIN',
-                          'region': 'us_central',
-                          'heartbeat': 5
+                          'region': 'us_west',
                         }
+
+
                 }
 
         for n in nodes.values():
@@ -331,7 +332,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
     @wavelink.WavelinkMixin.listener()
     async def on_node_ready(self, node: wavelink.Node):
-        print(f'Node {node.identifier} is ready!')
+        print(f'Successfully connected to node {node.identifier}!')
 
 
     @wavelink.WavelinkMixin.listener('on_track_stuck')
