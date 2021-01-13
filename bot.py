@@ -2,6 +2,8 @@
 import discord
 import os
 import asyncio
+from pyfiglet import Figlet
+from termcolor import colored
 from dotenv import load_dotenv
 from discord.ext import commands
 intents = discord.Intents.default()
@@ -13,9 +15,8 @@ Token = os.getenv('BOT_TOKEN')
 client = commands.Bot(command_prefix = '.', intents=intents)
 client.remove_command("help")
 
-@client.event
-async def on_shard_ready(shard_id):
-    print(f"Shard {shard_id} ready...")
+cool_logo = Figlet(font='graffiti')
+print(colored(cool_logo.renderText('OneCoolBot'), 'magenta'))
 
 #cogs related
 @client.command()
