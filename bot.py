@@ -13,7 +13,7 @@ load_dotenv()
 Token = os.getenv('BOT_TOKEN')
 
 #prefix/remove default help command/shard bot
-client = commands.Bot(command_prefix = '.', intents=intents)
+client = commands.AutoShardedBot(command_prefix = '.', intents=intents)
 client.remove_command("help")
 
 #ASCII art
@@ -49,6 +49,11 @@ async def reload(context, extension):
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
+
+#on_shard_ready
+@client.event
+async def on_shard_ready(shard_id):
+    print(f"Shard {shard_id} is ready...")
 
 #on_ready
 @client.event
