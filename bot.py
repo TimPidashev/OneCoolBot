@@ -6,6 +6,7 @@ from pyfiglet import Figlet
 from termcolor import colored
 from dotenv import load_dotenv
 from discord.ext import commands
+import logging
 intents = discord.Intents.default()
 intents.members = True
 load_dotenv()
@@ -15,8 +16,16 @@ Token = os.getenv('BOT_TOKEN')
 client = commands.Bot(command_prefix = '.', intents=intents)
 client.remove_command("help")
 
+#ASCII art
 cool_logo = Figlet(font='graffiti')
 print(colored(cool_logo.renderText('OneCoolBot'), 'magenta'))
+
+#discord.log
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 
 #cogs related
 @client.command()
