@@ -13,7 +13,7 @@ load_dotenv()
 Token = os.getenv('BOT_TOKEN')
 
 #prefix/remove default help command/shard bot
-client = commands.AutoShardedBot(command_prefix = '.', intents=intents)
+client = commands.AutoShardedBot(commands.when_mentioned_or("."), intents=intents)
 client.remove_command("help")
 
 #ASCII art
