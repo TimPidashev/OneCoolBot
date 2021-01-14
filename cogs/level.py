@@ -1,8 +1,10 @@
 import discord
-import json
-import random
-import os
 from discord.ext import commands
+import aiosqlite
+import asyncio
+
+START_BAL = 100
+db = aiosqlite.connect("main.sqlite")
 
 class level(commands.Cog):
     def __init__(self, client):
@@ -10,31 +12,57 @@ class level(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("cog level online...")
+        await db
+        cursor = await db.cursor()
+        await cursor.exexute("""CREATE TABLE IF NOT EXISTS main(
+        num INTEGER NOT NULL PRIMARY KEY
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        with open("users.json", "r", encoding="utf8") as f:
-            user = json.load(f)
-        try:
-            with open("users.json", "w", encoding="utf8") as f:
-                user[str(message.author.id)]["xp"] = user[str(message.author.id)]["xp"]+1#make into random int from 1 to 10 later...
-                lvl_start = user[str(message.author.id)]["level"]
-                lvl_end = user[str(message.author.id)]["exp"] ** (1.5/4)
-                if lvl_start < lvl_end:
-                    user[str(message.author.id)]["level"] = user[str(message.author.id)]["level"]+1
-                    lvl = user[str(message.author.id)]["level"]
-                    await message.channel.send(f"{message.author.name} has leveled up to {lvl}!")
-                    json.dump(user,f,sort_keys=True,indent=4,ensure_ascii=False)
-                    return
-                json.dump(user,f,sort_keys=True,indent=4,ensure_ascii=False)
-        except:
-            with open("users.json", "w", encoding="utf8") as f:
-                user = {}
-                user[str(message.author.id)] = {}
-                user[str(message.author.id)]["level"] = 0
-                user[str(message.author.id)]["xp"] = 0
-                json.dump(user,f,sort_keys=True,indent=4,ensure_ascii=False)
+        user_name TEXT
+        balance INTEGER
+        user_id INTEGER NOT NULL
+        )""")
+        await db.commit()
+        print("DB ready!")
 
+    @commands.command()
+    async def balance(self, context):
+        cursor = await db.commit()
+        USER_ID = context.message.author.id
+        USER_NAME = str(context.message.author)
+
+        await cursor.execute(f"SELECT user_id FROM main WHERE user_id={USER_ID}")
+        result_userID = await cursor.fetchone()
+
+        if result_userID == None:
+            await cursor.execute("INSERT INTO main(user_name, balance, user_id)values(?,?,?)",(USER_NAME,START_BAL,USER_ID))
+            await db.commit()
+
+            await context.send("**New DB User!**\nPlease execute the command again!")
+
+        else:
+            await cursor.execute(f"SELECT balance FROM main WHERE user_id={USER_ID}")
+            result_userBal = await cursor.fetchone()
+            await context.send(f"{USER_NAME}'s Balance!\n\nMoney:\n${result_userBal[0]}")
+
+    @commands.command()
+    async def beg(self, context):
+        ID = context.message.author.id
+        USER_NAME = str(context.message.author)
+
+        await cursor.execute(f"SELECT user_id FROM main WHERE user_id={USER_ID}")
+        result_userID = await cursor.fetchone()
+
+        if result_userID == None:
+            await cursor.execute("INSERT INTO main(user_name, balance, user_id)values(?,?,?)",(USER_NAME,START_BAL,USER_ID))
+            await db.commit()
+
+            await context.send("**New DB User!**\nPlease execute the command again!")
+
+        else:
+            addup = random.randint(100,500)
+            await cursor.execute("UPDATE main SET balance = balance + ? WHERE user_id=?"(addup,USER_ID))
+            await db.commit()
+
+            await context.send(f"**BEG**\n\nYou have gotten `${addup}` from begging!")
 def setup(client):
     client.add_cog(level(client))
