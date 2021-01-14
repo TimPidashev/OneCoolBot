@@ -1,5 +1,6 @@
 import discord
 import asyncio
+import re
 from discord.ext import commands
 
 class automoderation(commands.Cog):
@@ -21,11 +22,15 @@ class automoderation(commands.Cog):
                 await message.channel.purge(limit=1)
                 await message.channel.send(f"Cussing is not allowed! {message.author.mention}")
                 print(f"{message.author} said {message.content} and was moderated...")
-        for word in advertising:
-            if message.content.count(word) > 0:
-                await message.channel.purge(limit=1)
-                await message.channel.send(f"Advertising is not allowed! {message.author.mention}")
-                print(f"{message.author} said {message.content} and was moderated...")
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',message.content.lower())
+        if urls is not None and message.content.startswith('https://discord.gg' or 'http://discord.gg'):
+            await message.channel.purge(limit=1)
+            await message.channel.send("Links are not allowed!")
+            return
+
 
 def setup(client):
     client.add_cog(automoderation(client))
