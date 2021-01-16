@@ -56,13 +56,13 @@ class commands(commands.Cog):
     @commands.command()
     async def help(self, context):
         print('command(help) used...')
-        helpEmbed = discord.Embed(title="Help", color=2105637)
-        helpEmbed.add_field(name="Bot Related", value="info, help")
-        helpEmbed.add_field(name="AutoRole/Level/XP System(Coming Soon!)", value="rank, leaderboard", inline=False)
-        helpEmbed.add_field(name="Economy(Coming Soon!)", value="bank, market, inventory", inline=False)
-        helpEmbed.add_field(name="Mod Commands(requires moderator role)", value="kick, mute, ban, unban, clear", inline=False)
-        helpEmbed.add_field(name="Music(Coming Soon!)", value="play, skip(vote to skip song), mute(only mutes to person who asked),que(view que)")
-        await context.message.channel.send(embed=helpEmbed)
+        embed = discord.Embed(title="Help", color=2105637)
+        embed.add_field(name="Bot Related", value="info, help")
+        embed.add_field(name="AutoRole/Level/XP System(Coming Soon!)", value="rank, leaderboard", inline=False)
+        embed.add_field(name="Economy(Coming Soon!)", value="bank, market, inventory", inline=False)
+        embed.add_field(name="Mod Commands(requires moderator role)", value="kick, mute, ban, unban, clear", inline=False)
+        embed.add_field(name="Music(Coming Soon!)", value="play, skip(vote to skip song), mute(only mutes to person who asked),que(view que)")
+        await context.message.channel.send(embed=embed)
 
     #code i dont want to get rid of for reference...
     @commands.command()
