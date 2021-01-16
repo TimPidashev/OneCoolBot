@@ -9,4 +9,4 @@ class level(commands.Cog):
 
 
 def setup(client):
-    client.add_cogs(level(client))
+    client.add_cog(level(client))
