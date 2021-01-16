@@ -2,6 +2,7 @@ import discord
 import traceback
 import sys
 from discord.ext import commands
+from termcolor import colored
 
 class errorhandler(commands.Cog):
     def __init__(self, client):
@@ -9,7 +10,7 @@ class errorhandler(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("cog errorhandler online...")
+        print(colored("cog errorhandler online...", "green"))
 
 def setup(client):
     client.add_cog(errorhandler(client))

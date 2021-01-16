@@ -3,6 +3,7 @@ import os
 import asyncio
 import time
 from discord.ext import commands
+from termcolor import colored
 
 class dms(commands.Cog):
     def __init__(self, client):
@@ -10,7 +11,7 @@ class dms(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("cog dms online...")
+        print(colored("cog dms online...", "green"))
 
     @commands.command()
     async def chat(self, context):

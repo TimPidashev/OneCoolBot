@@ -2,6 +2,7 @@ import discord
 import asyncio
 from discord.ext import commands, tasks
 from discord.utils import get
+from termcolor import colored
 
 class moderation(commands.Cog):
     def __init__(self, client):
@@ -10,14 +11,14 @@ class moderation(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        print("cog moderation online...")
+        print(colored("cog moderation online...", "green"))
 
     #clear
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def clear(self, context, amount=10):
         await context.channel.purge(limit=amount)
-        print(f"removed {amount} messages...")
+        print(colored(f"removed {amount} messages...", "yellow"))
 
     #kick
     @commands.command()
@@ -37,9 +38,9 @@ class moderation(commands.Cog):
             await context.channel.send(embed=kickServerEmbed)
             await member.send(embed=kickPrivateEmbed)
             await member.kick(reason=reason)
-            print(f"{context.author} kicked {member}...")
+            print(colored(f"{context.author} kicked {member}...", "red"))
         except:
-            print(f"an error occured while {context.author} was trying to kick/kicked {member}...")
+            print(colored(f"an error occured while {context.author} was trying to kick/kicked {member}...", "red"))
 
     #ban
     @commands.command()
@@ -59,11 +60,11 @@ class moderation(commands.Cog):
            await context.channel.send(embed=banServerEmbed)
            await member.send(embed=banPrivateEmbed)
            await member.ban(reason=reason)
-           print(f"{context.author} banned {member}...")
+           print(colored(f"{context.author} banned {member}...", "red"))
        except:
-            print(f"an error occured while {context.author} was trying to ban/banned {member}...")
+            print(colored(f"an error occured while {context.author} was trying to ban/banned {member}...", "red"))
 
-    #unban(doesn't work)
+    #unban(works, but needs help)
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def unban(self, context, *, member):
@@ -79,10 +80,10 @@ class moderation(commands.Cog):
                     description = f"**Reason:** Good Behavior **By:** {context.author.mention}",
                 )
                 await context.channel.send(embed=unbanServerEmbed)
-                print(f"{context.author} unbanned {user.name}#{user.discriminator}...")
+                print(colored(f"{context.author} unbanned {user.name}#{user.discriminator}...", "green"))
                 return
             else:
-                print(f"{context.author} tried to unban/unbanned {user.name}#{user.discriminator}, but internal error occured...")
+                print(colored(f"{context.author} tried to unban/unbanned {user.name}#{user.discriminator}, but internal error occured...", "red"))
 
 def setup(client):
     client.add_cog(moderation(client))

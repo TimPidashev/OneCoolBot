@@ -17,14 +17,14 @@ client = commands.AutoShardedBot(commands.when_mentioned_or("."), intents=intent
 client.remove_command("help")
 
 #ASCII art
-cool_logo = Figlet(font='graffiti')
-print(colored(cool_logo.renderText('OneCoolBot'), 'magenta'))
+cool_logo = Figlet(font="graffiti")
+print(colored(cool_logo.renderText("OneCoolBot"), "magenta"))
 
 #discord.log
-logger = logging.getLogger('discord')
+logger = logging.getLogger("discord")
 logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+handler = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
+handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
 logger.addHandler(handler)
 
 #cogs related
@@ -32,19 +32,19 @@ logger.addHandler(handler)
 @commands.has_permissions(administrator=True)
 async def load(context, extension):
     client.load_extension(f'cogs.{extension}')
-    print("loaded "f'cogs.{extension}' + "...")
+    print(colored("loaded "f'cogs.{extension}' + "...", "yellow"))
 
 @client.command()
 @commands.has_permissions(administrator=True)
 async def unload(context, extension):
     client.unload_extension(f'cogs.{extension}')
-    print("unloaded "f'cogs.{extension}' + "...")
+    print(colored("unloaded "f'cogs.{extension}' + "...", "yellow"))
 
 @client.command()
 @commands.has_permissions(administrator=True)
 async def reload(context, extension):
     client.reload_extension(f'cogs.{extension}')
-    print("reloaded "f'cogs.{extension}' + "...")
+    print(colored("reloaded "f'cogs.{extension}' + "...", "yellow"))
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
@@ -53,7 +53,7 @@ for filename in os.listdir('./cogs'):
 #on_shard_ready
 @client.event
 async def on_shard_ready(shard_id):
-    print(f"Shard {shard_id} is ready...")
+    print(colored(f"Shard {shard_id} is ready...", "green"))
 
 #on_ready
 @client.event

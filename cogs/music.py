@@ -9,6 +9,7 @@ import re
 import typing
 import wavelink
 from pythonping import ping
+from termcolor import colored
 from discord.ext import commands, menus, tasks
 from discord import Spotify
 
