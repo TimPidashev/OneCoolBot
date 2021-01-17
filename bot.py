@@ -1,9 +1,10 @@
 #import stuff
 import discord
 import os
+import time
 import asyncio
 from pyfiglet import Figlet
-from termcolor import colored
+from termcolor import colored, cprint
 from dotenv import load_dotenv
 from discord.ext import commands
 import logging
@@ -58,10 +59,7 @@ async def on_shard_ready(shard_id):
 #on_ready
 @client.event
 async def on_ready():
-
     await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
-
-    general = await client.fetch_channel(791160100567384098)
-    print("Bot is back up...")
+    print(colored("Bot is back up...", "green"))
 
 client.run(Token, reconnect=True)
