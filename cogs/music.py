@@ -8,6 +8,9 @@ import random
 import re
 import typing
 import wavelink
+import aiohttp
+import humanize
+from typing import Union
 from pythonping import ping
 from termcolor import colored
 from discord.ext import commands, menus, tasks
@@ -21,14 +24,14 @@ class NoChannelProvided(commands.CommandError):
     """Error raised when no suitable voice channel was supplied."""
     pass
 
-
 class IncorrectChannelError(commands.CommandError):
     """Error raised when commands are issued outside of the players session channel."""
     pass
 
-
 class Track(wavelink.Track):
     """Wavelink Track object with a requester attribute."""
+
+
 
     __slots__ = ('requester', )
 
@@ -78,6 +81,7 @@ class Player(wavelink.Player):
         except asyncio.TimeoutError:
             # No music has been played for 5 minutes, cleanup and disconnect...
             return await self.teardown()
+            print(colored("No music has been played for 5 minutes, cleaning up and disconnecting...", "green"))
 
         await self.play(track)
         self.waiting = False
@@ -333,8 +337,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
     @wavelink.WavelinkMixin.listener()
     async def on_node_ready(self, node: wavelink.Node):
-        print(f'Successfully connected to node {node.identifier}!')
-
+        print(colored(f'Successfully connected to node {node.identifier}!', 'green'))
 
     @wavelink.WavelinkMixin.listener('on_track_stuck')
     @wavelink.WavelinkMixin.listener('on_track_end')
@@ -758,6 +761,27 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 player.dj = m
                 return await ctx.send(f'{member.mention} is now the DJ.')
 
+    @commands.command()
+    async def music(self, ctx):
+        """Retrieve various Node/Server/Player information."""
+        player = self.bot.wavelink.get_player(ctx.guild.id)
+        node = player.node
+
+        used = humanize.naturalsize(node.stats.memory_used)
+        total = humanize.naturalsize(node.stats.memory_allocated)
+        free = humanize.naturalsize(node.stats.memory_free)
+        cpu = node.stats.cpu_cores
+
+        fmt = f'**WaveLink:** `{wavelink.__version__}`\n\n' \
+              f'Connected to `{len(self.bot.wavelink.nodes)}` nodes.\n' \
+              f'Best available Node `{self.bot.wavelink.get_best_node().__repr__()}`\n' \
+              f'`{len(self.bot.wavelink.players)}` players are distributed on nodes.\n' \
+              f'`{node.stats.players}` players are distributed on server.\n' \
+              f'`{node.stats.playing_players}` players are playing on server.\n\n' \
+              f'Server Memory: `{used}/{total}` | `({free} free)`\n' \
+              f'Server CPU: `{cpu}`\n\n' \
+              f'Server Uptime: `{datetime.timedelta(milliseconds=node.stats.uptime)}`'
+        await ctx.send(fmt)
 
 def setup(bot: commands.Bot):
     bot.add_cog(Music(bot))
