@@ -762,7 +762,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 return await ctx.send(f'{member.mention} is now the DJ.')
 
     @commands.command()
-    async def music(self, ctx):
+    async def M(self, ctx):
         """Retrieve various Node/Server/Player information."""
         player = self.bot.wavelink.get_player(ctx.guild.id)
         node = player.node
