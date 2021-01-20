@@ -11,7 +11,7 @@ class dms(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("cog dms online...", "grey"))
+        print(colored("[dms]: cog dms online...", "grey"))
 
     @commands.command()
     async def chat(self, context):
