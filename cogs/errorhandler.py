@@ -10,7 +10,7 @@ class errorhandler(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[error]: cog errorhandler online...", "red"))
+        print(colored("cog errorhandler online...", "green"))
 
 def setup(client):
     client.add_cog(errorhandler(client))
