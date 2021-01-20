@@ -11,7 +11,7 @@ class automoderation(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("cog automoderation online...", "green"))
+        print(colored("[automoderation]: cog automoderation online...", "yellow"))
 
     #bad words
     @commands.Cog.listener()
@@ -21,7 +21,7 @@ class automoderation(commands.Cog):
             if message.content.count(word) > 0:
                 await message.channel.purge(limit=1)
                 await message.channel.send(f"Cussing is not allowed! {message.author.mention}")
-                print(colored(f"{message.author} said {message.content} and was moderated...", "orange"))
+                print(colored(f"[automoderation]: {message.author} said {message.content} and was moderated...", "yellow"))
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -29,7 +29,7 @@ class automoderation(commands.Cog):
         if urls is not None and message.content.startswith('https://discord.gg' or 'http://discord.gg'):
             await message.channel.purge(limit=1)
             await message.channel.send("Links are not allowed!")
-            print(colored(f"{message.author} tried to advertise link {message.content} but was stopped...", "orange"))
+            print(colored(f"[automoderation]: {message.author} tried to advertise link {message.content} but was stopped...", "yellow"))
             return
 
 
