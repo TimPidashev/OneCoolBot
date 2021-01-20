@@ -60,6 +60,7 @@ async def on_shard_ready(shard_id):
 @client.event
 async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
+    await asyncio.sleep(1)
     print(colored("[main]: Bot is back up...", "magenta"))
 
 client.run(Token, reconnect=True)
