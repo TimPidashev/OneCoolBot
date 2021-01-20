@@ -33,19 +33,19 @@ logger.addHandler(handler)
 @commands.has_permissions(administrator=True)
 async def load(context, extension):
     client.load_extension(f'cogs.{extension}')
-    print(colored("loaded "f'cogs.{extension}' + "...", "yellow"))
+    print(colored("[main]: loaded "f'cogs.{extension}' + "...", "magenta"))
 
 @client.command()
 @commands.has_permissions(administrator=True)
 async def unload(context, extension):
     client.unload_extension(f'cogs.{extension}')
-    print(colored("unloaded "f'cogs.{extension}' + "...", "yellow"))
+    print(colored("[main]: unloaded "f'cogs.{extension}' + "...", "magenta"))
 
 @client.command()
 @commands.has_permissions(administrator=True)
 async def reload(context, extension):
     client.reload_extension(f'cogs.{extension}')
-    print(colored("reloaded "f'cogs.{extension}' + "...", "yellow"))
+    print(colored("[main]: reloaded "f'cogs.{extension}' + "...", "magenta"))
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
@@ -54,12 +54,12 @@ for filename in os.listdir('./cogs'):
 #on_shard_ready
 @client.event
 async def on_shard_ready(shard_id):
-    print(colored(f"Shard {shard_id} is ready...", "green"))
+    print(colored(f"[main]: Shard {shard_id} is ready...", "magenta"))
 
 #on_ready
 @client.event
 async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
-    print(colored("Bot is back up...", "green"))
+    print(colored("[main]: Bot is back up...", "magenta"))
 
 client.run(Token, reconnect=True)

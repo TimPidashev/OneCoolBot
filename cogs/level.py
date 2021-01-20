@@ -10,7 +10,7 @@ class level(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("cog level online...", "green"))
+        print(colored("[level]: cog level online...", "cyan"))
 
 def setup(client):
     client.add_cog(level(client))

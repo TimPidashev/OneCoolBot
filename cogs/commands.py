@@ -23,12 +23,12 @@ class commands(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("cog commands online...", "green"))
+        print(colored("[commands]: cog commands online...", "white"))
 
     #info
     @commands.command()
     async def info(self, context):
-        print(colored("command(info) used...", "magenta"))
+        print(colored("[commands]: command(info) used...", "white"))
 
         """ About the bot """
         before = time.monotonic()
@@ -56,7 +56,7 @@ class commands(commands.Cog):
     #help
     @commands.command()
     async def help(self, context):
-        print(colored("command(help) used...", "magenta"))
+        print(colored("[commands]: command(help) used...", "white"))
         embed = discord.Embed(title="Help", color=2105637)
         embed.add_field(name="Bot Related", value="info, help")
         embed.add_field(name="AutoRole/Level/XP System(Coming Soon!)", value="rank, leaderboard", inline=False)
