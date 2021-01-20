@@ -12,13 +12,13 @@ class joinleave(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("cog joinleave online...", "green"))
+        print(colored("[joinleave]: cog joinleave online...", "green"))
 
     #on_member_join
     @commands.Cog.listener()
     async def on_member_join(self, member):
 
-        print(colored(f"{member.name}#{member.discriminator} joined at {member.joined_at}" + "...", "green"))
+        print(colored(f"[joinleave]: {member.name}#{member.discriminator} joined at {member.joined_at}" + "...", "green"))
         general = await self.bot.fetch_channel(791160100567384098)
 
         userJoinPrivateEmbed = discord.Embed(
@@ -36,25 +36,25 @@ class joinleave(commands.Cog):
         try:
             await member.send(embed=userJoinPrivateEmbed)
             await general.send(embed=userJoinServerEmbed)
-            print(colored(f"successfully sent welcome message to {member.name}#{member.discriminator}...", "green"))
+            print(colored(f"[joinleave]: successfully sent welcome message to {member.name}#{member.discriminator}...", "green"))
 
         except:
-            print(colored(f"couldn't send welcome message to {member.name}#{member.discriminator}...", "red"))
+            print(colored(f"[joinleave]: couldn't send welcome message to {member.name}#{member.discriminator}...", "red"))
 
         role = member.guild.get_role(791162885002100793)
 
         try:
             await member.add_roles(role)
-            print(colored("Added '{}' to {}".format(role.name, member.name) + "...", "green"))
+            print(colored("[joinleave]: Added '{}' to {}".format(role.name, member.name) + "...", "green"))
 
         except:
-            print(colored("Couldn't add role '{}' to {}".format(role.name, member.name) + "...", "red"))
+            print(colored("[joinleave]: Couldn't add role '{}' to {}".format(role.name, member.name) + "...", "red"))
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        print(colored(f"{member.name}#{member.discriminator} left at " + current_time + "...", "red"))
+        print(colored(f"[joinleave]: {member.name}#{member.discriminator} left at " + current_time + "...", "red"))
 
 
 def setup(client):
