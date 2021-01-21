@@ -326,7 +326,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                           'rest_uri': 'http://127.0.0.1:2333',
                           'password': 'youshallnotpass',
                           'identifier': 'MAIN',
-                          'region': 'us_west',
+                          'region': 'US West',
                         }
 
 
@@ -482,17 +482,20 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def spotify(self, ctx: commands.Context, user: discord.Member = None):
         user = user or ctx.author
         if user.activities:
-            for activity in user.activities:
-                if isinstance(activity, Spotify):
-                    embed = discord.Embed(
-                        title = f"{user.name}'s Spotify",
-                        description = f"Listening to {activity.title}",
-                        color = 0xC902FF)
-                    embed.set_thumbnail(url=activity.album_cover_url)
-                    embed.add_field(name="Artist", value=activity.artist)
-                    embed.add_field(name="Album", value=activity.album)
-                    embed.set_footer(text="Song started at {}".format(activity.created_at.strftime("%H:%M")))
-                    await ctx.send(embed=embed)
+                for activity in user.activities:
+                    if isinstance(activity, Spotify):
+                        embed = discord.Embed(
+                            title = f"{user.name}'s Spotify",
+                            description = f"Listening to {activity.title}",
+                            color = 0xC902FF)
+                        embed.set_thumbnail(url=activity.album_cover_url)
+                        embed.add_field(name="Artist", value=activity.artist)
+                        embed.add_field(name="Album", value=activity.album)
+                        embed.set_footer(text="Song started at {}".format(activity.created_at.strftime("%H:%M")))
+                        await ctx.send(embed=embed)
+
+        else:
+            await ctx.send("Spotify integration is currently undergoing changes, try again later :(")
 
 
     @commands.command()
