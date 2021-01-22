@@ -26,6 +26,7 @@ class commands(commands.Cog):
         print(colored("[commands]: cog commands online...", "white"))
 
     #info
+    @commands.guild_only()
     @commands.command()
     async def info(self, context):
         print(colored("[commands]: command(info) used...", "white"))
@@ -54,6 +55,7 @@ class commands(commands.Cog):
         await context.message.channel.send(embed=embed)
 
     #help
+    @commands.guild_only()
     @commands.command()
     async def help(self, context):
         print(colored("[commands]: command(help) used...", "white"))
@@ -66,6 +68,7 @@ class commands(commands.Cog):
         await context.message.channel.send(embed=embed)
 
     #code i dont want to get rid of for reference...
+    @commands.guild_only()
     @commands.command()
     async def pages(self, context):
         contents = ["This is page 1!", "This is page 2!", "This is page 3!", "This is page 4!"]

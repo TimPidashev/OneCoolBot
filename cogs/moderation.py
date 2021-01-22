@@ -66,7 +66,7 @@ class moderation(commands.Cog):
 
     #unban(works, but needs help)
     @commands.command()
-    @commands.has_permissions(administrator=True)
+    @commands.has_permissions(ban_members=True)
     async def unban(self, context, *, member):
         banned_users = await context.guild.bans()
         member_name, member_discriminator = member.split('#')
