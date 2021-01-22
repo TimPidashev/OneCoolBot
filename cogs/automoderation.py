@@ -1,5 +1,6 @@
 import discord
 import asyncio
+import json
 import re
 from discord.ext import commands
 from termcolor import colored
@@ -22,6 +23,16 @@ class automoderation(commands.Cog):
                 await message.channel.purge(limit=1)
                 await message.channel.send(f"Cussing is not allowed! {message.author.mention}")
                 print(colored(f"[automoderation]: {message.author} said {message.content} and was moderated...", "yellow"))
+
+                #with open("warnings.json", "r", encoding="utf8") as f:
+                #    user = json.load(f)
+
+                #try:
+                    #with open("warnings.json", "w", encoding="utf8") as f:
+                        #user[str(message.author.id)]["warnings"] = user[str(message.author.id)]["warnings"]+1
+
+                #except:
+                    #print("plz work failed...")
 
     @commands.Cog.listener()
     async def on_message(self, message):

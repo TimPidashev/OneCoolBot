@@ -27,15 +27,8 @@ class joinleave(commands.Cog):
             description = "We're so glad you're here!"
         )
 
-        userJoinServerEmbed = discord.Embed(
-            colour = discord.Colour.green(),
-            title = "Welcome "+member.name+"!",
-            description = "We're so glad you're here!"
-        )
-
         try:
             await member.send(embed=userJoinPrivateEmbed)
-            await general.send(embed=userJoinServerEmbed)
             print(colored(f"[joinleave]: successfully sent welcome message to {member.name}#{member.discriminator}...", "green"))
 
         except:
