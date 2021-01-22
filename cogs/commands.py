@@ -51,7 +51,7 @@ class commands(commands.Cog):
         embed.add_field(name="Uptime", value=text, inline=True)
         embed.add_field(name="Version", value="Ver 0.0.7")
         embed.set_footer(text="Copyright © 2021 - All Rights Reserved.")
-        await context.send(embed=embed)
+        await context.message.channel.send(embed=embed)
 
     #help
     @commands.command()
