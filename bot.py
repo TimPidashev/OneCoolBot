@@ -3,18 +3,18 @@ import discord
 import os
 import time
 import asyncio
+import logging
 from pyfiglet import Figlet
 from termcolor import colored, cprint
 from dotenv import load_dotenv
 from discord.ext import commands
-import logging
 intents = discord.Intents.default()
 intents.members = True
 load_dotenv()
 Token = os.getenv('BOT_TOKEN')
 
 #prefix/remove default help command/shard bot
-client = commands.AutoShardedBot(commands.when_mentioned_or("."), intents=intents)
+client = commands.Bot(commands.when_mentioned_or("."), intents=intents)
 client.remove_command("help")
 
 #ASCII art
@@ -50,11 +50,6 @@ async def reload(context, extension):
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
-
-#on_shard_ready
-@client.event
-async def on_shard_ready(shard_id):
-    print(colored(f"[main]: Shard {shard_id} is ready...", "magenta"))
 
 #on_ready
 @client.event
