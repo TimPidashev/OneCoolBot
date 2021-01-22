@@ -24,16 +24,6 @@ class automoderation(commands.Cog):
                 await message.channel.send(f"Cussing is not allowed! {message.author.mention}")
                 print(colored(f"[automoderation]: {message.author} said {message.content} and was moderated...", "yellow"))
 
-                #with open("warnings.json", "r", encoding="utf8") as f:
-                #    user = json.load(f)
-
-                #try:
-                    #with open("warnings.json", "w", encoding="utf8") as f:
-                        #user[str(message.author.id)]["warnings"] = user[str(message.author.id)]["warnings"]+1
-
-                #except:
-                    #print("plz work failed...")
-
     @commands.Cog.listener()
     async def on_message(self, message):
         urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',message.content.lower())
