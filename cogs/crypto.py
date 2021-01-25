@@ -29,7 +29,12 @@ class crypto(commands.Cog):
         coins = json['data']
 
         for x in coins:
-            print(x['symbol'], x['quote']['USD']['price'])
+            A = (x['symbol'], x['quote']['USD']['price'])
+            B = (x['symbol'], x['quote']['USD']['price'])
+            C = (x['symbol'], x['quote']['USD']['price'])
+            D = (x['symbol'], x['quote']['USD']['price'])
+            E = (x['symbol'], x['quote']['USD']['price'])
+            await context.send(A)
 
 def setup(client):
     client.add_cog(crypto(client))
