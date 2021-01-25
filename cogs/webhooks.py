@@ -17,3 +17,6 @@ class webhooks(commands.Cog):
     @commands.guild_only()
     @commands.commmand()
     async def minecraft(self):
+
+def setup(client):
+    client.add_cogs(webhooks)
