@@ -14,9 +14,7 @@ class webhooks(commands.Cog):
     async def on_ready(self):
         print(colored("[webhooks]: cog webhooks online...", "grey"))
 
-    @commands.guild_only()
-    @commands.commmand()
-    async def minecraft(self):
+
 
 def setup(client):
-    client.add_cogs(webhooks)
+    client.add_cog(webhooks(client))
