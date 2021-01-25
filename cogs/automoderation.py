@@ -15,17 +15,17 @@ class automoderation(commands.Cog):
         print(colored("[automoderation]: cog automoderation online...", "yellow"))
 
     #bad words
-    @commands.guild_only()
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        bad_words = ["fick", "arsch", "Arschgesicht", "arschgesicht", "Arschloch", "Asshole", "asshole", "Fotze", "fotze", "Miststück", "miststück", "Bitch", "bitch", "Schlampe", "schlampe", "Sheisse", "sheisse",  "Shit", "shit", "Fick", "huren", "Verpiss", "verpiss", "masturbiert", "Idiot", "idiot", "depp", "Depp", "Dumm", "dumm", "jude", "Bastard", "bastard", "Wichser", "wichser", "wixxer", "Wixxer", "Hurensohn" "Wixer", "Pisser", "Arschgesicht", "huso", "hure", "Hure", "verreck" "Verreck", "fehlgeburt", "Fehlgeburt", "ficken", "adhs", "ADHS", "Btch", "faggot", "fck", "f4ck", "nigga", "Nutted", "flaschengeburt", "penis", "pusse", "pusse", "pussy", "pussys", "nigger", "kacke", "fuucker", "fuck"]
-        for word in bad_words:
-            print("bad wrd")
-            if message.content.count(word) > 0:
-                print("plz work")
-                await message.channel.purge(limit=1)
-                await message.channel.send(f"Cussing is not allowed! {message.author.mention}")
-                print(colored(f"[automoderation]: {message.author} said {message.content} and was moderated...", "yellow"))
+    #@commands.guild_only()
+    #@commands.Cog.listener()
+    #async def on_message(self, message):
+        #bad_words = ["fick", "arsch", "Arschgesicht", "arschgesicht", "Arschloch", "Asshole", "asshole", "Fotze", "fotze", "Miststück", "miststück", "Bitch", "bitch", "Schlampe", "schlampe", "Sheisse", "sheisse",  "Shit", "shit", "Fick", "huren", "Verpiss", "verpiss", "masturbiert", "Idiot", "idiot", "depp", "Depp", "Dumm", "dumm", "jude", "Bastard", "bastard", "Wichser", "wichser", "wixxer", "Wixxer", "Hurensohn" "Wixer", "Pisser", "Arschgesicht", "huso", "hure", "Hure", "verreck" "Verreck", "fehlgeburt", "Fehlgeburt", "ficken", "adhs", "ADHS", "Btch", "faggot", "fck", "f4ck", "nigga", "Nutted", "flaschengeburt", "penis", "pusse", "pusse", "pussy", "pussys", "nigger", "kacke", "fuucker", "fuck"]
+        #for word in bad_words:
+            #print("bad wrd")
+            #if message.content.count(word) > 0:
+                #print("plz work")
+                #await message.channel.purge(limit=1)
+                #await message.channel.send(f"Cussing is not allowed! {message.author.mention}")
+                #print(colored(f"[automoderation]: {message.author} said {message.content} and was moderated...", "yellow"))
 
     @commands.Cog.listener()
     async def on_message(self, message):
