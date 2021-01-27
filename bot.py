@@ -4,7 +4,10 @@ import os
 import time
 import asyncio
 import logging
+import os
+from glob import glob
 from pyfiglet import Figlet
+from db import db
 from termcolor import colored, cprint
 from dotenv import load_dotenv
 from discord.ext import commands
