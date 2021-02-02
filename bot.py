@@ -5,9 +5,11 @@ import time
 import asyncio
 import logging
 import os
+import sqlite3
 from glob import glob
 from pyfiglet import Figlet
 from db import db
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from termcolor import colored, cprint
 from dotenv import load_dotenv
 from discord.ext import commands
@@ -58,7 +60,6 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
-    await asyncio.sleep(1)
     print(colored("[main]: Bot is back up...", "magenta"))
 
 client.run(Token, reconnect=True)

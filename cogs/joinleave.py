@@ -1,6 +1,7 @@
 import discord
 import asyncio
 import json
+from db import db
 from datetime import datetime
 from discord.ext import commands
 from termcolor import colored
@@ -17,6 +18,12 @@ class joinleave(commands.Cog):
     #on_member_join
     @commands.Cog.listener()
     async def on_member_join(self, member):
+
+        db.execute("INSERT INTO users (UserID) VALUES (?)", member.id)
+        print(f"{member.name} (member/user) have been added into the users DB")
+
+        print(f"{member.name} (member/user) have been added into the server exp DB")
+        db.commit()
 
         print(colored(f"[joinleave]: {member.name}#{member.discriminator} joined at {member.joined_at}" + "...", "green"))
         general = await self.bot.fetch_channel(791160100567384098)
