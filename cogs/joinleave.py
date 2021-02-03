@@ -20,9 +20,7 @@ class joinleave(commands.Cog):
     async def on_member_join(self, member):
 
         db.execute("INSERT INTO users (UserID) VALUES (?)", member.id)
-        print(f"{member.name} (member/user) have been added into the users DB")
-
-        print(f"{member.name} (member/user) have been added into the server exp DB")
+        print(colored)(f"[joinleave]: {member.name} (member/user) have been added into the users DB", "green"))
         db.commit()
 
         print(colored(f"[joinleave]: {member.name}#{member.discriminator} joined at {member.joined_at}" + "...", "green"))
@@ -55,7 +53,7 @@ class joinleave(commands.Cog):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         print(colored(f"[joinleave]: {member.name}#{member.discriminator} left at " + current_time + "...", "red"))
-
+        #add a sql command tp remove user from database
 
 def setup(client):
     client.add_cog(joinleave(client))

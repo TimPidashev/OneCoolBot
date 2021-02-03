@@ -61,5 +61,5 @@ for filename in os.listdir('./cogs'):
 async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
     print(colored("[main]: Bot is back up...", "magenta"))
-
+    
 client.run(Token, reconnect=True)
