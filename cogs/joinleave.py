@@ -53,7 +53,7 @@ class joinleave(commands.Cog):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         print(colored(f"[joinleave]: {member.name}#{member.discriminator} left at " + current_time + "...", "red"))
-        #add a sql command tp remove user from database
+        #add a sql command to remove user from database
 
 def setup(client):
     client.add_cog(joinleave(client))
