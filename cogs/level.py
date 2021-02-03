@@ -1,6 +1,7 @@
 import discord
 import random
 import time
+import sqlite3
 import asyncio
 from datetime import datetime
 from termcolor import colored
