@@ -59,7 +59,15 @@ class joinleave(commands.Cog):
         current_time = now.strftime("%H:%M:%S")
         print(colored(f"[joinleave]: {member.name}#{member.discriminator} left at " + current_time + "...", "green"))
 
-        #deleting user from databases...
+        #deleting user from databases
+        try:
+            db.execute("DELETE FROM users WHERE (UserID = ?)", member.id)
+            db.commit()
+            print(colored(f"[joinleave]: Successfully removed {member.name}#{member.discriminator} from user db...", "green"))
+
+        except:
+            print(colored(f"[joinleave]: Internal error occurred when removing {member.id}#{member.discriminator} from user db...", "red"))
+
 
 
 def setup(client):
