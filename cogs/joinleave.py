@@ -18,14 +18,18 @@ class joinleave(commands.Cog):
     #on_member_join
     @commands.Cog.listener()
     async def on_member_join(self, member):
-
-        db.execute("INSERT INTO users (UserID) VALUES (?)", member.id)
-        print(colored)(f"[joinleave]: {member.name} (member/user) have been added into the users DB", "green"))
-        db.commit()
-
         print(colored(f"[joinleave]: {member.name}#{member.discriminator} joined at {member.joined_at}" + "...", "green"))
-        general = await self.bot.fetch_channel(791160100567384098)
 
+        #adding user to database
+        try:
+            db.execute("INSERT INTO users (UserID) VALUES (?)", member.id)
+            print(colored(f"[joinleave]: {member.name}#{member.discriminator} (member/user) have been added into the users DB...", "green"))
+            db.commit()
+
+        except:
+            print(colored(f"[joinleave]: Internal error occurred when adding {member.name}#{member.discriminator} to user db...", "red"))
+
+        #dm welcome message to new member
         userJoinPrivateEmbed = discord.Embed(
             colour = discord.Colour.green(),
             title = "Welcome "+member.name+"!",
@@ -39,6 +43,7 @@ class joinleave(commands.Cog):
         except:
             print(colored(f"[joinleave]: couldn't send welcome message to {member.name}#{member.discriminator}...", "red"))
 
+        #add role 'new here' to user
         role = member.guild.get_role(791162885002100793)
 
         try:
@@ -52,8 +57,10 @@ class joinleave(commands.Cog):
     async def on_member_remove(self, member):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        print(colored(f"[joinleave]: {member.name}#{member.discriminator} left at " + current_time + "...", "red"))
-        #add a sql command to remove user from database
+        print(colored(f"[joinleave]: {member.name}#{member.discriminator} left at " + current_time + "...", "green"))
+
+        #deleting user from databases...
+
 
 def setup(client):
     client.add_cog(joinleave(client))
