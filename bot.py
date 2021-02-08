@@ -60,6 +60,8 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
+    #db.execute("INSERT OR IGNORE INTO users (UserID) VALUES (?)", member.id, if not member.bot)
+    #db.commmit()
     print(colored("[main]: Bot is back up...", "magenta"))
-    
+
 client.run(Token, reconnect=True)
