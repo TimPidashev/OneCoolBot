@@ -1,5 +1,6 @@
 import discord
 import asyncio
+import re
 from discord.ext import commands, tasks
 from discord.utils import get
 from termcolor import colored
@@ -84,6 +85,16 @@ class moderation(commands.Cog):
                 return
             else:
                 print(colored(f"[moderation]: {context.author} tried to unban/unbanned {user.name}#{user.discriminator}, but internal error occured...", "red"))
+
+    #automoderation section below
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',message.content.lower())
+        if urls is not None and message.content.startswith('https://discord.gg' or 'http://discord.gg'):
+            await message.channel.purge(limit=1)
+            await message.channel.send("Links are not allowed!")
+            print(colored(f"[automoderation]: {message.author} tried to advertise link {message.content} but was stopped...", "yellow"))
+            return
 
 def setup(client):
     client.add_cog(moderation(client))
