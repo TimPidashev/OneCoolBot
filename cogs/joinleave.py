@@ -27,7 +27,7 @@ class joinleave(commands.Cog):
             db.commit()
 
         except:
-            print(colored(f"[joinleave]: Internal error occurred when adding {member.name}#{member.discriminator} to user db...", "red"))
+            print(colored(f"[joinleave]: Internal error occurred when adding {member.name}#{member.discriminator} to users db...", "red"))
 
         #dm welcome message to new member
         userJoinPrivateEmbed = discord.Embed(
@@ -63,10 +63,10 @@ class joinleave(commands.Cog):
         try:
             db.execute("DELETE FROM users WHERE (UserID = ?)", member.id)
             db.commit()
-            print(colored(f"[joinleave]: Successfully removed {member.name}#{member.discriminator} from user db...", "green"))
+            print(colored(f"[joinleave]: Successfully removed {member.name}#{member.discriminator} from users db...", "green"))
 
         except:
-            print(colored(f"[joinleave]: Internal error occurred when removing {member.id}#{member.discriminator} from user db...", "red"))
+            print(colored(f"[joinleave]: Internal error occurred when removing {member.id}#{member.discriminator} from users db...", "red"))
 
 
 
