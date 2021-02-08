@@ -46,12 +46,12 @@ class commands(commands.Cog):
         embed = discord.Embed(colour=embedColour)
         embed.set_thumbnail(url=context.bot.user.avatar_url)
         embed.add_field(name="Developer", value="𝓣𝓲𝓶𝓶𝔂#6955")
-        embed.add_field(name="Servers", value=f"{len(context.bot.guilds)}", inline=True)
+        embed.add_field(name="Users", value=f"{len(context.guild.members)}", inline=True)
         embed.add_field(name="Ping", value=f"{before_ws}ms")
         embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
         embed.add_field(name="Uptime", value=text, inline=True)
-        embed.add_field(name="Version", value="Ver 0.0.7")
-        embed.set_footer(text="Copyright © 2021 - All Rights Reserved.")
+        embed.add_field(name="Version", value="Ver 0.0.8")
+        embed.set_footer(text="Most recent changes: Version 0.0.8 released!")
         await context.message.channel.send(embed=embed)
 
     #help
