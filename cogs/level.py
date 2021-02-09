@@ -1,11 +1,12 @@
 import discord
-import random
 import time
 import sqlite3
 import asyncio
-from datetime import datetime
+import random
+from datetime import datetime, timedelta
 from termcolor import colored
 from discord.ext import commands
+from db import db
 
 class level(commands.Cog):
     def __init__(self, client):
@@ -14,6 +15,11 @@ class level(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print(colored("[level]: cog level online...", "cyan"))
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if not message.author.bot:
+            await self.process_xp(message)
 
     async def process_xp(self, message):
         xp, lvl, xplock = db.record(
@@ -24,7 +30,7 @@ class level(commands.Cog):
             await self.add_xp(message, xp, lvl)
 
     async def add_xp(self, message, xp, lvl):
-        xp_to_add = randint(10, 20)
+        xp_to_add = random.randint(10, 20)
 
         new_lvl = int(((xp + xp_to_add) // 42) ** 0.55)
 
