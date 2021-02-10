@@ -12,8 +12,7 @@ from datetime import datetime, timedelta
 start_time = time.time()
 
 #roles
-moderator = (791161649901207572)
-owner = (791163340323815435)
+owner = (598625004279693460)
 
 class commands(commands.Cog):
     def __init__(self, client):

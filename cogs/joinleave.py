@@ -33,7 +33,7 @@ class joinleave(commands.Cog):
         userJoinPrivateEmbed = discord.Embed(
             colour = discord.Colour.green(),
             title = "Welcome "+member.name+"!",
-            description = "We're so glad you're here!"
+            description = "I'm still in early development, so if you have any ideas as to what i should say here, let me know!"
         )
 
         try:
@@ -44,7 +44,7 @@ class joinleave(commands.Cog):
             print(colored(f"[joinleave]: couldn't send welcome message to {member.name}#{member.discriminator}...", "red"))
 
         #add role 'new here' to user
-        role = member.guild.get_role(791162885002100793)
+        role = member.guild.get_role(808852399962849300)
 
         try:
             await member.add_roles(role)

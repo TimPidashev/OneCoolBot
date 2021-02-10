@@ -16,10 +16,10 @@ class level(commands.Cog):
     async def on_ready(self):
         print(colored("[level]: cog level online...", "cyan"))
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if not message.author.bot:
-            await self.process_xp(message)
+    #@commands.Cog.listener()
+    #async def on_message(self, message):
+        #if not message.author.bot:
+            #await self.process_xp(message)
 
     async def process_xp(self, message):
         xp, lvl, xplock = db.record(
