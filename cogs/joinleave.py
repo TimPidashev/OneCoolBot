@@ -44,7 +44,7 @@ class joinleave(commands.Cog):
             print(colored(f"[joinleave]: couldn't send welcome message to {member.name}#{member.discriminator}...", "red"))
 
         #add role 'new here' to user
-        role = member.guild.get_role(808852399962849300)
+        role = member.guild.get_role(791162885002100793)
 
         try:
             await member.add_roles(role)
