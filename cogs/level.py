@@ -12,6 +12,34 @@ class level(commands.Cog):
     def __init__(self, client):
         self.bot = client
 
+    async def process_xp(self, message):
+        xp, lvl, xplock = db.record(
+            "SELECT XP, Level, XPLock FROM users WHERE UserID = ?", message.author.id
+        )
+
+        if datetime.utcnow() > datetime.fromisoformat(xplock):
+            await self.add_xp(message, xp, lvl)
+
+    async def add_xp(self, message, xp, lvl):
+        xp_to_add = random.randint(10, 20)
+
+        new_lvl = int(((xp + xp_to_add) // 42) ** 0.55)
+
+        db.execute(
+            "UPDATE users SET XP = XP + ?, Level = ?, XPLock = ? WHERE UserID = ?",
+            xp_to_add,
+            new_lvl,
+            (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
+            message.author.id,
+        )
+
+        if new_lvl > lvl:
+            #if level_up_messages == "('yes',)" or level_up_messages == "('Yes',)":
+            await message.channel.send(
+                f"{message.author.mention} leveled up to {new_lvl:,}!",
+                delete_after=10,
+            )
+
     @commands.Cog.listener()
     async def on_ready(self):
         print(colored("[level]: cog level online...", "cyan"))
@@ -26,34 +54,6 @@ class level(commands.Cog):
     # async def on_message(self, message):
     #     if not message.author.bot:
     #         await self.process_xp(message)
-
-    # async def process_xp(self, message):
-    #     xp, lvl, xplock = db.record(
-    #         "SELECT XP, Level, XPLock FROM users WHERE UserID = ?", message.author.id
-    #     )
-    #
-    #     if datetime.utcnow() > datetime.fromisoformat(xplock):
-    #         await self.add_xp(message, xp, lvl)
-    #
-    # async def add_xp(self, message, xp, lvl):
-    #     xp_to_add = random.randint(10, 20)
-    #
-    #     new_lvl = int(((xp + xp_to_add) // 42) ** 0.55)
-    #
-    #     db.execute(
-    #         "UPDATE users SET XP = XP + ?, Level = ?, XPLock = ? WHERE UserID = ?",
-    #         xp_to_add,
-    #         new_lvl,
-    #         (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
-    #         message.author.id,
-    #     )
-    #
-    #     if new_lvl > lvl:
-    #         if level_up_messages == "('yes',)" or level_up_messages == "('Yes',)":
-    #             await message.channel.send(
-    #                 f"{message.author.mention} leveled up to {new_lvl:,}!",
-    #                 delete_after=10,
-    #             )
 
     # @command(name="level", aliases=["rank", "lvl"], brief="Shows your level, and rank.")
     # async def display_level(self, ctx, target: Optional[Member]):
