@@ -35,6 +35,7 @@ class crypto(commands.Cog):
             D = (x['symbol'], x['quote']['USD']['price'])
             E = (x['symbol'], x['quote']['USD']['price'])
             await context.send(A)
+        await context.send("This command is still not prettified yet, but will be fixed...")
 
 def setup(client):
     client.add_cog(crypto(client))
