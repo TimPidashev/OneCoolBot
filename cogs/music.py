@@ -320,14 +320,14 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 await node.destroy()
 
         nodes = {
-            # 'LOCAL':{
-            #     'host': '127.0.0.1',
-            #     'port': 2333,
-            #     'rest_uri': 'http://127.0.0.1:2333',
-            #     'password': 'youshallnotpass',
-            #     'identifier': 'LOCAL',
-            #     'region': 'US West',
-            # },
+            'LOCAL':{
+                'host': '127.0.0.1',
+                'port': 2333,
+                'rest_uri': 'http://127.0.0.1:2333',
+                'password': 'youshallnotpass',
+                'identifier': 'LOCAL',
+                'region': 'US West',
+            },
             'MAIN':{
                 'host': 'tranquil-journey-74197.herokuapp.com',
                 'port': 80,

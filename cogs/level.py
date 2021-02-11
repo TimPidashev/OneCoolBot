@@ -24,10 +24,10 @@ class level(commands.Cog):
             db.execute("INSERT OR IGNORE INTO users (UserID) VALUES (?)", message.author.id)
             db.commit()
 
-    @commands.guild_only()
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        xp, lvl, xplock = db.record("SELECT XP, Level, XPLock FROM users WHERE UserID = ?", message.author.id)
+    # @commands.guild_only()
+    # @commands.Cog.listener()
+    # async def on_message(self, message):
+    #     xp, lvl, xplock = db.record("SELECT XP, Level, XPLock FROM users WHERE UserID = ?", message.author.id)
 
 
 
