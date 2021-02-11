@@ -320,27 +320,24 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 await node.destroy()
 
         nodes = {
-                'LOCAL':
-                        {'host': '127.0.0.1',
-                          'port': 2333,
-                          'rest_uri': 'http://127.0.0.1:2333',
-                          'password': 'youshallnotpass',
-                          'identifier': 'MAIN',
-                          'region': 'US West',
-                        },
-                {
-                'MAIN':
-                        {'host': '89.40.5.228',
-                          'port': 8082,
-                          'rest_uri': 'http://89.40.5.228:8082/',
-                          'password': 'youshallnotpass',
-                          'identifier': 'MAIN',
-                          'region': 'us_central',
-                          'heartbeat': 5
-                        }
-                }
-
-                }
+            # 'LOCAL':{
+            #     'host': '127.0.0.1',
+            #     'port': 2333,
+            #     'rest_uri': 'http://127.0.0.1:2333',
+            #     'password': 'youshallnotpass',
+            #     'identifier': 'LOCAL',
+            #     'region': 'US West',
+            # },
+            'MAIN':{
+                'host': 'tranquil-journey-74197.herokuapp.com',
+                'port': 80,
+                'rest_uri': 'http://tranquil-journey-74197.herokuapp.com',
+                'password': 'youshallnotpass',
+                'identifier': 'MAIN',
+                'region': 'US Central',
+                'heartbeat': 5
+            }
+        }
 
         for n in nodes.values():
             await self.bot.wavelink.initiate_node(**n)
