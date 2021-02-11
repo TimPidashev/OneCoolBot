@@ -327,8 +327,18 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                           'password': 'youshallnotpass',
                           'identifier': 'MAIN',
                           'region': 'US West',
+                        },
+                {
+                'MAIN':
+                        {'host': '89.40.5.228',
+                          'port': 8082,
+                          'rest_uri': 'http://89.40.5.228:8082/',
+                          'password': 'youshallnotpass',
+                          'identifier': 'MAIN',
+                          'region': 'us_central',
+                          'heartbeat': 5
                         }
-
+                }
 
                 }
 
