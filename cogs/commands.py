@@ -62,7 +62,7 @@ class commands(commands.Cog):
             await asyncio.sleep(1)
             embed = discord.Embed(title="Help", color=2105637)
             embed.add_field(name="Bot Related", value="info, help")
-            embed.add_field(name="AutoRole/Level/XP System(Coming Soon!)", value="rank, leaderboard", inline=False)
+            embed.add_field(name="AutoRole/Level/XP System", value="rank, leaderboard(doesn't work yet)", inline=False)
             embed.add_field(name="Economy(Coming Soon!)", value="bank, market, inventory", inline=False)
             embed.add_field(name="Mod Commands(requires moderator role)", value="kick, mute, ban, unban, clear", inline=False)
             embed.add_field(name="Music", value="connect, play, pause, resume, skip, stop, volume, shuffle, equalizer, queue, current, swap, music, spotify")

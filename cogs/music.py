@@ -327,16 +327,16 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 'password': 'youshallnotpass',
                 'identifier': 'LOCAL',
                 'region': 'US West',
-            },
-            'MAIN':{
-                'host': 'tranquil-journey-74197.herokuapp.com',
-                'port': 80,
-                'rest_uri': 'http://tranquil-journey-74197.herokuapp.com',
-                'password': 'youshallnotpass',
-                'identifier': 'MAIN',
-                'region': 'US Central',
-                'heartbeat': 5
             }
+            # 'MAIN':{
+            #     'host': 'tranquil-journey-74197.herokuapp.com',
+            #     'port': 80,
+            #     'rest_uri': 'http://tranquil-journey-74197.herokuapp.com',
+            #     'password': 'youshallnotpass',
+            #     'identifier': 'MAIN',
+            #     'region': 'US Central',
+            #     'heartbeat': 5
+            # }
         }
 
         for n in nodes.values():

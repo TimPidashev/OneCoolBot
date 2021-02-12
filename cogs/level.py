@@ -45,6 +45,16 @@ class level(commands.Cog):
                     if new_lvl > lvl:
                         await message.channel.send(f":partying_face: {message.author.mention} has leveled up to {new_lvl:,}!")
 
+                    # elif lvl == 5:
+                    #     role = message.author.guild.get_role(791161672957558834)
+                    #     await message.author.add_roles(role)
+                    #     print(colored("[level]: Added '{}' to {}".format(role.name, message.author.name) + "...", "cyan"))
+                    #
+                    # elif lvl == 10:
+                    #     yellow_belt = message.author.guild.get_role(791161670080004126)
+                    #     await message.author.add_roles(yellow_belt)
+                    #     #print(colored("[level]: Added '{}' to {}".format(role.name, member.name) + "...", "cyan"))
+
                 else:
                     pass
 
@@ -73,38 +83,6 @@ class level(commands.Cog):
                 #await asyncio.sleep(1)
             await context.channel.send("You are not in the database :(")
 
-    # @command(
-    #     name="levelmessages",
-    #     aliases=["slm", "lm", "setlevelmessages"],
-    #     brief="Set the server's level messages",
-    # )
-    # @has_permissions(manage_guild=True)
-    # async def set_level_messages(self, ctx, *, yes_or_no: Optional[str]):
-    #     """PLEASE, put 'yes' if you DO want level messages\n`Manage Server` permission required."""
-    #     levelmessages = db.records(
-    #         "SELECT LevelMessages FROM guilds WHERE GuildID = ?", ctx.guild.id
-    #     ) or (None)
-    #     prefix = db.records("SELECT Prefix FROM guilds WHERE GuildID = ?", ctx.guild.id)
-    #
-    #     if (
-    #         yes_or_no == "Yes"
-    #         or yes_or_no == "yes"
-    #         or yes_or_no == "no"
-    #         or yes_or_no == "No"
-    #     ):
-    #         db.execute(
-    #             "UPDATE guilds SET LevelMessages = ? WHERE GuildID = ?",
-    #             yes_or_no,
-    #             ctx.guild.id,
-    #         )
-    #         db.commit()
-    #         await ctx.reply(f"Level messages set to `{yes_or_no}`.")
-    #
-    #     else:
-    #         await ctx.reply(
-    #             f"The current setting for Level Messages is: `{levelmessages[0][0]}`\nTo change it, type `{prefix[0][0]}levelmessages (yes or no)`"
-    #         )
-    #
     # @command(
     #     name="leaderboard",
     #     aliases=["lb", "xplb"],
