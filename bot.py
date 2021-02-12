@@ -1,5 +1,6 @@
 #import stuff
 import discord
+import psutil
 import os
 import time
 import asyncio
@@ -9,18 +10,26 @@ import sqlite3
 from glob import glob
 from pyfiglet import Figlet
 from db import db
+from discord.utils import get
+from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from termcolor import colored, cprint
 from dotenv import load_dotenv
-from discord.ext import commands
+from discord.ext import commands, tasks
 intents = discord.Intents.default()
 intents.members = True
 load_dotenv()
 Token = os.getenv('BOT_TOKEN')
 
+#Uptime
+start_time = time.time()
+
 #prefix/remove default help command/shard bot
 client = commands.Bot(commands.when_mentioned_or("."), intents=intents)
 client.remove_command("help")
+
+#Processes
+client.process = psutil.Process(os.getpid())
 
 #ASCII art
 cool_logo = Figlet(font="graffiti")
@@ -60,8 +69,48 @@ for filename in os.listdir('./cogs'):
 @client.event
 async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
-    #db.execute("INSERT OR IGNORE INTO users (UserID) VALUES (?)", member.id, if not member.bot)
-    #db.commmit()
     print(colored("[main]: Bot is back up...", "magenta"))
+
+#info
+@client.command()
+async def info(context):
+    print(colored("[commands]: command(info) used...", "white"))
+    async with context.typing():
+        await asyncio.sleep(1)
+        before = time.monotonic()
+        before_ws = int(round(client.latency * 1000, 1))
+        ping = (time.monotonic() - before) * 1000
+        ramUsage = client.process.memory_full_info().rss / 1024**2
+        avgmembers = round(len(client.users) / len(client.guilds))
+        embedColour = discord.Embed.Empty
+        if hasattr(context, 'guild') and context.guild is not None:
+            embedColour = context.me.top_role.colour
+        current_time = time.time()
+        difference = int(round(current_time - start_time))
+        text = str(timedelta(seconds=difference))
+        embed = discord.Embed(colour=embedColour)
+        embed.set_thumbnail(url=context.bot.user.avatar_url)
+        embed.add_field(name="Developer", value="𝓣𝓲𝓶𝓶𝔂#6955")
+        embed.add_field(name="Users", value=f"{len(context.guild.members)}", inline=True)
+        embed.add_field(name="Ping", value=f"{before_ws}ms")
+        embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
+        embed.add_field(name="Uptime", value=text, inline=True)
+        embed.add_field(name="Version", value="Ver 0.0.9")
+        embed.set_footer(text="Most recent changes: Version 0.0.8 released!")
+        await context.message.channel.send(embed=embed)
+
+#help
+client.command()
+async def help(context):
+    print(colored("[commands]: command(help) used...", "white"))
+    async with context.typing():
+        await asyncio.sleep(1)
+        embed = discord.Embed(title="Help", color=2105637)
+        embed.add_field(name="Bot Related", value="info, help")
+        embed.add_field(name="AutoRole/Level/XP System", value="rank, leaderboard(doesn't work yet)", inline=False)
+        embed.add_field(name="Economy(Coming Soon!)", value="bank, market, inventory", inline=False)
+        embed.add_field(name="Mod Commands(requires moderator role)", value="kick, mute, ban, unban, clear", inline=False)
+        embed.add_field(name="Music", value="connect, play, pause, resume, skip, stop, volume, shuffle, equalizer, queue, current, swap, music, spotify")
+        await context.message.channel.send(embed=embed)
 
 client.run(Token, reconnect=True)
