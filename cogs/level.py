@@ -44,22 +44,53 @@ class level(commands.Cog):
 
                     if new_lvl > lvl:
                         await message.channel.send(f":partying_face: {message.author.mention} has leveled up to {new_lvl:,}!")
+                        if new_lvl == 5:
+                            white_belt = message.guild.get_role(791161672957558834)
+                            await message.author.add_roles(white_belt)
+                            print(colored(f"[level]: Added {white_belt.name} to {message.author.name}...", "cyan"))
+                            await message.author.send(f":partying_face: Hooray, you have gotten the {white_belt.name} role!")
 
-                    # elif lvl == 5:
-                    #     role = message.author.guild.get_role(791161672957558834)
-                    #     await message.author.add_roles(role)
-                    #     print(colored("[level]: Added '{}' to {}".format(role.name, message.author.name) + "...", "cyan"))
-                    #
-                    # elif lvl == 10:
-                    #     yellow_belt = message.author.guild.get_role(791161670080004126)
-                    #     await message.author.add_roles(yellow_belt)
-                    #     #print(colored("[level]: Added '{}' to {}".format(role.name, member.name) + "...", "cyan"))
+                        elif new_lvl == 10:
+                            yellow_belt = message.guild.get_role(791161670080004126)
+                            await message.author.add_roles(yellow_belt)
+                            print(colored(f"[level]: Added {yellow_belt.name} to {message.author.name}...", "cyan"))
+                            await message.author.send(f":partying_face: Hooray, you have gotten the {yellow_belt.name} role!")
+
+                        elif new_lvl == 20:
+                            orange_belt = message.guild.get_role(791161667148840970)
+                            await message.author.add_roles(orange_belt)
+                            print(colored(f"[level]: Added {orange_belt.name} to {message.author.name}...", "cyan"))
+                            await message.author.send(f":partying_face: Hooray, you have gotten the {orange_level.name} role!")
+
+                        elif new_lvl == 30:
+                            green_belt = message.guild.get_role(791161664296058890)
+                            await message.author.add_roles(green_belt)
+                            print(colored(f"[level]: Added {green_belt.name} to {green_belt.author.name}...", "cyan"))
+                            await message.author.send(f":partying_face: Hooray, you have gotten the {green_belt.name} role!")
+
+                        elif new_lvl == 40:
+                            blue_belt = message.guild.get_role(791161661293330432)
+                            await message.author.add_roles(blue_belt)
+                            print(colored(f"[level]: Added {blue_belt.name} to {blue_belt.author.name}...", "cyan"))
+                            await message.author.send(f":partying_face: Hooray, you have gotten the {blue_belt.name} role!")
+
+                        elif new_lvl == 50:
+                            purple_belt = message.guild.get_role(791161658406993940)
+                            await message.author.add_roles(purple_belt)
+                            print(colored(f"[level]: Added {purple_belt.name} to {purple_belt.author.name}...", "cyan"))
+                            await message.author.send(f":partying_face: Hooray, you have gotten the {purple_belt.name} role!")
+
+
+
+
+
+
 
                 else:
                     pass
 
             else:
-                print(colored(f"[level]: {message.author}#{message.author.discriminator} is not in the db...", "cyan"))
+                print(colored(f"[level]: {message.author}#{message.author.discriminator} was added to db...", "cyan"))
                 db.execute("INSERT OR IGNORE INTO users (UserID) VALUES (?)", message.author.id)
                 db.commit()
 
