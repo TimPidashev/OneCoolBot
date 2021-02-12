@@ -3,6 +3,11 @@ import time
 import sqlite3
 import asyncio
 import random
+import os
+from discord import Member, Embed
+from discord.ext.commands import Cog
+from typing import Optional
+from os.path import isfile
 from datetime import datetime, timedelta
 from termcolor import colored
 from discord.ext import commands
@@ -16,48 +21,58 @@ class level(commands.Cog):
     async def on_ready(self):
         print(colored("[level]: cog level online...", "cyan"))
 
-
-
     @commands.Cog.listener()
     async def on_message(self, message):
         if not message.author.bot:
-            db.execute("INSERT OR IGNORE INTO users (UserID) VALUES (?)", message.author.id)
-            db.commit()
+            db.connect("./data/database.db")
+            result = db.record("SELECT UserID FROM users WHERE UserID = (?)", message.author.id)
+            if result is not None:
+                xp, lvl, xplock = db.record("SELECT XP, Level, XPLock FROM users WHERE UserID = ?", message.author.id)
+                if datetime.utcnow() > datetime.fromisoformat(xplock):
 
-    # @commands.guild_only()
-    # @commands.Cog.listener()
-    # async def on_message(self, message):
-    #     xp, lvl, xplock = db.record("SELECT XP, Level, XPLock FROM users WHERE UserID = ?", message.author.id)
+                    xp_to_add = random.randint(10, 20)
+                    new_lvl = int(((xp + xp_to_add) // 42) ** 0.55)
 
+                    db.execute("UPDATE users SET XP = XP + ?, Level = ?, XPLock = ? WHERE UserID = ?",
+                        xp_to_add,
+                        new_lvl,
+                        (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
+                        message.author.id,
+                    )
+                    db.commit()
+                    print(colored(f"[level]: added {xp_to_add} xp to {message.author}...", "cyan"))
 
+                    if new_lvl > lvl:
+                        await message.channel.send(f":partying_face: {message.author.mention} has leveled up to {new_lvl:,}!")
 
-    # @command(name="level", aliases=["rank", "lvl"], brief="Shows your level, and rank.")
-    # async def display_level(self, ctx, target: Optional[Member]):
-    #     """Shows your Global+Server Doob level, rank and XP!"""
-    #     target = target or ctx.author
-    #
-    #     ids = db.column("SELECT UserID FROM users ORDER BY XP DESC")
-    #     # ids_g = db.column("SELECT UserID FROM users ORDER BY XP DESC WHERE GuildID = ?", ctx.guild.id)
-    #     xp, lvl = db.record(
-    #         "SELECT XP, Level FROM users WHERE UserID = ?", target.id
-    #     ) or (None, None)
-    #     xp_g, lvl_g = (
-    #         db.record(
-    #             "SELECT XP, Level FROM guildexp WHERE (UserID, GuildID) = (?, ?)",
-    #             target.id,
-    #             ctx.guild.id,
-    #         )
-    #         or (None, None)
-    #     )
-    #
-    #     if lvl is not None:
-    #         await ctx.reply(
-    #             f"`Global Rank:`\n{target.display_name} is level {lvl:,} with {xp:,} xp and is rank {ids.index(target.id)+1} of {len(ids):,} users globally.\n`Server Rank:`\n{target.display_name} is server level {lvl_g:,} with {xp_g:,} server xp."
-    #         )
-    #
-    #     else:
-    #         ctx.reply("That member is not in the XP Database.")
-    #
+                else:
+                    pass
+
+            else:
+                print(colored(f"[level]: {message.author}#{message.author.discriminator} is not in the db...", "cyan"))
+                db.execute("INSERT OR IGNORE INTO users (UserID) VALUES (?)", message.author.id)
+                db.commit()
+
+    @commands.guild_only()
+    @commands.command()
+    async def rank(self, context, target: Optional[Member]):
+        target = target or context.author
+        ids = db.column("SELECT UserID FROM users ORDER BY XP DESC")
+
+        xp, lvl = db.record(
+            "SELECT XP, Level FROM users WHERE UserID = ?", target.id
+        ) or (None, None)
+
+        if lvl is not None:
+            async with context.typing():
+                await asyncio.sleep(1)
+                await context.channel.send(f"`Global Rank:`\n{target.display_name} is level {lvl:,} with {xp:,} xp and is rank {ids.index(target.id)+1} of {len(ids):,} users globally.")
+
+        else:
+            #async with context.typing():
+                #await asyncio.sleep(1)
+            await context.channel.send("You are not in the database :(")
+
     # @command(
     #     name="levelmessages",
     #     aliases=["slm", "lm", "setlevelmessages"],
