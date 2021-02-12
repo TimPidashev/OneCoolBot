@@ -9,6 +9,7 @@ from discord.ext.commands import Cog
 from typing import Optional
 from os.path import isfile
 from datetime import datetime, timedelta
+from discord.ext.menus import MenuPages, ListPageSource
 from termcolor import colored
 from discord.ext import commands
 from db import db
@@ -80,11 +81,17 @@ class level(commands.Cog):
                             print(colored(f"[level]: Added {purple_belt.name} to {purple_belt.author.name}...", "cyan"))
                             await message.author.send(f":partying_face: Hooray, you have gotten the {purple_belt.name} role!")
 
+                        elif new_lvl == 75:
+                            black_belt = message.guild.get_role(791161652971962378)
+                            await message.author.add_roles(black_belt)
+                            print(colored(f"[level]: Added {black_belt.name} to {black_belt.author.name}...", "cyan"))
+                            await message.author.send(f":partying_face: Hooray, you have gotten the {black_belt.name} role!")
 
-
-
-
-
+                        elif new_lvl == 100:
+                            moderator = message.guild.get_role(791161649901207572)
+                            await message.author.add_roles(moderator)
+                            print(colored(f"[level]: Added {moderator.name} to {moderator.author.name}...", "cyan"))
+                            await message.author.send(f":partying_face: Hooray, you have gotten the {moderator.name} role!")
 
                 else:
                     pass
@@ -110,50 +117,15 @@ class level(commands.Cog):
                 await context.channel.send(f"`Global Rank:`\n{target.display_name} is level {lvl:,} with {xp:,} xp and is rank {ids.index(target.id)+1} of {len(ids):,} users globally.")
 
         else:
-            #async with context.typing():
-                #await asyncio.sleep(1)
-            await context.channel.send("You are not in the database :(")
+            async with context.typing():
+                await asyncio.sleep(1)
+                await context.channel.send("You are not in the database :(")
 
-    # @command(
-    #     name="leaderboard",
-    #     aliases=["lb", "xplb"],
-    #     brief="Show who's on top of the Doob GlobalXP Leaderboard!",
-    # )
-    # async def display_leaderboard(self, ctx):
-    #     """Displays the Global XP Leaderboard for Doob."""
-    #     records = db.records("SELECT UserID, XP, Level FROM users ORDER BY XP DESC")
-    #
-    #     menu = MenuPages(
-    #         source=Menu(ctx, records), clear_reactions_after=True, timeout=100.0
-    #     )
-    #     await menu.start(ctx)
-    #
-    # @command(
-    #     name="serverleaderboard",
-    #     aliases=["serverlb", "serverxplb", "svxp", "svxplb"],
-    #     brief="Show who's on top of the Doob ServerXP Leaderboard!",
-    # )
-    # async def display_serverxp_leaderboard(self, ctx):
-    #     """Displays the Server XP Leaderboard for Doob."""
-    #     records = db.records(
-    #         "SELECT UserID, XP, Level FROM guildexp WHERE GuildID = ? ORDER BY XP DESC",
-    #         ctx.guild.id,
-    #     )
-    #
-    #     menu = MenuPages(
-    #         source=ServerMenu(ctx, records), clear_reactions_after=True, timeout=100.0
-    #     )
-    #     await menu.start(ctx)
-    #
-    # @Cog.listener()
-    # async def on_ready(self):
-    #     if not self.bot.ready:
-    #         self.bot.cogs_ready.ready_up("exp")
-    #
-    # @Cog.listener()
-    # async def on_message(self, message):
-    #     if not message.author.bot:
-    #         await self.process_xp(message)
+    @commands.guild_only()
+    @commands.command()
+    async def leaderboard(self, context):
+        records = db.records("SELECT UserID, XP, Level FROM users ORDER BY XP DESC")
+        await context.channel.send("Leaderboard coming Soon!")
 
 def setup(client):
     client.add_cog(level(client))
