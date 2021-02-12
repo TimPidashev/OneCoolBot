@@ -46,6 +46,8 @@ class level(commands.Cog):
                     if new_lvl > lvl:
                         await message.channel.send(f":partying_face: {message.author.mention} has leveled up to {new_lvl:,}!")
                         if new_lvl == 5:
+                            new_here = message.guild.get_role(791162885002100793)
+                            await message.author.remove_role(new_here)
                             white_belt = message.guild.get_role(791161672957558834)
                             await message.author.add_roles(white_belt)
                             print(colored(f"[level]: Added {white_belt.name} to {message.author.name}...", "cyan"))

@@ -95,22 +95,8 @@ async def info(context):
         embed.add_field(name="Ping", value=f"{before_ws}ms")
         embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
         embed.add_field(name="Uptime", value=text, inline=True)
-        embed.add_field(name="Version", value="Ver 0.0.9")
-        embed.set_footer(text="Most recent changes: Version 0.0.8 released!")
-        await context.message.channel.send(embed=embed)
-
-#help
-client.command()
-async def help(context):
-    print(colored("[commands]: command(help) used...", "white"))
-    async with context.typing():
-        await asyncio.sleep(1)
-        embed = discord.Embed(title="Help", color=2105637)
-        embed.add_field(name="Bot Related", value="info, help")
-        embed.add_field(name="AutoRole/Level/XP System", value="rank, leaderboard(doesn't work yet)", inline=False)
-        embed.add_field(name="Economy(Coming Soon!)", value="bank, market, inventory", inline=False)
-        embed.add_field(name="Mod Commands(requires moderator role)", value="kick, mute, ban, unban, clear", inline=False)
-        embed.add_field(name="Music", value="connect, play, pause, resume, skip, stop, volume, shuffle, equalizer, queue, current, swap, music, spotify")
+        embed.add_field(name="Version", value="Ver 1.0")
+        embed.set_footer(text="Most recent changes: XP/Level/Auto-role works!")
         await context.message.channel.send(embed=embed)
 
 client.run(Token, reconnect=True)

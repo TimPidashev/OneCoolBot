@@ -15,6 +15,20 @@ class joinleave(commands.Cog):
     async def on_ready(self):
         print(colored("[joinleave]: cog joinleave online...", "green"))
 
+    #help command
+    @commands.command()
+    async def help(self, context):
+        print(colored("[joinleave]: command(help) used...", "green"))
+        async with context.typing():
+            await asyncio.sleep(1)
+            embed = discord.Embed(title="Help", color=2105637)
+            embed.add_field(name="Bot Related", value="`info, help`")
+            embed.add_field(name="AutoRole/Level/XP System", value="`rank, leaderboard(coming soon...)`", inline=False)
+            embed.add_field(name="Economy", value="`Coming Soon!`", inline=False)
+            embed.add_field(name="Moderator", value="`kick, mute, ban, unban, clear`", inline=False)
+            embed.add_field(name="Music", value="`connect, play, pause, resume, skip, stop, volume, shuffle, equalizer, queue, current, swap, music, spotify`")
+            await context.message.channel.send(embed=embed)
+
     #on_member_join
     @commands.Cog.listener()
     async def on_member_join(self, member):
