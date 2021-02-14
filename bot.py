@@ -74,7 +74,7 @@ async def on_ready():
 #info
 @client.command()
 async def info(context):
-    print(colored("[commands]: command(info) used...", "white"))
+    print(colored("[main]: command(info) used...", "magenta"))
     async with context.typing():
         await asyncio.sleep(1)
         before = time.monotonic()
