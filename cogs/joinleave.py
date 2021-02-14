@@ -13,7 +13,7 @@ class joinleave(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[joinleave]: cog joinleave online...", "green"))
+        print(colored("[joinleave]: joinleave online...", "green"))
 
     #help command
     @commands.command()

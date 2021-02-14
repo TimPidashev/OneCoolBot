@@ -12,7 +12,7 @@ class moderation(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[moderation]: cog moderation online...", "yellow"))
+        print(colored("[moderation]: moderation online...", "yellow"))
 
     #clear
     @commands.command()

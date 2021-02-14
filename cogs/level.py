@@ -20,7 +20,7 @@ class level(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[level]: cog level online...", "cyan"))
+        print(colored("[level]: level online...", "cyan"))
 
     @commands.Cog.listener()
     async def on_message(self, message):
