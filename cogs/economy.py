@@ -31,10 +31,17 @@ class economy(commands.Cog):
 
         coins = db.record("SELECT Coins FROM users WHERE UserID = ?", target.id)
 
-
         async with context.typing():
             await asyncio.sleep(1)
             await context.channel.send(f"`Wallet`\n{target.display_name} has :coin: {coins[0]} coins and is rank {ids.index(target.id)+1} of {len(ids):} users globally.")
+
+    @commands.command()
+    async def market(self, context):
+        print(f"[economy]: user {context.author} accessed the global market...", "blue")
+
+        async with context.typing():
+            await asyncio.sleep(1)
+            await context.channel.send(f"`Market`\nIn development!")
 
 def setup(client):
     client.add_cog(economy(client))
