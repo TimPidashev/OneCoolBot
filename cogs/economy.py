@@ -37,7 +37,7 @@ class economy(commands.Cog):
 
     @commands.command()
     async def market(self, context):
-        print(f"[economy]: user {context.author} accessed the global market...", "blue")
+        print(f"[economy]: user {context.author} accessed the global market...", "blue"))
 
         async with context.typing():
             await asyncio.sleep(1)
