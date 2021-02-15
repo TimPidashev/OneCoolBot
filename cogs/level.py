@@ -265,7 +265,6 @@ class level(commands.Cog):
                 db.execute("INSERT OR IGNORE INTO users (UserID) VALUES (?)", message.author.id)
                 db.commit()
 
-    @commands.guild_only()
     @commands.command()
     async def rank(self, context, target: Optional[Member]):
         target = target or context.author
@@ -278,14 +277,13 @@ class level(commands.Cog):
         if lvl is not None:
             async with context.typing():
                 await asyncio.sleep(1)
-                await context.channel.send(f"`Global Rank:`\n{target.display_name} is level {lvl:,} with {xp:,} xp and is rank {ids.index(target.id)+1} of {len(ids):,} users globally.")
+                await context.channel.send(f"`Global Rank`\n{target.display_name} is level {lvl:,} with {xp:,} xp and is rank {ids.index(target.id)+1} of {len(ids):,} users globally.")
 
         else:
             async with context.typing():
                 await asyncio.sleep(1)
                 await context.channel.send("You are not in the database :(")
 
-    @commands.guild_only()
     @commands.command()
     async def leaderboard(self, context):
         records = db.records("SELECT UserID, XP, Level FROM users ORDER BY XP DESC")

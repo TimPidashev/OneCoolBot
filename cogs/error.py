@@ -38,11 +38,6 @@ class errorhandler(commands.Cog):
             print(colored("[error]: User was missing permissions, ignoring...", "red"))
             return
 
-        #no_private_messages
-        if isinstance(error, commands.NoPrivateMessage):
-            print(colored("[error]: User tried sending a command dms, ignoring..."))
-            return
-
         else:
             pass
 
