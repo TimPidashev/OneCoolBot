@@ -43,5 +43,19 @@ class economy(commands.Cog):
             await asyncio.sleep(1)
             await context.channel.send(f"`Market`\nIn development!")
 
+    @commands.command()
+    async def give(self, context):
+        print(colored("[economy]: Command give was used..", "blue"))
+        async with context.typing():
+            await asyncio.sleep(1)
+            await context.channel.send("This command is still in development, go bug 𝓣𝓲𝓶𝓶𝔂 to update!")
+
+    @commands.command()
+    async def me(self, context):
+        print(colored("[economy]: Command me was used..", "blue"))
+        async with context.typing():
+            await asyncio.sleep(1)
+            await context.channel.send("This command is still in development, go bug 𝓣𝓲𝓶𝓶𝔂 to update!")
+
 def setup(client):
     client.add_cog(economy(client))
