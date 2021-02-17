@@ -8,7 +8,7 @@ from termcolor import colored
 
 class errorhandler(commands.Cog):
     def __init__(self, client):
-        self.bot = client
+        self.client = client
 
     @commands.Cog.listener()
     async def on_ready(self):

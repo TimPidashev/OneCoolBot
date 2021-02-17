@@ -15,7 +15,7 @@ from discord.ext.menus import MenuPages, ListPageSource
 
 class economy(commands.Cog):
     def __init__(self, client):
-        self.bot = client
+        self.client = client
 
     @commands.Cog.listener()
     async def on_ready(self):

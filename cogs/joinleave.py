@@ -4,11 +4,12 @@ import json
 from db import db
 from datetime import datetime
 from discord.ext import commands
+from discord.utils import get
 from termcolor import colored
 
 class joinleave(commands.Cog):
     def __init__(self, client):
-        self.bot = client
+        self.client = client
 
     #on_ready
     @commands.Cog.listener()
@@ -18,7 +19,7 @@ class joinleave(commands.Cog):
     #help command
     @commands.command()
     async def help(self, context):
-        print(colored("[joinleave]: command(help) used...", "green"))
+        print(colored("[main]: command(help) used...", "magenta"))
         async with context.typing():
             await asyncio.sleep(1)
             embed = discord.Embed(title="Help", color=2105637)

@@ -10,7 +10,7 @@ profanity.load_censor_words_from_file("./data/profanity.txt")
 
 class moderation(commands.Cog):
     def __init__(self, client):
-        self.bot = client
+        self.client = client
 
     #on_ready
     @commands.Cog.listener()
