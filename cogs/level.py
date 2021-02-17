@@ -43,7 +43,7 @@ class Menu(ListPageSource):
         offset = (menu.current_page * self.per_page) + 1
         fields = []
         table = "\n ".join(
-            f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** (:large_orange_diamond:: {entry[1]} :trophy:: {entry[2]} :coin:: {entry[3]})"
+            f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** (XP: {entry[1]})"
             for idx, entry in enumerate(entries)
         )
 
@@ -82,7 +82,7 @@ class level(commands.Cog):
                     print(colored(f"[level]: Added {xp_to_add} xp to {message.author}...", "cyan"))
 
                     if new_lvl > lvl:
-                        await message.channel.send(f":partying_face: {message.author.mention} has leveled up to {new_lvl:,}!")
+                        await message.channel.send(f":partying_face: {message.author.mention} has leveled up to Level {new_lvl:,}!")
                         print(colored(f"[level]: {message.author} has leveled up to {new_lvl:,}...", "cyan"))
 
                         coins = db.record("SELECT Coins FROM users WHERE UserID = ?", message.author.id)
@@ -325,7 +325,7 @@ class level(commands.Cog):
     async def leaderboard(self, context):
         async with context.typing():
             await asyncio.sleep(1)
-            records = db.records("SELECT UserID, XP, Level, Coins FROM users ORDER BY XP DESC")
+            records = db.records("SELECT UserID, XP FROM users ORDER BY XP DESC")
             menu = MenuPages(source=Menu(context, records), clear_reactions_after=True, timeout=100.0)
             await menu.start(context)
 
