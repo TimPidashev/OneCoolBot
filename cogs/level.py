@@ -42,8 +42,8 @@ class Menu(ListPageSource):
     async def format_page(self, menu, entries):
         offset = (menu.current_page * self.per_page) + 1
         fields = []
-        table = "\n ".join(
-            f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** (XP: {entry[1]})"
+        table = "\n".join(
+            f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** XP: {entry[1]}\n"
             for idx, entry in enumerate(entries)
         )
 
@@ -314,7 +314,7 @@ class level(commands.Cog):
         if lvl is not None:
             async with context.typing():
                 await asyncio.sleep(1)
-                await context.channel.send(f"`Global Rank`\n{target.display_name} is level {lvl:,} with {xp:,} xp and is rank {ids.index(target.id)+1} of {len(ids):,} users globally.")
+                await context.channel.send(f"`Global Rank`\n**{target.display_name}** is level **{lvl:,}** with **{xp:,}** xp and is rank **{ids.index(target.id)+1}** of {len(ids):,} users globally.")
 
         else:
             async with context.typing():
