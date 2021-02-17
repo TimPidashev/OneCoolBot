@@ -2,10 +2,12 @@ import discord
 import asyncio
 import json
 from db import db
+from os.path import isfile
 from datetime import datetime
 from discord.ext import commands
 from discord.utils import get
 from termcolor import colored
+import sqlite3
 
 class misc(commands.Cog):
     def __init__(self, client):
@@ -82,6 +84,6 @@ class misc(commands.Cog):
 
         except:
             print(colored(f"[misc]: Internal error occurred when removing {member.id}#{member.discriminator} from users db...", "red"))
-
+            
 def setup(client):
     client.add_cog(misc(client))

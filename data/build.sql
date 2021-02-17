@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS starboard(
   UserID integer PRIMARY KEY,
   Stars integer default 0
 )
+
 --
 -- CREATE TABLE IF NOT EXISTS invites(
 -- 	UserID integer PRIMARY KEY,
