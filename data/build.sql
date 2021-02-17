@@ -3,11 +3,16 @@ CREATE TABLE IF NOT EXISTS users(
     XP integer DEFAULT 0,
     Level integer DEFAULT 0,
     Coins integer default 0,
+    Stars integer default 0,
     XPLock text DEFAULT CURRENT_TIMESTAMP
-)
+);
 
---CREATE TABLE IF NOT EXISTS votes(
-	--UserID integer PRIMARY KEY,
-	--HAVEVOTED text DEFAULT "no",
-	--VoteLock text DEFAULT CURRENT_TIMESTAMP
---)
+CREATE TABLE IF NOT EXISTS starboard(
+  UserID integer PRIMARY KEY,
+  Stars integer default 0
+)
+--
+-- CREATE TABLE IF NOT EXISTS invites(
+-- 	UserID integer PRIMARY KEY,
+-- 	Invites integer DEFAULT 0
+-- )

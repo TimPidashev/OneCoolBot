@@ -7,14 +7,14 @@ from discord.ext import commands
 from discord.utils import get
 from termcolor import colored
 
-class joinleave(commands.Cog):
+class misc(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[joinleave]: online...", "green"))
+        print(colored("[misc]: online...", "green"))
 
     #help command
     @commands.command()
@@ -33,16 +33,16 @@ class joinleave(commands.Cog):
     #on_member_join
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        print(colored(f"[joinleave]: {member.name}#{member.discriminator} joined at {member.joined_at}" + "...", "green"))
+        print(colored(f"[misc]: {member.name}#{member.discriminator} joined at {member.joined_at}" + "...", "green"))
 
         #adding user to database
         try:
             db.execute("INSERT INTO users (UserID) VALUES (?)", member.id)
-            print(colored(f"[joinleave]: {member.name}#{member.discriminator} (member/user) have been added into the users DB...", "green"))
+            print(colored(f"[misc]: {member.name}#{member.discriminator} (member/user) have been added into the users DB...", "green"))
             db.commit()
 
         except:
-            print(colored(f"[joinleave]: Internal error occurred when adding {member.name}#{member.discriminator} to users db...", "red"))
+            print(colored(f"[misc]: Internal error occurred when adding {member.name}#{member.discriminator} to users db...", "red"))
 
         #dm welcome message to new member
         userJoinPrivateEmbed = discord.Embed(
@@ -53,37 +53,35 @@ class joinleave(commands.Cog):
 
         try:
             await member.send(embed=userJoinPrivateEmbed)
-            print(colored(f"[joinleave]: successfully sent welcome message to {member.name}#{member.discriminator}...", "green"))
+            print(colored(f"[misc]: successfully sent welcome message to {member.name}#{member.discriminator}...", "green"))
 
         except:
-            print(colored(f"[joinleave]: couldn't send welcome message to {member.name}#{member.discriminator}...", "red"))
+            print(colored(f"[misc]: couldn't send welcome message to {member.name}#{member.discriminator}...", "red"))
 
         #add role 'new here' to user
         role = member.guild.get_role(791162885002100793)
 
         try:
             await member.add_roles(role)
-            print(colored("[joinleave]: Added '{}' to {}".format(role.name, member.name) + "...", "green"))
+            print(colored("[misc]: Added '{}' to {}".format(role.name, member.name) + "...", "green"))
 
         except:
-            print(colored("[joinleave]: Couldn't add role '{}' to {}".format(role.name, member.name) + "...", "red"))
+            print(colored("[misc]: Couldn't add role '{}' to {}".format(role.name, member.name) + "...", "red"))
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        print(colored(f"[joinleave]: {member.name}#{member.discriminator} left at " + current_time + "...", "green"))
+        print(colored(f"[misc]: {member.name}#{member.discriminator} left at " + current_time + "...", "green"))
 
         #deleting user from databases
         try:
             db.execute("DELETE FROM users WHERE (UserID = ?)", member.id)
             db.commit()
-            print(colored(f"[joinleave]: Successfully removed {member.name}#{member.discriminator} from users db...", "green"))
+            print(colored(f"[misc]: Successfully removed {member.name}#{member.discriminator} from users db...", "green"))
 
         except:
-            print(colored(f"[joinleave]: Internal error occurred when removing {member.id}#{member.discriminator} from users db...", "red"))
-
-
+            print(colored(f"[misc]: Internal error occurred when removing {member.id}#{member.discriminator} from users db...", "red"))
 
 def setup(client):
-    client.add_cog(joinleave(client))
+    client.add_cog(misc(client))

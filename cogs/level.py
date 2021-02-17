@@ -43,7 +43,7 @@ class Menu(ListPageSource):
         offset = (menu.current_page * self.per_page) + 1
         fields = []
         table = "\n".join(
-            f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** XP: {entry[1]}\n"
+            f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** ~ `{entry[1]}`"
             for idx, entry in enumerate(entries)
         )
 
@@ -70,19 +70,21 @@ class level(commands.Cog):
 
                     xp_to_add = random.randint(10, 20)
                     new_lvl = int(((xp + xp_to_add) // 42) ** 0.55)
-
-                    db.execute("UPDATE users SET XP = XP + ?, Level = ?, XPLock = ? WHERE UserID = ?",
+                    coins_on_xp = random.randint(1, 10)
+                    db.execute("UPDATE users SET XP = XP + ?, Level = ?, Coins = Coins + ?, XPLock = ? WHERE UserID = ?",
                         xp_to_add,
                         new_lvl,
+                        coins_on_xp,
                         (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
                         message.author.id,
                     )
 
                     db.commit()
                     print(colored(f"[level]: Added {xp_to_add} xp to {message.author}...", "cyan"))
+                    print(colored(f"[economy]: Added {coins_on_xp} coins to {message.author}...", "blue"))
 
                     if new_lvl > lvl:
-                        await message.channel.send(f":partying_face: {message.author.mention} has leveled up to Level {new_lvl:,}!")
+                        await message.channel.send(f":partying_face: {message.author.mention} is now level **{new_lvl:,}**!")
                         print(colored(f"[level]: {message.author} has leveled up to {new_lvl:,}...", "cyan"))
 
                         coins = db.record("SELECT Coins FROM users WHERE UserID = ?", message.author.id)
@@ -304,6 +306,7 @@ class level(commands.Cog):
 
     @commands.command()
     async def rank(self, context, target: Optional[Member]):
+        print(colored(f"[level]: {context.author} accessed rank...", "cyan"))
         target = target or context.author
         ids = db.column("SELECT UserID FROM users ORDER BY XP DESC")
 
@@ -323,6 +326,7 @@ class level(commands.Cog):
 
     @commands.command()
     async def leaderboard(self, context):
+        print(colored(f"[level]: {context.author} accessed leaderboard...", "cyan"))
         async with context.typing():
             await asyncio.sleep(1)
             records = db.records("SELECT UserID, XP FROM users ORDER BY XP DESC")
