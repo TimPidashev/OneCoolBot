@@ -287,7 +287,9 @@ class level(commands.Cog):
     @commands.command()
     async def leaderboard(self, context):
         records = db.records("SELECT UserID, XP, Level FROM users ORDER BY XP DESC")
-        await context.channel.send("Leaderboard coming Soon!")
+        async with context.typing():
+            asyncio.sleep(1)
+            await context.channel.send("Leaderboard coming Soon!")
 
 def setup(client):
     client.add_cog(level(client))

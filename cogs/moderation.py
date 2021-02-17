@@ -1,9 +1,12 @@
 import discord
 import asyncio
 import re
+from better_profanity import profanity
 from discord.ext import commands, tasks
 from discord.utils import get
 from termcolor import colored
+
+profanity.load_censor_words_from_file("./data/profanity.txt")
 
 class moderation(commands.Cog):
     def __init__(self, client):
@@ -89,12 +92,22 @@ class moderation(commands.Cog):
     #automoderation section below
     @commands.Cog.listener()
     async def on_message(self, message):
-        urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',message.content.lower())
-        if urls is not None and message.content.startswith('https://discord.gg' or 'http://discord.gg'):
-            await message.channel.purge(limit=1)
-            await message.channel.send("Links are not allowed!")
-            print(colored(f"[automoderation]: {message.author} tried to advertise link {message.content} but was stopped...", "yellow"))
-            return
+        if not message.author.bot:
+            urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',message.content.lower())
+            if urls is not None and message.content.startswith('https://discord.gg' or 'http://discord.gg'):
+                await message.delete()
+                await message.channel.send("Links are not allowed!")
+                print(colored(f"[moderation]: {message.author} tried to advertise link {message.content} but was stopped...", "yellow"))
+                return
+
+            elif profanity.contains_profanity(message.content):
+                await message.delete()
+                await message.channel.send("Profanity in this server is not allowed!")
+                print(colored(f"[moderation]: {message.author}'s message({message.content}) contained profanity and was deleted...", "yellow"))
+
+        else:
+            pass
+
 
 def setup(client):
     client.add_cog(moderation(client))
