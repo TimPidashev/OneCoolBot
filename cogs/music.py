@@ -1,67 +1,67 @@
-# import asyncio
-# import async_timeout
-# import copy
-# import datetime
-# import discord
-# import math
-# import random
-# import re
-# import typing
-# import wavelink
-# import aiohttp
-# import humanize
-# from typing import Union
-# from pythonping import ping
-# from termcolor import colored
-# from discord.ext import commands, menus, tasks
-# from discord import Spotify
-#
-# # URL matching REGEX...
-# URL_REG = re.compile(r'https?://(?:www\.)?.+')
-#
-#
-# class NoChannelProvided(commands.CommandError):
-#     """Error raised when no suitable voice channel was supplied."""
-#     pass
-#
-# class IncorrectChannelError(commands.CommandError):
-#     """Error raised when commands are issued outside of the players session channel."""
-#     pass
-#
-# class Track(wavelink.Track):
-#     """Wavelink Track object with a requester attribute."""
-#
-#
-#
-#     __slots__ = ('requester', )
-#
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args)
-#
-#         self.requester = kwargs.get('requester')
-#
-#
-# class Player(wavelink.Player):
-#     """Custom wavelink Player class."""
-#
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#
-#         self.context: commands.Context = kwargs.get('context', None)
-#         if self.context:
-#             self.dj: discord.Member = self.context.author
-#
-#         self.queue = asyncio.Queue()
-#         self.controller = None
-#
-#         self.waiting = False
-#         self.updating = False
-#
-#         self.pause_votes = set()
-#         self.resume_votes = set()
-#         self.skip_votes = set()
-#         self.shuffle_votes = set()
-#         self.stop_votes = set()
+import asyncio
+import async_timeout
+import copy
+import datetime
+import discord
+import math
+import random
+import re
+import typing
+import wavelink
+import aiohttp
+import humanize
+from typing import Union
+from pythonping import ping
+from termcolor import colored
+from discord.ext import commands, menus, tasks
+from discord import Spotify
+
+# URL matching REGEX...
+URL_REG = re.compile(r'https?://(?:www\.)?.+')
+
+
+class NoChannelProvided(commands.CommandError):
+    """Error raised when no suitable voice channel was supplied."""
+    pass
+
+class IncorrectChannelError(commands.CommandError):
+    """Error raised when commands are issued outside of the players session channel."""
+    pass
+
+class Track(wavelink.Track):
+    """Wavelink Track object with a requester attribute."""
+
+
+
+    __slots__ = ('requester', )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args)
+
+        self.requester = kwargs.get('requester')
+
+
+class Player(wavelink.Player):
+    """Custom wavelink Player class."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.context: commands.Context = kwargs.get('context', None)
+        if self.context:
+            self.dj: discord.Member = self.context.author
+
+        self.queue = asyncio.Queue()
+        self.controller = None
+
+        self.waiting = False
+        self.updating = False
+
+        self.pause_votes = set()
+        self.resume_votes = set()
+        self.skip_votes = set()
+        self.shuffle_votes = set()
+        self.stop_votes = set()
 #
 #     async def do_next(self) -> None:
 #         if self.is_playing or self.waiting:
@@ -793,5 +793,5 @@
 #               f'Server Uptime: `{datetime.timedelta(milliseconds=node.stats.uptime)}`'
 #         await ctx.send(fmt)
 #
-# def setup(bot: commands.Bot):
-#     bot.add_cog(Music(bot))
+def setup(bot: commands.Bot):
+    bot.add_cog(Music(bot))
