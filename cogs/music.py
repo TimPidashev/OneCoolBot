@@ -794,4 +794,4 @@ class Player(wavelink.Player):
 #         await ctx.send(fmt)
 #
 def setup(bot: commands.Bot):
-    bot.add_cog(Music(bot))
+    bot.add_cog(Player(bot))
