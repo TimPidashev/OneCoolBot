@@ -300,9 +300,10 @@ class level(commands.Cog):
                     pass
 
             else:
-                print(colored(f"[level]: {message.author}#{message.author.discriminator} was added to db...", "cyan"))
                 db.execute("INSERT OR IGNORE INTO users (UserID) VALUES (?)", message.author.id)
                 db.commit()
+                print(colored(f"[level]: {message.author}#{message.author.discriminator} was added to lebel db...", "cyan"))
+
 
     @commands.command()
     async def rank(self, context, target: Optional[Member]):
