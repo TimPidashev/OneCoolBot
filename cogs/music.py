@@ -320,14 +320,15 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 await node.destroy()
 
         nodes = {
-            'MAIN':{
-                'host': 'localhost',
-                'port': 8082,
-                'rest_uri': 'http://localhost:8082',
-                'password': 'youshallnotpass',
-                'identifier': 'MAIN',
-                'region': 'US Central',
-                'heartbeat': 5
+            'MAIN':
+                    {'host': 'localhost',
+                    'port': 8082,
+                    'rest_uri': 'http://localhost:8082',
+                    'password': 'youshallnotpass',
+                    'identifier': 'MAIN',
+                    'region': 'US Central',
+                    'heartbeat': 5
+                    }
             }
 
         for n in nodes.values():
