@@ -329,18 +329,6 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 'region': 'US Central',
                 'heartbeat': 5
             }
-<<<<<<< HEAD
-=======
-            'MAIN':{
-                'host': 'localhost',
-                'port': 8082,
-                'rest_uri': 'http://localhost:8082',
-                'password': 'youshallnotpass',
-                'identifier': 'MAIN',
-                'region': 'US Central',
-                'heartbeat': 5
-            }
->>>>>>> fb2432f2b017fd386163fe353c631255a84de913
 
         for n in nodes.values():
             await self.bot.wavelink.initiate_node(**n)
