@@ -24,57 +24,173 @@
 2021-02-22 14:20:30,772:DEBUG:discord.client: Dispatching event socket_response
 2021-02-22 14:20:30,773:DEBUG:discord.client: Dispatching event socket_raw_send
 2021-02-22 14:20:30,876:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:20:30,877:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'GUILD_MEMBERS_CHUNK', 's': 3, 'op': 0, 'd': {'nonce': '465d66f017f976119e121d96bc0e078e', 'members': [{'user': {'username': 'SulkingCrow', 'id': '325701029960351755', 'discriminator': '5329', 'avatar': 'e8a5aecaaa70d86e8ca152909c1dfed6'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T02:59:08.573000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'HeyItsClay', 'public_flags': 256, 'id': '478651264524222475', 'discriminator': '2112', 'avatar': 'ab036a9546f17b3a54d3a243b45aabea'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T01:37:56.685000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'TimmyTest', 'id': '520761049872596992', 'discriminator': '4492', 'avatar': None}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-08T22:20:38.795000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'one shot man195', 'id': '568206796020252683', 'discriminator': '3631', 'avatar': '500e786171e837bbfeff0b161ac2983a'}, 'roles': ['791161672957558834', '791161649901207572', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T00:07:28.109000+00:00', 'is_pending': False, 'hoisted_role': '791161649901207572', 'deaf': False}, {'user': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': '6955', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089'}, 'roles': ['811274015032737857', '791161672957558834', '791163340323815435', '791161670080004126'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-12-23T04:27:47.027000+00:00', 'is_pending': False, 'hoisted_role': '791163340323815435', 'deaf': False}, {'user': {'username': 'pedro.ap', 'id': '615942420303183872', 'discriminator': '9498', 'avatar': '381936dd720b75cfc20e686db63df6bc'}, 'roles': ['811274015032737857', '809919866513129502', '791162885002100793'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T14:07:52.259216+00:00', 'is_pending': False, 'hoisted_role': '811274015032737857', 'deaf': False}, {'user': {'username': 'SAV_BEN', 'id': '665837741342326786', 'discriminator': '9576', 'avatar': '830909cd48c934ceeb3d1931b2f49d8f'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T01:45:26.217000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'Cosemus™', 'public_flags': 128, 'id': '693092890599227482', 'discriminator': '9849', 'avatar': 'a7611420fcbd60112746bbd45c5f564a'}, 'roles': ['811274015032737857', '791162885002100793'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-16T16:32:38.119533+00:00', 'is_pending': False, 'hoisted_role': '811274015032737857', 'deaf': False}, {'user': {'username': 'STALKER MEDVED', 'id': '711813438111875093', 'discriminator': '8755', 'avatar': 'db69d41706055f20988d56d9c1bb5a28'}, 'roles': ['791162885002100793', '791161649901207572', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-10T23:12:44.526000+00:00', 'is_pending': False, 'hoisted_role': '791161649901207572', 'deaf': False}, {'user': {'username': '꧁༺ֆȶǟʟӄɛʀ_ʄռǟȶɨƈ༻꧂', 'id': '722310620111831082', 'discriminator': '7287', 'avatar': '900747d7aa70649a19e56d3a06bf13b7'}, 'roles': ['791162885002100793', '791161649901207572', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-01-25T21:39:48.285000+00:00', 'is_pending': False, 'hoisted_role': '791161649901207572', 'deaf': False}, {'user': {'username': 'TimmyTime', 'public_flags': 128, 'id': '734301865579380819', 'discriminator': '0310', 'avatar': 'f0ec3d3c1a26585d3208cd5d74ab1be2'}, 'roles': ['811274015032737857', '813499728451993701', '791161649901207572', '791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-22T22:13:10.148281+00:00', 'is_pending': False, 'hoisted_role': '811274015032737857', 'deaf': False}, {'user': {'username': 'T1m', 'id': '758530638344355842', 'discriminator': '9886', 'avatar': 'b21187a3111f1cbd8f5f25fa7f913e21'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T01:24:43.906000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'Wovenhimi', 'id': '763859270726844477', 'discriminator': '3246', 'avatar': '27921d09feede7d69626f6e5dd125d56'}, 'roles': ['791162885002100793', '813499728451993701'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-22T20:07:13.958740+00:00', 'is_pending': False, 'hoisted_role': '813499728451993701', 'deaf': False}, {'user': {'username': 'ABEL_', 'id': '782203096658870272', 'discriminator': '2760', 'avatar': '2c3f393d2eee2ccf4ce06580746bb89e'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T00:10:00.986000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'Indian Emperor Raman Bihari III', 'id': '790486122693394433', 'discriminator': '8008', 'avatar': '14a659a7aeee38d9bb3e839eec130ebe'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T01:22:49.412000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'OneCoolBot', 'id': '790701838164557854', 'discriminator': '3564', 'bot': True, 'avatar': '2bf8a2bc5e4ff339f82845f07ca8042f'}, 'roles': ['802230449744117761', '791161643417468940', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-01-22T17:37:23.973000+00:00', 'is_pending': False, 'hoisted_role': '791161643417468940', 'deaf': False}, {'user': {'username': 'Avealix For XTRA', 'id': '800125253472616458', 'discriminator': '9903', 'avatar': '423aaf6f2ff62d93c558f5f1191a1ef3'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T01:23:15.497000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'max1234', 'id': '800251679991267348', 'discriminator': '7464', 'avatar': 'bbbc62c8c093d32b8e137b241e30b106'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T02:37:33.656000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}], 'guild_id': '791160100567384094', 'chunk_index': 0, 'chunk_count': 1}}
+2021-02-22 14:20:30,877:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'GUILD_MEMBERS_CHUNK', 's': 3, 'op': 0, 'd': {'nonce': '465d66f017f976119e121d96bc0e078e', 'members': [{'user': {'username': 'SulkingCrow', 'id': '325701029960351755', 'discriminator': '5329', 'avatar': 'e8a5aecaaa70d86e8ca152909c1dfed6'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T02:59:08.573000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'HeyItsClay', 'public_flags': 256, 'id': '478651264524222475', 'discriminator': '2112', 'avatar': 'ab036a9546f17b3a54d3a243b45aabea'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T01:37:56.685000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'TimmyTest', 'id': '520761049872596992', 'discriminator': '4492', 'avatar': None}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-08T22:20:38.795000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'one shot man195', 'id': '568206796020252683', 'discriminator': '3631', 'avatar': '500e786171e837bbfeff0b161ac2983a'}, 'roles': ['791161672957558834', '791161649901207572', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T00:07:28.109000+00:00', 'is_pending': False, 'hoisted_role': '791161649901207572', 'deaf': False}, {'user': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': '6955', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089'}, 'roles': ['811274015032737857', '791161672957558834', '791163340323815435', '791161670080004126'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-12-23T04:27:47.027000+00:00', 'is_pending': False, 'hoisted_role': '791163340323815435', 'deaf': False}, {'user': {'username': 'pedro.ap', 'id': '615942420303183872', 'discriminator': '9498', 'avatar': '381936dd720b75cfc20e686db63df6bc'}, 'roles': ['811274015032737857', '809919866513129502', '791162885002100793'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T14:07:52.259216+00:00', 'is_pending': False, 'hoisted_role': '811274015032737857', 'deaf': False}, {'user': {'username': 'SAV_BEN', 'id': '665837741342326786', 'discriminator': '9576', 'avatar': '830909cd48c934ceeb3d1931b2f49d8f'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T01:45:26.217000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'Cosemus™', 'public_flags': 128, 'id': '693092890599227482', 'discriminator': '9849', 'avatar': 'a7611420fcbd60112746bbd45c5f564a'}, 'roles': ['811274015032737857', '791162885002100793'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-16T16:32:38.119533+00:00', 'is_pending': False, 'hoisted_role': '811274015032737857', 'deaf': False}, {'user': {'username': 'STALKER MEDVED', 'id': '711813438111875093', 'discriminator': '8755', 'avatar': 'db69d41706055f20988d56d9c1bb5a28'}, 'roles': ['791162885002100793', '791161649901207572', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-10T23:12:44.526000+00:00', 'is_pending': False, 'hoisted_role': '791161649901207572', 'deaf': False}, {'user': {'username': '꧁༺ֆȶǟʟӄɛʀ_ʄռǟȶɨƈ༻꧂', 'id': '722310620111831082', 'discriminator': '7287', 'avatar': '900747d7aa70649a19e56d3a06bf13b7'}, 'roles': ['791162885002100793', '791161649901207572', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-01-25T21:39:48.285000+00:00', 'is_pending': False, 'hoisted_role': '791161649901207572', 'deaf': False}, {'user': {'username': 'TimmyTime', 'public_flags': 128, 'id': '734301865579380819', 'discriminator': '0310', 'avatar': 'f0ec3d3c1a26585d3208cd5d74ab1be2'}, 'roles': ['811274015032737857', '813499728451993701', '791161649901207572', '791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-22T22:13:10.148281+00:00', 'is_pending': False, 'hoisted_role': '811274015032737857', 'deaf': False}, {'user': {'username': 'T1m', 'id': '758530638344355842', 'discriminator': '9886', 'avatar': 'b21187a3111f1cbd8f5f25fa7f913e21'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T01:24:43.906000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'Wovenhimi', 'id': '763859270726844477', 'discriminator': '3246', 'avatar': '27921d09feede7d69626f6e5dd125d56'}, 'roles': ['791162885002100793', '813499728451993701'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-22T20:07:13.958740+00:00', 'is_pending': False, 'hoisted_role': '813499728451993701', 'deaf': False}, {'user': {'username': 'ABEL_', 'id': '782203096658870272', 'discriminator': '2760', 'avatar': '2c3f393d2eee2ccf4ce06580746bb89e'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T00:10:00.986000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'Indian Emperor Raman Bihari III', 'id': '790486122693394433', 'discriminator': '8008', 'avatar': '14a659a7aeee38d9bb3e839eec130ebe'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T01:22:49.412000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, {'user': {'username': 'OneCoolBot', 'id': '790701838164557854', 'discriminator': '3564', 'bot': True, 'avatar': '2bf8a2bc5e4ff339f82845f07ca8042f'}, 'roles': ['802230449744117761', '791161643417468940', '809919866513129502']2021-02-22 15:13:45,251:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,328:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,328:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,328:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,061:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,062:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,405:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,405:INFO:discord.client: Closing the event loop.
+ '7464', 'avatar': 'bbbc62c8c093d32b8e137b241e30b106'}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-12T02:37:33.656000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}], 'guild_id': '791160100567384094', 'chunk_index': 0, 'chunk_count': 1}}
 2021-02-22 14:20:30,897:DEBUG:discord.client: Dispatching event socket_response
 2021-02-22 14:20:30,897:DEBUG:discord.state: Processed a chunk for 18 members in guild ID 791160100567384094.
-2021-02-22 14:20:32,775:DEBUG:discord.client: Dispatching event guild_available
-2021-02-22 14:20:32,775:DEBUG:discord.client: Dispatching event ready
-2021-02-22 14:20:32,776:DEBUG:discord.gateway: Sending "{"op":3,"d":{"game":{"flags":0,"type":2,"name":".help"},"afk":false,"since":0.0,"status":"online"}}" to change status
-2021-02-22 14:20:32,777:DEBUG:discord.client: Dispatching event socket_raw_send
-2021-02-22 14:20:37,395:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:20:37,396:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 4, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-02-22T22:20:37.176000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '813535748513857536', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['811274015032737857', '791161672957558834', '791163340323815435', '791161670080004126'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-12-23T04:27:47.027000+00:00', 'is_pending': False, 'hoisted_role': '791163340323815435', 'deaf': False}, 'id': '813535748375838730', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'fads', 'channel_id': '810324738743205898', 'author': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': '6955', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089'}, 'attachments': [], 'guild_id': '791160100567384094'}}
-2021-02-22 14:20:37,396:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:20:37,396:DEBUG:discord.client: Dispatching event message
-2021-02-22 14:20:40,233:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:20:40,233:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_REACTION_ADD', 's': 5, 'op': 0, 'd': {'user_id': '598625004279693460', 'message_id': '813535748375838730', 'member': {'user': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': '6955', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089'}, 'roles': ['811274015032737857', '791161672957558834', '791163340323815435', '791161670080004126'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-12-23T04:27:47.027000+00:00', 'is_pending': False, 'hoisted_role': '791163340323815435', 'deaf': False}, 'emoji': {'name': '⭐', 'id': None}, 'channel_id': '810324738743205898', 'guild_id': '791160100567384094'}}
-2021-02-22 14:20:40,234:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:20:40,234:DEBUG:discord.client: Dispatching event raw_reaction_add
-2021-02-22 14:20:40,234:DEBUG:discord.client: Dispatching event reaction_add
-2021-02-22 14:20:40,495:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 with None has returned 200
-2021-02-22 14:20:40,495:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 has received {'id': '813535748375838730', 'type': 0, 'content': 'fads', 'channel_id': '810324738743205898', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:37.176000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 1, 'me': False}]}
-2021-02-22 14:20:40,619:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 with None has returned 200
-2021-02-22 14:20:40,631:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 has received {'id': '813535748375838730', 'type': 0, 'content': 'fads', 'channel_id': '810324738743205898', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:37.176000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 1, 'me': False}]}
-2021-02-22 14:20:40,782:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 with None has returned 200
-2021-02-22 14:20:40,782:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 has received {'id': '813535748375838730', 'type': 0, 'content': 'fads', 'channel_id': '810324738743205898', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:37.176000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 1, 'me': False}]}
-2021-02-22 14:20:45,469:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:20:45,469:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 6, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-02-22T22:20:45.255000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '813535781334286336', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-08T22:20:38.795000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, 'id': '813535782261882910', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'fdas', 'channel_id': '810324712180940821', 'author': {'username': 'TimmyTest', 'public_flags': 0, 'id': '520761049872596992', 'discriminator': '4492', 'avatar': None}, 'attachments': [], 'guild_id': '791160100567384094'}}
+22021-02-22 15:13:42,025:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,311:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,316:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02021-02-22 15:13:45,321:DEBUG:discord.client: Dispatching event disco2021-02-22 15:13:57,059:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,066:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02021-02-22 15:13:57,440:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,440:INFO:discord.client: Closing the event loop.
+request to RESUME the websocket.
+2021-02-22 15:13:45,314:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,060:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,067:INFO:discord.client: Cleaning up after 4 tasks.
+2021-02-22 15:13:57,418:ERROR:discord.gateway: An error occurred while stopping the gateway. Ignoring.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/discord/gateway.py", line 140, in run
+    f.result()
+  File "/usr/lib/python3.8/concurrent/futures/_base.py", line 437, in result
+    raise CancelledError()
+concurrent.futures._base.CancelledError
+2021-02-22 15:14:00,627:INFO:discord.client: All tasks finished2021-02-22 15:14:21,676:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:14:21,899:INFO:discord.client: Cleaning up after 4 tasks.
+2021-02-22 15:14:35,383:ERROR:discord.gateway: An error occurred while stopping the gateway. Ignoring.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/discord/gateway.py", line 140, in run
+    f.result()
+  File "/usr/lib/python3.8/concurrent/futures/_base.py", line 437, in result
+    raise CancelledError()
+concurrent.futures._base.CancelledError
+2021-02-22 15:14:35,703:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:14:36,196:INFO:discord.client: Closing the event loop.
+2-22 15:13:57,064:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,442:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,442:INFO:discord.client: Closing the event loop.
+cord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,325:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,067:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,072:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,424:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,424:INFO:discord.client: Closing the event loop.
+tching event raw_reaction_add
+2021-2021-02-22 15:13:42,024:WARNING:discord.gateway: Shard ID None has stopped2021-02-22 15:13:45,250:WARNING:discord.gateway: Sha2021-02-22 15:13:45,305:INFO:discord.gateway: Timed out receiving packet. 2021-02-22 15:13:45,321:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,322:INFO:discord.client: Got a request to RESUME the websocket.
+22021-02-22 15:13:57,060:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,064:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,436:INFO:discord.client: All tasks finished cancelling2021-02-22 15:13:57,419:ERROR:discord.gateway: An error occurred while stopping the gateway. Ignoring.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/discord/gateway.py", line 140, in run
+    f.result()
+  File "/usr/lib/python3.8/concurrent/futures/_base.py", line 437, in result
+    raise CancelledError()
+concurrent.futures._base.CancelledError
+2021-02-22 15:14:00,631:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:14:03,661:INFO:discord.client: Closing the event loop.
+nt loop.
+loop.
+e event loop.
+2 15:13:57,069:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,074:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,421:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,422:INFO:discord.client: Closing the event loop.
+nt: All tasks finished cancelling.
+2021-02-22 15:13:57,407:INFO:discord.client: Closing the event loop.
+22 15:13:57,066:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,431:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,432:INFO:discord.client: Closing the event loop.
+lient: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,431:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,431:INFO:discord.cli2021-02-22 15:13:53,389:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:57,610:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:58,493:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:59,492:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:14:10,403:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:14:10,626:INFO:discord.client: Cleaning up after 4 tasks.
+2021-02-22 15:14:15,222:ERROR:discord.gateway: An error occurred while stopping the gateway. Ignoring.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/discord/gateway.py", line 140, in run
+    f.result()
+  File "/usr/lib/python3.8/concurrent/futures/_base.py", line 437, in result
+    raise CancelledError()
+concurrent.futures._base.CancelledError
+2021-02-22 15:14:16,374:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:14:16,827:INFO:discord.client: Closing the event loop.
+nt: Cleaning up after 3 tasks.
+2021-02-22 15:14:15,291:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:14:15,358:INFO:discord.client: Closing the event loop.
+aning up tasks.
+2021-02-22 15:13:57,071:INFO:discord.client:2021-02-22 15:13:57,067:INFO2021-02-22 15:13:57,402:INFO:discord.client:2021-02-22 15:13:57,432:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,432:INFO:discord.client: Closing the event loop.
+eds': [], 'edited_timestamp': None, 'content': 'fdas', 'channel_id': '810324712180940821', 'author': {'username': 'TimmyTest', 'public_flags': 0, 'id': '520761049872596992', 'discriminator': '4492', 'avatar': None}, 'attachments': [], 'guild_id': '791160100567384094'}}
 2021-02-22 14:20:45,469:DEBUG:discord.client: Dispatching event socket_response
 2021-02-22 14:20:45,470:DEBUG:discord.client: Dispatching event message
 2021-02-22 14:20:52,736:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:20:52,736:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_REACTION_ADD', 's': 7, 'op': 0, 'd': {'user_id': '520761049872596992', 'message_id': '813535748375838730', 'member': {'user': {'username': 'TimmyTest', 'id': '520761049872596992', 'discriminator': '4492', 'avatar': None}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-08T22:20:38.795000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, 'emoji': {'name': '⭐', 'id': None}, 'channel_id': '810324738743205898', 'guild_id': '791160100567384094'}}
-2021-02-22 14:20:52,736:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:20:52,736:DEBUG:discord.client: Dispatching event raw_reaction_add
-2021-02-22 14:20:52,737:DEBUG:discord.client: Dispatching event reaction_add
-2021-02-22 14:20:53,085:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 with None has returned 200
-2021-02-22 14:20:53,098:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 has received {'id': '813535748375838730', 'type': 0, 'content': 'fads', 'channel_id': '810324738743205898', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:37.176000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 2, 'me': False}]}
+2021-02-22 14:20:52,736:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_REACTION_ADD', 's': 7, 'op': 0, 'd': {'user_id': '520761049872596992', 'message_id': '813535748375838730', 'member': {'user': {'username': 'TimmyTest', 'id': '520761049872596992', 'discriminator': '4492', 'avatar': None}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2022021-02-22 15:13:42,028:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,304:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,309:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,311:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,069:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,072:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,420:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,421:INFO:discord.client: Closing the event loop.
+2:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:50,957:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:51,183:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:59,324:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:59,325:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:14:05,951:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:14:05,951:INFO:discord.client: Closing the event loop.
+.176000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 2, 'me': False}]}
 2021-02-22 14:20:53,237:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 with None has returned 200
-2021-02-22 14:20:53,246:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 has received {'id': '813535748375838730', 'type': 0, 'content': 'fads', 'channel_id': '810324738743205898', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:37.176000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 2, 'me': False}]}
-2021-02-22 14:20:53,504:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 with None has returned 200
-2021-02-22 14:20:53,519:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 has received {'id': '813535748375838730', 'type': 0, 'content': 'fads', 'channel_id': '810324738743205898', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:37.176000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 2, 'me': False}]}
-2021-02-22 14:20:59,010:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:20:59,010:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 8, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-02-22T22:20:58.808000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '813535839261818880', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['811274015032737857', '791161672957558834', '791163340323815435', '791161670080004126'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-12-23T04:27:47.027000+00:00', 'is_pending': False, 'hoisted_role': '791163340323815435', 'deaf': False}, 'id': '813535839107809310', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'fads', 'channel_id': '810324756137115688', 'author': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': '6955', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089'}, 'attachments': [], 'guild_id': '791160100567384094'}}
+2021-02-22 14:20:53,246:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 has received {'id': '813535748375838730',2021-02-22 15:13:42,028:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,304:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,306:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,306:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,060:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,065:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,427:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,427:INFO:discord.client: Closing the event loop.
+h None has returned 200
+2021-02-22 14:20:53,519:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324738743205898/messages/813535748375838730 has received {'id': '813535748375838730', 'type': 0, 'content': 'fads', 'channel_id': '810324738743205898', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [2021-02-22 15:13:42,026:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,306:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,316:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,317:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,061:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,065:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,411:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,411:INFO:discord.client: Closing the event loop.
+ne': False, 'member': {'roles': ['811274015032737857', '791161672957558834', '791163340323815435', '791161670080004126'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-12-23T04:27:47.027000+00:00', 'is_pending': False, 'hoisted_role': '791163340323815435', 'deaf': False}, 'id': '813535839107809310', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'fads', 'channel_id': '810324756137115688', 'author': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': '6955', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089'}, 'attachments': [], 'guild_id': '791160100567384094'}}
 2021-02-22 14:20:59,010:DEBUG:discord.client: Dispatching event socket_response
 2021-02-22 14:20:59,010:DEBUG:discord.client: Dispatching event message
 2021-02-22 14:21:01,902:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:21:01,903:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_REACTION_ADD', 's': 9, 'op': 0, 'd': {'user_id': '598625004279693460', 'message_id': '813535839107809310', 'member': {'user': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': '6955', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089'}, 'roles': ['811274015032737857', '791161672957558834', '791163340323815435', '791161670080004126'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-12-23T04:27:47.027000+00:00', 'is_pending': False, 'hoisted_role': '791163340323815435', 'deaf': False}, 'emoji': {'name': '⭐', 'id': None}, 'channel_id': '810324756137115688', 'guild_id': '791160100567384094'}}
-2021-02-22 14:21:01,903:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:21:01,903:DEBUG:discord.client: Dispatching event raw_reaction_add
-2021-02-22 14:21:01,903:DEBUG:discord.client: Dispatching event reaction_add
+2021-02-22 14:21:01,903:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_REACTION_ADD', 's': 9, 'op': 0, 'd': {'user_id': '598625004279693460', 'message_id': '813535839107809310', 'member': {'user': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': 2021-02-22 15:13:42,028:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,305:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,310:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,314:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,071:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,078:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,418:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,421:INFO:discord.client: Closing the event loop.
+Dispatching event reaction_add
 2021-02-22 14:21:02,054:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 with None has returned 200
-2021-02-22 14:21:02,064:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 has received {'id': '813535839107809310', 'type': 0, 'content': 'fads', 'channel_id': '810324756137115688', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:58.808000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 1, 'me': False}]}
-2021-02-22 14:21:02,271:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 with None has returned 200
-2021-02-22 14:21:02,284:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 has received {'id': '813535839107809310', 'type': 0, 'content': 'fads', 'channel_id': '810324756137115688', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:58.808000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 1, 'me': False}]}
-2021-02-22 14:21:02,572:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 with None has returned 200
+2021-02-22 14:21:02,064:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 has received {'id': '813535839107809310', 'type': 0, 'content': 'fads', 'channel_id': '8103247562021-02-22 15:13:42,031:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,303:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,310:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,314:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,061:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,065:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,394:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,395:INFO:discord.client: Closing the event loop.
+iscord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages2021-02-22 15:13:42,030:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,302:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,309:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,310:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,059:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,064:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,410:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,410:INFO:discord.client: Closing the event loop.
+7/channels/810324756137115688/messages/813535839107809310 with None has returned 200
 2021-02-22 14:21:02,584:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 has received {'id': '813535839107809310', 'type': 0, 'content': 'fads', 'channel_id': '810324756137115688', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:58.808000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 1, 'me': False}]}
 2021-02-22 14:21:09,457:DEBUG:discord.client: Dispatching event socket_raw_receive
 2021-02-22 14:21:09,457:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_REACTION_ADD', 's': 10, 'op': 0, 'd': {'user_id': '520761049872596992', 'message_id': '813535839107809310', 'member': {'user': {'username': 'TimmyTest', 'id': '520761049872596992', 'discriminator': '4492', 'avatar': None}, 'roles': ['791162885002100793', '809919866513129502'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-08T22:20:38.795000+00:00', 'is_pending': False, 'hoisted_role': '809919866513129502', 'deaf': False}, 'emoji': {'name': '⭐', 'id': None}, 'channel_id': '810324756137115688', 'guild_id': '791160100567384094'}}
@@ -84,9 +200,22 @@
 2021-02-22 14:21:09,646:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 with None has returned 200
 2021-02-22 14:21:09,661:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 has received {'id': '813535839107809310', 'type': 0, 'content': 'fads', 'channel_id': '810324756137115688', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:58.808000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 2, 'me': False}]}
 2021-02-22 14:21:09,835:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 with None has returned 200
-2021-02-22 14:21:09,848:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 has received {'id': '813535839107809310', 'type': 0, 'content': 'fads', 'channel_id': '810324756137115688', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:58.808000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 2, 'me': False}]}
-2021-02-22 14:21:10,075:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 with None has returned 200
-2021-02-22 14:21:10,090:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 has received {'id': '813535839107809310', 'type': 0, 'content': 'fads', 'channel_id': '810324756137115688', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:58.808000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 2, 'me': False}]}
+2021-02-22 14:21:09,848:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages/813535839107809310 has received {'id': '813535839107809310', 'type': 0, 'content': 'fads', 'channel_id': '810324756137115688', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attach2021-02-22 15:13:42,025:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,326:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,326:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,327:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,060:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,066:INFO:discord.client: Cleaning up after 4 tasks.
+2021-02-22 15:13:57,417:ERROR:discord.gateway: An error occurred while stopping the gateway. Ignoring.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/discord/gateway.py", line 140, in run
+    f.result()
+  File "/usr/lib/python3.8/concurrent/futures/_base.py", line 437, in result
+    raise CancelledError()
+concurrent.futures._base.CancelledError
+2021-02-22 15:14:00,607:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:14:03,664:INFO:discord.client: Closing the event loop.
+p': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 2, 'me': False}]}
 2021-02-22 14:21:11,776:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 10.
 2021-02-22 14:21:11,896:DEBUG:discord.client: Dispatching event socket_raw_receive
 2021-02-22 14:21:11,897:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
@@ -99,16 +228,26 @@
 2021-02-22 14:21:17,652:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages with None has returned 200
 2021-02-22 14:21:17,666:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324756137115688/messages has received [{'id': '813535915456200705', 'type': 0, 'content': '.clear', 'channel_id': '810324756137115688', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:21:17.011000+00:00', 'edited_timestamp': None, 'flags': 0}, {'id': '813535839107809310', 'type': 0, 'content': 'fads', 'channel_id': '810324756137115688', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:58.808000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 2, 'me': False}]}]
 2021-02-22 14:21:17,818:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:21:17,819:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_DELETE_BULK', 's': 12, 'op': 0, 'd': {'ids': ['813535915456200705', '813535839107809310'], 'channel_id': '810324756137115688', 'guild_id': '791160100567384094'}}
-2021-02-22 14:21:17,819:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:21:17,819:DEBUG:discord.client: Dispatching event raw_bulk_message_delete
-2021-02-22 14:21:17,819:DEBUG:discord.client: Dispatching event bulk_message_delete
-2021-02-22 14:21:17,830:DEBUG:discord.http: POST https://discord.com/api/v7/channels/810324756137115688/messages/bulk_delete with {"messages":[813535915456200705,813535839107809310]} has returned 204
-2021-02-22 14:21:17,831:DEBUG:discord.http: A rate limit bucket has been exhausted (bucket: 810324756137115688:None:/channels/{channel_id}/messages/bulk_delete, retry: 3.0).
-2021-02-22 14:21:17,831:DEBUG:discord.http: POST https://discord.com/api/v7/channels/810324756137115688/messages/bulk_delete has received 
-2021-02-22 14:21:17,831:DEBUG:discord.client: Dispatching event command_completion
-2021-02-22 14:21:19,708:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:21:19,709:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 13, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-02-22T22:21:19.508000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '813535926075523072', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['811274015032737857', '791161672957558834', '791163340323815435', '791161670080004126'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-12-23T04:27:47.027000+00:00', 'is_pending': False, 'hoisted_role': '791163340323815435', 'deaf': False}, 'id': '813535925929377813', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': '.clear', 'channel_id': '810324738743205898', 'author': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': '6955', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089'}, 'attachments': [], 'guild_id': '791160100567384094'}}
+2021-02-22 14:21:17,819:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_DELETE_BULK', 's': 12, 'op': 0, 'd': {'ids': ['813535915456200705', '813535839107809310'], 'channel_id': '810324756137115688', 'guil2021-02-22 15:13:42,030:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,302:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,305:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,310:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,059:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,067:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,428:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,429:INFO:discord.client: Closing the event loop.
+:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,067:INFO:discord.client: Cleaning up after 4 tasks.
+2021-02-22 15:13:57,438:ERROR:discord.gateway: An error occurred while stopping the gateway. Ignoring.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/discord/gateway.py", line 140, in run
+    f.result()
+  File "/usr/lib/python3.8/concurrent/futures/_base.py", line 437, in result
+    raise CancelledError()
+concurrent.futures._base.CancelledError
+2021-02-22 15:14:00,593:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:14:03,665:INFO:discord.client: Closing the event loop.
+False, 'member': {'roles': ['811274015032737857', '791161672957558834', '791163340323815435', '791161670080004126'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-12-23T04:27:47.027000+00:00', 'is_pending': False, 'hoisted_role': '791163340323815435', 'deaf': False}, 'id': '813535925929377813', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': '.clear', 'channel_id': '810324738743205898', 'author': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': '6955', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089'}, 'attachments': [], 'guild_id': '791160100567384094'}}
 2021-02-22 14:21:19,709:DEBUG:discord.client: Dispatching event socket_response
 2021-02-22 14:21:19,709:DEBUG:discord.client: Dispatching event message
 2021-02-22 14:21:19,710:DEBUG:discord.client: Dispatching event command
@@ -119,12 +258,15 @@
 2021-02-22 14:21:20,052:DEBUG:discord.http: POST https://discord.com/api/v7/channels/810324738743205898/messages/bulk_delete has received 
 2021-02-22 14:21:20,052:DEBUG:discord.client: Dispatching event command_completion
 2021-02-22 14:21:20,052:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:21:20,053:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_DELETE_BULK', 's': 14, 'op': 0, 'd': {'ids': ['813535925929377813', '813535748375838730', '813535095050469427'], 'channel_id': '810324738743205898', 'guild_id': '791160100567384094'}}
-2021-02-22 14:21:20,053:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:21:20,053:DEBUG:discord.client: Dispatching event raw_bulk_message_delete
-2021-02-22 14:21:20,053:DEBUG:discord.client: Dispatching event bulk_message_delete
-2021-02-22 14:21:22,031:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:21:22,031:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 15, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-02-22T22:21:21.807000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '813535935718227968', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['811274015032737857', '791161672957558834', '791163340323815435', '791161670080004126'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-12-23T04:27:47.027000+00:00', 'is_pending': False, 'hoisted_role': '791163340323815435', 'deaf': False}, 'id': '813535935572082689', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': '.claer', 'channel_id': '810324712180940821', 'author': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': '6955', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089'}, 'attachments': [], 'guild_id': '791160100567384094'}}
+2021-02-22 14:21:20,053:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_DELETE_BULK', 's': 14, 'op': 0, 'd': {'ids': ['813535925929377813', '813535748375838730', '8135352021-02-22 15:13:42,028:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:55,525:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:55,542:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:55,542:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:14:00,485:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:14:00,486:INFO:discord.client: Cleaning up after 5 tasks.
+2021-02-22 15:14:00,623:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:14:00,632:INFO:discord.client: Closing the event loop.
+ False, 'nonce': '813535935718227968', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['811274015032737857', '791161672957558834', '791163340323815435', '791161670080004126'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2020-12-23T04:27:47.027000+00:00', 'is_pending': False, 'hoisted_role': '791163340323815435', 'deaf': False}, 'id': '813535935572082689', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': '.claer', 'channel_id': '810324712180940821', 'author': {'username': '𝓣𝓲𝓶𝓶𝔂', 'public_flags': 128, 'id': '598625004279693460', 'discriminator': '6955', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089'}, 'attachments': [], 'guild_id': '791160100567384094'}}
 2021-02-22 14:21:22,032:DEBUG:discord.client: Dispatching event socket_response
 2021-02-22 14:21:22,032:DEBUG:discord.client: Dispatching event message
 2021-02-22 14:21:22,032:DEBUG:discord.client: Dispatching event command_error
@@ -134,10 +276,15 @@
 2021-02-22 14:21:23,490:DEBUG:discord.client: Dispatching event message
 2021-02-22 14:21:23,490:DEBUG:discord.client: Dispatching event command
 2021-02-22 14:21:23,953:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324712180940821/messages with None has returned 200
-2021-02-22 14:21:23,953:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324712180940821/messages has received [{'id': '813535941700354088', 'type': 0, 'content': '.clear', 'channel_id': '810324712180940821', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:21:23.268000+00:00', 'edited_timestamp': None, 'flags': 0}, {'id': '813535935572082689', 'type': 0, 'content': '.claer', 'channel_id': '810324712180940821', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:21:21.807000+00:00', 'edited_timestamp': None, 'flags': 0}, {'id': '813535782261882910', 'type': 0, 'content': 'fdas', 'channel_id': '810324712180940821', 'author': {'id': '520761049872596992', 'username': 'TimmyTest', 'avatar': None, 'discriminator': '4492', 'public_flags': 0}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:45.255000+00:00', 'edited_timestamp': None, 'flags': 0}, {'id': '813535000648613940', 'type': 0, 'content': 'FADS', 'channel_id': '810324712180940821', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:17:38.904000+00:00', 'edited_timestamp': None, 'flags': 0, 'reactions': [{'emoji': {'id': None, 'name': '⭐'}, 'count': 2, 'me': False}]}]
-2021-02-22 14:21:24,099:DEBUG:discord.http: POST https://discord.com/api/v7/channels/810324712180940821/messages/bulk_delete with {"messages":[813535941700354088,813535935572082689,813535782261882910,813535000648613940]} has returned 204
-2021-02-22 14:21:24,100:DEBUG:discord.http: A rate limit bucket has been exhausted (bucket: 810324712180940821:None:/channels/{channel_id}/messages/bulk_delete, retry: 3.0).
-2021-02-22 14:21:24,100:DEBUG:discord.http: POST https://discord.com/api/v7/channels/810324712180940821/messages/bulk_delete has received 
+2021-02-22 14:21:23,953:DEBUG:discord.http: GET https://discord.com/api/v7/channels/810324712180940821/messages has received [{'id': '813535941700354088', 'type': 0, 'content': '.clear', 'channel_id': '810324712180940821', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:21:23.268000+00:00', 'edited_timestamp': None, 'flags': 0}, {'id': '813535935572082689', 'type': 0, 'content': '.claer', 'channel_id': '810324712180940821', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:21:21.807000+00:00', 'edited_timestamp': None, 'flags': 0}, {'id': '813535782261882910', 'type': 0, 'content': 'fdas', 'channel_id': '810324712180940821', 'author': {'id': '520761049872596992', 'username': 'TimmyTest', 'avatar': None, 'discriminator': '4492', 'public_flags': 0}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_roles': [], 'pinned': False, 'mention_everyone': False, 'tts': False, 'timestamp': '2021-02-22T22:20:45.255000+00:00', 'edited_timestamp': None, 'flags': 0}, {'id': '813535000648613940', 'type': 0, 'content': 'FADS', 'channel_id': '810324712180940821', 'author': {'id': '598625004279693460', 'username': '𝓣𝓲𝓶𝓶𝔂', 'avatar': 'd7c0fe297591f8edea4578ba8b6d9089', 'discriminator': '6955', 'public_flags': 128}, 'attachments': [], 'embeds': [], 'mentions': [], 'mention_2021-02-22 15:13:42,027:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,303:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,306:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,306:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,060:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,064:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,408:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,409:INFO:discord.client: Closing the event loop.
+21:24,100:DEBUG:discord.http: POST https://discord.com/api/v7/channels/810324712180940821/messages/bulk_delete has received 
 2021-02-22 14:21:24,100:DEBUG:discord.client: Dispatching event command_completion
 2021-02-22 14:21:24,118:DEBUG:discord.client: Dispatching event socket_raw_receive
 2021-02-22 14:21:24,118:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_DELETE_BULK', 's': 17, 'op': 0, 'd': {'ids': ['813535941700354088', '813535935572082689', '813535782261882910', '813535000648613940'], 'channel_id': '810324712180940821', 'guild_id': '791160100567384094'}}
@@ -145,9 +292,15 @@
 2021-02-22 14:21:24,119:DEBUG:discord.client: Dispatching event raw_bulk_message_delete
 2021-02-22 14:21:24,119:DEBUG:discord.client: Dispatching event bulk_message_delete
 2021-02-22 14:21:44,457:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:21:44,457:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'TYPING_START', 's': 18, 'op': 0, 'd': {'user_id': '693092890599227482', 'timestamp': 1614032504, 'member': {'user': {'username': 'Cosemus™', 'public_flags': 128, 'id': '693092890599227482', 'discriminator': '9849', 'avatar': 'a7611420fcbd60112746bbd45c5f564a'}, 'roles': ['811274015032737857', '791162885002100793'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-16T16:32:38.119533+00:00', 'is_pending': False, 'hoisted_role': '811274015032737857', 'deaf': False}, 'channel_id': '798339319165091881', 'guild_id': '791160100567384094'}}
-2021-02-22 14:21:44,924:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:21:44,925:DEBUG:discord.client: Dispatching event typing
+2021-02-22 14:21:44,457:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'TYPING_STA2021-02-22 15:13:42,029:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,346:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,346:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,397:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,061:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,065:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,429:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,429:INFO:discord.client: Closing the event loop.
+ 14:21:44,925:DEBUG:discord.client: Dispatching event typing
 2021-02-22 14:21:47,755:DEBUG:discord.client: Dispatching event socket_raw_receive
 2021-02-22 14:21:47,755:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 19, 'op': 0, 'd': {'type': 0, 'tts': False, 'timestamp': '2021-02-22T22:21:47.521000+00:00', 'referenced_message': None, 'pinned': False, 'nonce': '819706824381956096', 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'member': {'roles': ['811274015032737857', '791162885002100793'], 'premium_since': None, 'pending': False, 'nick': None, 'mute': False, 'joined_at': '2021-02-16T16:32:38.119533+00:00', 'is_pending': False, 'hoisted_role': '811274015032737857', 'deaf': False}, 'id': '813536043424546847', 'flags': 0, 'embeds': [], 'edited_timestamp': None, 'content': 'Custom?', 'channel_id': '798339319165091881', 'author': {'username': 'Cosemus™', 'public_flags': 128, 'id': '693092890599227482', 'discriminator': '9849', 'avatar': 'a7611420fcbd60112746bbd45c5f564a'}, 'attachments': [], 'guild_id': '791160100567384094'}}
 2021-02-22 14:21:47,756:DEBUG:discord.client: Dispatching event socket_response
@@ -193,31 +346,37 @@
 2021-02-22 14:28:05,087:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
 2021-02-22 14:28:05,087:DEBUG:discord.client: Dispatching event socket_response
 2021-02-22 14:28:46,228:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 19.
-2021-02-22 14:28:46,340:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:28:46,340:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
-2021-02-22 14:28:46,340:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:29:27,479:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 19.
-2021-02-22 14:29:27,590:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:29:27,590:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
-2021-02-22 14:29:27,591:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:30:08,730:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 19.
+2021-02-22 14:28:46,340:DEBUG:dis2021-02-22 15:13:42,029:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,307:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,307:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,307:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,059:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,068:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,439:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,439:INFO:discord.client: Closing the event loop.
+30:08,730:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 19.
 2021-02-22 14:30:08,840:DEBUG:discord.client: Dispatching event socket_raw_receive
 2021-02-22 14:30:08,840:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
 2021-02-22 14:30:08,840:DEBUG:discord.client: Dispatching event socket_response
 2021-02-22 14:30:49,981:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 19.
 2021-02-22 14:30:50,110:DEBUG:discord.client: Dispatching event socket_raw_receive
 2021-02-22 14:30:50,111:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
-2021-02-22 14:30:50,111:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:31:31,232:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 19.
-2021-02-22 14:31:31,336:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:31:31,337:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
-2021-02-22 14:31:31,337:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:32:12,483:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 19.
-2021-02-22 14:32:12,597:DEBUG:discord.client: Dispatching event socket_raw_receive
-2021-02-22 14:32:12,597:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
-2021-02-22 14:32:12,598:DEBUG:discord.client: Dispatching event socket_response
-2021-02-22 14:32:53,734:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 19.
-2021-02-22 14:32:53,857:DEBUG:discord.client: Dispatching event socket_raw_receive
+22021-02-22 15:13:45,249:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,319:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,319:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,319:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,060:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,066:INFO:discord.client: Cleaning up after 4 tasks.
+2021-02-22 15:13:57,419:ERROR:discord.gateway: An error occurred while stopping the gateway. Ignoring.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/discord/gateway.py", line 140, in run
+    f.result()
+  File "/usr/lib/python3.8/concurrent/futures/_base.py", line 437, in result
+    raise CancelledError()
+concurrent.futures._base.CancelledError
+2021-02-22 15:14:00,622:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:14:03,662:INFO:discord.client: Closing the event loop.
+eive
 2021-02-22 14:32:53,857:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
 2021-02-22 14:32:53,858:DEBUG:discord.client: Dispatching event socket_response
 2021-02-22 14:33:34,985:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 19.
@@ -408,3 +567,38 @@
 2021-02-22 15:05:13,225:DEBUG:discord.client: Dispatching event socket_raw_receive
 2021-02-22 15:05:13,318:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
 2021-02-22 15:05:13,318:DEBUG:discord.client: Dispatching event socket_response
+2021-02-22 15:05:54,300:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 19.
+2021-02-22 15:05:54,456:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-02-22 15:05:54,457:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-02-22 15:05:54,457:DEBUG:discord.client: Dispatching event socket_response
+2021-02-22 15:06:14,329:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-02-22 15:06:14,452:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': 'MESSAGE_CREATE', 's': 20, 'op': 0, 'd': {'webhook_id': '809195488573653042', 'type': 0, 'tts': False, 'timestamp': '2021-02-22T23:06:13.786000+00:00', 'pinned': False, 'mentions': [], 'mention_roles': [], 'mention_everyone': False, 'id': '813547226550239252', 'flags': 0, 'embeds': [{'url': 'https://github.com/TimPidashev/OneCoolBot/commit/0bd4f3f89252bd3af42d2ce414094859982b78e1', 'type': 'rich', 'title': '[OneCoolBot:main] 1 new commit', 'description': '[`0bd4f3f`](https://github.com/TimPidashev/OneCoolBot/commit/0bd4f3f89252bd3af42d2ce414094859982b78e1) 1.0.7: Starboard added(sorta) - TimPidashev', 'color': 7506394, 'author': {'url': 'https://github.com/TimPidashev', 'proxy_icon_url': 'https://images-ext-1.discordapp.net/external/nvGgQ4EpWANG4Brbr00QRSIy9O8B77ttDMHVn7Wiy5o/%3Fv%3D4/https/avatars.githubusercontent.com/u/64367077', 'name': 'TimPidashev', 'icon_url': 'https://avatars.githubusercontent.com/u/64367077?v=4'}}], 'edited_timestamp': None, 'content': '', 'channel_id': '803027398332252240', 'author': {'username': 'GitHub', 'id': '809195488573653042', 'discriminator': '0000', 'bot': True, 'avatar': 'df91181b3f1cf0ef1592fbe18e0962d7'}, 'attachments': [], 'guild_id': '791160100567384094'}}
+2021-02-22 15:06:14,457:DEBUG:discord.client: Dispatching event socket_response
+2021-02-22 15:06:14,457:DEBUG:discord.client: Dispatching event message
+2021-02-22 15:06:35,551:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 20.
+2021-02-22 15:06:35,675:DEBUG:discord.client: Dispatching event socket_raw_receive
+2021-02-22 15:06:35,675:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2021-02-22 15:06:35,676:DEBUG:discord.client: Dispatching event socket_response
+2021-02-22 15:13:42,030:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:13:45,303:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:13:45,310:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:13:45,311:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:13:57,059:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:13:57,065:INFO:discord.client: Cleaning up after 3 tasks.
+2021-02-22 15:13:57,430:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:13:57,430:INFO:discord.client: Closing the event loop.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      2021-02-22 15:13:51,817:WARNING:discord.gateway: Shard ID None has stopped responding to the gateway. Closing and restarting.
+2021-02-22 15:14:02,778:INFO:discord.gateway: Timed out receiving packet. Attempting a reconnect.
+2021-02-22 15:14:05,504:INFO:discord.client: Got a request to RESUME the websocket.
+2021-02-22 15:14:06,647:DEBUG:discord.client: Dispatching event disconnect
+2021-02-22 15:14:33,414:INFO:discord.client: Cleaning up tasks.
+2021-02-22 15:14:33,922:INFO:discord.client: Cleaning up after 4 tasks.
+2021-02-22 15:14:48,372:ERROR:discord.gateway: An error occurred while stopping the gateway. Ignoring.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/dist-packages/discord/gateway.py", line 140, in run
+    f.result()
+  File "/usr/lib/python3.8/concurrent/futures/_base.py", line 437, in result
+    raise CancelledError()
+concurrent.futures._base.CancelledError
+2021-02-22 15:14:48,905:INFO:discord.client: All tasks finished cancelling.
+2021-02-22 15:14:50,195:INFO:discord.client: Closing the event loop.
