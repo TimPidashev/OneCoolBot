@@ -164,50 +164,8 @@ class misc(commands.Cog):
                 else:
                     print(colored("[misc]: Somebody tried adding themself a star but was stopped...", "green"))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # if message.channel.name == "python":
-        #     pass
-        #
-        # if message.channel.name == "javascript":
-        #     pass
-        #
-        # if message.channel.name == "java":
-        #     pass
-        #
-        # else:
-        #     pass
-
-
+        else:
+            return
 
 def setup(client):
     client.add_cog(misc(client))
