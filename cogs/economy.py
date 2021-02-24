@@ -33,7 +33,12 @@ class economy(commands.Cog):
 
         async with context.typing():
             await asyncio.sleep(1)
-            await context.channel.send(f"`Wallet`\n{target.display_name} has :coin: {coins[0]} coins and is rank {ids.index(target.id)+1} of {len(ids):} users globally.")
+            embedColour = discord.Embed.Empty
+            if hasattr(context, 'guild') and context.guild is not None:
+                embedColour = context.me.top_role.colour
+            embed = discord.Embed(colour=embedColour)
+            embed.add_field(name=f"**Wallet:**", value=f"**{target.display_name}** has :coin: **{coins[0]}** coins and is rank **{ids.index(target.id)+1}** of {len(ids):} users globally.")
+            await context.message.channel.send(embed=embed)
 
     @commands.command()
     async def market(self, context):
