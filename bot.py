@@ -96,7 +96,7 @@ async def info(context):
         embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
         embed.add_field(name="Uptime", value=text, inline=True)
         embed.add_field(name="Version", value="Ver 1.0.8")
-        embed.set_footer(text="Most recent changes: Polished embeds, multiple bugs fixed)
+        embed.set_footer(text="Most recent changes: Polished embeds, multiple bugs fixed")
         await context.message.channel.send(embed=embed)
 
 client.run(Token, reconnect=True)
