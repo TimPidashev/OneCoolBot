@@ -37,13 +37,15 @@ class misc(commands.Cog):
     #on_member_join
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        print(colored(f"[misc]: {member.name}#{member.discriminator} joined at {member.joined_at}" + "...", "green"))
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        print(colored(f"[misc]: {member.name}#{member.discriminator} joined at {current_time}" + "...", "green"))
 
         #adding user to database
         try:
             db.execute("INSERT INTO users (UserID) VALUES (?)", member.id)
             db.commit()
-            print(colored(f"[misc]: {member.name}#{member.discriminator} (member/user) have been added into the users DB...", "green"))
+            print(colored(f"[misc]: {member.name}#{member.discriminator} has been added into the users DB...", "green"))
 
         except:
             print(colored(f"[misc]: Internal error occurred when adding {member.name}#{member.discriminator} to databases...", "red"))
@@ -52,7 +54,7 @@ class misc(commands.Cog):
         userJoinPrivateEmbed = discord.Embed(
             colour = discord.Colour.green(),
             title = "Welcome "+member.name+"!",
-            description = "I'm still in early development, so if you have any ideas as to what i should say here, let me know!"
+            description = "Thank you for joining this help server! If you have any questions dm my owner Timmy!"
         )
 
         try:
@@ -76,7 +78,7 @@ class misc(commands.Cog):
     async def on_member_remove(self, member):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        print(colored(f"[misc]: {member.name}#{member.discriminator} left at " + current_time + "...", "green"))
+        print(colored(f"[misc]: {member.name}#{member.discriminator} left at {current_time}...", "green"))
 
         #deleting user from databases
         try:
@@ -112,7 +114,7 @@ class misc(commands.Cog):
                         print(colored(f"[misc]: Added {message.author} to starboard db...", "green"))
 
                 else:
-                    print(colored("[misc]: Somebody tried adding themself a star but was stopped...", "green"))
+                    pass
 
         #Javascript
         if payload.emoji.name == "⭐":
@@ -137,7 +139,7 @@ class misc(commands.Cog):
                         print(colored(f"[misc]: Added {message.author} to starboard db...", "green"))
 
                 else:
-                    print(colored("[misc]: Somebody tried adding themself a star but was stopped...", "green"))
+                    pass
 
         #Java
         if payload.emoji.name == "⭐":
@@ -162,10 +164,49 @@ class misc(commands.Cog):
                         print(colored(f"[misc]: Added {message.author} to starboard db...", "green"))
 
                 else:
-                    print(colored("[misc]: Somebody tried adding themself a star but was stopped...", "green"))
+                    pass
 
         else:
             return
+
+    @commands.Cog.listener()
+    async def on_raw_reaction_remove(self, payload):
+        message = await self.client.get_channel(payload.channel_id).fetch_message(payload.message_id)
+        if payload.emoji.name == "⭐":
+            if payload.channel_id == 810324712180940821 or 810324738743205898 or 810324756137115688:
+                if not message.author.bot and payload.user_id == message.author.id:
+                    user = db.record("SELECT UserID FROM starboard WHERE UserID = (?)", message.author.id)
+                    if user is not None:
+                        star = 3
+                        python_star = 1
+                        javascript_star = 1
+                        java_star = 1
+                        db.execute("UPDATE starboard SET Stars = Stars - ?, Python = Python - ?, Javascript = Javascript - ?, Java = Java - ? WHERE UserID = ?",
+                            star,
+                            python_star,
+                            javascript_star,
+                            java_star,
+                            message.author.id
+                        )
+                        db.commit()
+                        print(colored(f"[misc]: Punished {message.author} for trying to add themself a star...", "yellow"))
+
+                    else:
+                        db.execute("INSERT OR IGNORE INTO starboard (UserID) VALUES (?)", message.author.id)
+                        db.commit()
+                        print(colored(f"[misc]: Added {message.author} to starboard db...", "green"))
+
+                else:
+                    pass
+
+            else:
+                return
+
+
+
+
+
+
 
 def setup(client):
     client.add_cog(misc(client))
