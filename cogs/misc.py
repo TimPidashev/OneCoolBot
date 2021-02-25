@@ -275,7 +275,7 @@ class misc(commands.Cog):
                 embed.add_field(name=f"**Total**", value=f"⭐{combined_amount}")
                 embed.add_field(name=f"**Python**", value=f"{python}")
                 embed.add_field(name=f"**Javascript**", value=f"{javascript}")
-                embed.add_field(name=f"**Java**, value=f"{java}")
+                #embed.add_field(name=f"**Java**, value=f"{java}")
                 embed.add_field(name=f"**Global Rank**, value=f"**{ids.index(target.id)+1}** is {len(stars)} of users globally.")
                 await context.message.channel.send(embed=embed)
         else:
