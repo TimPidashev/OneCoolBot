@@ -42,7 +42,7 @@ class Menu(ListPageSource):
         offset = (menu.current_page * self.per_page) + 1
         fields = []
         table = "\n".join(
-            f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** ~ `{entry[1]}`"
+            f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** ~ ⭐`{entry[1]}`"
             for idx, entry in enumerate(entries)
         )
 
@@ -229,7 +229,7 @@ class misc(commands.Cog):
                             message.author.id
                         )
                         db.commit()
-                        print(colored(f"[misc]: Punished {message.author} for trying to add themself a star...", "yellow"))
+                        print(colored(f"[misc]: {message.author} tried to cheat the starboard...", "green"))
 
                     else:
                         db.execute("INSERT OR IGNORE INTO starboard (UserID) VALUES (?)", message.author.id)
@@ -252,6 +252,36 @@ class misc(commands.Cog):
             await menu.start(context)
 
 
+    @commands.command()
+    async def rank(self, context, target: Optional[Member]):
+        print(colored(f"[misc]: {context.author} accessed stars...", "green"))
+        target = target or context.author
+        stars = db.column("SELECT UserID FROM starboard ORDER BY Stars DESC")
+
+        python, javascript, java = db.record(
+            "SELECT Python, Javascript, Java FROM Starboard WHERE UserID = ?", target.id
+        ) or (None, None, None)
+
+        python + javascript + java = combined_amount
+
+        if stars is not None:
+            async with context.typing():
+                await asyncio.sleep(1)
+                embedColour = discord.Embed.Empty
+                if hasattr(context, 'guild') and context.guild is not None:
+                    embedColour = context.me.top_role.colour
+                embed = discord.Embed(colour=embedColour)
+                embed.add_field(name=f"**Name**", value=f"**{target.display_name}**")
+                embed.add_field(name=f"**Total**", value=f"⭐`{combined_amount:,}`")
+                embed.add_field(name=f"**Python**", value=f"`{python:,}`")
+                embed.add_field(name=f"**Javascript**", value=f"`{javascript:,}`")
+                embed.add_field(name=f"**Java**, value=f"`{java:,}`")
+                embed.add_field(name=f"**Gloabal Rank**, value=f"**{ids.index(target.id)+1}** of {len(ids):,} users globally.")
+                await context.message.channel.send(embed=embed)
+        else:
+            async with context.typing():
+                await asyncio.sleep(1)
+                await context.channel.send("You are not in the database :(")
 
 
 
