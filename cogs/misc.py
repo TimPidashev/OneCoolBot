@@ -253,7 +253,7 @@ class misc(commands.Cog):
 
 
     @commands.command()
-    async def rank(self, context, target: Optional[Member]):
+    async def stars(self, context, target: Optional[Member]):
         print(colored(f"[misc]: {context.author} accessed stars...", "green"))
         target = target or context.author
         stars = db.column("SELECT UserID FROM starboard ORDER BY Stars DESC")
@@ -276,7 +276,7 @@ class misc(commands.Cog):
                 embed.add_field(name=f"**Python**", value=f"`{python:,}`")
                 embed.add_field(name=f"**Javascript**", value=f"`{javascript:,}`")
                 embed.add_field(name=f"**Java**, value=f"`{java:,}`")
-                embed.add_field(name=f"**Gloabal Rank**, value=f"**{ids.index(target.id)+1}** of {len(ids):,} users globally.")
+                embed.add_field(name=f"**Global Rank**, value=f"**{ids.index(target.id)+1}** of {len(ids):,} users globally.")
                 await context.message.channel.send(embed=embed)
         else:
             async with context.typing():
