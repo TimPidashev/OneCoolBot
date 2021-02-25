@@ -8,7 +8,47 @@ from datetime import datetime
 from discord.ext import commands
 from discord.utils import get
 from termcolor import colored
+from discord.ext.menus import MenuPages, ListPageSource
+from discord import Member, Embed
+from discord.ext.commands import Cog
 import sqlite3
+
+class Menu(ListPageSource):
+    def __init__(self, context, data):
+        self.context = context
+
+        super().__init__(data, per_page=10)
+
+    async def write_page(self, menu, offset, fields=[]):
+        offset = (menu.current_page * self.per_page) + 1
+        len_data = len(self.entries)
+
+        embed = Embed(
+            title="Starboard",
+            colour=self.context.author.colour,
+        )
+
+        embed.set_thumbnail(url=self.context.guild.me.avatar_url)
+        embed.set_footer(
+            text=f"{offset:,} - {min(len_data, offset+self.per_page-1):,} of {len_data:,} members."
+        )
+
+        for name, value in fields:
+            embed.add_field(name=name, value=value, inline=False)
+
+        return embed
+
+    async def format_page(self, menu, entries):
+        offset = (menu.current_page * self.per_page) + 1
+        fields = []
+        table = "\n".join(
+            f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** ~ `{entry[1]}`"
+            for idx, entry in enumerate(entries)
+        )
+
+        fields.append(("Top members:", table))
+
+        return await self.write_page(menu, offset, fields)
 
 class misc(commands.Cog):
     def __init__(self, client):
@@ -202,6 +242,14 @@ class misc(commands.Cog):
             else:
                 return
 
+    @commands.command()
+    async def starboard(self, context):
+        print(colored(f"[misc]: {context.author} accessed starboard...", "green"))
+        async with context.typing():
+            await asyncio.sleep(1)
+            records = db.records("SELECT UserID, Stars FROM starboard ORDER BY Stars DESC")
+            menu = MenuPages(source=Menu(context, records), clear_reactions_after=True, timeout=100.0)
+            await menu.start(context)
 
 
 
