@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users(
     Coins integer default 0,
     Stars integer default 0,
     XPLock text DEFAULT CURRENT_TIMESTAMP
-);
+)
 
 CREATE TABLE IF NOT EXISTS starboard(
   UserID integer PRIMARY KEY,
