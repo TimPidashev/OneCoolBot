@@ -130,20 +130,18 @@ class misc(commands.Cog):
         except:
             print(colored(f"[misc]: Internal error occurred when removing {member.id}#{member.discriminator} from users db...", "red"))
 
+    #starboard
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
-        #Python
         if payload.emoji.name == "⭐":
             message = await self.client.get_channel(payload.channel_id).fetch_message(payload.message_id)
-            if payload.channel_id == 810324712180940821:
+            if payload.channel_id == 814897487370125353:
                 if not message.author.bot and payload.user_id != message.author.id:
                     user = db.record("SELECT UserID FROM starboard WHERE UserID = (?)", message.author.id)
                     if user is not None:
                         star = 1
-                        python_star = 1
-                        db.execute("UPDATE starboard SET Stars = Stars + ?, Python = Python + ? WHERE UserID = ?",
+                        db.execute("UPDATE starboard SET Stars = Stars + ? WHERE UserID = ?",
                             star,
-                            python_star,
                             message.author.id
                         )
                         db.commit()
@@ -155,93 +153,21 @@ class misc(commands.Cog):
                         print(colored(f"[misc]: Added {message.author} to starboard db...", "green"))
 
                 else:
-                    pass
-
-        #Javascript
-        if payload.emoji.name == "⭐":
-            message = await self.client.get_channel(payload.channel_id).fetch_message(payload.message_id)
-            if payload.channel_id == 810324738743205898:
-                if not message.author.bot and payload.user_id != message.author.id:
                     user = db.record("SELECT UserID FROM starboard WHERE UserID = (?)", message.author.id)
-                    if user is not None:
-                        star = 1
-                        javascript_star = 1
-                        db.execute("UPDATE starboard SET Stars = Stars + ?, Javascript = Javascript + ? WHERE UserID = ?",
-                            star,
-                            javascript_star,
-                            message.author.id
-                        )
-                        db.commit()
-                        print(colored(f"[misc]: Added a star to {message.author} who helped someone in javascript channel...", "green"))
+                    star = 3
+                    db.execute("UPDATE starboard SET Stars = Stars - ? WHERE UserID = ?",
+                        star,
+                        message.author.id
+                    )
+                    db.commit()
+                    print(colored(f"[misc]: {message.author} tried to cheat the starboard...", "green"))
 
-                    else:
-                        db.execute("INSERT OR IGNORE INTO starboard (UserID) VALUES (?)", message.author.id)
-                        db.commit()
-                        print(colored(f"[misc]: Added {message.author} to starboard db...", "green"))
-
-                else:
-                    pass
-
-        #Java
-        if payload.emoji.name == "⭐":
-            message = await self.client.get_channel(payload.channel_id).fetch_message(payload.message_id)
-            if payload.channel_id == 810324756137115688:
-                if not message.author.bot and payload.user_id != message.author.id:
-                    user = db.record("SELECT UserID FROM starboard WHERE UserID = (?)", message.author.id)
-                    if user is not None:
-                        star = 1
-                        java_star = 1
-                        db.execute("UPDATE starboard SET Stars = Stars + ?, Java = Java + ? WHERE UserID = ?",
-                            star,
-                            java_star,
-                            message.author.id
-                        )
-                        db.commit()
-                        print(colored(f"[misc]: Added a star to {message.author} who helped someone in java channel...", "green"))
-
-                    else:
-                        db.execute("INSERT OR IGNORE INTO starboard (UserID) VALUES (?)", message.author.id)
-                        db.commit()
-                        print(colored(f"[misc]: Added {message.author} to starboard db...", "green"))
-
-                else:
-                    pass
+            else:
+                pass
 
         else:
             return
 
-    @commands.Cog.listener()
-    async def on_raw_reaction_remove(self, payload):
-        message = await self.client.get_channel(payload.channel_id).fetch_message(payload.message_id)
-        if payload.emoji.name == "⭐":
-            if payload.channel_id == 810324712180940821 or 810324738743205898 or 810324756137115688:
-                if not message.author.bot and payload.user_id == message.author.id:
-                    user = db.record("SELECT UserID FROM starboard WHERE UserID = (?)", message.author.id)
-                    if user is not None:
-                        star = 3
-                        python_star = 1
-                        javascript_star = 1
-                        java_star = 1
-                        db.execute("UPDATE starboard SET Stars = Stars - ?, Python = Python - ?, Javascript = Javascript - ?, Java = Java - ? WHERE UserID = ?",
-                            star,
-                            python_star,
-                            javascript_star,
-                            java_star,
-                            message.author.id
-                        )
-                        db.commit()
-                        print(colored(f"[misc]: {message.author} tried to cheat the starboard...", "green"))
-
-                    else:
-                        db.execute("INSERT OR IGNORE INTO starboard (UserID) VALUES (?)", message.author.id)
-                        db.commit()
-                        print(colored(f"[misc]: Added {message.author} to starboard db...", "green"))
-
-                else:
-                    pass
-
-            else:
-                return
 
     @commands.command()
     async def starboard(self, context):
@@ -252,7 +178,7 @@ class misc(commands.Cog):
             menu = MenuPages(source=Menu(context, records), clear_reactions_after=True, timeout=100.0)
             await menu.start(context)
 
-    
+
     # @commands.command()
     # async def stars(self, context, target: Optional[Member]):
     #     print(colored(f"[misc]: {context.author} accessed stars...", "green"))
