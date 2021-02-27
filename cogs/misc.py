@@ -55,10 +55,6 @@ class misc(commands.Cog):
     def __init__(self, client, *args, **kwargs):
         self.client = client
         self.role_message_id = 815307066473578516
-        self.emoji_to_role = {
-            "<:javascript:815332173640761344>": 811690417912807474,
-            "<:python:815331845280497726>": 811689718826795019
-        }
 
     #on_ready
     @commands.Cog.listener()
@@ -140,15 +136,17 @@ class misc(commands.Cog):
         if payload.message_id != self.role_message_id:
             return
 
-        role_id = self.emoji_to_role[payload.emoji]
-        guild = self.get_guild(payload.guild_id)
-        if guild is None:
-            # Check if we're still in the guild and it's cached.
-            print("not in guild")
-            return
+        if payload.emoji.name == "<:javascript:815332173640761344>":
+            print("success")
 
-        await payload.member.add_roles(role)
-        print("sucessfull")
+        # guild = self.get_guild(payload.guild_id)
+        # if guild is None:
+        #     # Check if we're still in the guild and it's cached.
+        #     print("not in guild")
+        #     return
+        #
+        # await payload.member.add_roles(role)
+        # print("sucessfull")
 
     # #starboard
     # @commands.Cog.listener()
