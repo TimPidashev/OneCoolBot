@@ -52,7 +52,7 @@ class Menu(ListPageSource):
         return await self.write_page(menu, offset, fields)
 
 class misc(commands.Cog):
-    def __init__(self, client):
+    def __init__(self, client, *args, **kwargs):
         self.client = client
         self.role_message_id = 815307066473578516
         self.emoji_to_role = {
