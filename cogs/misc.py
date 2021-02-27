@@ -56,8 +56,8 @@ class misc(commands.Cog):
         self.client = client
         self.role_message_id = 815307066473578516
         self.emoji_to_role = {
-            ":javascript:" : 811690417912807474,
-            ":python:" : 811689718826795019
+            ':javascript:' : 811690417912807474,
+            ':python:' : 811689718826795019
         }
 
     #on_ready
@@ -138,24 +138,29 @@ class misc(commands.Cog):
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
         if payload.message_id != self.role_message_id:
+            print("wrong message")
             return
 
         try:
             role_id = self.emoji_to_role[payload.emoji]
         except KeyError:
             # If the emoji isn't the one we care about then exit as well.
+            print("wrong emoji")
             return
 
         guild = self.get_guild(payload.guild_id)
         if guild is None:
             # Check if we're still in the guild and it's cached.
+            print("nt in guild")
             return
 
         try:
             # Finally add the role
             await payload.member.add_roles(role)
+            print("sucessfull")
         except discord.HTTPException:
             # If we want to do something in case of errors we'd do it here.
+            print("more errors")
             pass
 
     # #starboard
