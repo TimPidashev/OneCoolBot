@@ -54,6 +54,11 @@ class Menu(ListPageSource):
 class misc(commands.Cog):
     def __init__(self, client):
         self.client = client
+        self.role_message_id = 815307066473578516
+        self.emoji_to_role = {
+            javascript: 811690417912807474,
+            python: 811689718826795019
+        }
 
     #on_ready
     @commands.Cog.listener()
@@ -106,14 +111,14 @@ class misc(commands.Cog):
             print(colored(f"[misc]: couldn't send welcome message to {member.name}#{member.discriminator}...", "red"))
 
         #add role 'new here' to user
-        role = member.guild.get_role(791162885002100793)
+        new_here = member.guild.get_role(791162885002100793)
 
         try:
-            await member.add_roles(role)
-            print(colored("[misc]: Added '{}' to {}".format(role.name, member.name) + "...", "green"))
+            await member.add_roles(new_here)
+            print(colored("[misc]: Added '{}' to {}".format(new_here.name, member.name) + "...", "green"))
 
         except:
-            print(colored("[misc]: Couldn't add role '{}' to {}".format(role.name, member.name) + "...", "red"))
+            print(colored("[misc]: Couldn't add role '{}' to {}".format(new_here.name, member.name) + "...", "red"))
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
@@ -130,55 +135,78 @@ class misc(commands.Cog):
         except:
             print(colored(f"[misc]: Internal error occurred when removing {member.id}#{member.discriminator} from users db...", "red"))
 
-    #starboard
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
-        if payload.emoji.name == "⭐":
-            message = await self.client.get_channel(payload.channel_id).fetch_message(payload.message_id)
-            if payload.channel_id == 814897487370125353:
-                if not message.author.bot and payload.user_id != message.author.id:
-                    user = db.record("SELECT UserID FROM starboard WHERE UserID = (?)", message.author.id)
-                    if user is not None:
-                        star = 1
-                        db.execute("UPDATE starboard SET Stars = Stars + ? WHERE UserID = ?",
-                            star,
-                            message.author.id
-                        )
-                        db.commit()
-                        print(colored(f"[misc]: Added a star to {message.author} who helped someone in python channel...", "green"))
-
-                    else:
-                        db.execute("INSERT OR IGNORE INTO starboard (UserID) VALUES (?)", message.author.id)
-                        db.commit()
-                        print(colored(f"[misc]: Added {message.author} to starboard db...", "green"))
-
-                else:
-                    user = db.record("SELECT UserID FROM starboard WHERE UserID = (?)", message.author.id)
-                    star = 3
-                    db.execute("UPDATE starboard SET Stars = Stars - ? WHERE UserID = ?",
-                        star,
-                        message.author.id
-                    )
-                    db.commit()
-                    print(colored(f"[misc]: {message.author} tried to cheat the starboard...", "green"))
-
-            else:
-                pass
-
-        else:
+        if payload.message_id != self.role_message_id:
             return
 
+        try:
+            role_id = self.emoji_to_role[payload.emoji]
+        except KeyError:
+            # If the emoji isn't the one we care about then exit as well.
+            return
 
-    @commands.command()
-    async def starboard(self, context):
-        print(colored(f"[misc]: {context.author} accessed starboard...", "green"))
-        async with context.typing():
-            await asyncio.sleep(1)
-            records = db.records("SELECT UserID, Stars FROM starboard ORDER BY Stars DESC")
-            menu = MenuPages(source=Menu(context, records), clear_reactions_after=True, timeout=100.0)
-            await menu.start(context)
+        guild = self.get_guild(payload.guild_id)
+        if guild is None:
+            # Check if we're still in the guild and it's cached.
+            return
 
+        try:
+            # Finally add the role
+            await payload.member.add_roles(role)
+        except discord.HTTPException:
+            # If we want to do something in case of errors we'd do it here.
+            pass
 
+    # #starboard
+    # @commands.Cog.listener()
+    # async def on_raw_reaction_add(self, payload):
+    #     if payload.emoji.name == "⭐":
+    #         message = await self.client.get_channel(payload.channel_id).fetch_message(payload.message_id)
+    #         if payload.channel_id == 814897487370125353:
+    #             if not message.author.bot and payload.user_id != message.author.id:
+    #                 user = db.record("SELECT UserID FROM starboard WHERE UserID = (?)", message.author.id)
+    #                 if user is not None:
+    #                     star = 1
+    #                     db.execute("UPDATE starboard SET Stars = Stars + ? WHERE UserID = ?",
+    #                         star,
+    #                         message.author.id
+    #                     )
+    #                     db.commit()
+    #                     print(colored(f"[misc]: Added a star to {message.author} who helped someone in python channel...", "green"))
+    #
+    #                 else:
+    #                     db.execute("INSERT OR IGNORE INTO starboard (UserID) VALUES (?)", message.author.id)
+    #                     db.commit()
+    #                     print(colored(f"[misc]: Added {message.author} to starboard db...", "green"))
+    #
+    #             else:
+    #                 user = db.record("SELECT UserID FROM starboard WHERE UserID = (?)", message.author.id)
+    #                 star = 3
+    #                 db.execute("UPDATE starboard SET Stars = Stars - ? WHERE UserID = ?",
+    #                     star,
+    #                     message.author.id
+    #                 )
+    #                 db.commit()
+    #                 print(colored(f"[misc]: {message.author} tried to cheat the starboard...", "green"))
+    #
+    #         else:
+    #             pass
+    #
+    #     else:
+    #         return
+    #
+    #
+    # @commands.command()
+    # async def starboard(self, context):
+    #     print(colored(f"[misc]: {context.author} accessed starboard...", "green"))
+    #     async with context.typing():
+    #         await asyncio.sleep(1)
+    #         records = db.records("SELECT UserID, Stars FROM starboard ORDER BY Stars DESC")
+    #         menu = MenuPages(source=Menu(context, records), clear_reactions_after=True, timeout=100.0)
+    #         await menu.start(context)
+    #
+    #
     # @commands.command()
     # async def stars(self, context, target: Optional[Member]):
     #     print(colored(f"[misc]: {context.author} accessed stars...", "green"))
