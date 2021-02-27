@@ -56,8 +56,8 @@ class misc(commands.Cog):
         self.client = client
         self.role_message_id = 815307066473578516
         self.emoji_to_role = {
-            "<a:javascript:815332173640761344>": 811690417912807474,
-            "<a:python:815331845280497726>": 811689718826795019
+            <":javascript:"815332173640761344>: 811690417912807474,
+            <":python:"815331845280497726>: 811689718826795019
         }
 
     #on_ready
