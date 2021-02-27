@@ -54,6 +54,7 @@ class Menu(ListPageSource):
 class misc(commands.Cog):
     def __init__(self, client, *args, **kwargs):
         self.client = client
+        self.guild = 791160100567384094
         self.role_message_id = 815307066473578516
 
     #on_ready
@@ -107,14 +108,14 @@ class misc(commands.Cog):
             print(colored(f"[misc]: couldn't send welcome message to {member.name}#{member.discriminator}...", "red"))
 
         #add role 'new here' to user
-        new_here = member.guild.get_role(791162885002100793)
+        role = member.guild.get_role(791162885002100793)
 
         try:
-            await member.add_roles(new_here)
-            print(colored("[misc]: Added '{}' to {}".format(new_here.name, member.name) + "...", "green"))
+            await member.add_roles(role)
+            print(colored("[misc]: Added '{}' to {}".format(role.name, member.name) + "...", "green"))
 
         except:
-            print(colored("[misc]: Couldn't add role '{}' to {}".format(new_here.name, member.name) + "...", "red"))
+            print(colored("[misc]: Couldn't add role '{}' to {}".format(role.name, member.name) + "...", "red"))
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
@@ -133,11 +134,123 @@ class misc(commands.Cog):
 
     @commands.Cog.listener()
     async def on_raw_reaction_add(self, payload):
-        if payload.message_id != self.role_message_id:
+        message_id = 815307066473578516
+
+        if payload.message_id == message_id:
+            member = payload.member
+            guild = member.guild
+            emoji = payload.emoji.name
+
+            if emoji == "javascript":
+                role = member.guild.get_role(811690417912807474)
+                await member.add_roles(role)
+                print(colored(f"[misc]: Added role {role.name} to {member.name}...", "green"))
+
+            if emoji == "python":
+                role = member.guild.get_role(811689718826795019)
+                await member.add_roles(role)
+                print(colored(f"[misc]: Added role {role.name} to {member.name}...", "green"))
+
+            if emoji == "java":
+                role = member.guild.get_role(811690475865374731)
+                await member.add_roles(role)
+                print(colored(f"[misc]: Added role {role.name} to {member.name}...", "green"))
+
+            if emoji == "ruby":
+                role = member.guild.get_role(815301345493516308)
+                await member.add_roles(role)
+                print(colored(f"[misc]: Added role {role.name} to {member.name}...", "green"))
+
+            if emoji == "php":
+                role = member.guild.get_role(815300280324194325)
+                await member.add_roles(role)
+                print(colored(f"[misc]: Added role {role.name} to {member.name}...", "green"))
+
+            if emoji == "cplusplus":
+                role = member.guild.get_role(815302655579914300)
+                await member.add_roles(role)
+                print(colored(f"[misc]: Added role {role.name} to {member.name}...", "green"))
+
+            if emoji == "csharp":
+                role = member.guild.get_role(815301348865998920)
+                await member.add_roles(role)
+                print(colored(f"[misc]: Added role {role.name} to {member.name}...", "green"))
+
+            if emoji == "justc":
+                role = member.guild.get_role(815300912292691979)
+                await member.add_roles(role)
+                print(colored(f"[misc]: Added role {role.name} to {member.name}...", "green"))
+
+            if emoji == "typescript":
+                role = member.guild.get_role(815301223623426069)
+                await member.add_roles(role)
+                print(colored(f"[misc]: Added role {role.name} to {member.name}...", "green"))
+
+            else:
+                return
+
+        else:
             return
 
-        if payload.emoji.name == "<:javascript:815332173640761344>":
-            print("success")
+    # @commands.Cog.listener()
+    # async def on_raw_reaction_remove(self, payload):
+    #     message_id = 815307066473578516
+    #
+    #     if payload.message_id == message_id:
+    #         member = payload.member
+    #         guild = member.guild
+    #         emoji = payload.emoji.name
+    #
+    #         if emoji == "javascript":
+    #             role = member.guild.get_role(811690417912807474)
+    #             await member.remove_roles(role)
+    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
+    #
+    #         if emoji == "python":
+    #             role = member.guild.get_role(811689718826795019)
+    #             await member.remove_roles(role)
+    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
+    #
+    #         if emoji == "java":
+    #             role = member.guild.get_role(811690475865374731)
+    #             await member.remove_roles(role)
+    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
+    #
+    #         if emoji == "ruby":
+    #             role = member.guild.get_role(815301345493516308)
+    #             await member.remove_roles(role)
+    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
+    #
+    #         if emoji == "php":
+    #             role = member.guild.get_role(815300280324194325)
+    #             await member.remove_roles(role)
+    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
+    #
+    #         if emoji == "cplusplus":
+    #             role = member.guild.get_role(815302655579914300)
+    #             await member.remove_roles(role)
+    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
+    #
+    #         if emoji == "csharp":
+    #             role = member.guild.get_role(815301348865998920)
+    #             await member.remove_roles(role)
+    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
+    #
+    #         if emoji == "justc":
+    #             role = member.guild.get_role(815300912292691979)
+    #             await member.remove_roles(role)
+    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
+    #
+    #         if emoji == "typescript":
+    #             role = member.guild.get_role(815301223623426069)
+    #             await member.remove_roles(role)
+    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
+    #
+    #         else:
+    #             return
+    #
+    #     else:
+    #         return
 
         # guild = self.get_guild(payload.guild_id)
         # if guild is None:
