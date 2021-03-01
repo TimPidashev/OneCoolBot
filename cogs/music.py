@@ -764,6 +764,22 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
                 return await ctx.send(f'{member.mention} is now the DJ.')
 
     @commands.command()
+    async def spotify(self, ctx: commands.Context, user: discord.Member = None):
+        user = user or ctx.author
+        if user.activities:
+            for activity in user.activities:
+                if isinstance(activity, Spotify):
+                    embed = discord.Embed(
+                        title = f"{user.name}'s Spotify",
+                        description = f"Listening to {activity.title}",
+                        color = 0xC902FF)
+                    embed.set_thumbnail(url=activity.album_cover_url)
+                    embed.add_field(name="Artist", value=activity.artist)
+                    embed.add_field(name="Album", value=activity.album)
+                    embed.set_footer(text="Song started at {}".format(activity.created_at.strftime("%H:%M")))
+                    await ctx.send(embed=embed)
+
+    @commands.command()
     async def music(self, ctx):
         """Retrieve various Node/Server/Player information."""
         player = self.bot.wavelink.get_player(ctx.guild.id)
