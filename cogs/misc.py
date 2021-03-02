@@ -192,74 +192,18 @@ class misc(commands.Cog):
         else:
             return
 
-    # @commands.Cog.listener()
-    # async def on_raw_reaction_remove(self, payload):
-    #     message_id = 815307066473578516
-    #
-    #     if payload.message_id == message_id:
-    #         member = payload.member
-    #         guild = member.guild
-    #         emoji = payload.emoji.name
-    #
-    #         if emoji == "javascript":
-    #             role = member.guild.get_role(811690417912807474)
-    #             await member.remove_roles(role)
-    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
-    #
-    #         if emoji == "python":
-    #             role = member.guild.get_role(811689718826795019)
-    #             await member.remove_roles(role)
-    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
-    #
-    #         if emoji == "java":
-    #             role = member.guild.get_role(811690475865374731)
-    #             await member.remove_roles(role)
-    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
-    #
-    #         if emoji == "ruby":
-    #             role = member.guild.get_role(815301345493516308)
-    #             await member.remove_roles(role)
-    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
-    #
-    #         if emoji == "php":
-    #             role = member.guild.get_role(815300280324194325)
-    #             await member.remove_roles(role)
-    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
-    #
-    #         if emoji == "cplusplus":
-    #             role = member.guild.get_role(815302655579914300)
-    #             await member.remove_roles(role)
-    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
-    #
-    #         if emoji == "csharp":
-    #             role = member.guild.get_role(815301348865998920)
-    #             await member.remove_roles(role)
-    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
-    #
-    #         if emoji == "justc":
-    #             role = member.guild.get_role(815300912292691979)
-    #             await member.remove_roles(role)
-    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
-    #
-    #         if emoji == "typescript":
-    #             role = member.guild.get_role(815301223623426069)
-    #             await member.remove_roles(role)
-    #             print(colored(f"[misc]: Removed role {role.name} to {member.name}...", "green"))
-    #
-    #         else:
-    #             return
-    #
-    #     else:
-    #         return
-
-        # guild = self.get_guild(payload.guild_id)
-        # if guild is None:
-        #     # Check if we're still in the guild and it's cached.
-        #     print("not in guild")
-        #     return
-        #
-        # await payload.member.add_roles(role)
-        # print("sucessfull")
+    #giveway command
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def giveaway(self, context):
+        channel = self.client.get_channel(802019457257963551)
+        await asyncio.sleep(10)
+        try:
+            async with channel.typing():
+                await asyncio.sleep(1)
+                await channel.send("A test giveaway link! :)")
+        except:
+            return
 
     # #starboard
     # @commands.Cog.listener()
