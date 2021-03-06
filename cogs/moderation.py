@@ -94,7 +94,7 @@ class moderation(commands.Cog):
     async def on_message(self, message):
         if not message.author.bot:
             urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',message.content.lower())
-            if urls is not None and message.content.startswith('https://discord.gg' or 'http://discord.gg'):
+            if urls is not None and message.content == 'https://discord.gg' or 'http://discord.gg':
                 await message.delete()
                 embed = discord.Embed(
                     colour = discord.Colour.red(),
@@ -102,7 +102,7 @@ class moderation(commands.Cog):
                     description = "Discord invite links are not allowed!"
                 )
                 await message.author.send(embed=embed)
-                print(colored(f"[moderation]: {message.author} tried to advertise link {message.content}...", "yellow"))
+                print(colored(f"[moderation]: {message.author} tried to advertise: {message.content}...", "yellow"))
                 return
 
             elif profanity.contains_profanity(message.content):

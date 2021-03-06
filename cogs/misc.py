@@ -186,6 +186,8 @@ class misc(commands.Cog):
                 await member.add_roles(role)
                 print(colored(f"[misc]: Added role {role.name} to {member.name}...", "green"))
 
+            #figure out a simple elif to remove emoji on raw_reaction_remove if possible here...
+
             else:
                 return
 
