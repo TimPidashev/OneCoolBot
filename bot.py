@@ -99,4 +99,5 @@ async def info(context):
         embed.set_footer(text="Most recent changes: Fixed spotify command.")
         await context.message.channel.send(embed=embed)
 
+
 client.run(Token, reconnect=True)
