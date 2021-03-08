@@ -98,6 +98,5 @@ async def info(context):
         embed.add_field(name="Version", value="Ver 1.1")
         embed.set_footer(text="Most recent changes: Fixed spotify command.")
         await context.message.channel.send(embed=embed)
-
-
+        
 client.run(Token, reconnect=True)
