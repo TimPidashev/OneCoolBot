@@ -323,7 +323,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             'MAIN':
                     {'host': '127.0.0.1',
                     'port': 2333,
-                    'rest_uri': '127.0.0.1:2333',
+                    'rest_uri': 'http://localhost:2333/',
                     'password': 'youshallnotpass',
                     'identifier': 'MAIN',
                     'region': 'US Central',
