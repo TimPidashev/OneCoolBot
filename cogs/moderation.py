@@ -16,7 +16,6 @@ class moderation(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        db.connect("./data/database.db")
         print(colored("[moderation]: online...", "yellow"))
 
     #clear
@@ -106,16 +105,6 @@ class moderation(commands.Cog):
                 await message.author.send(embed=embed)
                 print(colored(f"[moderation]: {message.author} tried to advertise: {message.content}...", "yellow"))
 
-                warning = 1
-
-                db.execute("UPDATE users SET Warnings = Warnings + ? WHERE UserID = ?",
-                    warning,
-                    message.author.id
-                )
-
-                db.commit()
-                print(colored(f"[moderation]: {message.author} has a recieved a warning", "yellow"))
-
             elif profanity.contains_profanity(message.content):
                 await message.delete()
                 embed = discord.Embed(
@@ -126,16 +115,6 @@ class moderation(commands.Cog):
                 await message.author.send(embed=embed)
                 print(colored(f"[moderation]: {message.author}'s message({message.content}) was deleted...", "yellow"))
 
-                warning = 1
-
-                db.execute("UPDATE users SET Warnings = Warnings + ? WHERE UserID = ?",
-                    warning,
-                    message.author.id
-                )
-
-                db.commit()
-                print(colored(f"[moderation]: {message.author} has a recieved a warning", "yellow"))
-                
         else:
             pass
 
