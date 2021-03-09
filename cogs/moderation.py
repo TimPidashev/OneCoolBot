@@ -1,6 +1,7 @@
 import discord
 import asyncio
 import re
+import sqlite3
 from better_profanity import profanity
 from discord.ext import commands, tasks
 from discord.utils import get
@@ -15,6 +16,7 @@ class moderation(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
+        db.connect("./data/database.db")
         print(colored("[moderation]: online...", "yellow"))
 
     #clear
@@ -103,7 +105,16 @@ class moderation(commands.Cog):
                 )
                 await message.author.send(embed=embed)
                 print(colored(f"[moderation]: {message.author} tried to advertise: {message.content}...", "yellow"))
-                return
+
+                warning = 1
+
+                db.execute("UPDATE users SET Warnings = Warnings + ? WHERE UserID = ?",
+                    warning,
+                    message.author.id
+                )
+
+                db.commit()
+                print(colored(f"[moderation]: {message.author} has a recieved a warning", "yellow"))
 
             elif profanity.contains_profanity(message.content):
                 await message.delete()
@@ -115,6 +126,16 @@ class moderation(commands.Cog):
                 await message.author.send(embed=embed)
                 print(colored(f"[moderation]: {message.author}'s message({message.content}) was deleted...", "yellow"))
 
+                warning = 1
+
+                db.execute("UPDATE users SET Warnings = Warnings + ? WHERE UserID = ?",
+                    warning,
+                    message.author.id
+                )
+
+                db.commit()
+                print(colored(f"[moderation]: {message.author} has a recieved a warning", "yellow"))
+                
         else:
             pass
 

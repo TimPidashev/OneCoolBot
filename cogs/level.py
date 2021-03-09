@@ -57,12 +57,12 @@ class level(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
+        db.connect("./data/database.db")
         print(colored("[level]: online...", "cyan"))
 
     @commands.Cog.listener()
     async def on_message(self, message):
         if not message.author.bot:
-            db.connect("./data/database.db")
             result = db.record("SELECT UserID FROM users WHERE UserID = (?)", message.author.id)
             if result is not None:
                 xp, lvl, xplock = db.record("SELECT XP, Level, XPLock FROM users WHERE UserID = ?", message.author.id)
@@ -76,7 +76,7 @@ class level(commands.Cog):
                         new_lvl,
                         coins_on_xp,
                         (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
-                        message.author.id,
+                        message.author.id
                     )
 
                     db.commit()
