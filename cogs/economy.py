@@ -42,7 +42,7 @@ class economy(commands.Cog):
 
     @commands.command()
     async def cap(self, context):
-        print(colored(f"[economy]: user {context.author} accessed economy...", "blue"))
+        print(colored(f"[economy]: user {context.author} accessed cap...", "blue"))
 
         cap = db.record("SELECT sum(Coins) FROM users")
         #await context.channel.send(f"There are currently :coin: **{cap[0]}** coins widespread globally.")
@@ -54,11 +54,9 @@ class economy(commands.Cog):
             if hasattr(context, 'guild') and context.guild is not None:
                 embedColour = context.me.top_role.colour
 
-            embed = discord.Embed(colour=EmbedColour)
+            embed = discord.Embed(colour=embedColour)
             embed.add_field(name=f"**Current Market Cap:**", value=f"There are currently :coin: **{cap[0]}** coins widespread globally")
             await context.message.channel.send(embed=embed)
-
-            await context.channel.send(embed=embed)
 
     @commands.command()
     async def market(self, context):
