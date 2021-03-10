@@ -44,8 +44,10 @@ class economy(commands.Cog):
     async def cap(self, context):
         print(colored(f"[economy]: user {context.author} accessed economy...", "blue"))
 
-        cap = db.record("SELECT count(Coins) FROM users")
-        await context.channel.send(f"There are currently :coin: **{cap[0]}** widespread globally.")
+        cap = db.record("SELECT count(Coins) FROM users WHERE Coins = ?"
+            cap
+        )
+        await context.channel.send(f"There are currently :coin: **{cap[0]}** coins widespread globally.")
 
     @commands.command()
     async def market(self, context):
