@@ -50,11 +50,13 @@ class economy(commands.Cog):
         async with context.typing():
             await asyncio.sleep(1)
 
-            embed = discord.Embed(
-                colour = discord.Colour.dark_magenta(),
-                title = "Global Market Cap"
-                description = f"There are currently :coin: **{cap[0]}** coins widespread globally."
-            )
+            embedColour = discord.Embed.Empty
+            if hasattr(context, 'guild') and context.guild is not None:
+                embedColour = context.me.top_role.colour
+
+            embed = discord.Embed(colour=EmbedColour)
+            embed.add_field(name=f"**Current Market Cap:**", value=f"There are currently :coin: **{cap[0]}** coins widespread globally")
+            await context.message.channel.send(embed=embed)
 
             await context.channel.send(embed=embed)
 
