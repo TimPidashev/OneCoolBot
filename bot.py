@@ -95,8 +95,8 @@ async def info(context):
         embed.add_field(name="Ping", value=f"{before_ws}ms")
         embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
         embed.add_field(name="Uptime", value=text, inline=True)
-        embed.add_field(name="Version", value="Ver 1.1.2")
-        embed.set_footer(text="Most recent changes: Fleshed out moderation, fixed minor bugs in level.py")
+        embed.add_field(name="Version", value="Ver 1.1.5")
+        embed.set_footer(text="Most recent changes: Added market cap command, fixed several annoying bugs")
         await context.message.channel.send(embed=embed)
 
 client.run(Token, reconnect=True)

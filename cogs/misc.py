@@ -72,7 +72,7 @@ class misc(commands.Cog):
             embed = discord.Embed(title="Help", color=2105637)
             embed.add_field(name="Bot Related", value="`info, help`")
             embed.add_field(name="AutoRole/Level/XP System", value="`rank, leaderboard`", inline=False)
-            embed.add_field(name="Economy", value="`wallet, market, give, me`", inline=False)
+            embed.add_field(name="Economy", value="`wallet, market, give, me, cap`", inline=False)
             embed.add_field(name="Moderator", value="`kick, mute, ban, unban, clear`", inline=False)
             embed.add_field(name="Music", value="`connect, play, pause, resume, skip, stop, volume, shuffle, equalizer, queue, current, swap, music, spotify`")
             await context.message.channel.send(embed=embed)
