@@ -45,7 +45,18 @@ class economy(commands.Cog):
         print(colored(f"[economy]: user {context.author} accessed economy...", "blue"))
 
         cap = db.record("SELECT sum(Coins) FROM users")
-        await context.channel.send(f"There are currently :coin: **{cap[0]}** coins widespread globally.")
+        #await context.channel.send(f"There are currently :coin: **{cap[0]}** coins widespread globally.")
+
+        async with context.typing():
+            await asyncio.sleep(1)
+
+            embed = discord.Embed(
+                colour = discord.Colour.dark_magenta(),
+                title = "Global Market Cap"
+                description = f"There are currently :coin: **{cap[0]}** coins widespread globally."
+            )
+
+            await context.channel.send(embed=embed)
 
     @commands.command()
     async def market(self, context):
