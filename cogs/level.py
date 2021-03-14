@@ -322,7 +322,7 @@ class level(commands.Cog):
                 if hasattr(context, 'guild') and context.guild is not None:
                     embedColour = context.me.top_role.colour
                 embed = discord.Embed(colour=embedColour)
-                embed.set_thumbnail(url=message.author.avatar_url)
+                embed.set_thumbnail(url=context.author.avatar_url)
                 embed.add_field(name=f"**Global Rank:**", value=f"**{target.display_name}** is level **{lvl:,}** with **{xp:,}** xp and is rank **{ids.index(target.id)+1}** of {len(ids):,} users globally.")
                 await context.message.channel.send(embed=embed)
         else:
