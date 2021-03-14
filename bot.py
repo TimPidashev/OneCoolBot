@@ -5,7 +5,6 @@ import os
 import time
 import asyncio
 import logging
-import os
 import sqlite3
 from glob import glob
 from pyfiglet import Figlet
@@ -19,7 +18,7 @@ from discord.ext import commands, tasks
 intents = discord.Intents.default()
 intents.members = True
 load_dotenv()
-Token = os.getenv('BOT_TOKEN')
+Token = os.getenv("BOT_TOKEN")
 
 #Uptime
 start_time = time.time()
