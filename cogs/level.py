@@ -4,6 +4,9 @@ import sqlite3
 import asyncio
 import random
 import os
+import aiohttp
+import io
+from io import BytesIO
 from discord import Member, Embed
 from discord.ext.commands import Cog
 from typing import Optional
@@ -13,6 +16,9 @@ from discord.ext.menus import MenuPages, ListPageSource
 from termcolor import colored
 from discord.ext import commands
 from db import db
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
 
 class Menu(ListPageSource):
     def __init__(self, context, data):
@@ -309,23 +315,30 @@ class level(commands.Cog):
     async def rank(self, context, target: Optional[Member]):
         print(colored(f"[level]: {context.author} accessed rank...", "cyan"))
         target = target or context.author
-        ids = db.column("SELECT UserID FROM users ORDER BY XP DESC")
 
-        xp, lvl = db.record(
-            "SELECT XP, Level FROM users WHERE UserID = ?", target.id
-        ) or (None, None)
+        result = db.record(f"SELECT XP, Level FROM users WHERE UserID = {target.id}")
 
-        if lvl is not None:
+        if result is not None:
             async with context.typing():
                 await asyncio.sleep(1)
-                embedColour = discord.Embed.Empty
-                if hasattr(context, 'guild') and context.guild is not None:
-                    embedColour = context.me.top_role.colour
-                embed = discord.Embed(colour=embedColour)
-                embed.set_thumbnail(url=context.author.avatar_url)
-                embed.add_field(name=f"**Global Rank:**", value=f"**{target.display_name}** is level **{lvl:,}** with **{xp:,}** xp and is rank **{ids.index(target.id)+1}** of {len(ids):,} users globally.")
-                embed.add_field(name=f"**Stats**", value =f"exp/level bar goes here!", inline=False)
-                await context.message.channel.send(embed=embed)
+
+                img = Image.open("./data/rank.png")
+                draw = ImageDraw.Draw(img)
+                font = ImageFont.truetype("./data/Quotable.otf", 35)
+                font1 = ImageFont.truetype("./data/Quotable.otf", 24)
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(str(context.author.avatar_url)) as response:
+                        image = await response.read()
+                icon = Image.open(BytesIO(image)).convert("RGBA")
+                img.paste(icon.resize((156, 156)), (50, 60))
+                draw.text((242, 100), f"{str(result[1])}", (140, 86, 214), font=font)
+                draw.text((242, 180), f"{str(result[0])}", (140, 86, 214), font=font)
+                draw.text((50,220), f"{context.author.name}", (140, 86, 214), font=font1)
+                draw.text((50,240), f"#{context.author.discriminator}", (255, 255, 255), font=font1)
+                img.save("./data/infoimg2.png")
+                ffile = discord.File("./data/infoimg2.png")
+                await context.send(file=ffile)
+
         else:
             async with context.typing():
                 await asyncio.sleep(1)
