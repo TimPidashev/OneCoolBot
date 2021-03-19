@@ -1,2 +1,3 @@
-# OneCoolBot
-A Discord bot for the DevelopingThings Discord server!
+# OneCoolBot: a Discord Bot for the DevThings Server!
+[![Join our Discord server!](https://invidget.switchblade.xyz/EDRjZdkGBG)](https://discord.gg/EDRjZdkGBG)
+
