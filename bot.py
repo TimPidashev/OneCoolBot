@@ -81,21 +81,18 @@ async def info(context):
         ping = (time.monotonic() - before) * 1000
         ramUsage = client.process.memory_full_info().rss / 1024**2
         avgmembers = round(len(client.users) / len(client.guilds))
-        embedColour = discord.Embed.Empty
-        if hasattr(context, 'guild') and context.guild is not None:
-            embedColour = context.me.top_role.colour
         current_time = time.time()
         difference = int(round(current_time - start_time))
         text = str(timedelta(seconds=difference))
-        embed = discord.Embed(colour=embedColour)
+        embed = discord.Embed(colour=0x9b59b6)
         embed.set_thumbnail(url=context.bot.user.avatar_url)
         embed.add_field(name="Developer", value="𝓣𝓲𝓶𝓶𝔂#6955")
         embed.add_field(name="Users", value=f"{len(context.guild.members)}", inline=True)
         embed.add_field(name="Ping", value=f"{before_ws}ms")
         embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
         embed.add_field(name="Uptime", value=text, inline=True)
-        embed.add_field(name="Version", value="Ver 1.1.6")
-        embed.set_footer(text="Most recent changes: rank command now sends cool rank card!")
+        embed.add_field(name="Version", value="Ver 1.1.7")
+        embed.set_footer(text="Most recent changes: embed colors fixed")
         await context.message.channel.send(embed=embed)
 
 client.run(Token, reconnect=True)
