@@ -31,7 +31,7 @@ class economy(commands.Cog):
         async with context.typing():
             await asyncio.sleep(1)
             embed = discord.Embed(colour=0x9b59b6)
-            embed.add_field(name=f"**Wallet:**", value=f"**{target.display_name}** has :coin: **{coins[0]}** coins and is rank **{ids.index(target.id)+1}** of {len(ids):} users globally.")
+            embed.add_field(name=f"**Wallet:**", value="**{target.display_name}** has :coin: **{coins[0]}** coins and is rank **{ids.index(target.id)+1}** of {len(ids):} users globally.")
             await context.message.channel.send(embed=embed)
 
     @commands.command()
@@ -49,25 +49,20 @@ class economy(commands.Cog):
         print(colored(f"[economy]: user {context.author} accessed the global market...", "blue"))
         async with context.typing():
             await asyncio.sleep(1)
-            await context.channel.send(f"`Market`\nIn development!")
+            embed = discord.Embed(title="**Market:**", colour=0x9b59b6)
+            embed.set_footer(text="See whats for sale!")
+            await context.channel.send(embed=embed)
+
+    # @commands.command()
+    # async def inventory(self, context):
+    #     print(colored(f"[economy]: user {context.author} accessed their inventory...", "blue"))
+    #     async with context.typing():
+    #         await asyncio.sleep(1)
+    #         inventory = db.record("SELECT FROM inventory WHERE UserID = ? ")
 
     @commands.command()
     async def give(self, context):
         print(colored("[economy]: Command give was used..", "blue"))
-        async with context.typing():
-            await asyncio.sleep(1)
-            await context.channel.send("This command is still in development, go bug 𝓣𝓲𝓶𝓶𝔂 to update!")
-
-    @commands.command()
-    async def me(self, context):
-        print(colored("[economy]: Command me was used..", "blue"))
-        async with context.typing():
-            await asyncio.sleep(1)
-            await context.channel.send("This command is still in development, go bug 𝓣𝓲𝓶𝓶𝔂 to update!")
-
-    @commands.command()
-    async def sell(self, context):
-        print(colored("[economy]: Command sell was used...", "blue"))
         async with context.typing():
             await asyncio.sleep(1)
             await context.channel.send("This command is still in development, go bug 𝓣𝓲𝓶𝓶𝔂 to update!")

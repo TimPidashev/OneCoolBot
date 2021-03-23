@@ -4,15 +4,19 @@ import json
 import os
 from db import db
 from os.path import isfile
-from datetime import datetime
+from datetime import datetime, timedelta
+import datetime
 from discord.ext import commands
 from discord.utils import get
 from termcolor import colored
 from typing import Optional
+from random import choice
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext.commands import Cog
+from discord import Embed, Emoji
 import sqlite3
+import time
 
 class Menu(ListPageSource):
     def __init__(self, context, data):
@@ -193,19 +197,74 @@ class misc(commands.Cog):
 
         else:
             return
+    
+    # #polls
+    # @commands.command()
+    # async def poll(self, context):
+        
 
     #giveway command
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def giveaway(self, context):
-        channel = self.client.get_channel(802019457257963551)
-        await asyncio.sleep(10)
-        try:
-            async with channel.typing():
-                await asyncio.sleep(1)
-                await channel.send("A test giveaway link! :)")
-        except:
-            return
+        channel = self.client.get_channel(823725656873107476)
+        emoji = self.client.get_emoji(823934633116303431)
+        start_timer = int(10)
+        timer = 10
+
+        embed = discord.Embed(name="Nitro Giveaway", colour=0x9b59b6)
+        embed.insert_field_at(
+            index=0,
+            name=":tada:React below to enter Discord Nitro giveaway!",
+            value=f":stopwatch:Time left: {start_timer}'s",
+            inline=False
+        )
+
+        message = await channel.send(embed=embed)
+        await message.add_reaction(emoji)
+
+        while timer != 0:
+            timer = timer - 1
+            embed.remove_field(index=0)
+            embed.insert_field_at(
+                index=0,
+                name=":tada:React below to enter Discord Nitro giveaway!",
+                value=f":stopwatch:Time left: {timer}'s",
+                inline=False
+            )
+            await message.edit(embed=embed)
+            
+            time.sleep(1)
+                
+            if timer == 0:
+                fetch_message = await channel.fetch_message(message.id)
+                users = await fetch_message.reactions[0].users().flatten()
+                users.pop(users.index(self.client.user))
+                
+                if len(users) > 0:
+                    winner = choice(users)
+
+                    embed = discord.Embed(name="Giveaway Winner", colour=0x9b59b6)
+                    embed.add_field(
+                        name=":tada:Congratulations!",
+                        value=f":partying_face:{winner.mention} won the giveaway!",
+                    )
+                    await message.edit(embed=embed)
+                    
+                    embed = discord.Embed(name=":tada:Congratulations!", colour=0x9b59b6)
+                    embed.add_field(
+                        name=":partying_face:You won a giveaway! Here is your reward:",
+                        value="reward",
+                        inline=False
+                    )
+
+                    await winner.send(embed=embed)
+                
+                else:
+                    pass
+
+
+    
 
     # #starboard
     # @commands.Cog.listener()

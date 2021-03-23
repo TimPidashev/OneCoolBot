@@ -91,8 +91,8 @@ async def info(context):
         embed.add_field(name="Ping", value=f"{before_ws}ms")
         embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
         embed.add_field(name="Uptime", value=text, inline=True)
-        embed.add_field(name="Version", value="Ver 1.1.7")
-        embed.set_footer(text="Most recent changes: embed colors fixed/prepare db for economy update.")
+        embed.add_field(name="Version", value="Ver 1.1.8")
+        embed.set_footer(text="Most recent changes: Added giveaway command(beta)")
         await context.message.channel.send(embed=embed)
 
 client.run(Token, reconnect=True)
