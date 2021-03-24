@@ -4,8 +4,7 @@ import json
 import os
 from db import db
 from os.path import isfile
-from datetime import datetime, timedelta
-import datetime
+from datetime import datetime
 from discord.ext import commands
 from discord.utils import get
 from termcolor import colored
@@ -207,10 +206,11 @@ class misc(commands.Cog):
     @commands.command()
     @commands.has_permissions(administrator=True)
     async def giveaway(self, context):
-        channel = self.client.get_channel(823725656873107476)
+        print(colored("[misc]: Started a giveaway...", "green"))
+        channel = self.client.get_channel(802019457257963551)
         emoji = self.client.get_emoji(823934633116303431)
-        start_timer = int(10)
-        timer = 10
+        start_timer = int(10000)
+        timer = 10000
 
         embed = discord.Embed(name="Nitro Giveaway", colour=0x9b59b6)
         embed.insert_field_at(
@@ -254,16 +254,29 @@ class misc(commands.Cog):
                     embed = discord.Embed(name=":tada:Congratulations!", colour=0x9b59b6)
                     embed.add_field(
                         name=":partying_face:You won a giveaway! Here is your reward:",
-                        value="reward",
+                        value="https://discord.gift/aYTVT39VJWMtQBR5",
                         inline=False
                     )
 
                     await winner.send(embed=embed)
+                    print(colored(f"[misc]: {winner} won the giveaway...", "green"))
                 
                 else:
                     pass
 
-
+    # @commands.Cog.listener()
+    # async def on_message():
+    #     messageattachments = message.attachments
+    #     if len(messageattachments) > 0:
+    #         for attachment in messageattachments:
+    #             if attachment.filename.endswith(".dll"):
+    #                 await message.delete()
+    #                 await message.channel.send("No DLL's allowed!")
+    #             elif attachment.filename.endswith('.exe'):
+    #                 await message.delete()
+    #                 await message.channel.send("No EXE's allowed!")
+    #             else:
+    #                 break
     
 
     # #starboard
@@ -338,6 +351,19 @@ class misc(commands.Cog):
     #         async with context.typing():
     #             await asyncio.sleep(1)
     #             await context.channel.send("You haven't helped anybody yet :(")
+    
+    # @commands.Cog.listener()
+    # async def on_message(self, context):
+    #     secret_words = ["Irradiated", "irradiated", "radiation", "What is timmy up to?"]
+    #     exception1 = (598625004279693460)
+    #     exception2 = (711813438111875093)
+    #     exception3 = (722310620111831082)
+
+    #     if not message.author.bot:
+    #         if context.author != exception1 or exception2 or exception3:
+    #             with open 
+
+                
 
 
 

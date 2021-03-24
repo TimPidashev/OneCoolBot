@@ -10,7 +10,7 @@ from typing import Optional
 from termcolor import colored
 from discord.ext import commands
 from discord import Member, Embed
-from datetime import datetime, timedelta
+from datetime import datetime
 from discord.ext.menus import MenuPages, ListPageSource
 
 class economy(commands.Cog):
@@ -31,7 +31,7 @@ class economy(commands.Cog):
         async with context.typing():
             await asyncio.sleep(1)
             embed = discord.Embed(colour=0x9b59b6)
-            embed.add_field(name=f"**Wallet:**", value="**{target.display_name}** has :coin: **{coins[0]}** coins and is rank **{ids.index(target.id)+1}** of {len(ids):} users globally.")
+            embed.add_field(name=f"**Wallet:**", value=f"**{target.display_name}** has :coin: **{coins[0]}** coins and is rank **{ids.index(target.id)+1}** of {len(ids):} users globally.")
             await context.message.channel.send(embed=embed)
 
     @commands.command()
