@@ -3,3 +3,4 @@ __pycache__/
 *.vscode
 /data/database.db
 .env
+/node_modules
