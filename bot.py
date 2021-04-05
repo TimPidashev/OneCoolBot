@@ -14,7 +14,8 @@ from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from termcolor import colored, cprint
 from dotenv import load_dotenv
-from discord.ext import commands, tasks
+from discord.ext import commands, tasks, ipc
+
 intents = discord.Intents.default()
 intents.members = True
 load_dotenv()
