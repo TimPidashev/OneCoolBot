@@ -82,11 +82,5 @@ class misc(commands.Cog):
         except:
             print(colored(f"[misc]: Error occured when removing guild: {guild.name}#{guild.id} from guilds table...", "red"))
 
-
-
-
-
-
-
 def setup(client):
     client.add_cog(misc(client))
