@@ -11,7 +11,6 @@ from db import db
 from discord.utils import get
 from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from routes.utils import app
 from quart import Quart, redirect, url_for, render_template, request
 from termcolor import colored, cprint
 from dotenv import load_dotenv
@@ -24,12 +23,6 @@ start_time = time.time()
 
 logo = Figlet(font="graffiti")
 print(colored(logo.renderText("OneCoolBot"), "magenta"))
-
-app = Quart(__name__)
-
-@app.route("/")
-async def home():
-  return "I'm alive"
 
 class OneCoolBot(commands.Bot):
     def __init__(self, *args, **kwargs):

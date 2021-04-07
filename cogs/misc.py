@@ -21,13 +21,11 @@ class misc(commands.Cog):
     def __init__(self, client, *args, **kwargs):
         self.client = client
 
-    #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
         print(colored("[misc]: online...", "green"))
         db.connect("./data/database.db")
 
-    #on_member_join
     @commands.Cog.listener()
     async def on_member_join(self, member):
         now = datetime.now()
