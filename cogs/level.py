@@ -13,7 +13,7 @@ from typing import Optional
 from os.path import isfile
 from datetime import datetime, timedelta
 from discord.ext.menus import MenuPages, ListPageSource
-from termcolor import colored
+from termcolor import colored, cprint
 from discord.ext import commands
 from db import db
 from PIL import Image
@@ -64,7 +64,7 @@ class level(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         db.connect("./data/database.db")
-        print(colored("[level]: online...", "cyan"))
+        print(colored("[level]:", "magenta"), colored("online...", "green"))
 
     @commands.Cog.listener()
     async def on_message(self, message):

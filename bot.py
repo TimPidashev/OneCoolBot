@@ -31,7 +31,7 @@ class OneCoolBot(commands.Bot):
         #self.ipc = ipc.Server(self, secret_key="my_secret_key")
     
     async def on_ready(self):
-        print(colored("[main]: Bot is back up", "magenta"))
+        print(colored("[main]:", "magenta"), colored("Bot is back up...", "green"))
 
         await self.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
 

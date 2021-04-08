@@ -5,7 +5,7 @@ import sqlite3
 from better_profanity import profanity
 from discord.ext import commands, tasks
 from discord.utils import get
-from termcolor import colored
+from termcolor import colored, cprint
 
 profanity.load_censor_words_from_file("./data/profanity.txt")
 
@@ -16,7 +16,7 @@ class moderation(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[moderation]: online...", "yellow"))
+        print(colored("[moderation]:", "magenta"), colored("online...", "green"))
 
     #clear
     @commands.command()

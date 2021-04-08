@@ -4,7 +4,7 @@ import lavalink
 import sys
 import aiohttp
 from discord.ext import commands
-from termcolor import colored
+from termcolor import colored, cprint
 
 class errorhandler(commands.Cog):
     def __init__(self, client):
@@ -12,7 +12,7 @@ class errorhandler(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[error]: online...", "red"))
+        print(colored("[error]:", "magenta"), colored("online...", "green"))
 
     @commands.Cog.listener()
     async def on_command_error(self, context, error):

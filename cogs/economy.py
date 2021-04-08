@@ -7,7 +7,7 @@ import os
 from db import db
 from os.path import isfile
 from typing import Optional
-from termcolor import colored
+from termcolor import colored, cprint
 from discord.ext import commands
 from discord import Member, Embed
 from datetime import datetime
@@ -19,7 +19,7 @@ class economy(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[economy]: online...", "blue"))
+        print(colored("[economy]:", "magenta"), colored("online...", "green"))
         db.connect("./data/database.db")
 
     @commands.command()

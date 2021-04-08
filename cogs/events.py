@@ -7,7 +7,7 @@ from os.path import isfile
 from datetime import datetime
 from discord.ext import commands
 from discord.utils import get
-from termcolor import colored
+from termcolor import colored, cprint
 from typing import Optional
 from random import choice
 from discord.ext.menus import MenuPages, ListPageSource
@@ -17,13 +17,13 @@ from discord import Embed, Emoji
 import sqlite3
 import time
 
-class misc(commands.Cog):
+class events(commands.Cog):
     def __init__(self, client, *args, **kwargs):
         self.client = client
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[misc]: online...", "green"))
+        print(colored("[events]:", "magenta"), colored("online...", "green"))
         db.connect("./data/database.db")
 
     @commands.Cog.listener()
@@ -37,8 +37,8 @@ class misc(commands.Cog):
             db.commit()
             print(colored(f"[misc]: {member.name}#{member.discriminator} was added into the users table...", "green"))
 
-        except:
-            print(colored(f"[misc]: Error occurred when adding {member.name}#{member.discriminator} to users table...", "red"))
+        except Exception as error:
+            print(colored(f"[misc]: Error occurred when adding {member.name}#{member.discriminator} to users table... {error}", "red"))
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
@@ -49,8 +49,8 @@ class misc(commands.Cog):
             db.commit()
             print(colored(f"[misc]: {guild.name}#{guild.id} was added into the guilds table", "green"))
 
-        except:
-            print(colored(f"[misc]: Error occured when adding {guild.name}#{guild.id} to guilds table...", "red"))
+        except Exception as error:
+            print(colored(f"[misc]: Error occured when adding {guild.name}#{guild.id} to guilds table... {error}", "red"))
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
@@ -63,8 +63,8 @@ class misc(commands.Cog):
             db.commit()
             print(colored(f"[misc]: Removed {member.name}#{member.discriminator} from users table...", "yellow"))
 
-        except:
-            print(colored(f"[misc]: Error occurred when removing {member.id}#{member.discriminator} from users table...", "red"))
+        except Exception as error:
+            print(colored(f"[misc]: Error occurred when removing {member.id}#{member.discriminator} from users table... {error}", "red"))
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
@@ -77,8 +77,8 @@ class misc(commands.Cog):
             db.commit()
             print(colored(f"[misc]: Removed {guild.name}#{guild.id} from guilds table...", "yellow"))
 
-        except:
-            print(colored(f"[misc]: Error occured when removing guild: {guild.name}#{guild.id} from guilds table...", "red"))
+        except Exception as error:
+            print(colored(f"[misc]: Error occured when removing guild: {guild.name}#{guild.id} from guilds table... {error}", "red"))
 
 def setup(client):
-    client.add_cog(misc(client))
+    client.add_cog(events(client))
