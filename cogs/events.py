@@ -30,55 +30,55 @@ class events(commands.Cog):
     async def on_member_join(self, member):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        print(colored(f"[misc]: {member.name}#{member.discriminator} joined {member.guild}#{member.guild.id} at {current_time}...", "green"))
+        print(colored("[events]:", "magenta"), colored(f"{member.name}#{member.discriminator} joined {member.guild}#{member.guild.id} at {current_time}...", "green"))
 
         try:
             db.execute("INSERT INTO users (UserID) VALUES (?)", member.id)
             db.commit()
-            print(colored(f"[misc]: {member.name}#{member.discriminator} was added into the users table...", "green"))
+            print(colored("[events]:", "magenta"), colored(f"{member.name}#{member.discriminator} was added into the users table...", "green"))
 
         except Exception as error:
-            print(colored(f"[misc]: Error occurred when adding {member.name}#{member.discriminator} to users table... {error}", "red"))
+            print(colored("[events]:", "magenta"), colored(f"Error occurred when adding {member.name}#{member.discriminator} to users table... {error}", "red"))
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
-        print(colored(f"[misc]: Joined guild: {guild.name}#{guild.id}", "green"))
+        print(colored("[events]:", "magenta"), colored(f"Joined guild: {guild.name}#{guild.id}", "green"))
 
         try:
             db.execute("INSERT INTO guilds (GuildID) VALUES (?)", guild.id)
             db.commit()
-            print(colored(f"[misc]: {guild.name}#{guild.id} was added into the guilds table", "green"))
+            print(colored("[events]:", "magenta"), colored(f"{guild.name}#{guild.id} was added into the guilds table", "green"))
 
         except Exception as error:
-            print(colored(f"[misc]: Error occured when adding {guild.name}#{guild.id} to guilds table... {error}", "red"))
+            print(colored("events]:", "magenta"), colored(f"Error occured when adding {guild.name}#{guild.id} to guilds table... {error}", "red"))
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        print(colored(f"[misc]: {member.name}#{member.discriminator} left from {member.guild}#{member.guild.id} at {current_time}...", "yellow"))
+        print(colored("[events]:", "magenta"), colored(f"{member.name}#{member.discriminator} left from {member.guild}#{member.guild.id} at {current_time}...", "yellow"))
 
         try:
             db.execute("DELETE FROM users WHERE (UserID = ?)", member.id)
             db.commit()
-            print(colored(f"[misc]: Removed {member.name}#{member.discriminator} from users table...", "yellow"))
+            print(colored("[events]:", "magenta"), colored(f"Removed {member.name}#{member.discriminator} from users table...", "yellow"))
 
         except Exception as error:
-            print(colored(f"[misc]: Error occurred when removing {member.id}#{member.discriminator} from users table... {error}", "red"))
+            print(colored("[events]:", "magenta"), colored(f"Error occurred when removing {member.id}#{member.discriminator} from users table... {error}", "red"))
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        print(colored(f"[misc]: Left guild: {guild.name}#{guild.id} at {current_time}..." "yellow"))
+        print(colored("[events]:", "magenta"), colored(f"Left guild: {guild.name}#{guild.id} at {current_time}..." "yellow"))
 
         try:
             db.execute("DELETE FROM guilds WHERE (GuildID = ?)", guild.id)
             db.commit()
-            print(colored(f"[misc]: Removed {guild.name}#{guild.id} from guilds table...", "yellow"))
+            print(colored("[events]:", "magenta"), colored(f"Removed {guild.name}#{guild.id} from guilds table...", "yellow"))
 
         except Exception as error:
-            print(colored(f"[misc]: Error occured when removing guild: {guild.name}#{guild.id} from guilds table... {error}", "red"))
+            print(colored("[events]:", "magenta"), colored(f"Error occured when removing guild: {guild.name}#{guild.id} from guilds table... {error}", "red"))
 
 def setup(client):
     client.add_cog(events(client))
