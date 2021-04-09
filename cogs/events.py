@@ -70,7 +70,7 @@ class events(commands.Cog):
     async def on_guild_remove(self, guild):
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
-        print(colored("[events]:", "magenta"), colored(f"Left guild: {guild.name}#{guild.id} at {current_time}..." "yellow"))
+        print(colored("[events]:", "magenta"), colored(f"Left guild: {guild.name}#{guild.id} at {current_time}...", "yellow"))
 
         try:
             db.execute("DELETE FROM guilds WHERE (GuildID = ?)", guild.id)
