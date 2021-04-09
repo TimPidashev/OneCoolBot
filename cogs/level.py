@@ -112,41 +112,40 @@ class level(commands.Cog):
                 db.commit()
                 print(colored("[level]:", "magenta"), colored(f"{message.author}#{message.author.discriminator} in guild: {message.guild.name} was added to users table...", "cyan"))
 
+    # @commands.command()
+    # async def rank(self, message):
+    #     print(colored("[level]:", "magenta"), colored(f"{message.author} accessed rank in guild: {message.guild.name}...", "cyan"))
 
-    @commands.command()
-    async def rank(self, message):
-        print(colored("[level]:", "magenta"), colored(f"{message.author} accessed rank in guild: {message.guild.name}...", "cyan"))
+    #     result = db.record("SELECT XP, Level FROM users WHERE (GuildID, UserID) = (?, ?)",
+    #         message.guild.id,
+    #         message.author.id
+    #     )
 
-        result = db.record(f"SELECT XP, Level FROM users WHERE (GuilID, UserID) = (?, ?)",
-            message.guild.id,
-            message.author.id
-        )
+    #     if result is not None:
+    #         async with message.typing():
+    #             await asyncio.sleep(1)
 
-        if result is not None:
-            async with message.typing():
-                await asyncio.sleep(1)
+    #             img = Image.open("./data/rank.png")
+    #             draw = ImageDraw.Draw(img)
+    #             font = ImageFont.truetype("./data/Quotable.otf", 35)
+    #             font1 = ImageFont.truetype("./data/Quotable.otf", 24)
+    #             async with aiohttp.ClientSession() as session:
+    #                 async with session.get(str(message.author.avatar_url)) as response:
+    #                     image = await response.read()
+    #             icon = Image.open(BytesIO(image)).convert("RGBA")
+    #             img.paste(icon.resize((156, 156)), (50, 60))
+    #             draw.text((242, 100), f"{str(result[1])}", (140, 86, 214), font=font)
+    #             draw.text((242, 180), f"{str(result[0])}", (140, 86, 214), font=font)
+    #             draw.text((50,220), f"{message.author.name}", (140, 86, 214), font=font1)
+    #             draw.text((50,240), f"#{message.author.discriminator}", (255, 255, 255), font=font1)
+    #             img.save("./data/infoimg2.png")
+    #             ffile = discord.File("./data/infoimg2.png")
+    #             await message.reply(file=ffile, mention_author=False)
 
-                img = Image.open("./data/rank.png")
-                draw = ImageDraw.Draw(img)
-                font = ImageFont.truetype("./data/Quotable.otf", 35)
-                font1 = ImageFont.truetype("./data/Quotable.otf", 24)
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(str(message.author.avatar_url)) as response:
-                        image = await response.read()
-                icon = Image.open(BytesIO(image)).convert("RGBA")
-                img.paste(icon.resize((156, 156)), (50, 60))
-                draw.text((242, 100), f"{str(result[1])}", (140, 86, 214), font=font)
-                draw.text((242, 180), f"{str(result[0])}", (140, 86, 214), font=font)
-                draw.text((50,220), f"{message.author.name}", (140, 86, 214), font=font1)
-                draw.text((50,240), f"#{message.author.discriminator}", (255, 255, 255), font=font1)
-                img.save("./data/infoimg2.png")
-                ffile = discord.File("./data/infoimg2.png")
-                await message.reply(file=ffile)
-
-        else:
-            async with message.typing():
-                await asyncio.sleep(1)
-                await message.reply("You are not in the database :(", mention_author=False)
+    #     else:
+    #         async with message.typing():
+    #             await asyncio.sleep(1)
+    #             await message.reply("You are not in the database :(", mention_author=False)
 
     # @commands.command()
     # async def leaderboard(self, context):
