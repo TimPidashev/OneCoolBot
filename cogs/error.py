@@ -25,17 +25,17 @@ class errorhandler(commands.Cog):
     
         #command_not_found
         if isinstance(error, commands.CommandNotFound):
-            print(colored("[error]: An invalid command was sent, ignoring...", "red"))
+            print(colored("[error]:", "magenta"), colored("An invalid command was sent, ignoring...", "red"))
             return
     
         #disabled_command
         if isinstance(error, commands.DisabledCommand):
-            print(colored("[error]: A disabled command was sent, ignoring...", "red"))
+            print(colored("[error]:", "magenta"), colored("A disabled command was sent, ignoring...", "red"))
             return
     
         #missing_permissions
         if isinstance(error, commands.MissingPermissions):
-            print(colored("[error]: User was missing permissions, ignoring...", "red"))
+            print(colored("[error]:", "magenta"), colored("User was missing permissions, ignoring...", "red"))
             return
     
         else:
