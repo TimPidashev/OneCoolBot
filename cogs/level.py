@@ -69,35 +69,39 @@ class level(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         if not message.author.bot:
-            guild_id, user_id = db.record("SELECT GuildID, UserID FROM users WHERE (GuildID, UserId) = (?, ?)",
+            result = db.record("SELECT GuildID, UserID FROM users WHERE (GuildID, UserId) = (?, ?)",
                 message.guild.id,
                 message.author.id
             )
-            if guild_id is not None:
-                print("success")
-                # xp, lvl, xplock = db.record("SELECT XP, Level, XPLock FROM users WHERE UserID = ?", message.author.id)
-                # if datetime.utcnow() > datetime.fromisoformat(xplock):
+            if result is not None:
+                xp, lvl, xplock = db.record("SELECT XP, Level, XPLock FROM users WHERE (GuildID, UserID) = (?, ?)", 
+                    message.guild.id, 
+                    message.author.id
+                )
+                
+                if datetime.utcnow() > datetime.fromisoformat(xplock):
 
-                #     xp_to_add = random.randint(10, 20)
-                #     new_lvl = int(((xp + xp_to_add) // 42) ** 0.55)
-                #     coins_on_xp = random.randint(1, 10)
-                #     db.execute(f"UPDATE users SET XP = XP + ?, Level = ?, Coins = Coins + ?, XPLock = ? WHERE UserID = {message.author.id} AND GuildID = {message.guild.id}",
-                #         xp_to_add,
-                #         new_lvl,
-                #         coins_on_xp,
-                #         (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
-                #     )
+                    xp_to_add = random.randint(10, 20)
+                    new_lvl = int(((xp + xp_to_add) // 42) ** 0.55)
+                    coins_on_xp = random.randint(1, 10)
 
-                #     db.commit()
-                #     print(colored("[level]:", "magenta"), colored(f"Added {xp_to_add} xp to {message.author}...", "cyan"))
-                #     print(colored("[economy]:", "magenta"), colored(f"Added {coins_on_xp} coins to {message.author}...", "blue"))
+                    db.execute(f"UPDATE users SET XP = XP + ?, Level = ?, Coins = Coins + ?, XPLock = ? WHERE GuildID = {message.guild.id} AND UserID = {message.author.id}",
+                        xp_to_add,
+                        new_lvl,
+                        coins_on_xp,
+                        (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
+                    )
 
-                #     if new_lvl > lvl:
-                #         await message.channel.send(f":partying_face: {message.author.mention} is now level **{new_lvl:,}**!")
-                #         print(colored("[level]:", "magenta"), colored(f"{message.author} has leveled up to {new_lvl:,}...", "cyan"))
+                    db.commit()
+                    print(colored("[level]:", "magenta"), colored(f"Added {xp_to_add} xp to {message.author} in guild: {message.guild.name}...", "cyan"))
+                    print(colored("[economy]:", "magenta"), colored(f"Added {coins_on_xp} coins to {message.author} in guild: {message.guild.name}...", "blue"))
 
-                # else:
-                #     pass
+                    if new_lvl > lvl:
+                        await message.channel.send(f":partying_face: {message.author.mention} is now level **{new_lvl:,}**!")
+                        print(colored("[level]:", "magenta"), colored(f"{message.author} has leveled up to {new_lvl:,} in guild {message.guild.name}...", "cyan"))
+
+                else:
+                    pass
 
             else:
                 
@@ -110,14 +114,16 @@ class level(commands.Cog):
 
 
     @commands.command()
-    async def rank(self, context, target: Optional[Member]):
-        print(colored(f"[level]: {context.author} accessed rank...", "cyan"))
-        target = target or context.author
+    async def rank(self, message):
+        print(colored("[level]:", "magenta"), colored(f"{message.author} accessed rank in guild: {message.guild.name}...", "cyan"))
 
-        result = db.record(f"SELECT XP, Level FROM users WHERE UserID = {target.id}")
+        result = db.record(f"SELECT XP, Level FROM users WHERE (GuilID, UserID) = (?, ?)",
+            message.guild.id,
+            message.author.id
+        )
 
         if result is not None:
-            async with context.typing():
+            async with message.typing():
                 await asyncio.sleep(1)
 
                 img = Image.open("./data/rank.png")
@@ -125,31 +131,31 @@ class level(commands.Cog):
                 font = ImageFont.truetype("./data/Quotable.otf", 35)
                 font1 = ImageFont.truetype("./data/Quotable.otf", 24)
                 async with aiohttp.ClientSession() as session:
-                    async with session.get(str(context.author.avatar_url)) as response:
+                    async with session.get(str(message.author.avatar_url)) as response:
                         image = await response.read()
                 icon = Image.open(BytesIO(image)).convert("RGBA")
                 img.paste(icon.resize((156, 156)), (50, 60))
                 draw.text((242, 100), f"{str(result[1])}", (140, 86, 214), font=font)
                 draw.text((242, 180), f"{str(result[0])}", (140, 86, 214), font=font)
-                draw.text((50,220), f"{context.author.name}", (140, 86, 214), font=font1)
-                draw.text((50,240), f"#{context.author.discriminator}", (255, 255, 255), font=font1)
+                draw.text((50,220), f"{message.author.name}", (140, 86, 214), font=font1)
+                draw.text((50,240), f"#{message.author.discriminator}", (255, 255, 255), font=font1)
                 img.save("./data/infoimg2.png")
                 ffile = discord.File("./data/infoimg2.png")
-                await context.send(file=ffile)
+                await message.reply(file=ffile)
 
         else:
-            async with context.typing():
+            async with message.typing():
                 await asyncio.sleep(1)
-                await context.channel.send("You are not in the database :(")
+                await message.reply("You are not in the database :(", mention_author=False)
 
-    @commands.command()
-    async def leaderboard(self, context):
-        print(colored(f"[level]: {context.author} accessed leaderboard...", "cyan"))
-        async with context.typing():
-            await asyncio.sleep(1)
-            records = db.records("SELECT UserID, XP FROM users ORDER BY XP DESC")
-            menu = MenuPages(source=Menu(context, records), clear_reactions_after=True, timeout=100.0)
-            await menu.start(context)
+    # @commands.command()
+    # async def leaderboard(self, context):
+    #     print(colored(f"[level]: {context.author} accessed leaderboard...", "cyan"))
+    #     async with context.typing():
+    #         await asyncio.sleep(1)
+    #         records = db.records("SELECT UserID, XP FROM users ORDER BY XP DESC")
+    #         menu = MenuPages(source=Menu(context, records), clear_reactions_after=True, timeout=100.0)
+    #         await menu.start(context)
 
 def setup(client):
     client.add_cog(level(client))
