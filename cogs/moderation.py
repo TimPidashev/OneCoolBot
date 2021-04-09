@@ -5,7 +5,7 @@ import sqlite3
 from better_profanity import profanity
 from discord.ext import commands, tasks
 from discord.utils import get
-from termcolor import colored, cprint
+from termcolor import colored
 
 profanity.load_censor_words_from_file("./data/profanity.txt")
 
