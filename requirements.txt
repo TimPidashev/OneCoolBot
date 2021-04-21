@@ -6,7 +6,6 @@ pyfiglet==0.8.post1
 aiohttp==3.7.4.post0
 APScheduler==3.7.0
 humanize==3.3.0
-lavalink==3.1.4
 pythonping==1.0.16
 psutil==5.8.0
 wavelink==0.9.9
