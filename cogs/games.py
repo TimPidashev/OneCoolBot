@@ -14,14 +14,12 @@ class games(commands.Cog):
         db.connect("./data/database.db")
 
     @commands.command()
-    async def game(self, message, arg):
+    async def game(self, context, arg):
         if arg == "count":
-            await message.channel.reply("success")
+            await context.reply("success")
         
         else:
-            await message.reply("game does not exist!")
-
-    
+            await context.reply("game does not exist!")
 
 def setup(client):
     client.add_cog(games(client))
