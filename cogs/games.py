@@ -16,12 +16,14 @@ class games(commands.Cog):
 
     @commands.command()
     async def game(self, context, arg):
-        if arg == "help":
+
+         if arg == "help":
             embed = discord.Embed(colour=0x9b59b6)
             embed.add_field(name="**Help with games**", value="A reference to all the commands and minigames.", inline=False)
             embed.set_footer(text="To suggest more minigames, dm 𝓣𝓲𝓶𝓶𝔂#6955")
+            await context.reply(embed=embed, mention_author=False)
 
-        if arg == "count":
+        elif arg == "count":
             embed = discord.Embed(colour=0x9b59b6)
             embed.add_field(name="**Count**", value="Count as high as you can!", inline=False)
             embed.set_footer(text="Winner gets 1000 coins!")
