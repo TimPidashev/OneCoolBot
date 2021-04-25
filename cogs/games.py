@@ -82,14 +82,14 @@ class games(commands.Cog):
                     start_game = True
                     count = 0
 
-                    while start_game != False:
-                        commands.Cog.listener()
-                        async def on_message(self, message):
-                            if not message.author.bot() and message.channel = game_channel:
-                                if message.content.startswith("1"):
-                                    count = count += 1
-                                    print(count)
-                                    break
+                    # while start_game != False:
+                    #     commands.Cog.listener()
+                    #     async def on_message(self, message):
+                    #         if not message.author.bot() and message.channel = game_channel:
+                    #             if message.content.startswith("1"):
+                    #                 count = count += 1
+                    #                 print(count)
+                    #                 break
                                     
                         
 
