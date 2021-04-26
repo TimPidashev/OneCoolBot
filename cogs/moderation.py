@@ -85,10 +85,10 @@ class moderation(commands.Cog):
                     description = f"**Reason:** Good Behavior **By:** {context.author.mention}",
                 )
                 await context.channel.send(embed=unban)
-                print(colored("[moderation]:", colored(f"{context.author} unbanned {user.name}#{user.discriminator}...", "yellow"))
-                return
+                print(colored("[moderation]:", "magenta"), colored(f"{context.author} unbanned {user.name}#{user.discriminator}...", "yellow"))
+
             else:
-                print(colored("[moderation]:", colored(f"{context.author} tried to unban/unbanned {user.name}#{user.discriminator}, but internal error occured...", "red"))
+                print(colored("[moderation]:", "magenta"), colored(f"{context.author} tried to unban/unbanned {user.name}#{user.discriminator}, but internal error occured...", "red"))
 
     #automoderation section below
     @commands.Cog.listener()
