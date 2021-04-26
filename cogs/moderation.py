@@ -22,7 +22,7 @@ class moderation(commands.Cog):
     @commands.command()
     @commands.has_permissions(manage_messages=True)
     async def clear(self, context, amount=10):
-        await context.channel.purge(limit=amount)
+        await context.channel.purge(limit=amount+1)
         print(colored(f"[moderation]: removed {amount} messages...", "yellow"))
 
     #kick
