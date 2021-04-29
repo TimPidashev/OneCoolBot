@@ -81,7 +81,7 @@ async def bot(context, arg):
         print(colored("[main]:", "magenta"), colored("command(info) used...", "green"))
         async with context.typing():
             await asyncio.sleep(1)
-            
+
             before = time.monotonic()
             before_ws = int(round(client.latency * 1000, 1))
             ping = (time.monotonic() - before) * 1000
@@ -125,7 +125,8 @@ async def bot(context, arg):
             embed.set_footer(
                 text="Most recent changes(rewrite): more args!"
             )
-            await context.message.reply(embed=embed, mention_author=False)
+
+            message = await context.message.reply(embed=embed, mention_author=False)
 
     elif arg == "help":
         print(colored("[main]:", "magenta"), colored("command(help) used...", "green"))
@@ -133,22 +134,22 @@ async def bot(context, arg):
         #page 1
         page_1 = discord.Embed(title="Index", description="The home page of the help command!", colour=0x9b59b6)
         page_1.add_field(
-            name="**General**",
+            name="`General`",
             value="**The basic commands for day-to-day tasks.",
             inline=False
         )
         page_1.add_field(
-            name="**Economy**", 
-            value="A global market and trading system, complete with its own :coin:currency!",
+            name="`Economy`", 
+            value="A global market and trading system, complete with its own currency!",
             inline=False
         )
         page_1.add_field(
-            name="**Games**", 
+            name="`Games`", 
             value="Play with friends, compete with strangers, and make some extra :coin: while having fun!",
             inline=False
         )
         page_1.add_field(
-            name="**Moderation**",
+            name="`Moderation`",
             value="Make sure your server is always under control, with an advanced toolset for your moderators, and auto-moderation for the tech-savvy!", 
             inline=False
         )
@@ -157,58 +158,69 @@ async def bot(context, arg):
         #page 2
         page_2 = discord.Embed(title="General", description="The overview of the general commands.", colour=0x9b59b6)
         page_2.add_field(
-            name="help", 
+            name="`help`", 
             value="If your reading this, you know what this command does :smile:",
             inline=False
         )
         page_2.add_field(
-            name="info", 
+            name="`info`", 
             value="Displays bot status, ping, and other miscellaneous content.",
+            inline=False
+        )
+        page_2.add_field(
+            name="`serverinfo`",
+            value="Displays server info, such as user count.",
+            inline=False
+        )
+        page_2.add_field(
+            name="`userinfo`,",
+            value="Displays user info, such as xp, statistics, and rank.",
+            inline=False
         )
         page_2.set_footer(text="To use these commands, type .bot <command_name>")
         
         #page 3
         page_3 = discord.Embed(title="Economy", description="A global market and trading system, complete with its own :coin:currency!", colour=0x9b59b6)
         page_3.add_field(
-            name="**wallet**",
+            name="`wallet`",
             value="Check how many coins you own.",
             inline=False
         )
         page_3.add_field(
-            name="**market**",
+            name="`market`",
             value="See whats for sale, sell, and trade in a global market.",
             inline=False
         )
         page_3.add_field(
-            name="**cap**",
+            name="`cap`",
             value="Check the current global/local market cap.",
             inline=False
         )
         page_3.set_footer(text="To use these commands, type .eco <command_name>")
 
-        page_4 = discord.Embed(title="Games", description="Play with friends, compete with strangers, and make some extra :coin:! all while having fun!", colour=0x9b59b6)
+        page_4 = discord.Embed(title="Games", description="Play with friends, compete with strangers, and make some extra coins all while having fun!", colour=0x9b59b6)
         page_4.add_field(
-            name="count",
+            name="`count`",
             value="A counting game with multiple people and different modes for different occasions. More detail found in `game` help menu.",
             inline=False
         )
         page_4.add_field(
-            name="chess",
-            value="Match up with people and play for :coin:, or challenge @OneCoolBot for a very special prize!",
+            name="`chess`",
+            value="Match up with people and play for coins, or challenge @OneCoolBot for a very special prize!",
             inline=False
         )
         page_4.add_field(
-            name="roll",
-            value="Roll the die with friends to decide your fate, or for :coin:",
+            name="`roll`",
+            value="Roll the die with friends to decide your fate, or for coins.",
             inline=False
         )
         
         page_4.add_field(
-            name="cave",
+            name="`cave`",
             value="Play the collosal-cave-adventure terminal classic within discord!",
             inline=False
         )
-        page_4.set_footer(text="To use these commands, type .game <command_name>")
+        page_4.set_footer(text="To use these commands, type .game <command_name>. For more help on game commands, type .game help")
 
         #page 5
         page_5 = discord.Embed(title="Moderation", description="Make sure your server is always under control, with an advanced toolset for your moderators, and auto-moderation for the tech-savvy!", colour=0x9b59b6)
