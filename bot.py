@@ -81,6 +81,7 @@ async def bot(context, arg):
         print(colored("[main]:", "magenta"), colored("command(info) used...", "green"))
         async with context.typing():
             await asyncio.sleep(1)
+            
             before = time.monotonic()
             before_ws = int(round(client.latency * 1000, 1))
             ping = (time.monotonic() - before) * 1000
@@ -89,15 +90,41 @@ async def bot(context, arg):
             current_time = time.time()
             difference = int(round(current_time - start_time))
             text = str(timedelta(seconds=difference))
+
             embed = discord.Embed(colour=0x9b59b6)
-            embed.set_thumbnail(url=context.bot.user.avatar_url)
-            embed.add_field(name="Developer", value="𝓣𝓲𝓶𝓶𝔂#6955")
-            embed.add_field(name="Users", value=f"{len(context.guild.members)}", inline=True)
-            embed.add_field(name="Ping", value=f"{before_ws}ms")
-            embed.add_field(name="RAM Usage", value=f"{ramUsage:.2f} MB", inline=True)
-            embed.add_field(name="Uptime", value=text, inline=True)
-            embed.add_field(name="Version", value="Ver 0.1.3")
-            embed.set_footer(text="Most recent changes(rewrite): more args!")
+            embed.set_thumbnail(
+                url=context.bot.user.avatar_url
+            )
+            embed.add_field(
+                name="Developer",
+                value="𝓣𝓲𝓶𝓶𝔂#6955"
+            )
+            embed.add_field(
+                name="Users", 
+                value=f"{len(context.guild.members)}", 
+                inline=True
+            )
+            embed.add_field(
+                name="Ping", 
+                value=f"{before_ws}ms"
+            )
+            embed.add_field(
+                name="RAM Usage", 
+                value=f"{ramUsage:.2f} MB", 
+                inline=True
+            )
+            embed.add_field(
+                name="Uptime", 
+                value=text, 
+                inline=True
+            )
+            embed.add_field(
+                name="Version", 
+                value="Ver 0.1.4"
+            )
+            embed.set_footer(
+                text="Most recent changes(rewrite): more args!"
+            )
             await context.message.reply(embed=embed, mention_author=False)
 
     elif arg == "help":
@@ -219,7 +246,7 @@ async def bot(context, arg):
 
         while True:
             try:
-                reaction, user = await context.bot.wait_for("reaction_add", timeout=10, check=check)
+                reaction, user = await context.bot.wait_for("reaction_add", timeout=60, check=check)
     
                 if str(reaction.emoji) == "▶️" and current_page != pages:
                     current_page += 1
