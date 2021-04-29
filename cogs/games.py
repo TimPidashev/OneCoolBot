@@ -36,7 +36,6 @@ class games(commands.Cog):
             await context.reply(embed=embed, mention_author=False)
 
         elif arg == "count":
-            game_channel = self.client.channel()
             emoji = self.client.get_emoji(823934633116303431)
             start_timer = int(60)
             timer = 60
@@ -77,7 +76,6 @@ class games(commands.Cog):
                     fetch_message = await context.channel.fetch_message(message.id)
                     users = await fetch_message.reactions[0].users().flatten()
                     users.pop(users.index(self.client.user))
-
 
                     start_game = True
                     count = 0

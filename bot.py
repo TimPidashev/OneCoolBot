@@ -14,6 +14,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from quart import Quart, redirect, url_for, render_template, request
 from termcolor import colored, cprint
 from dotenv import load_dotenv
+from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
 
@@ -40,8 +41,7 @@ class OneCoolBot(commands.Bot):
         logger.setLevel(logging.DEBUG)
         handler = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
         handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
-        logger.addHandler(handler)
-
+        logger.addHandler(handler)  
 
     async def on_ipc_ready(self):
         print("Ipc is ready.")
@@ -102,19 +102,196 @@ async def bot(context, arg):
 
     elif arg == "help":
         print(colored("[main]:", "magenta"), colored("command(help) used...", "green"))
-        async with context.typing():
-            await asyncio.sleep(1)
-            embed = discord.Embed(title="Help", color=0x9b59b6)
-            embed.add_field(name="Bot Related", value="`info, help`")
-            embed.add_field(name="AutoRole/Level/XP System", value="`rank, leaderboard`", inline=False)
-            embed.add_field(name="Economy", value="`wallet, market, give, me, cap`", inline=False)
-            embed.add_field(name="Moderator", value="`kick, mute, ban, unban, clear`", inline=False)
-            #embed.add_field(name="Music", value="`connect, play, pause, resume, skip, stop, volume, shuffle, equalizer, queue, current, swap, music, spotify`")
-            await context.message.reply(embed=embed, mention_author=False)
+        
+        #page 1
+        page_1 = discord.Embed(title="Index", description="The home page of the help command!", colour=0x9b59b6)
+        page_1.add_field(
+            name="**General**",
+            value="**The basic commands for day-to-day tasks.",
+            inline=False
+        )
+        page_1.add_field(
+            name="**Economy**", 
+            value="A global market and trading system, complete with its own :coin:currency!",
+            inline=False
+        )
+        page_1.add_field(
+            name="**Games**", 
+            value="Play with friends, compete with strangers, and make some extra :coin: while having fun!",
+            inline=False
+        )
+        page_1.add_field(
+            name="**Moderation**",
+            value="Make sure your server is always under control, with an advanced toolset for your moderators, and auto-moderation for the tech-savvy!", 
+            inline=False
+        )
+        page_1.set_footer(text="To scroll through pages, react to the arrows below.")
+
+        #page 2
+        page_2 = discord.Embed(title="General", description="The overview of the general commands.", colour=0x9b59b6)
+        page_2.add_field(
+            name="help", 
+            value="If your reading this, you know what this command does :smile:",
+            inline=False
+        )
+        page_2.add_field(
+            name="info", 
+            value="Displays bot status, ping, and other miscellaneous content.",
+        )
+        page_2.set_footer(text="To use these commands, type .bot <command_name>")
+        
+        #page 3
+        page_3 = discord.Embed(title="Economy", description="A global market and trading system, complete with its own :coin:currency!", colour=0x9b59b6)
+        page_3.add_field(
+            name="**wallet**",
+            value="Check how many coins you own.",
+            inline=False
+        )
+        page_3.add_field(
+            name="**market**",
+            value="See whats for sale, sell, and trade in a global market.",
+            inline=False
+        )
+        page_3.add_field(
+            name="**cap**",
+            value="Check the current global/local market cap.",
+            inline=False
+        )
+        page_3.set_footer(text="To use these commands, type .eco <command_name>")
+
+        page_4 = discord.Embed(title="Games", description="Play with friends, compete with strangers, and make some extra :coin:! all while having fun!", colour=0x9b59b6)
+        page_4.add_field(
+            name="count",
+            value="A counting game with multiple people and different modes for different occasions. More detail found in `game` help menu.",
+            inline=False
+        )
+        page_4.add_field(
+            name="chess",
+            value="Match up with people and play for :coin:, or challenge @OneCoolBot for a very special prize!",
+            inline=False
+        )
+        page_4.add_field(
+            name="roll",
+            value="Roll the die with friends to decide your fate, or for :coin:",
+            inline=False
+        )
+        
+        page_4.add_field(
+            name="cave",
+            value="Play the collosal-cave-adventure terminal classic within discord!",
+            inline=False
+        )
+        page_4.set_footer(text="To use these commands, type .game <command_name>")
+
+        #page 5
+        page_5 = discord.Embed(title="Moderation", description="Make sure your server is always under control, with an advanced toolset for your moderators, and auto-moderation for the tech-savvy!", colour=0x9b59b6)
+        page_5.add_field(
+            name="`clear` <message_amount>",
+            value="Clear messages from a channel.",
+            inline=False
+        )
+        page_5.add_field(
+            name="`kick` <@member> <reason>",
+            value="Kick mentioned member from server.",
+            inline=False
+        )
+        page_5.add_field(
+            name="`ban` <@member> <reason>",
+            value="Ban mentioned member from server.",
+            inline=False
+        )
+        page_5.add_field(
+            name="`unban` <@member> <reason>",
+            value="Unbans mentioned member from server.",
+            inline=False
+        )
+        page_5.set_footer(text="Moderation commands are not args, and can be used as shown above.")
+
+        message = await context.reply(embed=page_1, mention_author=False)
+        await message.add_reaction("◀️")
+        await message.add_reaction("▶️")
+        await message.add_reaction("❌")
+        pages = 5
+        current_page = 1
+
+        def check(reaction, user):
+            return user == context.author and str(reaction.emoji) in ["◀️", "▶️", "❌"]
+
+        while True:
+            try:
+                reaction, user = await context.bot.wait_for("reaction_add", timeout=10, check=check)
+    
+                if str(reaction.emoji) == "▶️" and current_page != pages:
+                    current_page += 1
+
+                    if current_page == 2:
+                        await message.edit(embed=page_2)
+                        await message.remove_reaction(reaction, user)
+                    
+                    elif current_page == 3:
+                        await message.edit(embed=page_3)
+                        await message.remove_reaction(reaction, user)
+
+                    elif current_page == 4:
+                        await message.edit(embed=page_4)
+                        await message.remove_reaction(reaction, user)
+
+                    elif current_page == 5:
+                        await message.edit(embed=page_5)
+                        await message.remove_reaction(reaction, user)
+                
+                if str(reaction.emoji) == "◀️" and current_page > 1:
+                    current_page -= 1
+                    
+                    if current_page == 1:
+                        await message.edit(embed=page_1)
+                        await message.remove_reaction(reaction, user)
+
+                    elif current_page == 2:
+                        await message.edit(embed=page_2)
+                        await message.remove_reaction(reaction, user)
+                    
+                    elif current_page == 3:
+                        await message.edit(embed=page_3)
+                        await message.remove_reaction(reaction, user)
+
+                    elif current_page == 4:
+                        await message.edit(embed=page_4)
+                        await message.remove_reaction(reaction, user)
+
+                if str(reaction.emoji) == "❌":
+                    await message.delete()
+                    break
+
+                else:
+                    await message.remove_reaction(reaction, user)
+                    
+            except asyncio.TimeoutError:
+                await message.delete()
+                #add context message delete here
+                break
+
+        # async with context.typing():
+        #     await asyncio.sleep(1)
+        #     embed = discord.Embed(title="Help", color=0x9b59b6)
+        #     embed.add_field(name="Bot Related", value="`info, help`")
+        #     embed.add_field(name="AutoRole/Level/XP System", value="`rank, leaderboard`", inline=False)
+        #     embed.add_field(name="Economy", value="`wallet, market, give, me, cap`", inline=False)
+        #     embed.add_field(name="Moderator", value="`kick, mute, ban, unban, clear`", inline=False)
+        #     #embed.add_field(name="Music", value="`connect, play, pause, resume, skip, stop, volume, shuffle, equalizer, queue, current, swap, music, spotify`")
+        #     await context.message.reply(embed=embed, mention_author=False)
 
     else:
         embed = discord.Embed(colour=0x9b59b6)
         embed.add_field(name="**Error :(**", value=f"Bot: {arg} does not exist. Try running ***.bot help*** for help  with bot commands...", inline=False)
         await context.message.reply(embed=embed, mention_author=False)
+
+@client.command()
+async def help(context):
+    async with context.typing():
+        await asyncio.sleep(1)
+        embed = discord.Embed(colour=0x9b59b6)
+        embed.add_field(name="**Error :(**", value="Commands are categorized in sections. For help command, type **.bot help**")
+        await context.reply(embed=embed, mention_author=False)
 
 client.run(Token, reconnect=True)

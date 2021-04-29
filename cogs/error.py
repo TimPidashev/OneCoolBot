@@ -1,6 +1,5 @@
 import discord
 import traceback
-import lavalink
 import sys
 import aiohttp
 from discord.ext import commands
