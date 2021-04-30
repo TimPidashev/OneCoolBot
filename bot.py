@@ -152,7 +152,7 @@ async def shutdown(context, arg):
             return user == context.author and str(reaction.emoji) in ["✔️", "❌"]
 
         while True:
-            timer = float(3.5).
+            timer = float(3.5)
             try:
                 reaction, user = await context.bot.wait_for("reaction_add", timeout=10, check=check)
 
