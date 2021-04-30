@@ -34,8 +34,8 @@ class OneCoolBot(commands.Bot):
     
     async def on_ready(self):
         print(colored("[main]:", "magenta"), colored("Bot is back up...", "green"))
-
         await self.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
+        db.connect("./data/database.db")
 
         logger = logging.getLogger("discord")
         logger.setLevel(logging.DEBUG)
@@ -58,23 +58,38 @@ for filename in os.listdir('./cogs'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
 @client.group(pass_context=True, invoke_without_command=True)
-async def bot(context):   
-    if context.invoked_subcommand is None:
+async def bot(context): 
+    print(colored("[main}:", "magenta"), colored(f"Super command(bot) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
+    message = context.message  
+    prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
+        context.guild.id,
+    )[0]
+    if message.content == f"{prefix}bot":
         async with context.typing():
             await asyncio.sleep(1)
             embed = discord.Embed(
-                title=".bot <?>", 
+                title=f"{prefix}bot <?>", 
                 description="You have found a *super command!* With this command you can do anything your heart desires, well almost...", 
                 colour=0x9b59b6
             )   
             embed.set_footer(
-                text="For more information on what this command does, type `bot .help`"
+                text=f"For more information on what this command does, type `{prefix}bot help`"
             )
             await context.reply(embed=embed, mention_author=False)
-            
-#    elif context.invoke_without_command:
-#         print("test")
-        
+    else:
+        embed = discord.Embed(
+            colour=0x9b59b6
+        )
+        embed.add_field(
+            name="**Error :(**", 
+            value=f"This is not a valid command. Try running `{prefix}bot help` for help with bot commands...", 
+            inline=False
+        )
+        if context.author == context.guild.owner:
+            embed.set_footer(
+                text=f"To disable error messages, type: {prefix}bot error_notifs off"
+            )
+        await context.message.reply(embed=embed, mention_author=False)
 
 @bot.command()
 @commands.is_owner()
@@ -85,9 +100,6 @@ async def load(context, extension):
         title="Your wish is my command",
         description=f"Loaded cogs.{extension}",
         colour=0x9b59b6
-    )
-    embed.set_footer(
-        text=".bot owner_notifs off to turn off notifs."
     )
     await context.reply(embed=embed, mention_author=False)
 
@@ -101,9 +113,6 @@ async def unload(context, extension):
         description=f"Unloaded cogs.{extension}",
         colour=0x9b59b6
     )
-    embed.set_footer(
-        text=".bot owner_notifs off to turn off notifs."
-    )
     await context.reply(embed=embed, mention_author=False)
 
 @bot.command()
@@ -116,20 +125,115 @@ async def reload(context, extension):
         description=f"Reloaded cogs.{extension}",
         colour=0x9b59b6
     )
-    embed.set_footer(
-        text=".bot owner_notifs off to turn off notifs."
-    )
     await context.reply(embed=embed, mention_author=False)
 
 @bot.command()
 @commands.is_owner()
-async def shutdown(context):
-    await context.bot.logout()
+async def shutdown(context, arg):
+    print(colored("[main]:", "magenta"), colored(f"Initiated shutdown process by request from {context.author.name}#{context.author.discriminator}...", "green"))
+    
+    if arg == "now":
+        
+        embed = discord.Embed(
+            colour=0x9b59b6
+        )
+        embed.insert_field_at(
+            index=0,
+            name="**Shutdown**",
+            value="Initiate shutdown now?",
+            inline=False
+        )
+        
+        message = await context.reply(embed=embed, mention_author=False)
+        await message.add_reaction("✔️")
+        await message.add_reaction("❌")
+
+        def check(reaction, user):
+            return user == context.author and str(reaction.emoji) in ["✔️", "❌"]
+
+        while True:
+            timer = float(3.5).
+            try:
+                reaction, user = await context.bot.wait_for("reaction_add", timeout=10, check=check)
+
+                if str(reaction.emoji) == "✔️":
+                    unload_complete = False
+                    embed.remove_field(index=0)
+                    embed.insert_field_at(
+                        index=0,
+                        name="**Unloading Cogs**",
+                        value="🟠 Starting...", 
+                        inline=False
+                    )
+                    await message.edit(embed=embed, mention_author=False)
+                    await message.remove_reaction(reaction, user)
+
+                    for filename in os.listdir('./cogs'):
+                        if filename.endswith('.py'):
+                            client.unload_extension(f'cogs.{filename[:-3]}')
+                            print(colored("[main]:", "magenta"), colored(f"Unloaded cogs.{filename[:-3]}...", "green"))
+                            embed.remove_field(index=0)
+                            embed.insert_field_at(
+                                index=0,
+                                name="**Unloading Cogs**",
+                                value=f"🟡 Unloaded cogs.{filename[:-3]}...",
+                                inline=False
+                            )
+                            await message.edit(embed=embed, mention_author=False)
+                            await message.remove_reaction(reaction, user)
+                            time.sleep(.5)
+                            timer -= .5
+
+                            if timer == 0:
+                                print(colored("[main]:", "magenta"), colored(f"Unloading cogs complete...", "green"))
+                                embed.remove_field(index=0)
+                                embed.insert_field_at(
+                                    index=0,
+                                    name="**Unloading Cogs**",
+                                    value=f"🟢 Unloaded all cogs...",
+                                    inline=False
+                                )
+                                await message.edit(embed=embed, mention_author=False)
+                                await message.remove_reaction(reaction, user)         
+
+
+                elif str(reaction.emoji) == "❌":
+                    embed.remove_field(index=0)
+                    embed.insert_field_at(
+                        index=0,
+                        name="**Shutdown**",
+                        value="Shutdown has been aborted."
+                    )
+                    await message.edit(embed=embed)
+                    await message.remove_reaction(reaction, user)
+                    await asyncio.sleep(3)
+                    await message.delete()
+                    break
+
+                else:
+                    await message.remove_reaction(reaction, user)
+
+            except asyncio.TimeoutError:
+                await message.delete()
+                #add context message delete here
+                break
+
+
+
+    
+
+
+
+
+
+    # await context.bot.logout()
 
 @bot.command()
 async def help(context):
-    print(colored("[main]:", "magenta"), colored("command(help) used...", "green"))
-    
+    print(colored("[main}:", "magenta"), colored(f"SubCommand(help) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
+    prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
+        context.guild.id,
+    )[0]
     #page 1
     page_1 = discord.Embed(
         title="Index",
@@ -187,7 +291,7 @@ async def help(context):
         inline=False
     )
     page_2.set_footer(
-        text="To use these commands, type .bot <command_name>"
+        text=f"To use these commands, type {prefix}bot <command_name>"
     )
     
     #page 3
@@ -212,7 +316,7 @@ async def help(context):
         inline=False
     )
     page_3.set_footer(
-        text="To use these commands, type .eco <command_name>"
+        text=f"To use these commands, type {prefix}eco <command_name>"
     )
 
     page_4 = discord.Embed(
@@ -242,7 +346,7 @@ async def help(context):
         inline=False
     )
     page_4.set_footer(
-        text="To use these commands, type .game <command_name>. For more help on game commands, type .game help"
+        text=f"To use these commands, type {prefix}game <command_name>. For more help on game commands, type {prefix}game help"
     )
 
     #page 5
@@ -252,22 +356,22 @@ async def help(context):
         colour=0x9b59b6
     )
     page_5.add_field(
-        name="`clear` <message_amount>",
+        name=f"`{prefix}clear` <message_amount>",
         value="Clear messages from a channel.",
         inline=False
     )
     page_5.add_field(
-        name="`kick` <@member> <reason>",
+        name=f"`{prefix}kick` <@member> <reason>",
         value="Kick mentioned member from server.",
         inline=False
     )
     page_5.add_field(
-        name="`ban` <@member> <reason>",
+        name=f"`{prefix}ban` <@member> <reason>",
         value="Ban mentioned member from server.",
         inline=False
     )
     page_5.add_field(
-        name="`unban` <@member> <reason>",
+        name=f"`{prefix}unban` <@member> <reason>",
         value="Unbans mentioned member from server.",
         inline=False
     )
@@ -341,7 +445,7 @@ async def help(context):
 
 @bot.command()
 async def info(context):
-    print(colored("[main]:", "magenta"), colored("command(info) used...", "green"))
+    print(colored("[main}:", "magenta"), colored(f"SubCommand(info) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
     async with context.typing():
         await asyncio.sleep(1)
 
@@ -394,13 +498,5 @@ async def info(context):
         )
 
         message = await context.message.reply(embed=embed, mention_author=False)
-
-# @client.command()
-# async def help(context):
-#     async with context.typing():
-#         await asyncio.sleep(1)
-#         embed = discord.Embed(colour=0x9b59b6)
-#         embed.add_field(name="**Error :(**", value="Commands are categorized in sections. For help command, type **.bot help**")
-#         await context.reply(embed=embed, mention_author=False)
 
 client.run(Token, reconnect=True)
