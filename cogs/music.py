@@ -126,7 +126,7 @@ class Player(wavelink.Player):
         channel = self.bot.get_channel(int(self.channel_id))
         qsize = self.queue.qsize()
 
-        embed = discord.Embed(title=f'Music Controller | {channel.name}', colour=0xebb145)
+        embed = discord.Embed(title=f'Music Controller | {channel.name}', colour=0x9b59b6)
         embed.description = f'Now Playing:\n**`{track.title}`**\n\n'
         embed.set_thumbnail(url=track.thumb)
 
@@ -336,7 +336,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
     @wavelink.WavelinkMixin.listener()
     async def on_node_ready(self, node: wavelink.Node):
-        print(colored(f'Successfully connected to node {node.identifier}!', 'green'))
+        print(colored("[music]:", "magenta"), colored(f"connected to node {node.identifier}...", "green"))
 
     @wavelink.WavelinkMixin.listener('on_track_stuck')
     @wavelink.WavelinkMixin.listener('on_track_end')
@@ -782,6 +782,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     @commands.command()
     async def music(self, ctx):
         """Retrieve various Node/Server/Player information."""
+        print(colored("[main]:", "magenta"), colored("command(music) used...", "green"))
         player = self.bot.wavelink.get_player(ctx.guild.id)
         node = player.node
 
@@ -789,17 +790,48 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         total = humanize.naturalsize(node.stats.memory_allocated)
         free = humanize.naturalsize(node.stats.memory_free)
         cpu = node.stats.cpu_cores
-
-        fmt = f'**WaveLink:** `{wavelink.__version__}`\n\n' \
-              f'Connected to `{len(self.bot.wavelink.nodes)}` nodes.\n' \
-              f'Best available Node `{self.bot.wavelink.get_best_node().__repr__()}`\n' \
-              f'`{len(self.bot.wavelink.players)}` players are distributed on nodes.\n' \
-              f'`{node.stats.players}` players are distributed on server.\n' \
-              f'`{node.stats.playing_players}` players are playing on server.\n\n' \
-              f'Server Memory: `{used}/{total}` | `({free} free)`\n' \
-              f'Server CPU: `{cpu}`\n\n' \
-              f'Server Uptime: `{datetime.timedelta(milliseconds=node.stats.uptime)}`'
-        await ctx.send(fmt)
+        
+        embed = discord.Embed(
+            title="Music Status",
+            colour=0x9b59b6
+        )
+        embed.set_thumbnail(
+            url=ctx.bot.user.avatar_url
+        )
+        embed.add_field(
+            name="Connection",
+            value=f"Connected to {len(self.bot.wavelink.nodes)} nodes.",
+            inline=False
+        )
+        embed.add_field(
+            name="Best Available Node",
+            value=f"{self.bot.wavelink.get_best_node().__repr__()}",
+            inline=False
+        )
+        embed.add_field(
+            name="Server Memory",
+            value=f"{used}/{total} | ({free} free)",
+            inline=False
+        )
+        embed.add_field(
+            name="Server CPU",
+            value=f"{cpu}",
+            inline=False
+        )
+        embed.add_field(
+            name="Server Uptime",
+            value=f"{datetime.timedelta(milliseconds=node.stats.uptime)}",
+            inline=False
+        )
+        embed.add_field(
+            name="Additional Information",
+            value=f"{node.stats.players} players are distributed on server.\n {node.stats.playing_players} players are playing on server.",
+            inline=False
+        )
+        embed.set_footer(
+            text=f"Wavelink v{wavelink.__version__}"
+        )
+        await ctx.reply(embed=embed, mention_author=False)
 
 def setup(bot: commands.Bot):
     bot.add_cog(Music(bot))
