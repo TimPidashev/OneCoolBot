@@ -64,18 +64,18 @@ async def bot(context):
     prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
         context.guild.id,
     )[0]
+
     if message.content == f"{prefix}bot":
-        async with context.typing():
-            await asyncio.sleep(1)
-            embed = discord.Embed(
-                title=f"{prefix}bot <?>", 
-                description="You have found a *super command!* With this command you can do anything your heart desires, well almost...", 
-                colour=0x9b59b6
-            )   
-            embed.set_footer(
-                text=f"For more information on what this command does, type `{prefix}bot help`"
-            )
-            await context.reply(embed=embed, mention_author=False)
+        embed = discord.Embed(
+            title=f"{prefix}bot <?>", 
+            description="You have found a *super command!* With this command you can do anything your heart desires, well almost...", 
+            colour=0x9b59b6
+        )   
+        embed.set_footer(
+            text=f"For more information on what this command does, type {prefix}bot help"
+        )
+        await context.reply(embed=embed, mention_author=False)
+
     else:
         embed = discord.Embed(
             colour=0x9b59b6
@@ -85,11 +85,13 @@ async def bot(context):
             value=f"This is not a valid command. Try running `{prefix}bot help` for help with bot commands...", 
             inline=False
         )
+
         if context.author == context.guild.owner:
             embed.set_footer(
                 text=f"To disable error messages, type: {prefix}bot error_notifs off"
             )
-        await context.message.reply(embed=embed, mention_author=False)
+
+        await context.reply(embed=embed, mention_author=False)
 
 @bot.command()
 @commands.is_owner()
@@ -218,22 +220,13 @@ async def shutdown(context, arg):
                 #add context message delete here
                 break
 
-
-
-    
-
-
-
-
-
-    # await context.bot.logout()
-
 @bot.command()
 async def help(context):
-    print(colored("[main}:", "magenta"), colored(f"SubCommand(help) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
+    print(colored("[main}:", "magenta"), colored(f"Bot sub-command(help) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
     prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
         context.guild.id,
     )[0]
+    
     #page 1
     page_1 = discord.Embed(
         title="Index",
@@ -253,6 +246,11 @@ async def help(context):
     page_1.add_field(
         name="`Games`", 
         value="Play with friends, compete with strangers, and make some extra :coin: while having fun!",
+        inline=False
+    )
+    page_1.add_field(
+        name="`Music`",
+        value="Listen to low-latency music streams for studying and hanging with friends in voice-chat!",
         inline=False
     )
     page_1.add_field(
@@ -286,7 +284,7 @@ async def help(context):
         inline=False
     )
     page_2.add_field(
-        name="`userinfo`,",
+        name="`userinfo`,", 
         value="Displays user info, such as xp, statistics, and rank.",
         inline=False
     )
@@ -348,34 +346,49 @@ async def help(context):
     page_4.set_footer(
         text=f"To use these commands, type {prefix}game <command_name>. For more help on game commands, type {prefix}game help"
     )
-
+    
     #page 5
     page_5 = discord.Embed(
+        title="Music",
+        description="Listen to low-latency music streams for studying and hanging with friends in voice-chat!",
+        colour=0x9b59b6
+    )
+    page_5.add_field(
+        name="Commands",
+        value="`connect` connect bot to voice chat\n`play` <search song to play>\n`pause` pause player\n`resume` resume player\n`skip` skip current song\n`stop`\n`volume` change volume\n`shuffle` shuffle queue\n`equalizer` change equalizer\n`queue` see songs queue\n`current` see currently played song\n`swap` swap song\n`music` see music status\n`spotify` see spotify rich presence",
+        inline=False
+    )
+    page_5.set_footer(
+        text=f"confused? use this handy command: {prefix}bot music help"
+    )
+
+    #page 6
+    page_6 = discord.Embed(
         title="Moderation", 
         description="Make sure your server is always under control, with an advanced toolset for your moderators, and auto-moderation for the tech-savvy!", 
         colour=0x9b59b6
     )
-    page_5.add_field(
+    page_6.add_field(
         name=f"`{prefix}clear` <message_amount>",
         value="Clear messages from a channel.",
         inline=False
     )
-    page_5.add_field(
+    page_6.add_field(
         name=f"`{prefix}kick` <@member> <reason>",
         value="Kick mentioned member from server.",
         inline=False
     )
-    page_5.add_field(
+    page_6.add_field(
         name=f"`{prefix}ban` <@member> <reason>",
         value="Ban mentioned member from server.",
         inline=False
     )
-    page_5.add_field(
+    page_6.add_field(
         name=f"`{prefix}unban` <@member> <reason>",
         value="Unbans mentioned member from server.",
         inline=False
     )
-    page_5.set_footer(
+    page_6.set_footer(
         text="Moderation commands are not args, and can be used as shown above."
     )
 
@@ -383,7 +396,7 @@ async def help(context):
     await message.add_reaction("◀️")
     await message.add_reaction("▶️")
     await message.add_reaction("❌")
-    pages = 5
+    pages = 6
     current_page = 1
 
     def check(reaction, user):
@@ -411,6 +424,10 @@ async def help(context):
                 elif current_page == 5:
                     await message.edit(embed=page_5)
                     await message.remove_reaction(reaction, user)
+
+                elif current_page == 6:
+                    await message.edit(embed=page_6)
+                    await message.remove_reaction(reaction, user)
             
             if str(reaction.emoji) == "◀️" and current_page > 1:
                 current_page -= 1
@@ -431,6 +448,10 @@ async def help(context):
                     await message.edit(embed=page_4)
                     await message.remove_reaction(reaction, user)
 
+                elif current_page == 5:
+                    await message.edit(embed=page_5)
+                    await message.remove_reaction(reaction, user)
+
             if str(reaction.emoji) == "❌":
                 await message.delete()
                 break
@@ -445,58 +466,56 @@ async def help(context):
 
 @bot.command()
 async def info(context):
-    print(colored("[main}:", "magenta"), colored(f"SubCommand(info) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
-    async with context.typing():
-        await asyncio.sleep(1)
+    print(colored("[main}:", "magenta"), colored(f"Bot sub-command(info) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
 
-        before = time.monotonic()
-        before_ws = int(round(client.latency * 1000, 1))
-        ping = (time.monotonic() - before) * 1000
-        ramUsage = client.process.memory_full_info().rss / 1024**2
-        avgmembers = round(len(client.users) / len(client.guilds))
-        current_time = time.time()
-        difference = int(round(current_time - start_time))
-        text = str(timedelta(seconds=difference))
+    before = time.monotonic()
+    before_ws = int(round(client.latency * 1000, 1))
+    ping = (time.monotonic() - before) * 1000
+    ramUsage = client.process.memory_full_info().rss / 1024**2
+    avgmembers = round(len(client.users) / len(client.guilds))
+    current_time = time.time()
+    difference = int(round(current_time - start_time))
+    text = str(timedelta(seconds=difference))
 
-        embed = discord.Embed(
-            title="Bot Info",
-            description="Everything about me!",
-            colour=0x9b59b6
-        )
-        embed.set_thumbnail(
-            url=context.bot.user.avatar_url
-        )
-        embed.add_field(
-            name="Developer",
-            value="𝓣𝓲𝓶𝓶𝔂#6955"
-        )
-        embed.add_field(
-            name="Users", 
-            value=f"{len(context.guild.members)}", 
-            inline=True
-        )
-        embed.add_field(
-            name="Ping", 
-            value=f"{before_ws}ms"
-        )
-        embed.add_field(
-            name="RAM Usage", 
-            value=f"{ramUsage:.2f} MB", 
-            inline=True
-        )
-        embed.add_field(
-            name="Uptime", 
-            value=text, 
-            inline=True
-        )
-        embed.add_field(
-            name="Version", 
-            value="Ver 0.1.4"
-        )
-        embed.set_footer(
-            text="Most recent changes(rewrite): more args!"
-        )
+    embed = discord.Embed(
+        title="Bot Info",
+        description="Everything about me!",
+        colour=0x9b59b6
+    )
+    embed.set_thumbnail(
+        url=context.bot.user.avatar_url
+    )
+    embed.add_field(
+        name="Developer",
+        value="𝓣𝓲𝓶𝓶𝔂#6955"
+    )
+    embed.add_field(
+        name="Users", 
+        value=f"{len(context.guild.members)}", 
+        inline=True
+    )
+    embed.add_field(
+        name="Ping", 
+        value=f"{before_ws}ms"
+    )
+    embed.add_field(
+        name="RAM Usage", 
+        value=f"{ramUsage:.2f} MB", 
+        inline=True
+    )
+    embed.add_field(
+        name="Uptime", 
+        value=text, 
+        inline=True
+    )
+    embed.add_field(
+        name="Version", 
+        value="Ver 0.1.4"
+    )
+    embed.set_footer(
+        text="Most recent changes(rewrite): more args!"
+    )
 
-        message = await context.message.reply(embed=embed, mention_author=False)
+    message = await context.message.reply(embed=embed, mention_author=False)
 
 client.run(Token, reconnect=True)

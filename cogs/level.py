@@ -20,42 +20,42 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 
-class Menu(ListPageSource):
-    def __init__(self, context, data):
-        self.context = context
+# class Menu(ListPageSource):
+#     def __init__(self, context, data):
+#         self.context = context
 
-        super().__init__(data, per_page=10)
+#         super().__init__(data, per_page=10)
 
-    async def write_page(self, menu, offset, fields=[]):
-        offset = (menu.current_page * self.per_page) + 1
-        len_data = len(self.entries)
+#     async def write_page(self, menu, offset, fields=[]):
+#         offset = (menu.current_page * self.per_page) + 1
+#         len_data = len(self.entries)
 
-        embed = Embed(
-            title="Leaderboard",
-            colour=self.context.author.colour,
-        )
+#         embed = Embed(
+#             title="Leaderboard",
+#             colour=self.context.author.colour,
+#         )
 
-        embed.set_thumbnail(url=self.context.guild.me.avatar_url)
-        embed.set_footer(
-            text=f"{offset:,} - {min(len_data, offset+self.per_page-1):,} of {len_data:,} members."
-        )
+#         embed.set_thumbnail(url=self.context.guild.me.avatar_url)
+#         embed.set_footer(
+#             text=f"{offset:,} - {min(len_data, offset+self.per_page-1):,} of {len_data:,} members."
+#         )
 
-        for name, value in fields:
-            embed.add_field(name=name, value=value, inline=False)
+#         for name, value in fields:
+#             embed.add_field(name=name, value=value, inline=False)
 
-        return embed
+#         return embed
 
-    async def format_page(self, menu, entries):
-        offset = (menu.current_page * self.per_page) + 1
-        fields = []
-        table = "\n".join(
-            f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** ~ `{entry[1]}`"
-            for idx, entry in enumerate(entries)
-        )
+#     async def format_page(self, menu, entries):
+#         offset = (menu.current_page * self.per_page) + 1
+#         fields = []
+#         table = "\n".join(
+#             f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** ~ `{entry[1]}`"
+#             for idx, entry in enumerate(entries)
+#         )
 
-        fields.append(("Top members:", table))
+#         fields.append(("Top members:", table))
 
-        return await self.write_page(menu, offset, fields)
+#         return await self.write_page(menu, offset, fields)
 
 class level(commands.Cog):
     def __init__(self, client):
