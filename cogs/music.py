@@ -338,6 +338,10 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def on_node_ready(self, node: wavelink.Node):
         print(colored("[music]:", "magenta"), colored(f"connected to node {node.identifier}...", "green"))
 
+    @wavelink.WavelinkMixin.listener()
+    async def on_websocket_closed(self, node: wavelink.Node):
+        print(colored("[music]:", "magenta"), colored("Connection lost to node {node.identifier}...", "green"))
+
     @wavelink.WavelinkMixin.listener('on_track_stuck')
     @wavelink.WavelinkMixin.listener('on_track_end')
     @wavelink.WavelinkMixin.listener('on_track_exception')

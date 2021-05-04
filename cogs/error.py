@@ -1,5 +1,6 @@
 import discord
 import traceback
+import wavelink
 import sys
 import aiohttp
 from discord.ext import commands

@@ -57,6 +57,15 @@ for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
+@client.command()
+async def test(context):
+    embed = discord.Embed(
+        title="```fix\nSHHHHHHHHHHHH```",
+        description="```fix\nSHHHHHHHHHHHH```",
+        colour=0x9b59b6
+    )
+    await context.reply(embed=embed, mention_author=False)
+
 @client.group(pass_context=True, invoke_without_command=True)
 async def bot(context): 
     print(colored("[main}:", "magenta"), colored(f"Super command(bot) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
