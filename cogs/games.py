@@ -16,6 +16,7 @@ from discord.ext.commands import Cog
 from discord import Embed, Emoji
 import sqlite3
 import time
+import log
 
 class games(commands.Cog):
     def __init__(self, client, *args, **kwargs):
@@ -23,12 +24,12 @@ class games(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[games]:", "magenta"), colored("online...", "green"))
+        await log.online(self)
         db.connect("./data/database.db")
 
     @commands.group(pass_context=True, invoke_without_command=True)
     async def game(self, context):
-        print(colored("[main}:", "magenta"), colored(f"Super command(game) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
+        await log.cog_command(self, context)
         message = context.message  
         prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
             context.guild.id,
@@ -64,7 +65,7 @@ class games(commands.Cog):
 
     @game.command()
     async def help(self, context):
-        print(colored("[main}:", "magenta"), colored(f"Game sub-command(help) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
+        await log.cog_command(self, context)
         prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
             context.guild.id,
         )[0]
@@ -263,6 +264,71 @@ class games(commands.Cog):
                 break
 
 
+    @game.command()
+    async def count(self, context):
+        await log.cog_command(self, context)
+        emoji = self.client.get_emoji(823934633116303431)
+        start_timer = int(60)
+        timer = 60
+
+        embed = discord.Embed(
+            colour=0x9b59b6
+        )
+        embed.add_field(
+            name="**Count**",
+            value="Count as high as you can!",
+            inline=False
+        )
+        embed.insert_field_at(
+            index=1,
+            name=":trophy:React below to join the match.",
+            value=f":stopwatch:Match starts in: {start_timer}'s",
+            inline=False
+        )
+        embed.set_footer(
+            text="Winner gets 1000 coins!"
+        )
+        message = await context.reply(embed=embed, mention_author=False)
+        await message.add_reaction(emoji)
+
+        while timer != 0:
+            timer = timer - 1
+            embed.remove_field(index=1)
+            embed.insert_field_at(
+                index=1,
+                name=":trophy:React below to join the match.",
+                value=f":stopwatch:Match starts in: {timer}'s",
+                inline=False
+            )
+            await message.edit(embed=embed)
+            time.sleep(1)
+
+            if timer == 0:
+                embed.remove_field(index=1)
+                embed.insert_field_at(
+                    index=1,
+                    name=":trophy:The match has started!",
+                    value=f"Commence typing!",
+                    inline=False
+                )
+                await message.edit(embed=embed)
+
+                fetch_message = await context.channel.fetch_message(message.id)
+                users = await fetch_message.reactions[0].users().flatten()
+                users.pop(users.index(self.client.user))
+
+                start_game = True
+                count = 0
+
+                # while start_game != False:
+                #     commands.Cog.listener()
+                #     async def on_message(self, message):
+                #         if not message.author.bot() and message.channel = game_channel:
+                #             if message.content.startswith("1"):
+                #                 count = count += 1
+                #                 print(count)
+                #                 break
+
 
 
 
@@ -318,14 +384,14 @@ class games(commands.Cog):
         #             start_game = True
         #             count = 0
 
-                    # while start_game != False:
-                    #     commands.Cog.listener()
-                    #     async def on_message(self, message):
-                    #         if not message.author.bot() and message.channel = game_channel:
-                    #             if message.content.startswith("1"):
-                    #                 count = count += 1
-                    #                 print(count)
-                    #                 break
+        #             while start_game != False:
+        #                 commands.Cog.listener()
+        #                 async def on_message(self, message):
+        #                     if not message.author.bot() and message.channel = game_channel:
+        #                         if message.content.startswith("1"):
+        #                             count = count += 1
+        #                             print(count)
+        #                             break
                                     
                         
 
@@ -335,10 +401,7 @@ class games(commands.Cog):
 
                     # await context.reply(users, mention_author=False)
         
-        else:
-            embed = discord.Embed(colour=0x9b59b6)
-            embed.add_field(name="**Error :(**", value=f"Game: {arg} does not exist. Try running ***.game help*** for help  with game command...", inline=False)
-            await context.reply(embed=embed, mention_author=False)
+        
 
 def setup(client):
     client.add_cog(games(client))

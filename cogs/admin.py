@@ -1,7 +1,6 @@
 import discord
 from discord.ext import commands, tasks
-from termcolor import colored
-from db import db
+import log
 
 class admin(commands.Cog):
     def __init__(self, client):
@@ -9,8 +8,7 @@ class admin(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[admin]:", "magenta"), colored("online...", "green"))
-        db.connect("./data/database.db")
+        await log.online(self)
 
 def setup(client):
     client.add_cog(admin(client))

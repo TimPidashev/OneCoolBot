@@ -4,6 +4,7 @@ import random
 import sqlite3
 import time
 import os
+import log
 from db import db
 from os.path import isfile
 from typing import Optional
@@ -19,7 +20,7 @@ class economy(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[economy]:", "magenta"), colored("online...", "green"))
+        await log.online(self)
         db.connect("./data/database.db")
 
     

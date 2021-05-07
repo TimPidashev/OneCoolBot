@@ -6,8 +6,8 @@ import asyncio
 import logging
 import sqlite3
 from glob import glob
-from pyfiglet import Figlet
 from db import db
+import log
 from discord.utils import get
 from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -22,9 +22,7 @@ load_dotenv()
 Token = os.getenv("BOT_TOKEN")
 
 start_time = time.time()
-
-logo = Figlet(font="graffiti")
-print(colored(logo.renderText("OneCoolBot"), "magenta"))
+log.logo()
 
 class OneCoolBot(commands.Bot):
     def __init__(self, *args, **kwargs):
@@ -33,13 +31,12 @@ class OneCoolBot(commands.Bot):
         #self.ipc = ipc.Server(self, secret_key="my_secret_key")
     
     async def on_ready(self):
-        print(colored("[main]:", "magenta"), colored("Bot is back up...", "green"))
         await self.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
         db.connect("./data/database.db")
 
         logger = logging.getLogger("discord")
         logger.setLevel(logging.DEBUG)
-        handler = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="w")
+        handler = logging.FileHandler(filename="./data/discord.log", encoding="utf-8", mode="w")
         handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
         logger.addHandler(handler)  
 
@@ -68,7 +65,7 @@ async def test(context):
 
 @client.group(pass_context=True, invoke_without_command=True)
 async def bot(context): 
-    print(colored("[main}:", "magenta"), colored(f"Super command(bot) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
+    await log.client_command(context)
     message = context.message  
     prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
         context.guild.id,
@@ -105,8 +102,8 @@ async def bot(context):
 @bot.command()
 @commands.is_owner()
 async def load(context, extension):
-    client.load_extension(f'cogs.{extension}')
-    print(colored("[main]:", "magenta"), colored(f"Loaded cogs.{extension}...", "green"))
+    await client.load_extension(f'cogs.{extension}')
+    log.client_command(context)
     embed = discord.Embed(
         title="Your wish is my command",
         description=f"Loaded cogs.{extension}",
@@ -118,7 +115,7 @@ async def load(context, extension):
 @commands.is_owner()
 async def unload(context, extension):
     client.unload_extension(f'cogs.{extension}')
-    print(colored("[main]:", "magenta"), colored(f"Unloaded cogs.{extension}...", "green"))
+    await log.client_command(context)
     embed = discord.Embed(
         title="Your wish is my command",
         description=f"Unloaded cogs.{extension}",
@@ -130,7 +127,7 @@ async def unload(context, extension):
 @commands.is_owner()
 async def reload(context, extension):
     client.reload_extension(f'cogs.{extension}')
-    print(colored("[main]:", "magenta"), colored(f"Reloaded cogs.{extension}...", "green"))
+    await log.client_command(context)
     embed = discord.Embed(
         title="Your wish is my command",
         description=f"Reloaded cogs.{extension}",
@@ -139,99 +136,8 @@ async def reload(context, extension):
     await context.reply(embed=embed, mention_author=False)
 
 @bot.command()
-@commands.is_owner()
-async def shutdown(context, arg):
-    print(colored("[main]:", "magenta"), colored(f"Initiated shutdown process by request from {context.author.name}#{context.author.discriminator}...", "green"))
-    
-    if arg == "now":
-        
-        embed = discord.Embed(
-            colour=0x9b59b6
-        )
-        embed.insert_field_at(
-            index=0,
-            name="**Shutdown**",
-            value="Initiate shutdown now?",
-            inline=False
-        )
-        
-        message = await context.reply(embed=embed, mention_author=False)
-        await message.add_reaction("✔️")
-        await message.add_reaction("❌")
-
-        def check(reaction, user):
-            return user == context.author and str(reaction.emoji) in ["✔️", "❌"]
-
-        while True:
-            timer = float(3.5)
-            try:
-                reaction, user = await context.bot.wait_for("reaction_add", timeout=10, check=check)
-
-                if str(reaction.emoji) == "✔️":
-                    unload_complete = False
-                    embed.remove_field(index=0)
-                    embed.insert_field_at(
-                        index=0,
-                        name="**Unloading Cogs**",
-                        value="🟠 Starting...", 
-                        inline=False
-                    )
-                    await message.edit(embed=embed, mention_author=False)
-                    await message.remove_reaction(reaction, user)
-
-                    for filename in os.listdir('./cogs'):
-                        if filename.endswith('.py'):
-                            client.unload_extension(f'cogs.{filename[:-3]}')
-                            print(colored("[main]:", "magenta"), colored(f"Unloaded cogs.{filename[:-3]}...", "green"))
-                            embed.remove_field(index=0)
-                            embed.insert_field_at(
-                                index=0,
-                                name="**Unloading Cogs**",
-                                value=f"🟡 Unloaded cogs.{filename[:-3]}...",
-                                inline=False
-                            )
-                            await message.edit(embed=embed, mention_author=False)
-                            await message.remove_reaction(reaction, user)
-                            time.sleep(.5)
-                            timer -= .5
-
-                            if timer == 0:
-                                print(colored("[main]:", "magenta"), colored(f"Unloading cogs complete...", "green"))
-                                embed.remove_field(index=0)
-                                embed.insert_field_at(
-                                    index=0,
-                                    name="**Unloading Cogs**",
-                                    value=f"🟢 Unloaded all cogs...",
-                                    inline=False
-                                )
-                                await message.edit(embed=embed, mention_author=False)
-                                await message.remove_reaction(reaction, user)         
-
-
-                elif str(reaction.emoji) == "❌":
-                    embed.remove_field(index=0)
-                    embed.insert_field_at(
-                        index=0,
-                        name="**Shutdown**",
-                        value="Shutdown has been aborted."
-                    )
-                    await message.edit(embed=embed)
-                    await message.remove_reaction(reaction, user)
-                    await asyncio.sleep(3)
-                    await message.delete()
-                    break
-
-                else:
-                    await message.remove_reaction(reaction, user)
-
-            except asyncio.TimeoutError:
-                await message.delete()
-                #add context message delete here
-                break
-
-@bot.command()
 async def help(context):
-    print(colored("[main}:", "magenta"), colored(f"Bot sub-command(help) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
+    await log.client_command(context)
     prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
         context.guild.id,
     )[0]
@@ -475,7 +381,7 @@ async def help(context):
 
 @bot.command()
 async def info(context):
-    print(colored("[main}:", "magenta"), colored(f"Bot sub-command(info) used in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
+    await log.client_command(context)
 
     before = time.monotonic()
     before_ws = int(round(client.latency * 1000, 1))

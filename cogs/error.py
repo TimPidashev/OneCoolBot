@@ -10,18 +10,19 @@ from discord.utils import get
 import asyncio
 import sqlite3
 from db import db
+import log
 
-class errorhandler(commands.Cog):
+class error(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[error]:", "magenta"), colored("online...", "green"))
+        await log.online(self)
 
     @commands.command()
     async def help(self, context):
-        print(colored("[error]:", "magenta"), colored(f"{context.author.name}#{context.author.discriminator} was redirected  to help command in guild: {context.guild.name} | channel: {context.channel.name}...", "green"))
+        await log.error(self, context)
         prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
             context.guild.id,
         )[0]
@@ -66,4 +67,4 @@ class errorhandler(commands.Cog):
     #     pass
 
 def setup(client):
-    client.add_cog(errorhandler(client))
+    client.add_cog(error(client))

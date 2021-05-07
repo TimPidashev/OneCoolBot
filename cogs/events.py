@@ -16,6 +16,7 @@ from discord.ext.commands import Cog
 from discord import Embed, Emoji
 import sqlite3
 import time
+import log
 
 class events(commands.Cog):
     def __init__(self, client, *args, **kwargs):
@@ -23,7 +24,7 @@ class events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[events]:", "magenta"), colored("online...", "green"))
+        await log.online(self)
         db.connect("./data/database.db")
 
     @commands.Cog.listener()

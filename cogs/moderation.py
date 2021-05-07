@@ -2,6 +2,7 @@ import discord
 import asyncio
 import re
 import sqlite3
+import log
 from better_profanity import profanity
 from discord.ext import commands, tasks
 from discord.utils import get
@@ -16,7 +17,7 @@ class moderation(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-        print(colored("[moderation]:", "magenta"), colored("online...", "green"))
+       await log.online(self)
 
     #clear
     @commands.command()
