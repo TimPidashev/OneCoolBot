@@ -57,13 +57,12 @@ class level(commands.Cog):
                     )
 
                     db.commit()
-                    print(colored("[level]:", "magenta"), colored(f"Added {xp_to_add} xp to {message.author} in guild: {message.guild.name}...", "cyan"))
-                    print(colored("[economy]:", "magenta"), colored(f"Added {coins_on_xp} coins to {message.author} in guild: {message.guild.name}...", "blue"))
+                    await log.exp_add(self, message, xp_to_add)
+                    await log.coin_add(self, message, coins_on_xp)
 
                     if new_lvl > lvl:
                         await message.channel.send(f":partying_face: {message.author.mention} is now level **{new_lvl:,}**!")
-                        print(colored("[level]:", "magenta"), colored(f"{message.author} has leveled up to {new_lvl:,} in guild {message.guild.name}...", "cyan"))
-
+                        await log.level_up(self, message, new_lvl)
                 else:
                     pass
 
@@ -74,7 +73,7 @@ class level(commands.Cog):
                     message.author.id
                 )
                 db.commit()
-                print(colored("[level]:", "magenta"), colored(f"{message.author}#{message.author.discriminator} in guild: {message.guild.name} was added to users table...", "cyan"))
-
+                await log.member_redundant_add_db(self, message)
+                
 def setup(client):
     client.add_cog(level(client))

@@ -34,50 +34,46 @@ class events(commands.Cog):
         try:
             db.execute("INSERT INTO users (UserID) VALUES (?)", member.id)
             db.commit()
-            print(colored("[events]:", "magenta"), colored(f"{member.name}#{member.discriminator} was added into the users table...", "green"))
+            await log.member_add_db(self, member)
 
         except Exception as error:
-            print(colored("[events]:", "magenta"), colored(f"Error occurred when adding {member.name}#{member.discriminator} to users table... {error}", "red"))
+            await log.member_add_db_error(self, member)
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
-        print(colored("[events]:", "magenta"), colored(f"Joined guild: {guild.name}#{guild.id}", "green"))
+        await log.on_guild_join(self, guild)
 
         try:
             db.execute("INSERT INTO guilds (GuildID) VALUES (?)", guild.id)
             db.commit()
-            print(colored("[events]:", "magenta"), colored(f"{guild.name}#{guild.id} was added into the guilds table", "green"))
+            await log.guild_add_db(self, guild)
 
         except Exception as error:
-            print(colored("events]:", "magenta"), colored(f"Error occured when adding {guild.name}#{guild.id} to guilds table... {error}", "red"))
+            await log.guild_add_db_error(self, guild)
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        print(colored("[events]:", "magenta"), colored(f"{member.name}#{member.discriminator} left from {member.guild}#{member.guild.id} at {current_time}...", "yellow"))
+        await log.on_member_remove(self, member)
 
         try:
             db.execute("DELETE FROM users WHERE (UserID = ?)", member.id)
             db.commit()
-            print(colored("[events]:", "magenta"), colored(f"Removed {member.name}#{member.discriminator} from users table...", "yellow"))
+            await log.member_remove_db(self, member)
 
         except Exception as error:
-            print(colored("[events]:", "magenta"), colored(f"Error occurred when removing {member.id}#{member.discriminator} from users table... {error}", "red"))
+            await log.member_remove_db_error(self, member)
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        print(colored("[events]:", "magenta"), colored(f"Left guild: {guild.name}#{guild.id} at {current_time}...", "yellow"))
+        await log.on_guild_remove(self, guild)
 
         try:
             db.execute("DELETE FROM guilds WHERE (GuildID = ?)", guild.id)
             db.commit()
-            print(colored("[events]:", "magenta"), colored(f"Removed {guild.name}#{guild.id} from guilds table...", "yellow"))
+            await log.on_guild_remove_db(self, guild)
 
         except Exception as error:
-            print(colored("[events]:", "magenta"), colored(f"Error occured when removing guild: {guild.name}#{guild.id} from guilds table... {error}", "red"))
+            await log.guild_remove_db_error(self, guild)
 
 def setup(client):
     client.add_cog(events(client))

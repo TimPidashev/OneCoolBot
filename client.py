@@ -428,7 +428,7 @@ async def info(context):
         value="Ver 0.1.4"
     )
     embed.set_footer(
-        text="Most recent changes(rewrite): more args!"
+        text="Most recent changes: Added super-command(game)"
     )
 
     message = await context.message.reply(embed=embed, mention_author=False)

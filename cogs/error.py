@@ -22,7 +22,7 @@ class error(commands.Cog):
 
     @commands.command()
     async def help(self, context):
-        await help_error(self, context)
+        await log.help_error(self, context)
         prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
             context.guild.id,
         )[0]
@@ -40,18 +40,18 @@ class error(commands.Cog):
             )
         await context.reply(embed=embed, mention_author=False)
 
-    # @commands.Cog.listener()
-    # async def on_command_error(self, context, error):
-    #     #gets original error
-    #     error = getattr(error, 'original', error)
+    @commands.Cog.listener()
+    async def on_command_error(self, context, error):
+        #gets original error
+        error = getattr(error, 'original', error)
     
-    #     #if a local error handler exists...
-    #     if hasattr(context.command, 'on_error'):
-    #         return
+        #if a local error handler exists...
+        # if hasattr(context.command, 'on_error'):
+        #     return
     
-    #     #command_not_found
-    #     if isinstance(error, commands.CommandNotFound):
-    #         print(colored("[error]:", "magenta"), colored("An invalid command was sent, ignoring...", "red"))
+        #command_not_found
+        if isinstance(error, commands.CommandNotFound):
+            pass
     
     #disabled_command
     # if isinstance(error, commands.DisabledCommand):

@@ -15,6 +15,7 @@ from pythonping import ping
 from termcolor import colored
 from discord.ext import commands, menus, tasks
 from discord import Spotify
+import log
 
 # URL matching REGEX...
 URL_REG = re.compile(r'https?://(?:www\.)?.+')
@@ -336,12 +337,12 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
     @wavelink.WavelinkMixin.listener()
     async def on_node_ready(self, node: wavelink.Node):
-        print(colored("[music]:", "magenta"), colored(f"connected to node {node.identifier}...", "green"))
+        await log.music_node_connect(self, node)
 
     @wavelink.WavelinkMixin.listener()
     async def on_websocket_closed(self, node: wavelink.Node):
-        print(colored("[music]:", "magenta"), colored("Connection lost to node {node.identifier}...", "green"))
-
+       await log.music_node_disconnect(self, node)
+ 
     @wavelink.WavelinkMixin.listener('on_track_stuck')
     @wavelink.WavelinkMixin.listener('on_track_end')
     @wavelink.WavelinkMixin.listener('on_track_exception')
