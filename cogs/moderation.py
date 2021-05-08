@@ -24,7 +24,7 @@ class moderation(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     async def clear(self, context, amount=10):
         await context.channel.purge(limit=amount+1)
-        print(colored("[moderation]:", "magenta"), colored(f"removed {amount} messages...", "yellow"))
+        await log.clear_messages(self, context, amount)
 
     #kick
     @commands.command()
@@ -44,9 +44,10 @@ class moderation(commands.Cog):
             await context.channel.send(embed=embed1)
             await member.send(embed=embed2)
             await member.kick(reason=reason)
-            print(colored("[moderation]:", "magenta"), colored(f"{context.author} kicked {member}...", "yellow"))
+            await log.kick_member(self, context, member, reason=reason)
+
         except:
-            print(colored("[moderation]:", "magenta"), colored(f"an error occured while {context.author} was trying to kick/kicked {member}...", "red"))
+            await log.member_kick_error(self, context, member)
 
     #ban
     @commands.command()
@@ -66,14 +67,15 @@ class moderation(commands.Cog):
            await context.channel.send(embed=embed1)
            await member.send(embed=embed2)
            await member.ban(reason=reason)
-           print(colored("[moderation]:", "magenta"), colored(f"{context.author} banned {member}...", "yellow"))
+           await log.ban_member(self, context, member, reason=reason)
+
        except:
-            print(colored("[moderation]:", "magenta"), colored(f"an error occured while {context.author} was trying to ban/banned {member}...", "red"))
+            await log.ban_member_error(self, context, member)
 
     #unban(works, but needs help)
     @commands.command()
     @commands.has_permissions(ban_members=True)
-    async def unban(self, context, *, member):
+    async def unban(self, context, *, member, reason=None):
         banned_users = await context.guild.bans()
         member_name, member_discriminator = member.split('#')
         for ban_entry in banned_users:
@@ -83,14 +85,14 @@ class moderation(commands.Cog):
                 embed = discord.Embed(
                     colour = discord.Colour.green(),
                     title = f"{context.author} unbanned {user.name}#{user.discriminator}!",
-                    description = f"**Reason:** Good Behavior **By:** {context.author.mention}",
+                    description = f"**Reason:** {reason} **By:** {context.author.mention}",
                 )
                 await context.channel.send(embed=unban)
-                print(colored("[moderation]:", "magenta"), colored(f"{context.author} unbanned {user.name}#{user.discriminator}...", "yellow"))
+                await log.unban_member(self, context, member, reason=reason)
 
             else:
-                print(colored("[moderation]:", "magenta"), colored(f"{context.author} tried to unban/unbanned {user.name}#{user.discriminator}, but internal error occured...", "red"))
-
+                await log.unban_member_error(self, context, member)
+                
     #automoderation section below
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -104,21 +106,13 @@ class moderation(commands.Cog):
                     description = "Discord invite links are not allowed!"
                 )
                 await message.author.send(embed=embed)
-                print(colored("[moderation]:", "magenta"), colored(f"{message.author} tried to advertise: {message.content}...", "yellow"))
-
-            elif profanity.contains_profanity(message.content):
-                await message.delete()
-                embed = discord.Embed(
-                    colour = discord.Colour.red(),
-                    title = f"**Warning**",
-                    description = "Profanity is not allowed on this server!"
-                )
-                await message.author.send(embed=embed)
-                print(colored("[moderation]:", "magenta"), colored(f"{message.author}'s message({message.content}) was deleted...", "yellow"))
+                await log.advertise(self, message)
+                
+            else:
+                pass
 
         else:
             pass
-
 
 def setup(client):
     client.add_cog(moderation(client))

@@ -24,14 +24,18 @@ Token = os.getenv("BOT_TOKEN")
 start_time = time.time()
 log.logo()
 
+async def get_prefix(client, context):
+        prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")
+        return prefix
+
 class OneCoolBot(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         #self.ipc = ipc.Server(self, secret_key="my_secret_key")
-    
+
     async def on_ready(self):
-        await self.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
+        await self.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="115 users"))
         db.connect("./data/database.db")
 
         logger = logging.getLogger("discord")
@@ -46,7 +50,7 @@ class OneCoolBot(commands.Bot):
     async def on_ipc_error(self, endpoint, error):
         print(endpoint, "raised", error)
 
-client = OneCoolBot(command_prefix=".", intents=discord.Intents.all())
+client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all())
 client.process = psutil.Process(os.getpid())
 client.remove_command("help")  
 
@@ -199,8 +203,13 @@ async def help(context):
         inline=False
     )
     page_2.add_field(
-        name="`userinfo`,", 
+        name="`userinfo`", 
         value="Displays user info, such as xp, statistics, and rank.",
+        inline=False
+    )
+    page_2.add_field(
+        name="`prefix`",
+        value="Displays server prefix.",
         inline=False
     )
     page_2.set_footer(
@@ -434,26 +443,49 @@ async def info(context):
     message = await context.message.reply(embed=embed, mention_author=False)
 
 @bot.command()
-async def prefix(context):
+async def prefix(context, arg=None):
     await log.client_command(context)
+    
+    if arg is not None and context.author == context.guild.owner:
 
-    prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
-        context.guild.id,
-    )[0]
+        db.execute(f"UPDATE guilds SET Prefix = ? WHERE GuildID = {context.guild.id}",
+            arg
+        )
+        db.commit()
 
-    embed = discord.Embed(
-        name="Bot Prefix",
-        colour=0x9b59b6
-    )
-    embed.add_field(
-        name="Current Prefix",
-        value=f"The current prefix is `{prefix}`",
-        inline=False
-    )
-    if context.author == context.guild.owner:
-            embed.set_footer(
-                text=f"To change the prefix, use command: {prefix}bot prefix <new_prefix>"
-            )
-    await context.reply(embed=embed, mention_author=False)
+        prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
+            context.guild.id,
+        )[0]
+
+        embed = discord.Embed(
+            name="New Bot Prefix",
+            colour=0x9b59b6
+        )
+        embed.add_field(
+            name="Prefix Changed",
+            value=f"The prefix was changed to `{prefix}`"
+        )
+        await context.reply(embed=embed, mention_author=False)
+    
+    if arg is None:
+        prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
+            context.guild.id,
+        )[0]
+
+        embed = discord.Embed(
+            name="Bot Prefix",
+            colour=0x9b59b6
+        )
+        embed.add_field(
+            name="Current Prefix",
+            value=f"The current prefix is `{prefix}`",
+            inline=False
+        )
+        if context.author == context.guild.owner:
+                embed.set_footer(
+                    text=f"To change the prefix, use command: {prefix}bot prefix <new_prefix>"
+                )
+            
+        await context.reply(embed=embed, mention_author=False)
 
 client.run(Token, reconnect=True)

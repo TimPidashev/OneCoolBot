@@ -45,13 +45,13 @@ class error(commands.Cog):
         #gets original error
         error = getattr(error, 'original', error)
     
-        #if a local error handler exists...
+        # if a local error handler exists...
         # if hasattr(context.command, 'on_error'):
         #     return
     
-        #command_not_found
-        if isinstance(error, commands.CommandNotFound):
-            pass
+        # command_not_found
+        # if isinstance(error, commands.CommandNotFound):
+        #     pass
     
     #disabled_command
     # if isinstance(error, commands.DisabledCommand):

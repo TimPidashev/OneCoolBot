@@ -23,6 +23,7 @@ class economy(commands.Cog):
         await log.online(self)
         db.connect("./data/database.db")
 
+        
     
     
 def setup(client):

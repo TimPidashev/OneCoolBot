@@ -29,12 +29,12 @@ async def music_node_disconnect(self, node):
 async def client_command(context):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[{current_time}]", "magenta"), colored("command:", "green"), colored(f"{context.command}", "magenta"), colored("used by", "green"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("in guild", "green"), colored(f"{context.guild.name}", "magenta"), colored("at", "green"), colored(f"{current_time}", "magenta"))
+    print(colored(f"[{current_time}]", "magenta"), colored("command:", "green"), colored(f"{context.command}", "magenta"), colored("used by", "green"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("in guild", "green"), colored(f"{context.guild.name}", "magenta"))
 
 async def cog_command(self, context):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[cogs.{self.qualified_name}]:", "magenta"), colored(f"{context.command}", "magenta"), colored("used by", "green"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("in guild", "green"), colored(f"{context.guild.name}", "magenta"), colored("at", "green"), colored(f"{current_time}", "magenta"))
+    print(colored(f"[cogs.{self.qualified_name}]:", "magenta"), colored(f"{context.command}", "magenta"), colored("used by", "green"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("in guild", "green"), colored(f"{context.guild.name}", "magenta"))
     
 #errors
 async def help_error(self, context):
@@ -51,12 +51,12 @@ async def on_member_join(self, member):
 async def member_add_db(self, member):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[{current_time}]", "magenta"), colored("member:", "green"), colored(f"{member.name}#{member.discriminator}", "magenta"), colored("was added to users table", "green"))
+    print(colored(f"[{current_time}]", "magenta"), colored("member:", "green"), colored(f"{member.name}#{member.discriminator}", "magenta"), colored("was added to users table in guild:", "green"), colored(f"{member.guild.name}", "magenta"))
 
 async def member_add_db_error(self, member):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[{current_time}]", "magenta"), colored("an error occured when adding member:", "red"), colored(f"{member.name}#{member.discriminator}", "magenta"), colored("from users table", "red"))
+    print(colored(f"[{current_time}]", "magenta"), colored("an error occured when adding member:", "red"), colored(f"{member.name}#{member.discriminator}", "magenta"), colored("from users table in guild:", "red"), colored(f"{member.guild.name}", "magenta"))
 
 async def on_guild_join(self, guild):
     now = datetime.now()
@@ -81,12 +81,12 @@ async def on_member_remove(self, member):
 async def member_remove_db(self, member):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[{current_time}]", "magenta"), colored(f"member:", "green"), colored(f"{member.name}#{member.discriminator}", "magenta"), colored("was removed from users table", "green"))
+    print(colored(f"[{current_time}]", "magenta"), colored(f"member:", "green"), colored(f"{member.name}#{member.discriminator}", "magenta"), colored("was removed from users table in guild:", "green"), colored(f"{member.guild.name}", "magenta"))
 
 async def member_remove_db_error(self, member):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[{current_time}]", "magenta"), colored("an error occured when removing member:", "red"), colored(f"{member.name}#{member.discriminator}", "magenta"), colored("from users table", "red"))
+    print(colored(f"[{current_time}]", "magenta"), colored("an error occured when removing member:", "red"), colored(f"{member.name}#{member.discriminator}", "magenta"), colored("from users table in guild:", "red"), colored(f"{member.guild.name}", "magenta"))
 
 async def on_guild_remove(self, guild):
     now = datetime.now()
@@ -122,3 +122,44 @@ async def member_redundant_add_db(self, message):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     print(colored(f"[{current_time}]", "magenta"), colored("member:", "green"), colored(f"{message.author}#{message.author.discriminator}", "magenta"), colored("was added to users table", "green"))
+
+async def clear_messages(self, context, amount):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("member:", "yellow"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("removed", "yellow"), colored(f"{amount}", "magenta"), colored("messages in guild:", "yellow"), colored(f"{context.guild}", "magenta"))
+
+async def kick_member(self, context, member, reason):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("member:", "yellow"), colored(f"{member.name}#{member.discriminator}", "magenta"), colored("was kicked from guild:", "yellow"), colored(f"{context.guild.name}", "magenta"), colored("by member:", "yellow"), colored(f"{context.author.name}.", "magenta"), colored(f"Reason: {reason}", "yellow"))
+
+async def kick_member_error(self, context, member):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("an error occured while trying to kick member:", "red"), colored(f"{member.name}", "magenta"), colored("from guild:", "red"), colored(f"{context.guild.name}", "magenta"))
+
+async def ban_member(self, context, member, reason):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("member:", "yellow"), colored(f"{member.name}#{member.discriminator}", "magenta"), colored("was banned from guild:", "yellow"), colored(f"{context.guild.name}", "magenta"), colored("by member:", "yellow"), colored(f"{context.author.name}.", "magenta"), colored(f"Reason: {reason}", "yellow"))
+
+async def ban_member_error(self, context, member):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("an error occured while trying to ban member:", "red"), colored(f"{member.name}", "magenta"), colored("from guild:", "red"), colored(f"{context.guild.name}", "magenta"))
+
+async def unban_member(self, context, member, reason):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("member:", "yellow"), colored(f"{member.name}#{member.discriminator}", "magenta"), colored("was unbanned from guild:", "yellow"), colored(f"{context.guild.name}", "magenta"), colored("by member:", "yellow"), colored(f"{context.author.name}.", "magenta"), colored(f"Reason: {reason}", "yellow"))
+
+async def unban_member_error(self, context, member):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("an error occured while trying to unban member:", "red"), colored(f"{member.name}", "magenta"), colored("from guild:", "red"), colored(f"{context.guild.name}", "magenta"))
+
+async def advertise(self, message):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("member:", "yellow"), colored(f"{message.author}", "magenta"), colored("tried to advertise:", "yellow"), colored(f"{message.content}", "magenta"), colored("in guild:", "yellow"), colored(f"{message.guild.name}", "magenta"))
+
