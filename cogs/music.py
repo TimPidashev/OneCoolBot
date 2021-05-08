@@ -787,7 +787,6 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     @commands.command()
     async def music(self, ctx):
         """Retrieve various Node/Server/Player information."""
-        print(colored("[main]:", "magenta"), colored("command(music) used...", "green"))
         player = self.bot.wavelink.get_player(ctx.guild.id)
         node = player.node
 

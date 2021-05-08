@@ -32,7 +32,7 @@ class events(commands.Cog):
         await log.on_member_join(self, member)
 
         try:
-            db.execute("INSERT INTO users (UserID) VALUES (?)", member.id)
+            db.execute("INSERT INTO users (UserID, GuildID) VALUES (?, ?)", member.id, member.guild.id)
             db.commit()
             await log.member_add_db(self, member)
 
