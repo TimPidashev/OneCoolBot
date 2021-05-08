@@ -433,4 +433,27 @@ async def info(context):
 
     message = await context.message.reply(embed=embed, mention_author=False)
 
+@bot.command()
+async def prefix(context):
+    await log.client_command(context)
+
+    prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
+        context.guild.id,
+    )[0]
+
+    embed = discord.Embed(
+        name="Bot Prefix",
+        colour=0x9b59b6
+    )
+    embed.add_field(
+        name="Current Prefix",
+        value=f"The current prefix is `{prefix}`",
+        inline=False
+    )
+    if context.author == context.guild.owner:
+            embed.set_footer(
+                text=f"To change the prefix, use command: {prefix}bot prefix <new_prefix>"
+            )
+    await context.reply(embed=embed, mention_author=False)
+
 client.run(Token, reconnect=True)

@@ -22,7 +22,7 @@ class error(commands.Cog):
 
     @commands.command()
     async def help(self, context):
-        await log.error(self, context)
+        await help_error(self, context)
         prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
             context.guild.id,
         )[0]

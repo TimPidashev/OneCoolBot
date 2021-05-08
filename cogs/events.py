@@ -29,9 +29,7 @@ class events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        print(colored("[events]:", "magenta"), colored(f"{member.name}#{member.discriminator} joined {member.guild}#{member.guild.id} at {current_time}...", "green"))
+        await log.on_member_join(self, member)
 
         try:
             db.execute("INSERT INTO users (UserID) VALUES (?)", member.id)
