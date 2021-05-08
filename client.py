@@ -425,7 +425,7 @@ async def info(context):
     )
     embed.add_field(
         name="Version", 
-        value="Ver 0.1.4"
+        value="Ver 1.2.4"
     )
     embed.set_footer(
         text="Most recent changes: Added super-command(game)"
