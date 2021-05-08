@@ -2,6 +2,7 @@ import discord
 import psutil
 import os
 import time
+import random
 import asyncio
 import logging
 import sqlite3
@@ -35,7 +36,6 @@ class OneCoolBot(commands.Bot):
         #self.ipc = ipc.Server(self, secret_key="my_secret_key")
 
     async def on_ready(self):
-        await self.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="115 users"))
         db.connect("./data/database.db")
 
         logger = logging.getLogger("discord")
@@ -54,18 +54,22 @@ client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all())
 client.process = psutil.Process(os.getpid())
 client.remove_command("help")  
 
+async def change_presence():
+        await client.wait_until_ready()
+
+        statuses = [f"{len(client.guilds)} servers", f"{len(client.users)} members"]
+
+        while not client.is_closed():
+
+            status = random.choice(statuses)
+
+            await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
+
+            await asyncio.sleep(10)  
+
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
-
-@client.command()
-async def test(context):
-    embed = discord.Embed(
-        title="```fix\nSHHHHHHHHHHHH```",
-        description="```fix\nSHHHHHHHHHHHH```",
-        colour=0x9b59b6
-    )
-    await context.reply(embed=embed, mention_author=False)
 
 @client.group(pass_context=True, invoke_without_command=True)
 async def bot(context): 
@@ -488,4 +492,5 @@ async def prefix(context, arg=None):
             
         await context.reply(embed=embed, mention_author=False)
 
+client.loop.create_task(change_presence())
 client.run(Token, reconnect=True)
