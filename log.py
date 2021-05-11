@@ -34,7 +34,7 @@ async def client_command(context):
 async def cog_command(self, context):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[cogs.{self.qualified_name}]:", "magenta"), colored(f"{context.command}", "magenta"), colored("used by", "green"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("in guild", "green"), colored(f"{context.guild.name}", "magenta"))
+    print(colored(f"[{current_time}]", "magenta"), colored(f"{context.command}", "magenta"), colored("used by", "green"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("in guild", "green"), colored(f"{context.guild.name}", "magenta"))
     
 #errors
 async def help_error(self, context):
@@ -163,3 +163,27 @@ async def advertise(self, message):
     current_time = now.strftime("%H:%M:%S")
     print(colored(f"[{current_time}]", "magenta"), colored("member:", "yellow"), colored(f"{message.author}", "magenta"), colored("tried to advertise:", "yellow"), colored(f"{message.content}", "magenta"), colored("in guild:", "yellow"), colored(f"{message.guild.name}", "magenta"))
 
+async def report(self, message_count):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("Report:", "green"), colored(f"{message_count}", "magenta"), colored("messages were sent in the last 10 seconds", "green"))
+
+async def guildconfig_add_db(self, guild):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("added guild:", "green"), colored(f"{guild.name}", "magenta"), colored("to guildconfig table", "green"))
+
+async def guild_config_add_db_error(self, guild):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("an error occurred when trying to add guild:", "red"), colored(f"{guild.name}", "magenta"), colored("to guildconfig table", "red"))
+
+async def on_guild_remove_guildconfig(self, guild):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("removed guild:", "green"), colored(f"{guild.name}", "magenta"), colored("from guildconfig table", "green"))
+
+async def on_guild_remove_guildcofig_error(self, guild):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("an error occurred when trying to remove guild:", "red"), colored(f"{guild.name}", "magenta"), colored("from guildconfig table", "red"))

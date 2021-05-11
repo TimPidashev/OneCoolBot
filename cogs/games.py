@@ -27,7 +27,7 @@ class games(commands.Cog):
         await log.online(self)
         db.connect("./data/database.db")
 
-    @commands.group(pass_context=True, invoke_without_command=True)
+    @commands.group(pass_context=True, invoke_without_command=True, aliases=["g"])
     async def game(self, context):
         await log.cog_command(self, context)
         message = context.message  
@@ -35,7 +35,7 @@ class games(commands.Cog):
             context.guild.id,
         )[0]
 
-        if message.content == f"{prefix}game":
+        if message.content == f"{prefix}game" or f"{prefix}g":
             embed = discord.Embed(
                 title=f"{prefix}game <?>", 
                 description="You have found a *super command!* With this command you can do anything your heart desires, well almost...", 

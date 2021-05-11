@@ -3,6 +3,20 @@ CREATE TABLE IF NOT EXISTS guilds(
     Prefix text DEFAULT "."
 );
 
+CREATE TABLE IF NOT EXISTS guildconfig(
+    GuildID integer PRIMARY KEY,
+    Levels text DEFAULT "OFF",
+    LevelMessages text DEFAULT "OFF",
+    LevelMessage text DEFAULT ":partying_face: {message.author.mention} is now level **{new_lvl:,}**!",
+    LevelMessageChannel integer DEFAULT 0,
+    UpdateMessage text DEFAULT "NONE",
+    Economy text DEFAULT "OFF",
+    Games text Default "OFF",
+    Music text DEFAULT "OFF",
+    BotAI text DEFAULT "OFF",
+    ErrorMessages text DEFAULT "On"
+);
+
 CREATE TABLE IF NOT EXISTS users(
     GuildID integer,
     UserID integer,

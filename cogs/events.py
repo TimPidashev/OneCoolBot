@@ -14,6 +14,8 @@ from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext.commands import Cog
 from discord import Embed, Emoji
+from discord.ext import commands, tasks
+import asyncio
 import sqlite3
 import time
 import log
@@ -47,6 +49,14 @@ class events(commands.Cog):
             db.execute("INSERT INTO guilds (GuildID) VALUES (?)", guild.id)
             db.commit()
             await log.guild_add_db(self, guild)
+            
+            try:
+                db.execute("INSERT INTO guildconfig (GuildID) VALUES (?)", guild.id)
+                db.commit()
+                await log.guildconfig_add_db(self, guild)
+            
+            except:
+                await log.guild_config_add_db_error(self, guild)
 
         except Exception as error:
             await log.guild_add_db_error(self, guild)
@@ -72,8 +82,16 @@ class events(commands.Cog):
             db.commit()
             await log.on_guild_remove_db(self, guild)
 
+            try:
+                db.execute("DELETE FROM guildconfig WHERE (GuildID = ?)", guild.id)
+                db.commit()
+                await log.on_guild_remove_guildconfig(self, guild)
+
+            except:
+                await log.on_guild_remove_guildcofig_error(self, guild)
+
         except Exception as error:
-            await log.guild_remove_db_error(self, guild)
+            await log.guild_remove_db_error(self, guild)       
 
 def setup(client):
     client.add_cog(events(client))

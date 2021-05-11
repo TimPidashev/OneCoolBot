@@ -34,7 +34,11 @@ class level(commands.Cog):
     async def on_message(self, message):
         if not message.author.bot:
             context = await self.client.get_context(message)
+            lvls = db.record(f"SELECT Levels FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
             if context.command:
+                return
+
+            if lvls == "OFF":
                 return
 
             else:
@@ -66,8 +70,19 @@ class level(commands.Cog):
                         await log.coin_add(self, message, coins_on_xp)
 
                         if new_lvl > lvl:
-                            await message.channel.send(f":partying_face: {message.author.mention} is now level **{new_lvl:,}**!")
-                            await log.level_up(self, message, new_lvl)
+                            levelmessages, levelmessage, levelmessagechannel = db.record(f"SELECT LevelMessages, LevelMessage, LevelMessageChannel FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
+                            if levelmessages == "OFF":
+                                return
+                            
+                            if levelmessages == "ON":
+                                if levelmessagechannel == 0:
+                                    await message.reply(f"{levelmessage}", mention_author=False)
+                                    await log.level_up(self, message, new_lvl)
+
+                                else:
+                                    messagechannel = self.client.get_channel(levelmessagechannel)
+                                    await message.channel.send(f"{levelmessage}")
+
                     else:
                         pass
 

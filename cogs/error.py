@@ -40,10 +40,10 @@ class error(commands.Cog):
             )
         await context.reply(embed=embed, mention_author=False)
 
-    @commands.Cog.listener()
-    async def on_command_error(self, context, error):
-        #gets original error
-        error = getattr(error, 'original', error)
+    # @commands.Cog.listener()
+    # async def on_command_error(self, context, error):
+    #     #gets original error
+    #     error = getattr(error, 'original', error)
     
         # if a local error handler exists...
         # if hasattr(context.command, 'on_error'):
