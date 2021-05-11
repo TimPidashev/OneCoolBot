@@ -182,7 +182,7 @@ async def help(context):
         inline=False
     )
     page_1.add_field(
-        name="`Settings",
+        name="`Settings`",
         value="Configure OneCoolBot with ease right in discord, with a dashboard coming later.",
         inline = False
     )
@@ -526,18 +526,13 @@ async def help(context):
         inline=False
     )
     page_2.add_field(
-        name="`level`", 
-        value="This command toggles the level",
+        name="`levels`", 
+        value="Toggles level functionality on and off.",
         inline=False
     )
     page_2.add_field(
-        name="`serverinfo`",
-        value="Displays server info, such as user count.",
-        inline=False
-    )
-    page_2.add_field(
-        name="`prefix`",
-        value="Displays server prefix.",
+        name="`levelmessages`",
+        value="Enables or disables level-messages.",
         inline=False
     )
     page_2.set_footer(
@@ -792,6 +787,56 @@ async def configuration(context):
 
     else:
         await context.reply("You are not the owner of this server!", mention_author=False)
+
+@settings.command()
+async def levels(context, arg=None):
+    await log.client_command(context)
+    levels = db.record(f"SELECT Levels FROM guildconfig WHERE GuildID = {context.guild.id}")[0]
+
+    if arg == "on" and context.author == context.guild.owner:
+        levels = "ON"
+        db.execute(f"UPDATE guildconfig SET Levels = ? WHERE GuildID = {context.guild.id}",
+            levels
+        )
+        db.commit()
+
+        embed = discord.Embed(
+            colour=0x9b59b6
+        )
+        embed.add_field(
+            name="Current Settings",
+            value="Levels were turned on!",
+            inline=False
+        )
+    
+        await context.reply(embed=embed, mention_author=False)
+
+    if arg == "off" and context.author == context.guild.owner:
+        levels = "OFF"
+        db.execute(f"UPDATE guildconfig SET Levels = ? WHERE GuildID = {context.guild.id}",
+            levels
+        )
+        db.commit()
+
+        embed = discord.Embed(
+            colour=0x9b59b6
+        )
+        embed.add_field(
+            name="Current Settings",
+            value="Levels were turned off!",
+            inline=False
+        )
+    
+        await context.reply(embed=embed, mention_author=False)
+
+    if arg is None:
+        levels = db.record(f"SELECT Levels from guildconfig WHERE GuildID = {context.guild.id}")[0]
+
+        if levels == "OFF":
+            await context.reply("Levels are currently off.", mention_author=False)
+            
+        if levels == "ON":
+            await context.reply("Levels are currently on.", mention_author=False)
 
 client.loop.create_task(change_presence())
 client.run(Token, reconnect=True)
