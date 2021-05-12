@@ -56,22 +56,17 @@ client.remove_command("help")
 
 async def change_presence():
         await client.wait_until_ready()
-
         statuses = [f"{len(client.guilds)} servers", f"{len(client.users)} members"]
-
         while not client.is_closed():
-
             status = random.choice(statuses)
-
             await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
-
             await asyncio.sleep(10)  
 
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         client.load_extension(f'cogs.{filename[:-3]}')
 
-@client.group(pass_context=True, invoke_without_command=True)
+@client.group(pass_context=True, invoke_without_command=True, aliases=["bt", "b"])
 async def bot(context): 
     await log.client_command(context)
     message = context.message  
@@ -79,7 +74,7 @@ async def bot(context):
         context.guild.id,
     )[0]
 
-    if message.content == f"{prefix}bot":
+    if message.content == f"{prefix}bot" or f"{prefix}bt" or f"{prefix}b":
         embed = discord.Embed(
             title=f"{prefix}bot <?>", 
             description="You have found a *super command!* With this command you can do anything your heart desires, well almost...", 
@@ -107,43 +102,28 @@ async def bot(context):
 
         await context.reply(embed=embed, mention_author=False)
 
-@bot.command()
+@bot.command(aliases=["ld", "l"])
 @commands.is_owner()
 async def load(context, extension):
     await client.load_extension(f'cogs.{extension}')
     log.client_command(context)
-    embed = discord.Embed(
-        title="Your wish is my command",
-        description=f"Loaded cogs.{extension}",
-        colour=0x9b59b6
-    )
-    await context.reply(embed=embed, mention_author=False)
+    await context.reply(f"Your wish is my command | Loaded cogs.{extension}", mention_author=False)
 
-@bot.command()
+@bot.command(aliases=["ul", "u"])
 @commands.is_owner()
 async def unload(context, extension):
     client.unload_extension(f'cogs.{extension}')
     await log.client_command(context)
-    embed = discord.Embed(
-        title="Your wish is my command",
-        description=f"Unloaded cogs.{extension}",
-        colour=0x9b59b6
-    )
-    await context.reply(embed=embed, mention_author=False)
+    await context.reply(f"Your wish is my command | Unloaded cogs.{extension}", mention_author=False)
 
-@bot.command()
+@bot.command(aliases=["rl", "r"])
 @commands.is_owner()
 async def reload(context, extension):
     client.reload_extension(f'cogs.{extension}')
     await log.client_command(context)
-    embed = discord.Embed(
-        title="Your wish is my command",
-        description=f"Reloaded cogs.{extension}",
-        colour=0x9b59b6
-    )
-    await context.reply(embed=embed, mention_author=False)
+    await context.reply(f"Your wish is my command | Reloaded cogs.{extension}", mention_author=False)
 
-@bot.command()
+@bot.command(aliases=["hlp", "h"])
 async def help(context):
     await log.client_command(context)
     prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
@@ -156,39 +136,19 @@ async def help(context):
         description="The home page of the help command!", 
         colour=0x9b59b6
     )
-    page_1.add_field(
-        name="`General`",
-        value="**The basic commands for day-to-day tasks.",
-        inline=False
-    )
-    page_1.add_field(
-        name="`Economy`", 
-        value="A global market and trading system, complete with its own currency!",
-        inline=False
-    )
-    page_1.add_field(
-        name="`Games`", 
-        value="Play with friends, compete with strangers, and make some extra :coin: while having fun!",
-        inline=False
-    )
-    page_1.add_field(
-        name="`Music`",
-        value="Listen to low-latency music streams for studying and hanging with friends in voice-chat!",
-        inline=False
-    )
-    page_1.add_field(
-        name="`Moderation`",
-        value="Make sure your server is always under control, with an advanced toolset for your moderators, and auto-moderation for the tech-savvy!", 
-        inline=False
-    )
-    page_1.add_field(
-        name="`Settings`",
-        value="Configure OneCoolBot with ease right in discord, with a dashboard coming later.",
-        inline = False
-    )
+    fields = [("`General`", "**The basic commands for day-to-day tasks.", False),
+              ("`Economy`", "A global market and trading system, complete with its own currency!", False),
+              ("`Games`", "Play with friends, compete with strangers, and make some extra :coin: while having fun!", False),
+              ("`Music`", "Listen to low-latency music streams for studying and hanging with friends in voice-chat!", False),
+              ("`Moderation`", "Make sure your server is always under control, with an advanced toolset for your moderators, and auto-moderation for the tech-savvy!", False),
+              ("`Settings`", "Configure OneCoolBot with ease right in discord, with a dashboard coming later.", False)]
+
     page_1.set_footer(
         text="To scroll through pages, react to the arrows below."
     )
+
+    for name, value, inline in fields:
+        page_1.add_field(name=name, value=value, inline=inline)
 
     #page 2
     page_2 = discord.Embed(
@@ -196,98 +156,66 @@ async def help(context):
         description="The overview of the general commands.", 
         colour=0x9b59b6
     )
-    page_2.add_field(
-        name="`help`", 
-        value="If your reading this, you know what this command does :smile:",
-        inline=False
-    )
-    page_2.add_field(
-        name="`info`", 
-        value="Displays bot status, ping, and other miscellaneous content.",
-        inline=False
-    )
-    page_2.add_field(
-        name="`serverinfo`",
-        value="Displays server info, such as user count.",
-        inline=False
-    )
-    page_2.add_field(
-        name="`userinfo`", 
-        value="Displays user info, such as xp, statistics, and rank.",
-        inline=False
-    )
+    fields = [("`help`", "If your reading this, you know what this command does :smile:", False),
+              ("`info`", "Displays bot status, ping, and other miscellaneous content.", False),
+              ("`serverinfo`", "Displays server info, such as user count.", False),
+              ("`userinfo`", "Displays user info, such as xp, statistics, and rank.", False)]
+
     page_2.set_footer(
         text=f"To use these commands, type {prefix}bot <command_name>"
     )
-    
+
+    for name, value, inline in fields:
+        page_2.add_field(name=name, value=value, inline=inline)
+
     #page 3
     page_3 = discord.Embed(
         title="Economy", 
         description="A global market and trading system, complete with its own :coin:currency!", 
         colour=0x9b59b6
     )
-    page_3.add_field(
-        name="`wallet`",
-        value="Check how many coins you own.",
-        inline=False
-    )
-    page_3.add_field(
-        name="`market`",
-        value="See whats for sale, sell, and trade in a global market.",
-        inline=False
-    )
-    page_3.add_field(
-        name="`cap`",
-        value="Check the current global/local market cap.",
-        inline=False
-    )
+    fields = [("`wallet`", "Check how many coins you own.", False),
+              ("`market`", "See whats for sale, sell, and trade in a global market.", False),
+              ("`cap`", "Check the current global/local market cap.", False)]
+    
     page_3.set_footer(
         text=f"To use these commands, type {prefix}eco <command_name>"
     )
 
+    for name, value, inline in fields:
+        page_3.add_field(name=name, value=value, inline=inline)
+
+    #page 4
     page_4 = discord.Embed(
         title="Games", 
         description="Play with friends, compete with strangers, and make some extra coins all while having fun!", 
         colour=0x9b59b6
     )
-    page_4.add_field(
-        name="`count`",
-        value="A counting game with multiple people and different modes for different occasions. More detail found in `game` help menu.",
-        inline=False
-    )
-    page_4.add_field(
-        name="`chess`",
-        value="Match up with people and play for coins, or challenge @OneCoolBot for a very special prize!",
-        inline=False
-    )
-    page_4.add_field(
-        name="`roll`",
-        value="Roll the die with friends to decide your fate, or for coins.",
-        inline=False
-    )
-    
-    page_4.add_field(
-        name="`cave`",
-        value="Play the collosal-cave-adventure terminal classic within discord!",
-        inline=False
-    )
+    fields = [("`count`", "A counting game with multiple people and different modes for different occasions. More detail found in `game` help menu.", False),
+              ("`chess`", "Match up with people and play for coins, or challenge @OneCoolBot for a very special prize!", False),
+              ("`roll`", "Roll the die with friends to decide your fate, or for coins.", False),
+              ("`cave`", "Play the collosal-cave-adventure terminal classic within discord!", False)] 
+
     page_4.set_footer(
         text=f"To use these commands, type {prefix}game <command_name>. For more help on game commands, type {prefix}game help"
     )
-    
+
+    for name, value, inline in fields:
+        page_4.add_field(name=name, value=value, inline=inline)
+
     #page 5
     page_5 = discord.Embed(
         title="Music",
         description="Listen to low-latency music streams for studying and hanging with friends in voice-chat!",
         colour=0x9b59b6
     )
-    page_5.add_field(
-        name="Commands",
-        value="`connect` connect bot to voice chat\n`play` <search song to play>\n`pause` pause player\n`resume` resume player\n`skip` skip current song\n`stop`\n`volume` change volume\n`shuffle` shuffle queue\n`equalizer` change equalizer\n`queue` see songs queue\n`current` see currently played song\n`swap` swap song\n`music` see music status\n`spotify` see spotify rich presence",
-        inline=False
-    )
+    fields = [("Commands", "`connect` connect bot to voice chat\n`play` <search song to play>\n`pause` pause player\n`resume` resume player\n`skip` skip current song\n`stop`\n`volume` change volume\n`shuffle` shuffle queue\n`equalizer` change equalizer\n`queue` see songs queue\n`current` see currently played song\n`swap` swap song\n`music` see music status\n`spotify` see spotify rich presence", False)]
+    
+    for name, value, inline in fields:
+        page_5.add_field(name=name, value=value, inline=inline)
+
     page_5.set_footer(
-        text=f"confused? use this handy command: {prefix}bot music help"
+        text=f"Confused? Use this handy command: {prefix}bot music help"
     )
 
     #page 6
@@ -296,26 +224,14 @@ async def help(context):
         description="Make sure your server is always under control, with an advanced toolset for your moderators, and auto-moderation for the tech-savvy!", 
         colour=0x9b59b6
     )
-    page_6.add_field(
-        name=f"`{prefix}clear` <message_amount>",
-        value="Clear messages from a channel.",
-        inline=False
-    )
-    page_6.add_field(
-        name=f"`{prefix}kick` <@member> <reason>",
-        value="Kick mentioned member from server.",
-        inline=False
-    )
-    page_6.add_field(
-        name=f"`{prefix}ban` <@member> <reason>",
-        value="Ban mentioned member from server.",
-        inline=False
-    )
-    page_6.add_field(
-        name=f"`{prefix}unban` <@member> <reason>",
-        value="Unbans mentioned member from server.",
-        inline=False
-    )
+    fields = [(f"`{prefix}clear` <message_amount>", "Clear messages from a channel.", False),
+              (f"`{prefix}kick` <@member> <reason>", "Kick mentioned member from server.", False),
+              (f"`{prefix}ban` <@member> <reason>", "Ban mentioned member from server.", False),
+              (f"`{prefix}unban` <@member> <reason>", "Unbans mentioned member from server.", False)]
+
+    for name, value, inline in fields:
+        page_6.add_field(name=name, value=value, inline=inline)
+
     page_6.set_footer(
         text="Moderation commands are not args, and can be used as shown above."
     )
@@ -392,7 +308,7 @@ async def help(context):
             #add context message delete here
             break
 
-@bot.command()
+@bot.command(aliases=["inf", "i"])
 async def info(context):
     await log.client_command(context)
 
@@ -413,40 +329,22 @@ async def info(context):
     embed.set_thumbnail(
         url=context.bot.user.avatar_url
     )
-    embed.add_field(
-        name="Developer",
-        value="𝓣𝓲𝓶𝓶𝔂#6955"
-    )
-    embed.add_field(
-        name="Users", 
-        value=f"{len(context.guild.members)}", 
-        inline=True
-    )
-    embed.add_field(
-        name="Ping", 
-        value=f"{before_ws}ms"
-    )
-    embed.add_field(
-        name="RAM Usage", 
-        value=f"{ramUsage:.2f} MB", 
-        inline=True
-    )
-    embed.add_field(
-        name="Uptime", 
-        value=text, 
-        inline=True
-    )
-    embed.add_field(
-        name="Version", 
-        value="Ver 1.2.4"
-    )
+    fields = [("Developer", "𝓣𝓲𝓶𝓶𝔂#6955", True), 
+              ("Users", f"{len(client.users)}", True),
+              ("Latency", f"{before_ws}ms", True),
+              ("RAM Usage", f"{ramUsage:.2f} MB", True), 
+              ("Uptime", text, True), 
+              ("Version", "Ver 1.2.4", True)]
+
     embed.set_footer(
         text="Most recent changes: Added super-command(game)"
     )
+    for name, value, inline in fields:
+        embed.add_field(name=name, value=value, inline=inline)
 
     message = await context.message.reply(embed=embed, mention_author=False)
 
-@bot.command()
+@bot.command(aliases=["srvrinf", "si"])
 async def serverinfo(context):
     await log.client_command(context)
 
@@ -468,7 +366,7 @@ async def serverinfo(context):
 
     await context.reply(embed=embed, mention_author=False)
 
-@bot.group(pass_context=True, invoke_without_command=True)
+@bot.group(pass_context=True, invoke_without_command=True, aliases=["st", "s"])
 async def settings(context):
     await log.client_command(context)
     message = context.message  
@@ -476,7 +374,7 @@ async def settings(context):
         context.guild.id,
     )[0]
 
-    if message.content == f"{prefix}bot settings":
+    if message.content == f"{prefix}bot settings" or f"{prefix}bt settings" or f"{prefix}b settings" f"{prefix}bot st" f"{prefix}b s":
         embed = discord.Embed(
             title=f"{prefix}settings <?>", 
             description="You have found a *sub command!* With this command you can do anything your heart desires, well almost...", 
@@ -504,7 +402,7 @@ async def settings(context):
 
         await context.reply(embed=embed, mention_author=False)
 
-@settings.command()
+@settings.command(aliases=["hlp", "h"])
 async def help(context):
     await log.client_command(context)
     prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
@@ -517,21 +415,10 @@ async def help(context):
         description="The home page of the settings sub-command!", 
         colour=0x9b59b6
     )
-    page_1.add_field(
-        name="`config`",
-        value="Use this command to go through an easy setup of OneCoolBot",
-        inline=False
-    )
-    page_1.add_field(
-        name="`prefix`",
-        value="Use this command to change my prefix!",
-        inline=False
-    )
-    page_1.add_field(
-        name="`level`", 
-        value="Use this command to turn off levels, change level messages, and change where the level messages will be sent.",
-        inline=False
-    )
+    fields = [("`config`", "Use this command to go through an easy setup of OneCoolBot", False),
+              ("`prefix`", "Use this command to change my prefix!", False),
+              ("`level`", "Use this command to turn off levels, change level messages, and change where the level messages will be sent.", False)]
+
     page_1.set_footer(
         text="To scroll through pages, react to the arrows below."
     )
@@ -601,7 +488,7 @@ async def help(context):
             #add context message delete here
             break
 
-@settings.command()
+@settings.command(aliases=["prfx", "p"])
 async def prefix(context, arg=None):
     await log.client_command(context)
     
