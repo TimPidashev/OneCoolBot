@@ -94,25 +94,25 @@ class moderation(commands.Cog):
                 await log.unban_member_error(self, context, member)
                 
     #automoderation section below
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if not message.author.bot:
-            urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',message.content.lower())
-            if urls is not None and message.content.startswith('https://discord.gg' or 'http://discord.gg'):
-                await message.delete()
-                embed = discord.Embed(
-                    colour = discord.Colour.red(),
-                    title = f"**Warning**",
-                    description = "Discord invite links are not allowed!"
-                )
-                await message.author.send(embed=embed)
-                await log.advertise(self, message)
+    # @commands.Cog.listener()
+    # async def on_message(self, message):
+    #     if not message.author.bot:
+    #         urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',message.content.lower())
+    #         if urls is not None and message.content.startswith('https://discord.gg' or 'http://discord.gg'):
+    #             await message.delete()
+    #             embed = discord.Embed(
+    #                 colour = discord.Colour.red(),
+    #                 title = f"**Warning**",
+    #                 description = "Discord invite links are not allowed!"
+    #             )
+    #             await message.author.send(embed=embed)
+    #             await log.advertise(self, message)
                 
-            else:
-                pass
+    #         else:
+    #             pass
 
-        else:
-            pass
+    #     else:
+    #         pass
 
 def setup(client):
     client.add_cog(moderation(client))
