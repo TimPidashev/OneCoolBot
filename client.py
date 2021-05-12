@@ -446,6 +446,28 @@ async def info(context):
 
     message = await context.message.reply(embed=embed, mention_author=False)
 
+@bot.command()
+async def serverinfo(context):
+    await log.client_command(context)
+
+    embed = discord.Embed(
+        title="Server Info",
+        colour=0x9b59b6
+    )
+    embed.set_thumbnail(
+        url=context.guild.icon_url
+    )
+
+    fields = [("Owner", context.guild.owner, False),
+              ("Region", context.guild.region, False),
+              ("Created At", context.guild.created_at.strftime("%d/%m/%Y %H:%M:%S"), True),
+              ("Members", len(context.guild.members), False)]
+
+    for name, value, inline in fields:
+            embed.add_field(name=name, value=value, inline=inline)
+
+    await context.reply(embed=embed, mention_author=False)
+
 @bot.group(pass_context=True, invoke_without_command=True)
 async def settings(context):
     await log.client_command(context)
