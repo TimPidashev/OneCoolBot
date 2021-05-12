@@ -833,10 +833,79 @@ async def levels(context, arg=None):
         levels = db.record(f"SELECT Levels from guildconfig WHERE GuildID = {context.guild.id}")[0]
 
         if levels == "OFF":
-            await context.reply("Levels are currently off.", mention_author=False)
+            await context.reply("**Levels** are currently off.", mention_author=False)
             
         if levels == "ON":
-            await context.reply("Levels are currently on.", mention_author=False)
+            await context.reply("**Levels** are currently on.", mention_author=False)
+
+@settings.command()
+async def levelmessages(context, arg=None):
+    await log.client_command(context)
+    levelmessage = db.record(f"SELECT LevelMessages FROM guildconfig WHERE GuildID = {context.guild.id}")[0]
+
+    if arg == "on" and context.author == context.guild.owner:
+        levelmessage = "ON"
+        db.execute(f"UPDATE guildconfig SET LevelMessages = ? WHERE GuildID = {context.guild.id}",
+            levelmessage
+        )
+        db.commit()
+
+        message = db.record(f"SELECT LevelMessage FROM guildconfig WHERE GuildID = {context.guild.id}")[0]
+        
+        embed = discord.Embed(
+            colour=0x9b59b6
+        )
+        embed.add_field(
+            name="Current Settings",
+            value="Level message turned on!",
+            inline=False
+        )
+        embed.add_field(
+            name="Current Level Message",
+            value=f"{message}",
+            inline=False
+        )
+        # if channel == "0":
+        #     embed.add_field(
+        #         name="Current Level Message Channel",
+        #         value="None, level messages will be sent to the member in chat.",
+        #         inline=False
+        #     )
+        
+        # if channel != "0":
+            
+        #     embed.add_field(
+        #         name="Current Level Message Channel",
+        #         value=f"{channel}",
+        #         inline=False
+        #     )
+    
+        await context.reply(embed=embed, mention_author=False)
+
+    if arg == "off" and context.author == context.guild.owner:
+        levelmessage = "OFF"
+        db.execute(f"UPDATE guildconfig SET LevelMessage = ? WHERE GuildID = {context.guild.id}",
+            levelmessage
+        )
+        db.commit()
+
+        await context.reply("**Level messages** were turned off.", mention_author=False)
+
+    if arg is None:
+        levelmessages = db.record(f"SELECT LevelMessages FROM guildconfig WHERE GuildID = {context.guild.id}")[0]
+
+        if levelmessages == "OFF":
+            await context.reply("**Level messages** are currently off.", mention_author=False)
+
+        if levelmessages == "ON":
+            await context.reply("**Level messages** are currently on", mention_author=Falses)
+
+        if levelmessages == "NONE":
+            db.execute("INSERT INTO guildconfig (GuildID) VALUES (?)", context.guild.id)
+            db.commit()
+    
+    if arg == "help":
+        await context.reply("Under construction.", mention_author=False)
 
 client.loop.create_task(change_presence())
 client.run(Token, reconnect=True)
