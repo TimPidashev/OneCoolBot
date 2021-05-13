@@ -75,129 +75,85 @@ class games(commands.Cog):
             description="The home page of the game super-command!", 
             colour=0x9b59b6
         )
-        page_1.add_field(
-            name="`Counting`",
-            value="A counting game with multiple people and different modes for different occasions.",
-            inline=False
-        )
-        page_1.add_field(
-            name="`Chess`", 
-            value="Match up with people and play for coins, or challenge @OneCoolBot for a very special prize!",
-            inline=False
-        )
-        page_1.add_field(
-            name="`Cave Adventure`", 
-            value="Play the collosal-cave-adventure terminal classic within discord!",
-            inline=False
-        )
-        page_1.add_field(
-            name="`Roll the Dice`",
-            value="Roll the dice with friends to decide your fate, or for coins.", 
-            inline=False
-        )
+        fields = [("`counting`", "A counting game with multiple people and different modes for different occasions.", False),
+                  ("`Chess`", "A counting game with multiple people and different modes for different occasions.", False),
+                  ("`Cave Adveture`", "Play the collosal-cave-adventure terminal classic within discord!", False),
+                  ("`Roll the Dice`", "Roll the dice with friends to decide your fate, or for coins.", False),
+                  
         page_1.set_footer(
             text="To scroll through pages, react to the arrows below."
         )
+                  
+        for name, value, inline in fields:
+            page_1.add_field(name=name, value=value, inline=inline)
 
         #page 2
         page_2 = discord.Embed(
             title="Counting", 
             colour=0x9b59b6
         )
-        page_2.add_field(
-            name="Commands", 
-            value="`count` Specifies game context.",
-            inline=False
-        )
-        page_2.add_field(
-            name="Argument 1",
-            value=f"_Modes_:\n`default` The default game mode.\n`deathmatch` Become the last man standing!\n`duel` 1v1 a friend or foe in an epic fight!\n`endless` Play against OneCoolBot in an endless fight!",
-            inline=False
-        )
-        page_2.add_field(
-            name="Argument 2",
-            value=f"_Conditions:_\n**default** `no secondary args.`\n**deathmatch** `@member` `@OneCoolBot`\n**duel** `@member` `@OneCoolBot`\n**endless** `no secondary args.`",
-            inline=False
-        )
+        fields = [("Counting", "`count` Specifies game context.", False),
+                  ("Argument 1", "_Modes_:\n`default` The default game mode.\n`deathmatch` Become the last man standing!\n`duel` 1v1 a friend or foe in an epic fight!\n`endless` Play against OneCoolBot in an endless fight!", False),
+                  ("Argument 2", f"Argument 2","_Conditions:_\n**default** `no secondary args.`\n**deathmatch** `@member` `@OneCoolBot`\n**duel** `@member` `@OneCoolBot`\n**endless** `no secondary args.`", False),
+       
         page_2.set_footer(
             text=f"For complete reference with counting, do: {prefix}game count help"
         )
+         
+        for name, value, inline in fields:
+            page_2.add_field(name=name, value=value, inline=inline)
+        
         
         #page 3
         page_3 = discord.Embed(
             title="Chess", 
             colour=0x9b59b6
         )
-        page_3.add_field(
-            name="Commands",
-            value="`chess` specifies game context.",
-            inline=False
-        )
-        page_3.add_field(
-            name="Argument 1",
-            value="_Modes:_\n`default` The default game mode.\n`losers` Get rid of your pieces before your opponent!",
-            inline=False
-        )
-        page_3.add_field(
-            name="Argument 2",
-            value="_Conditions:_\n**default** `wager` `@member` `@OneCoolBot`\n**losers** `wager` `@member` `@OneCoolBot`",
-            inline=False
-        )
+        fields[("Commands",  "`chess` specifies game context.", False),
+               ("Argument 1", "_Modes:_\n`default` The default game mode.\n`losers` Get rid of your pieces before your opponent!", False),
+               ("Argument 2", "_Conditions:_\n**default** `wager` `@member` `@OneCoolBot`\n**losers** `wager` `@member` `@OneCoolBot`", False),
+             
         page_3.set_footer(
             text=f"For complete reference with chess, do: {prefix}game chess help"
         )
+               
+        for name, value, inline in fields:
+            page_3.add_field(name=name, value=value, inline=inline)
         
+               
         #page 4
         page_4 = discord.Embed(
             title="Cave Adventure", 
             colour=0x9b59b6
         )
-        page_4.add_field(
-            name="Commands",
-            value="`cave` specifies game context.",
-            inline=False
-        )
-        page_4.add_field(
-            name="Argument 1",
-            value="_Options:_",
-            inline=False
-        )
-        page_4.add_field(
-            name="Argument 2",
-            value="_Actions:_",
-            inline=False
-        )
-        page_4.add_field(
-            name="Argument 3",
-            value="_Settings:_"
-        )
+               
+        fields = [("Commands", "`cave` specifies game context.", False),
+                  ("Argument 1", "_Options:_", False),
+                  ("Argument 2", "_Actions:_", False),
+                  ("Argument 3", "_Settings:_" False),
+     
         page_4.set_footer(
             text=f"For complete reference with chess, do: {prefix}game cave help"
         )
+        for name, value, inline in fields:
+            page_4.add_field(name=name, value=value, inline=inline)
 
         #page 5
         page_5 = discord.Embed(
             title="Roll the Dice", 
             colour=0x9b59b6
         )
-        page_5.add_field(
-            name="Commands",
-            value="`roll` specifies game context.",
-            inline=False
-        )
-        page_5.add_field(
-            name="Argument 1",
-            value="_Modes:_",
-            inline=False
-        )
-        page_5.add_field(
-            name="Argument 2",
-            value="_Actions:_",
-            inline=False
-        )
+                  
+        fields = [("Commands", "`roll` specifies game context.", False),
+                  ("Argument 1", "_Modes:_", False),
+                  ("Argument 2", "_Actions:_", False),
+
         page_5.set_footer(
             text="For complete reference with chess, do: {prefix}game roll help"
         )
+        for name, value, inline in fields:
+            page_5.add_field(name=name, value=value, inline=inline)
+              
 
         message = await context.reply(embed=page_1, mention_author=False)
         await message.add_reaction("◀️")
