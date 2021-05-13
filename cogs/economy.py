@@ -4,7 +4,7 @@ import random
 import sqlite3
 import time
 import os
-import log
+from utils import log
 from db import db
 from os.path import isfile
 from typing import Optional

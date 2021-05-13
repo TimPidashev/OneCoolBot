@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands, tasks
-import log
+from utils import log
 
 class admin(commands.Cog):
     def __init__(self, client):

@@ -8,7 +8,7 @@ import logging
 import sqlite3
 from glob import glob
 from db import db
-import log
+from utils import log
 from discord.utils import get
 from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
