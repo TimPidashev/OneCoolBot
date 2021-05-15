@@ -10,7 +10,7 @@ from discord.utils import get
 import asyncio
 import sqlite3
 from db import db
-from utils import log
+from utils import embed, log
 
 class error(commands.Cog):
     def __init__(self, client):

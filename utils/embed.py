@@ -1,4 +1,3 @@
-from utils import log
 from db import db
 import discord
 import asyncio
@@ -207,6 +206,8 @@ async def serverinfo(context):
 
     for name, value, inline in fields:
             embed.add_field(name=name, value=value, inline=inline)
+
+    return embed
 
 async def settings(context, prefix):
     embed = discord.Embed(

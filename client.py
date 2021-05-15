@@ -8,7 +8,6 @@ import logging
 import sqlite3
 from glob import glob
 from db import db
-from utils import log
 from discord.utils import get
 from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -18,7 +17,7 @@ from dotenv import load_dotenv
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
-from utils import embed
+from utils import embed, log
 
 load_dotenv()
 Token = os.getenv("BOT_TOKEN")

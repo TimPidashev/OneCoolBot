@@ -2,7 +2,7 @@ import discord
 import asyncio
 import re
 import sqlite3
-from utils import log
+from utils import embed, log
 from better_profanity import profanity
 from discord.ext import commands, tasks
 from discord.utils import get

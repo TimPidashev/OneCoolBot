@@ -18,7 +18,7 @@ from discord.ext import commands, tasks
 import asyncio
 import sqlite3
 import time
-from utils import log
+from utils import embed, log
 
 class events(commands.Cog):
     def __init__(self, client, *args, **kwargs):

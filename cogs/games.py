@@ -16,7 +16,7 @@ from discord.ext.commands import Cog
 from discord import Embed, Emoji
 import sqlite3
 import time
-from utils import log
+from utils import embed, log
 
 class games(commands.Cog):
     def __init__(self, client, *args, **kwargs):

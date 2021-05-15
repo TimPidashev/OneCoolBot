@@ -6,7 +6,7 @@ import random
 import os
 import aiohttp
 import io
-from utils import log
+from utils import embed, log
 from io import BytesIO
 from discord import Member, Embed
 from discord.ext.commands import Cog

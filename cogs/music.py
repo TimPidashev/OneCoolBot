@@ -15,7 +15,7 @@ from pythonping import ping
 from termcolor import colored
 from discord.ext import commands, menus, tasks
 from discord import Spotify
-from utils import log
+from utils import embed, log
 
 # URL matching REGEX...
 URL_REG = re.compile(r'https?://(?:www\.)?.+')
