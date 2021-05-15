@@ -60,9 +60,8 @@ async def on_guild_remove(self, guild):
             db.commit()
             await log.on_guild_remove_guildconfig(self, guild)
 
-        except Exception as error:
+        except:
             await log.on_guild_remove_guildcofig_error(self, guild)
 
-        except Exception as error:
-            await log.guild_remove_db_error(self, guild)       
-
+    except Exception as error:
+        await log.guild_remove_db_error(self, guild)       
