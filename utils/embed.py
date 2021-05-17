@@ -33,6 +33,40 @@ async def info(context, users, before_ws, ramUsage, uptime):
     
     return info
 
+#userinfo
+async def userinfo(context, user):
+    if user is None:
+        user = context.author    
+    embed = discord.Embed(
+        colour=0x9b59b6
+    )
+    embed.set_author(
+        name=str(user), 
+        icon_url=user.avatar_url
+    )
+    
+    perm_string = ', '.join([str(p[0]).replace("_", " ").title() for p in user.guild_permissions if p[1]])
+    members = sorted(context.guild.members, key=lambda m: m.joined_at)
+    date_format = "%a, %d %b %Y %I:%M %p"
+
+    if len(user.roles) > 1:
+        role_string = ' '.join([r.mention for r in user.roles][1:])
+    
+    fields = [("Joined", user.joined_at.strftime(date_format), False),
+              ("Join position", str(members.index(user)+1), True),
+              ("Registered", user.created_at.strftime(date_format), True),
+              ("Roles [{}]".format(len(user.roles)-1), role_string, False),
+              ("Guild permissions", perm_string, False)]
+    
+    for name, value, inline in fields:
+        embed.add_field(name=name, value=value, inline=inline)
+
+    embed.set_footer(
+        text="ID: " + str(user.id)
+    )
+
+    return embed
+
 #help
 async def help_page_1(context):
     prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",

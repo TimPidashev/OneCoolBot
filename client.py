@@ -30,24 +30,24 @@ start_time = time.time()
 log.logo()
 data.connect()
 
+#discord.log
+logger = logging.getLogger("discord")
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename="./data/logs/discord.log", encoding="utf-8", mode="w")
+handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
+logger.addHandler(handler)  
+
+#get_prefix
 async def get_prefix(client, context):
         prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")
         return prefix
 
+#ipc_class
 class OneCoolBot(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         #self.ipc = ipc.Server(self, secret_key="my_secret_key")
-
-    async def on_ready(self):
-        db.connect("./data/database.db")
-
-        logger = logging.getLogger("discord")
-        logger.setLevel(logging.DEBUG)
-        handler = logging.FileHandler(filename="./data/logs/discord.log", encoding="utf-8", mode="w")
-        handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
-        logger.addHandler(handler)  
 
     async def on_ipc_ready(self):
         print("Ipc is ready.")
@@ -55,10 +55,12 @@ class OneCoolBot(commands.Bot):
     async def on_ipc_error(self, endpoint, error):
         print(endpoint, "raised", error)
 
+#client setup
 client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all())
 client.process = psutil.Process(os.getpid())
 client.remove_command("help")  
 
+#change presence
 async def change_presence():
         await client.wait_until_ready()
         statuses = [f"{len(client.guilds)} servers", f"{len(client.users)} members"]
@@ -67,10 +69,12 @@ async def change_presence():
             await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
             await asyncio.sleep(10)  
 
+#load cogs forloop
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
         client.load_extension(f"cogs.{filename[:-3]}")
 
+#commands group: bot
 @client.group(pass_context=True, invoke_without_command=True, aliases=["bt", "b"])
 async def bot(context): 
     await log.client_command(context)
@@ -85,7 +89,6 @@ async def bot(context):
     else:
         await context.reply("**Error :(**\nThis is not a valid command. Use this handy command `{prefix}bot help` to help you out.", mention_author=False)
     
-
 @bot.command(aliases=["ld", "l"])
 @commands.is_owner()
 async def load(context, extension):
@@ -203,6 +206,11 @@ async def info(context):
 async def serverinfo(context):
     await log.client_command(context)
     await context.reply(embed=await embed.serverinfo(context), mention_author=False)
+
+@bot.command(aliases=["usrinf", "ui"])
+async def userinfo(context, user: discord.User = None):
+    await log.client_command(context)
+    await context.reply(embed=await embed.userinfo(context, user), mention_author=False)
 
 @bot.group(pass_context=True, invoke_without_command=True, aliases=["st", "s"])
 async def settings(context):
