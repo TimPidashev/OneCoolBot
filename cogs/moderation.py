@@ -3,12 +3,9 @@ import asyncio
 import re
 import sqlite3
 from utils import embed, log
-from better_profanity import profanity
 from discord.ext import commands, tasks
 from discord.utils import get
 from termcolor import colored
-
-profanity.load_censor_words_from_file("./data/profanity.txt")
 
 class moderation(commands.Cog):
     def __init__(self, client):
