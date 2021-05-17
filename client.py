@@ -17,13 +17,18 @@ from dotenv import load_dotenv
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
-from utils import embed, log
+from utils import data, embed, log
 
+#loading and identifying client token
 load_dotenv()
 Token = os.getenv("BOT_TOKEN")
 
+#timestamping start_time
 start_time = time.time()
+
+#logging logo and connecting to database
 log.logo()
+data.connect()
 
 async def get_prefix(client, context):
         prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")

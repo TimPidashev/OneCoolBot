@@ -4,7 +4,9 @@ from db import db
 from utils import log
 import os
 
-db.connect("./data/database.db")
+#establish_database_connection
+def connect():
+    db.connect("./data/database.db")
 
 #on_member_join
 async def on_member_join(self, member):
