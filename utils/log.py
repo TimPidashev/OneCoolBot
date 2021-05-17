@@ -7,7 +7,7 @@ import sys
 
 #logger
 def logger(message):
-    with open("./data/logs/client.log", "a") as log:
+    with open("./data/logs/client.log", "a+") as log:
         log.write(f"{message}\n")
         log.close()
 
