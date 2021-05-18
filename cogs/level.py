@@ -40,11 +40,17 @@ class level(commands.Cog):
                 return
 
             if level_check == "OFF":
-                xp, lvl, xplock = await data.fetch_record(message)
-                if datetime.utcnow() > datetime.fromisoformat(xplock):
-                    coins_on_xp = random.randint(1, 10)
-                    await data.update_coins_if_levels_off(self, message, coins_on_xp)
-                    return
+                result = await data.find_record(message)
+                
+                if result is not None:
+                    xp, lvl, xplock = await data.fetch_record(message)
+                    if datetime.utcnow() > datetime.fromisoformat(xplock):
+                        coins_on_xp = random.randint(1, 10)
+                        await data.update_coins_if_levels_off(self, message, coins_on_xp)
+                        return
+
+                else:
+                    await data.on_message_send(self, message)
 
             else:
                 result = await data.find_record(message)
