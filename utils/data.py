@@ -14,6 +14,13 @@ async def get_prefix(context):
     prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")[0]
     return prefix
 
+async def update_prefix(context):
+    db.execute(f"UPDATE guilds SET Prefix = ? WHERE GuildID = {context.guild.id}", arg)
+    db.commit()
+
+    prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?", context.guild.id)[0]
+    return prefix
+
 #on_member_join
 async def on_member_join(self, member):
 
@@ -117,5 +124,9 @@ async def on_message_send(self, message):
     await log.member_redundant_add_db(self, message)
 
 async def rank_command(self, target):
-    result = db.record(f"SELECT XP, Level FROM users WHERE UserID = {target.id}")
+    result = db.record(f"SELECT XP, Level FROM users WHERE (guildID, UserID) = (?, ?)",
+        target.id,
+        target.guild.id
+    )
     return result
+

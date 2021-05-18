@@ -1,6 +1,7 @@
 import discord
 import asyncio
 import os
+from db import db
 from discord.ext import commands
 from utils import data, embed, log
 
@@ -22,75 +23,69 @@ class settings(commands.Cog):
             await context.reply(embed=await embed.settings(context, prefix), mention_author=False)
 
         else:
-            await context.reply("**Error :(**\nThis is not a valid command. Use this handy command `{prefix}bot help` to help you out.", mention_author=False)
+            await context.reply("**Error :(**\nThis is not a valid command. Use this handy command `{prefix}settings help` to help you out.", mention_author=False)
 
+    @settings.command(aliases=["hlp", "h"])
+    async def help(self, context):
+        await log.cog_command(self, context)
+        message = await context.reply(embed=await embed.settings_help_page_1(context), mention_author=False)
 
-# @settings.command(aliases=["hlp", "h"])
-# async def help(context):
-#     await log.client_command(context)
-#     message = await context.reply(embed=await embed.settings_help_page_1(context), mention_author=False)
+        await message.add_reaction("◀️")
+        await message.add_reaction("▶️")
+        await message.add_reaction("❌")
+        pages = 2
+        current_page = 1
 
-#     await message.add_reaction("◀️")
-#     await message.add_reaction("▶️")
-#     await message.add_reaction("❌")
-#     pages = 2
-#     current_page = 1
+        def check(reaction, user):
+            return user == context.author and str(reaction.emoji) in ["◀️", "▶️", "❌"]
 
-#     def check(reaction, user):
-#         return user == context.author and str(reaction.emoji) in ["◀️", "▶️", "❌"]
+        while True:
+            try:
+                reaction, user = await context.bot.wait_for("reaction_add", timeout=60, check=check)
 
-#     while True:
-#         try:
-#             reaction, user = await context.bot.wait_for("reaction_add", timeout=60, check=check)
+                if str(reaction.emoji) == "▶️" and current_page != pages:
+                    current_page += 1
 
-#             if str(reaction.emoji) == "▶️" and current_page != pages:
-#                 current_page += 1
-
-#                 if current_page == 2:
-#                     await message.edit(embed=await embed.settings_help_page_2(context))
-#                     await message.remove_reaction(reaction, user)
-            
-#             if str(reaction.emoji) == "◀️" and current_page > 1:
-#                 current_page -= 1
+                    if current_page == 2:
+                        await message.edit(embed=await embed.settings_help_page_2(context))
+                        await message.remove_reaction(reaction, user)
                 
-#                 if current_page == 1:
-#                     await message.edit(embed=await embed.settings_help_page_1(context))
-#                     await message.remove_reaction(reaction, user)
+                if str(reaction.emoji) == "◀️" and current_page > 1:
+                    current_page -= 1
+                    
+                    if current_page == 1:
+                        await message.edit(embed=await embed.settings_help_page_1(context))
+                        await message.remove_reaction(reaction, user)
 
-#             if str(reaction.emoji) == "❌":
-#                 await message.delete()
-#                 await context.message.delete()
-#                 break
+                if str(reaction.emoji) == "❌":
+                    await message.delete()
+                    await context.message.delete()
+                    break
 
-#             else:
-#                 await message.remove_reaction(reaction, user)
-                
-#         except asyncio.TimeoutError:
-#             await message.delete()
-#             await context.message.delete()
-#             break
+                else:
+                    await message.remove_reaction(reaction, user)
+                    
+            except asyncio.TimeoutError:
+                await message.delete()
+                await context.message.delete()
+                break
 
-# @settings.command(aliases=["prfx", "p"])
-# async def prefix(context, arg=None):
-#     await log.client_command(context)
-    
-#     if arg is not None and context.author == context.guild.owner:
+    @settings.command(aliases=["prfx", "p"])
+    async def prefix(self, context, arg=None):
+        await log.cog_command(self, context)
+        
+        if arg is not None and context.author == context.guild.owner or context.bot.is_owner:
+            prefix = data.update_prefix(context)
+            await context.reply(f"The prefix was changed to `{prefix}`", mention_author=False)
+        
+        if arg is None:
+            prefix = await data.get_prefix(context)
 
-#         db.execute(f"UPDATE guilds SET Prefix = ? WHERE GuildID = {context.guild.id}", arg)
-#         db.commit()
+            if context.author == context.guild.owner:
+                await context.reply(f"The current prefix is `{prefix}`\nTo change the prefix, use this handy command: `{prefix}bot prefix <prefix>`", mention_author=False)
 
-#         prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?", context.guild.id)[0]
-
-#         await context.reply(f"The prefix was changed to `{prefix}`", mention_author=False)
-    
-#     if arg is None:
-#         prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?", context.guild.id)[0]
-
-#         if context.author == context.guild.owner:
-#             await context.reply(f"The current prefix is `{prefix}`\nTo change the prefix, use this handy command: `{prefix}bot prefix <prefix>`", mention_author=False)
-
-#         else:
-#             await context.reply(f"The current prefix is `{prefix}`", mention_autho=False)
+            else:
+                await context.reply(f"The current prefix is `{prefix}`", mention_author=False)
 
 # @settings.command()
 # async def levels(context, arg=None):

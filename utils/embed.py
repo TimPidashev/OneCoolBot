@@ -252,7 +252,7 @@ async def settings(context, prefix):
         colour=0x9b59b6
     )   
     embed.set_footer(
-        text=f"For more information on what this command does, type {prefix}bot settings help"
+        text=f"For more information on what this command does, type {prefix}settings help"
     )
     
     return embed
