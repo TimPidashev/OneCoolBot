@@ -8,6 +8,11 @@ import os
 def connect():
     db.connect("./data/database.db")
 
+#get_prefix
+async def get_prefix(context):
+    prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")[0]
+    return prefix
+
 #on_member_join
 async def on_member_join(self, member):
 
