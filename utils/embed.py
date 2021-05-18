@@ -55,8 +55,8 @@ async def userinfo(context, user):
     fields = [("Joined", user.joined_at.strftime(date_format), False),
               ("Join position", str(members.index(user)+1), True),
               ("Registered", user.created_at.strftime(date_format), True),
-              ("Roles [{}]".format(len(user.roles)-1), role_string, False),
-              ("Guild permissions", perm_string, False)]
+              ("Roles [{}]".format(len(user.roles)-1), role_string, False)]
+            #   ("Guild permissions", perm_string, False)
     
     for name, value, inline in fields:
         embed.add_field(name=name, value=value, inline=inline)
