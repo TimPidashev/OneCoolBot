@@ -130,3 +130,11 @@ async def rank_command(self, target):
     )
     return result
 
+async def update_coins_if_levels_off(self, message, coins_on_xp):
+    
+    db.execute(f"UPDATE users SET Coins = Coins + ?, XPLock = ? WHERE GuildID = {message.guild.id} AND UserID = {message.author.id}",
+        coins_on_xp,
+        (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
+    )
+    db.commit()
+    await log.coin_add(self, message, coins_on_xp)
