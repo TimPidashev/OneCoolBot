@@ -207,7 +207,7 @@ async def serverinfo(context):
     await context.reply(embed=await embed.serverinfo(context), mention_author=False)
 
 @bot.command(aliases=["usrinf", "ui"])
-async def userinfo(context, user: discord.User = None):
+async def userinfo(context, user: discord.Member = None):
     await log.client_command(context)
     await context.reply(embed=await embed.userinfo(context, user), mention_author=False)
 

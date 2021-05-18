@@ -115,3 +115,7 @@ async def on_message_send(self, message):
     )
     db.commit()
     await log.member_redundant_add_db(self, message)
+
+async def rank_command(self, target):
+    result = db.record(f"SELECT XP, Level FROM users WHERE UserID = {target.id}")
+    return result

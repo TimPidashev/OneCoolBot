@@ -35,6 +35,8 @@ async def info(context, users, before_ws, ramUsage, uptime):
 
 #userinfo
 async def userinfo(context, user):
+    if isinstance(context.channel, discord.DMChannel):
+        return
     if user is None:
         user = context.author    
     embed = discord.Embed(

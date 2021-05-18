@@ -20,7 +20,7 @@ from db import db
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
-from utils import data
+from utils import data, embed, log
 
 class level(commands.Cog):
     def __init__(self, client):
@@ -76,6 +76,35 @@ class level(commands.Cog):
 
                 else:
                     await data.on_message_send(self, message)
-                
+
+    @commands.command()
+    async def rank(self, context, target: Optional[Member]):
+        await log.cog_command(self, context)
+        target = target or context.author
+
+        result = await data.rank_command(self, target)
+
+        if result is not None:
+
+            img = Image.open("./data/img/rank_cards/neon_simple.png")
+            draw = ImageDraw.Draw(img)
+            font = ImageFont.truetype("./data/fonts/Quotable.otf", 35)
+            font1 = ImageFont.truetype("./data/fonts/Quotable.otf", 24)
+            async with aiohttp.ClientSession() as session:
+                async with session.get(str(context.author.avatar_url)) as response:
+                    image = await response.read()
+            icon = Image.open(BytesIO(image)).convert("RGBA")
+            img.paste(icon.resize((156, 156)), (50, 60))
+            draw.text((242, 100), f"{str(result[1])}", (140, 86, 214), font=font)
+            draw.text((242, 180), f"{str(result[0])}", (140, 86, 214), font=font)
+            draw.text((50,220), f"{context.author.name}", (140, 86, 214), font=font1)
+            draw.text((50,240), f"#{context.author.discriminator}", (255, 255, 255), font=font1)
+            img.save("./data/img/imgswap.png")
+            ffile = discord.File("./data/img/imgswap.png")
+            await context.reply(file=ffile, mention_author=False)
+
+        else:
+            await context.reply("You are not in the database :(\nDont worry though, you were just added! Try running the command again.", mention_author=False)
+
 def setup(client):
     client.add_cog(level(client))
