@@ -20,6 +20,7 @@ from db import db
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+from utils import data
 
 class level(commands.Cog):
     def __init__(self, client):
@@ -34,23 +35,18 @@ class level(commands.Cog):
     async def on_message(self, message):
         if not message.author.bot:
             context = await self.client.get_context(message)
-            lvls = db.record(f"SELECT Levels FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
+            level_check = await data.level_check(message)
             if context.command:
                 return
 
-            if lvls == "OFF":
+            if level_check == "OFF":
                 return
 
             else:
-                result = db.record("SELECT GuildID, UserID FROM users WHERE (GuildID, UserId) = (?, ?)",
-                    message.guild.id,
-                    message.author.id
-                )
+                result = await data.find_record(message)
+
                 if result is not None:
-                    xp, lvl, xplock = db.record("SELECT XP, Level, XPLock FROM users WHERE (GuildID, UserID) = (?, ?)", 
-                        message.guild.id, 
-                        message.author.id
-                    )
+                    xp, lvl, xplock = await data.fetch_record(message)
                     
                     if datetime.utcnow() > datetime.fromisoformat(xplock):
 
@@ -58,24 +54,16 @@ class level(commands.Cog):
                         new_lvl = int(((xp + xp_to_add) // 42) ** 0.55)
                         coins_on_xp = random.randint(1, 10)
 
-                        db.execute(f"UPDATE users SET XP = XP + ?, Level = ?, Coins = Coins + ?, XPLock = ? WHERE GuildID = {message.guild.id} AND UserID = {message.author.id}",
-                            xp_to_add,
-                            new_lvl,
-                            coins_on_xp,
-                            (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
-                        )
-
-                        db.commit()
-                        await log.exp_add(self, message, xp_to_add)
-                        await log.coin_add(self, message, coins_on_xp)
+                        await data.update_record(self, message, xp_to_add, new_lvl, coins_on_xp)
 
                         if new_lvl > lvl:
-                            levelmessages, levelmessage, levelmessagechannel = db.record(f"SELECT LevelMessages, LevelMessage, LevelMessageChannel FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
+                            levelmessages, levelmessage, levelmessagechannel = await data.level_up_check(message)
+                            
                             if levelmessages == "OFF":
                                 return
                             
                             if levelmessages == "ON":
-                                if levelmessagechannel == 0:
+                                if levelmessagechannel == "0":
                                     await message.reply(f"{levelmessage}", mention_author=False)
                                     await log.level_up(self, message, new_lvl)
 
@@ -84,16 +72,10 @@ class level(commands.Cog):
                                     await message.channel.send(f"{levelmessage}")
 
                     else:
-                        pass
+                        return
 
                 else:
-                    
-                    db.execute("INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
-                        message.guild.id,
-                        message.author.id
-                    )
-                    db.commit()
-                    await log.member_redundant_add_db(self, message)
+                    await data.on_message_send(self, message)
                 
 def setup(client):
     client.add_cog(level(client))

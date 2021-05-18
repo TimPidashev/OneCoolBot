@@ -3,6 +3,7 @@ import asyncio
 from db import db
 from utils import log
 import os
+from datetime import datetime, timedelta
 
 #establish_database_connection
 def connect():
@@ -71,4 +72,46 @@ async def on_guild_remove(self, guild):
             await log.on_guild_remove_guildcofig_error(self, guild)
 
     except Exception as error:
-        await log.guild_remove_db_error(self, guild)       
+        await log.guild_remove_db_error(self, guild)    
+
+#LEVEL STUFF BELOW
+async def level_check(message):
+    level_check = db.record(f"SELECT Levels FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
+    return level_check
+
+async def find_record(message):
+    result = db.record("SELECT GuildID, UserID FROM users WHERE (GuildID, UserId) = (?, ?)",
+        message.guild.id,
+        message.author.id
+    )   
+    return result
+
+async def fetch_record(message):
+    xp, lvl, xplock = db.record("SELECT XP, Level, XPLock FROM users WHERE (GuildID, UserID) = (?, ?)", 
+        message.guild.id, 
+        message.author.id
+    )
+    return xp, lvl, xplock
+
+async def update_record(self, message, xp_to_add, new_lvl, coins_on_xp):
+    db.execute(f"UPDATE users SET XP = XP + ?, Level = ?, Coins = Coins + ?, XPLock = ? WHERE GuildID = {message.guild.id} AND UserID = {message.author.id}",
+        xp_to_add,
+        new_lvl,
+        coins_on_xp,
+        (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
+    )
+    db.commit()
+    await log.exp_add(self, message, xp_to_add)
+    await log.coin_add(self, message, coins_on_xp)
+
+async def level_up_check(message):
+    levelmessages, levelmessage, levelmessagechannel = db.record(f"SELECT LevelMessages, LevelMessage, LevelMessageChannel FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
+    return levelmessages, levelmessage, levelmessagechannel
+
+async def on_message_send(self, message):
+    db.execute("INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
+        message.guild.id,
+        message.author.id
+    )
+    db.commit()
+    await log.member_redundant_add_db(self, message)
