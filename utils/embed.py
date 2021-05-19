@@ -307,3 +307,69 @@ async def settings_help_page_2(context):
 
     return page_2
 
+async def economy(context, prefix):
+    embed = discord.Embed(
+        title=f"{prefix}economy <?>", 
+        description="You have found a *super command!* With this command you can do anything your heart desires, well almost...", 
+        colour=0x9b59b6
+    )   
+    embed.set_footer(
+        text=f"For more information on what this command does, type {prefix}economy help"
+    )
+    return embed
+
+async def wallet(context, target):
+    target = target or context.author
+    ids = db.column("SELECT UserID FROM users ORDER BY Coins DESC")
+    coins = db.record("SELECT Coins FROM users WHERE UserID = ?", target.id)
+    embed = discord.Embed(
+        colour=0x9b59b6
+    )
+    embed.add_field(
+        name=f"**Wallet:**",
+        value=f"**{target.display_name}** has :coin: **{coins[0]}** coins and is rank **{ids.index(target.id)+1}** of {len(ids):} users globally.",
+        inline=False
+    )
+    
+    return embed
+
+async def cap(context):
+    cap = db.record("SELECT sum(Coins) FROM users")
+    embed = discord.Embed(
+        colour=0x9b59b6
+    )
+    embed.add_field(
+        name=f"**Current Market Cap:**", 
+        value=f"There are currently :coin: **{cap[0]}** coins widespread globally"
+    )
+    
+    return embed
+
+async def market(context):
+    embed = discord.Embed(
+        title="**Market:**", 
+        colour=0x9b59b6
+    )
+    embed.set_footer(
+        text="See whats for sale!"
+    )
+
+    return embed
+
+async def economy_help_page_1(context):
+    #page 1
+    page_1 = discord.Embed(
+        title="Economy",
+        description="The home page of the economy super-command!", 
+        colour=0x9b59b6
+    )
+    page_1.add_field(
+        name="`Under Construction`",
+        value="This command is still under construction! Shhhh, 𝓣𝓲𝓶𝓶𝔂 has a headache!",
+        inline=False
+    )
+    page_1.set_footer(
+        text="To scroll through pages, react to the arrows below."
+    )
+
+    return page_1
