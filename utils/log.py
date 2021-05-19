@@ -171,8 +171,8 @@ async def level_up(self, message, new_lvl):
 async def member_redundant_add_db(self, message):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[{current_time}]", "magenta"), colored("member:", "green"), colored(f"{message.author}", "magenta"), colored("was added to users table", "green"))
-    message = f"[{current_time}] member: {message.author} was added to users table"
+    print(colored(f"[{current_time}]", "magenta"), colored("member:", "green"), colored(f"{message.author}", "magenta"), colored("was added to users table in guild:", "green"), colored(f"{message.guild.name}", "magenta"))
+    message = f"[{current_time}] member: {message.author} was added to users table in guild: {message.guild.name}#{message.guild.id}"
     logger(message)
 
 async def clear_messages(self, context, amount):
