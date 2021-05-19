@@ -112,7 +112,7 @@ async def update_record(self, message, xp_to_add, new_lvl, coins_on_xp):
     await log.coin_add(self, message, coins_on_xp)
 
 async def level_up_check(message):
-    levelmessages, levelmessage, levelmessagechannel = db.record(f"SELECT LevelMessages, LevelMessage, LevelMessageChannel FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
+    levelmessages, levelmessage, levelmessagechannel = db.record(f"SELECT LevelMessages, LevelMessage, LevelMessageChannel FROM guildconfig WHERE GuildID = {message.guild.id}")
     return levelmessages, levelmessage, levelmessagechannel
 
 async def on_message_send(self, message):

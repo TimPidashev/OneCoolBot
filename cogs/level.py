@@ -80,6 +80,7 @@ class level(commands.Cog):
                                 else:
                                     messagechannel = self.client.get_channel(levelmessagechannel)
                                     await message.channel.send(f"{levelmessage}")
+                                    await log.level_up(self, message, new_lvl)
 
                     else:
                         return
