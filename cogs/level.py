@@ -67,14 +67,15 @@ class level(commands.Cog):
                         await data.update_record(self, message, xp_to_add, new_lvl, coins_on_xp)
 
                         if new_lvl > lvl:
-                            levelmessages, levelmessage, levelmessagechannel = await data.level_up_check(message)
-                            
+                            levelmessages, levelmessagechannel = await data.level_up_check(message)
+                            levelmessage = await data.fetch_levelmessage(message)
+
                             if levelmessages == "OFF":
                                 return
                             
                             if levelmessages == "ON":
-                                if levelmessagechannel == "0":
-                                    await message.reply(f"{levelmessage}", mention_author=False)
+                                if levelmessagechannel == 0:
+                                    await message.reply(f":partying_face: {message.author.mention} is now level **{new_lvl:,}**!", mention_author=False)
                                     await log.level_up(self, message, new_lvl)
 
                                 else:
@@ -101,7 +102,7 @@ class level(commands.Cog):
 
         if result is not None:
             async with context.typing():
-                asyncio.sleep(1)
+                await asyncio.sleep(1)
                 img = Image.open("./data/img/rank_cards/neon_simple.png")
                 draw = ImageDraw.Draw(img)
                 font = ImageFont.truetype("./data/fonts/Quotable.otf", 35)

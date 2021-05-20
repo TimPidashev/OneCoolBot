@@ -12,6 +12,7 @@ from discord.utils import get
 from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from quart import Quart, redirect, url_for, render_template, request
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from dotenv import load_dotenv
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
@@ -36,6 +37,7 @@ handler = logging.FileHandler(filename="./data/logs/discord.log", encoding="utf-
 handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
 logger.addHandler(handler)  
 
+
 #get_prefix
 async def get_prefix(client, context):
     prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")[0]
@@ -46,7 +48,16 @@ class OneCoolBot(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        #self.ipc = ipc.Server(self, secret_key="my_secret_key")
+    async def on_ready(self):
+        await data.update_users_table(self)
+        await data.update_guilds_table(self)
+        await data.update_guildconfig_table(self)
+    
+    async def on_connect(self):
+        await log.client_connect(self)
+
+    async def on_disconnect(self):
+        pass                
 
     async def on_ipc_ready(self):
         print("Ipc is ready.")
@@ -55,9 +66,13 @@ class OneCoolBot(commands.Bot):
         print(endpoint, "raised", error)
 
 #client setup
-client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all())
+client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all(), case_insensitive=True)
 client.process = psutil.Process(os.getpid())
-client.remove_command("help")  
+client.remove_command("help")
+
+for filename in os.listdir("./cogs"):
+    if filename.endswith(".py"):
+        client.load_extension(f"cogs.{filename[:-3]}")
 
 #change presence
 async def change_presence():
@@ -67,11 +82,6 @@ async def change_presence():
             status = random.choice(statuses)
             await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
             await asyncio.sleep(10)  
-
-#load cogs forloop
-for filename in os.listdir("./cogs"):
-    if filename.endswith(".py"):
-        client.load_extension(f"cogs.{filename[:-3]}")
 
 #commands group: bot
 @client.group(pass_context=True, invoke_without_command=True, aliases=["bt", "b"])

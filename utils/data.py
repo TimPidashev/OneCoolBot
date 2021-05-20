@@ -4,6 +4,11 @@ from db import db
 from utils import log
 import os
 from datetime import datetime, timedelta
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
+user_add_count = 0
+guild_add_count = 0
+guildconfig_add_count = 0
 
 #establish_database_connection
 def connect():
@@ -112,8 +117,8 @@ async def update_record(self, message, xp_to_add, new_lvl, coins_on_xp):
     await log.coin_add(self, message, coins_on_xp)
 
 async def level_up_check(message):
-    levelmessages, levelmessage, levelmessagechannel = db.record(f"SELECT LevelMessages, LevelMessage, LevelMessageChannel FROM guildconfig WHERE GuildID = {message.guild.id}")
-    return levelmessages, levelmessage, levelmessagechannel
+    levelmessages, levelmessagechannel = db.record(f"SELECT LevelMessages, LevelMessageChannel FROM guildconfig WHERE GuildID = {message.guild.id}")
+    return levelmessages, levelmessagechannel
 
 async def on_message_send(self, message):
     db.execute("INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
@@ -145,3 +150,32 @@ async def update_coins_if_levels_off(self, message, coins_on_xp):
     )
     db.commit()
     await log.coin_add(self, message, coins_on_xp)
+
+async def fetch_levelmessage(message):
+    levelmessage = db.record(f"SELECT LevelMessage FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
+    return levelmessage
+
+async def update_users_table(self):
+    db.multiexec(
+        "INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
+        (
+            (member.guild.id, member.id,)
+            for guild in self.guilds
+            for member in guild.members
+            if not member.bot
+        ),
+    )
+
+async def update_guilds_table(self):
+    db.multiexec(
+        "INSERT OR IGNORE INTO guilds (GuildID) VALUES (?)",
+        ((guild.id,) for guild in self.guilds),
+    )
+    db.commit()
+
+async def update_guildconfig_table(self):
+    db.multiexec(
+        "INSERT OR IGNORE INTO guildconfig (GuildID) VALUES (?)",
+        ((guild.id,) for guild in self.guilds),
+    )
+    db.commit()

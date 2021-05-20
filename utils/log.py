@@ -265,3 +265,10 @@ async def on_guild_remove_guildcofig_error(self, guild):
     print(colored(f"[{current_time}]", "magenta"), colored("an error occurred while trying to remove guild:", "red"), colored(f"{guild.name}", "magenta"), colored("from guildconfig table", "red"))
     message = f"[{current_time}] an error occured while trying to remove guild: {guild.name}#{guild.id} from guildconfig table"
     logger(message)
+    
+async def client_connect(self):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("client connected to gateway", "green"))
+    message = f"[{current_time}] client connected to gateway"
+    logger(message)

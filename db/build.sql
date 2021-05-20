@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS guildconfig(
     GuildID integer PRIMARY KEY,
     Levels text DEFAULT "OFF",
     LevelMessages text DEFAULT "OFF",
-    LevelMessage text DEFAULT ":partying_face: {message.author.mention} is now level **{new_lvl:,}**!",
+    LevelMessage text DEFAULT "This is a level message!",
     LevelMessageChannel integer DEFAULT 0,
     UpdateMessage text DEFAULT "NONE",
     Economy text DEFAULT "OFF",
