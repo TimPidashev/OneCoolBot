@@ -85,9 +85,9 @@ class settings(commands.Cog):
                 await context.reply(f"The current prefix is `{prefix}`\nTo change the prefix, use this handy command: `{prefix}bot prefix <prefix>`", mention_author=False)
 
             else:
-                await context.reply(f"The c urrent prefix is `{prefix}`", mention_author=False)
+                await context.reply(f"The current prefix is `{prefix}`", mention_author=False)
 
-    @settings.command()
+    @settings.command(aliases = ["lvls", "ls"])
     async def levels(self, context, arg=None):
         await log.cog_command(self, context)
         levels = db.record(f"SELECT Levels FROM guildconfig WHERE GuildID = {context.guild.id}")[0]
@@ -99,16 +99,7 @@ class settings(commands.Cog):
             )
             db.commit()
 
-            embed = discord.Embed(
-                colour=0x9b59b6
-            )
-            embed.add_field(
-                name="Current Settings",
-                value="Levels were turned on!",
-                inline=False
-            )
-        
-            await context.reply(embed=embed, mention_author=False)
+            await context.reply("Levels were turned `on`", mention_author=False)
 
         if arg == "off" and context.author == context.guild.owner:
             levels = "OFF"
@@ -116,28 +107,19 @@ class settings(commands.Cog):
                 levels
             )
             db.commit()
-
-            embed = discord.Embed(
-                colour=0x9b59b6
-            )
-            embed.add_field(
-                name="Current Settings",
-                value="Levels were turned off!",
-                inline=False
-            )
         
-            await context.reply(embed=embed, mention_author=False)
+            await context.reply("Levels were turned `off`", mention_author=False)
 
         if arg is None:
             levels = db.record(f"SELECT Levels from guildconfig WHERE GuildID = {context.guild.id}")[0]
 
             if levels == "OFF":
-                await context.reply("**Levels** are currently off.", mention_author=False)
+                await context.reply("Levels are currently `off`", mention_author=False)
                 
             if levels == "ON":
-                await context.reply("**Levels** are currently on.", mention_author=False)
+                await context.reply("Levels are currently `on`", mention_author=False)
 
-    @settings.command()
+    @settings.command(aliases=["lvlms", "lm"])
     async def levelmessages(self, context, arg=None):
         await log.cog_command(self, context)
         levelmessage = db.record(f"SELECT LevelMessages FROM guildconfig WHERE GuildID = {context.guild.id}")[0]
@@ -153,7 +135,7 @@ class settings(commands.Cog):
             messagechannel = db.record(f"SELECT LevelMessageChannel FROM guildconfig WHERE GuildID = {context.guild.id}")[0]
             embed = discord.Embed(
                 colour=0x9b59b6
-            )
+           )
             embed.add_field(
                 name="Current Settings",
                 value="Level message turned on!",
@@ -183,28 +165,28 @@ class settings(commands.Cog):
 
         if arg == "off" and context.author == context.guild.owner:
             levelmessage = "OFF"
-            db.execute(f"UPDATE guildconfig SET LevelMessage = ? WHERE GuildID = {context.guild.id}",
+            db.execute(f"UPDATE guildconfig SET LevelMessages = ? WHERE GuildID = {context.guild.id}",
                 levelmessage
             )
             db.commit()
 
-            await context.reply("**Level messages** were turned off.", mention_author=False)
+            await context.reply("Level messages were turned `off`", mention_author=False)
 
         if arg is None:
             levelmessages = db.record(f"SELECT LevelMessages FROM guildconfig WHERE GuildID = {context.guild.id}")[0]
 
             if levelmessages == "OFF":
-                await context.reply("Level messages are currently **off**.", mention_author=False)
+                await context.reply("Level messages are currently `off`", mention_author=False)
 
             if levelmessages == "ON":
-                await context.reply("Level messages are currently **on**", mention_author=False)
+                await context.reply("Level messages are currently `on`", mention_author=False)
 
             if levelmessages == "NONE":
                 db.execute("INSERT INTO guildconfig (GuildID) VALUES (?)", context.guild.id)
                 db.commit()
 
         if arg == "help":
-            await context.reply("Under construction.", mention_author=False)
+            await context.reply("**Under Construction.**\nThe idea is that every command has its own small `help` description that will be supplied if the context is either not correct or close(determined by deep learning :eyes:) or the help command is specified.", mention_author=False)
 
 def setup(client):
     client.add_cog(settings(client))

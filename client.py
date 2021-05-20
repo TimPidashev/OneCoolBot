@@ -6,6 +6,8 @@ import random
 import asyncio
 import logging
 import sqlite3
+import traceback
+import sys
 from glob import glob
 from db import db
 from discord.utils import get
@@ -101,23 +103,35 @@ async def bot(context):
 @bot.command(aliases=["ld", "l"])
 @commands.is_owner()
 async def load(context, extension):
-    await client.load_extension(f'cogs.{extension}')
-    log.client_command(context)
-    await context.reply(f"Your wish is my command | Loaded cogs.**{extension}**", mention_author=False)
+    try:
+        client.load_extension(f'cogs.{extension}')
+        await log.client_command(context)
+        await context.reply(f"Your wish is my command | Loaded cogs.**{extension}**", mention_author=False)
+
+    except Exception as error:
+        await context.reply(f"**Error :(**\n```{error}```", mention_author=False)
 
 @bot.command(aliases=["ul", "u"])
 @commands.is_owner()
 async def unload(context, extension):
-    client.unload_extension(f'cogs.{extension}')
-    await log.client_command(context)
-    await context.reply(f"Your wish is my command | Unloaded cogs.**{extension}**", mention_author=False)
+    try:
+        client.unload_extension(f'cogs.{extension}')
+        await log.client_command(context)
+        await context.reply(f"Your wish is my command | Unloaded cogs.**{extension}**", mention_author=False)
+
+    except Exception as error:
+        await context.reply(f"**Error :(**\n```{error}```", mention_author=False)
 
 @bot.command(aliases=["rl", "r"])
 @commands.is_owner()
 async def reload(context, extension):
-    client.reload_extension(f'cogs.{extension}')
-    await log.client_command(context)
-    await context.reply(f"Your wish is my command | Reloaded cogs.**{extension}**", mention_author=False)
+    try:
+        client.reload_extension(f'cogs.{extension}')
+        await log.client_command(context)
+        await context.reply(f"Your wish is my command | Reloaded cogs.**{extension}**", mention_author=False)
+
+    except Exception as error:
+        await context.reply(f"**Error :(**\n```{error}```", mention_author=False)
 
 @bot.command(aliases=["hlp", "h"])
 async def help(context):
