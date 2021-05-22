@@ -19,7 +19,7 @@ async def get_prefix(context):
     prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")[0]
     return prefix
 
-async def update_prefix(context):
+async def update_prefix(context, arg):
     db.execute(f"UPDATE guilds SET Prefix = ? WHERE GuildID = {context.guild.id}", arg)
     db.commit()
 
@@ -179,3 +179,8 @@ async def update_guildconfig_table(self):
         ((guild.id,) for guild in self.guilds),
     )
     db.commit()
+
+#SETTINGS BELOW
+async def fetch_level_settings(context):
+    levels = db.record(f"SELECT Levels FROM guildconfig WHERE GuildID = {context.guild.id}")[0]
+    return levels

@@ -35,9 +35,10 @@ class level(commands.Cog):
     async def on_message(self, message):
         if not message.author.bot:
             context = await self.client.get_context(message)
-            level_check = await data.level_check(message)
             if context.command:
                 return
+
+            level_check = await data.level_check(message)
 
             if level_check == "OFF":
                 result = await data.find_record(message)
