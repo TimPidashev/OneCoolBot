@@ -10,6 +10,7 @@ import traceback
 import sys
 import aiml
 from glob import glob
+from ai import train
 from db import db
 from discord.utils import get
 from datetime import datetime, timedelta
@@ -37,9 +38,9 @@ log.logo()
 data.connect()
 
 # AIML startup
-kernel = aiml.Kernel()
-kernel.learn("std-startup.xml")
-kernel.respond("LOAD AIML B")
+# kernel = aiml.Kernel()
+# kernel.learn("std-startup.xml")
+# kernel.respond("LOAD AIML B")
 
 #discord.log
 logger = logging.getLogger("discord")
@@ -94,30 +95,31 @@ async def change_presence():
             await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
             await asyncio.sleep(10)  
 
-@client.event
-async def on_message(message):
-    channel = message.channel
+#AIML HANDLER
+# @client.event
+# async def on_message(message):
+#     channel = message.channel
 
-    if message.author.bot or str(message.channel) != channel_name:
-        return
+#     if message.author.bot or str(message.channel) != channel_name:
+#         return
     
-    if message.author == client.user:
-        return
+#     if message.author == client.user:
+#         return
 
-    if message.content is None:
-        return
+#     if message.content is None:
+#         return
 
-    if "https://" in message.content.lower() or "www." in message.content.lower():
-        return
+#     if "https://" in message.content.lower() or "www." in message.content.lower():
+#         return
 
-    if message.content == "<@547321575993769984>":
-        await mesage.reply(f"{mesage.author.mention}")
-        return
+#     if message.content == "<@547321575993769984>":
+#         await mesage.reply(f"{mesage.author.mention}")
+#         return
         
-    else:
-        response = kernel.respond(message.content)
-        await asyncio.sleep(random.randint(0,2))
-        await channel.send(response)
+#     else:
+#         response = kernel.respond(message.content)
+#         await asyncio.sleep(random.randint(0,2))
+#         await channel.send(response)
 
 #commands group: bot
 @client.group(pass_context=True, invoke_without_command=True, aliases=["bt", "b"])
