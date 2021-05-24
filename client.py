@@ -87,128 +87,153 @@ async def change_presence():
 
 #commands group: bot
 @client.group(pass_context=True, invoke_without_command=True, aliases=["bt", "b"])
-async def bot(context): 
+async def bot(context, arg=None): 
     await log.client_command(context)
-    message = context.message  
-    prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
-        context.guild.id,
-    )[0]
-
-    if message.content == f"{prefix}bot" or f"{prefix}bt" or f"{prefix}b":
-        await context.reply(embed=await embed.bot(context, prefix), mention_author=False)
-
-    else:
-        await context.reply("**Error :(**\nThis is not a valid command. Use this handy command `{prefix}bot help` to help you out.", mention_author=False)
+    prefix = await data.get_prefix(context)
     
+    if arg is not None:
+        if arg == "aliases" or arg == "alias" or arg == "als" or arg == "a": 
+            await context.reply(f"**{prefix}bot** aliases: `bt` `b`", mention_author=False)
+
+        if arg == "prefix" or arg == "prfx" or arg == "prf" or arg == "pr" or arg == "p":
+            await context.reply(f"The current prefix is `{prefix}`", mention_author=False)
+
+        else:
+            return
+
+    elif arg is None:
+        return
+
 @bot.command(aliases=["ld", "l"])
 @commands.is_owner()
-async def load(context, extension):
-    try:
-        client.load_extension(f'cogs.{extension}')
-        await log.client_command(context)
-        await context.reply(f"Your wish is my command | Loaded cogs.**{extension}**", mention_author=False)
+async def load(context, extension=None):
+    if extension is not None:
+        try:
+            client.load_extension(f'cogs.{extension}')
+            await log.client_command(context)
+            await context.reply(f"Your wish is my command | Loaded cogs.**{extension}**", mention_author=False)
 
-    except Exception as error:
-        await context.reply(f"**Error :(**\n```{error}```", mention_author=False)
+        except Exception as error:
+            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+    
+    elif extension is None:
+        await context.reply("**oops :|**\n Please provide me with more context.", mention_author=False)
+
+    else:
+        return
 
 @bot.command(aliases=["ul", "u"])
 @commands.is_owner()
-async def unload(context, extension):
-    try:
-        client.unload_extension(f'cogs.{extension}')
-        await log.client_command(context)
-        await context.reply(f"Your wish is my command | Unloaded cogs.**{extension}**", mention_author=False)
+async def unload(context, extension=None):
+    if extension is not None:
+        try:
+            client.unload_extension(f'cogs.{extension}')
+            await log.client_command(context)
+            await context.reply(f"Your wish is my command | Unloaded cogs.**{extension}**", mention_author=False)
 
-    except Exception as error:
-        await context.reply(f"**Error :(**\n```{error}```", mention_author=False)
+        except Exception as error:
+            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+    
+    elif extension is None:
+        await context.reply("**oops :|**\n Please provide me with more context.", mention_author=False)
+
+    else:
+        return
 
 @bot.command(aliases=["rl", "r"])
 @commands.is_owner()
-async def reload(context, extension):
-    try:
-        client.reload_extension(f'cogs.{extension}')
-        await log.client_command(context)
-        await context.reply(f"Your wish is my command | Reloaded cogs.**{extension}**", mention_author=False)
+async def reload(context, extension=None):
+    if extension is not None:
+        try:
+            client.reload_extension(f'cogs.{extension}')
+            await log.client_command(context)
+            await context.reply(f"Your wish is my command | Reloaded cogs.**{extension}**", mention_author=False)
 
-    except Exception as error:
-        await context.reply(f"**Error :(**\n```{error}```", mention_author=False)
+        except Exception as error:
+            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+
+    elif extension is None:
+        await context.reply("**oops :|**\n Please provide me with more context.", mention_author=False)
+
+    else:
+        return
 
 @bot.command(aliases=["hlp", "h"])
-async def help(context):
+async def help(context, arg=None):
     await log.client_command(context)
+    if arg is None:
+        message = await context.reply(embed=await embed.help_page_1(context), mention_author=False)
+        await message.add_reaction("◀️")
+        await message.add_reaction("▶️")
+        await message.add_reaction("❌")
+        pages = 6
+        current_page = 1
 
-    message = await context.reply(embed=await embed.help_page_1(context), mention_author=False)
-    await message.add_reaction("◀️")
-    await message.add_reaction("▶️")
-    await message.add_reaction("❌")
-    pages = 6
-    current_page = 1
+        def check(reaction, user):
+            return user == context.author and str(reaction.emoji) in ["◀️", "▶️", "❌"]
 
-    def check(reaction, user):
-        return user == context.author and str(reaction.emoji) in ["◀️", "▶️", "❌"]
+        while True:
+            try:
+                reaction, user = await context.bot.wait_for("reaction_add", timeout=60, check=check)
 
-    while True:
-        try:
-            reaction, user = await context.bot.wait_for("reaction_add", timeout=60, check=check)
+                if str(reaction.emoji) == "▶️" and current_page != pages:
+                    current_page += 1
 
-            if str(reaction.emoji) == "▶️" and current_page != pages:
-                current_page += 1
+                    if current_page == 2:
+                        await message.edit(embed=await embed.help_page_2(context))
+                        await message.remove_reaction(reaction, user)
+                    
+                    elif current_page == 3:
+                        await message.edit(embed=await embed.help_page_3(context))
+                        await message.remove_reaction(reaction, user)
 
-                if current_page == 2:
-                    await message.edit(embed=await embed.help_page_2(context))
-                    await message.remove_reaction(reaction, user)
+                    elif current_page == 4:
+                        await message.edit(embed=await embed.help_page_4(context))
+                        await message.remove_reaction(reaction, user)
+
+                    elif current_page == 5:
+                        await message.edit(embed=await embed.help_page_5(context))
+                        await message.remove_reaction(reaction, user)
+
+                    elif current_page == 6:
+                        await message.edit(embed=await embed.help_page_6(context))
+                        await message.remove_reaction(reaction, user)
                 
-                elif current_page == 3:
-                    await message.edit(embed=await embed.help_page_3(context))
-                    await message.remove_reaction(reaction, user)
+                if str(reaction.emoji) == "◀️" and current_page > 1:
+                    current_page -= 1
+                    
+                    if current_page == 1:
+                        await message.edit(embed=await embed.help_page_1(context))
+                        await message.remove_reaction(reaction, user)
 
-                elif current_page == 4:
-                    await message.edit(embed=await embed.help_page_4(context))
-                    await message.remove_reaction(reaction, user)
+                    elif current_page == 2:
+                        await message.edit(embed=await embed.help_page_2(context))
+                        await message.remove_reaction(reaction, user)
+                    
+                    elif current_page == 3:
+                        await message.edit(embed=await embed.help_page_3(context))
+                        await message.remove_reaction(reaction, user)
 
-                elif current_page == 5:
-                    await message.edit(embed=await embed.help_page_5(context))
-                    await message.remove_reaction(reaction, user)
+                    elif current_page == 4:
+                        await message.edit(embed=await embed.help_page_4(context))
+                        await message.remove_reaction(reaction, user)
 
-                elif current_page == 6:
-                    await message.edit(embed=await embed.help_page_6(context))
-                    await message.remove_reaction(reaction, user)
-            
-            if str(reaction.emoji) == "◀️" and current_page > 1:
-                current_page -= 1
-                
-                if current_page == 1:
-                    await message.edit(embed=await embed.help_page_1(context))
-                    await message.remove_reaction(reaction, user)
+                    elif current_page == 5:
+                        await message.edit(embed=await embed.   help_page_5(context))
+                        await message.remove_reaction(reaction, user)
 
-                elif current_page == 2:
-                    await message.edit(embed=await embed.help_page_2(context))
-                    await message.remove_reaction(reaction, user)
-                
-                elif current_page == 3:
-                    await message.edit(embed=await embed.help_page_3(context))
-                    await message.remove_reaction(reaction, user)
+                if str(reaction.emoji) == "❌":
+                    await message.delete()
+                    await context.message.delete()
+                    break
 
-                elif current_page == 4:
-                    await message.edit(embed=await embed.help_page_4(context))
+                else:
                     await message.remove_reaction(reaction, user)
-
-                elif current_page == 5:
-                    await message.edit(embed=await embed.   help_page_5(context))
-                    await message.remove_reaction(reaction, user)
-
-            if str(reaction.emoji) == "❌":
+                    
+            except asyncio.TimeoutError:
                 await message.delete()
                 await context.message.delete()
                 break
-
-            else:
-                await message.remove_reaction(reaction, user)
-                
-        except asyncio.TimeoutError:
-            await message.delete()
-            await context.message.delete()
-            break
 
 @bot.command(aliases=["inf", "i"])
 async def info(context):
