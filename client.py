@@ -8,6 +8,7 @@ import logging
 import sqlite3
 import traceback
 import sys
+import aiml
 from glob import glob
 from db import db
 from discord.utils import get
@@ -21,6 +22,9 @@ from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
 from utils import data, embed, log
 
+#test channel for ai
+channel_name = "timmy-testin" # default channel name
+
 #loading and identifying client token
 load_dotenv()
 Token = os.getenv("BOT_TOKEN")
@@ -31,6 +35,11 @@ start_time = time.time()
 #logging logo and connecting to database
 log.logo()
 data.connect()
+
+# AIML startup
+kernel = aiml.Kernel()
+kernel.learn("std-startup.xml")
+kernel.respond("LOAD AIML B")
 
 #discord.log
 logger = logging.getLogger("discord")
@@ -84,6 +93,31 @@ async def change_presence():
             status = random.choice(statuses)
             await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
             await asyncio.sleep(10)  
+
+@client.event
+async def on_message(message):
+    channel = message.channel
+
+    if message.author.bot or str(message.channel) != channel_name:
+        return
+    
+    if message.author == client.user:
+        return
+
+    if message.content is None:
+        return
+
+    if "https://" in message.content.lower() or "www." in message.content.lower():
+        return
+
+    if message.content == "<@547321575993769984>":
+        await mesage.reply(f"{mesage.author.mention}")
+        return
+        
+    else:
+        response = kernel.respond(message.content)
+        await asyncio.sleep(random.randint(0,2))
+        await channel.send(response)
 
 #commands group: bot
 @client.group(pass_context=True, invoke_without_command=True, aliases=["bt", "b"])
