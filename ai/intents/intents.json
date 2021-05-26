@@ -30,6 +30,14 @@
     {"tag": "coolness",
     "patterns": ["How cool are you?", "Are you really cool?", "Your not cool."],
     "responses": ["I am very cool.", "More cool than you :grin:", "Cooler than your mom.", "As cool as 𝓣𝓲𝓶𝓶𝔂!"]
+    },
+    {"tag": "status",
+    "patterns": ["How are you?", "How do you feel?", "What is your current status?"],
+    "responses": ["I feel fine.", "A little bored...", "Well, I could use an update..."]
+    },
+    {"tag": "joke",
+    "patterns": ["Tell me a joke.", "Say something funny.", "Make me laugh."],
+    "responses": ["Nah, I dont feel like it.", "Ask someone else, sorry :(", "𝓣𝓲𝓶𝓶𝔂 is still working on this feature."]
     }
 ]
 }
