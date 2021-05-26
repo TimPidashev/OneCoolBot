@@ -1,4 +1,3 @@
-
 {"intents": [
     {"tag": "greeting",
      "patterns": ["Hi", "Hey", "Is anyone there?", "Hello", "Hay"],
@@ -18,7 +17,7 @@
     },
     {"tag": "name",
     "patterns": ["what is your name", "what should I call you", "whats your name?"],
-    "responses": ["You can call me OneCoolBot.", "I'm Joana!", "Just call me OneCoolBot"]
+    "responses": ["You can call me OneCoolBot.", "I'm OneCoolBot", "Just call me OneCoolBot"]
     },
     {"tag": "help",
     "patterns": ["Could you help me?", "give me a hand please", "Can you help?", "What can you do for me?", "I need a support", "I need a help", "support me please"],

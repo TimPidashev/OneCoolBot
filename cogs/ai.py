@@ -8,9 +8,9 @@ from tensorflow import keras
 from sklearn.preprocessing import LabelEncoder
 import random
 import pickle
+import asyncio
 
-#test channel
-channel_name = "timmy-testin" # default channel name
+test_channel = 846428895981076510
 
 with open('./ai/tokenizer.pickle', 'rb') as handle:
         tokenizer = pickle.load(handle)
@@ -31,19 +31,21 @@ class ai(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         if not message.author.bot:
-            if message.channel == channel_name:
+            if message.channel.id == test_channel:
                 with open("./ai/intents/intents.json") as file:
                     data = json.load(file)
-                inp = message.content()
-                result = model.predict(keras.preprocessing.sequence.pad_sequences(tokenizer.texts_to_sequences([inp]), truncating='post', maxlen=max_len))
-                tag = lbl_encoder.inverse_transform([np.argmax(result)])
-                
-                # for i in data['intents']:
-                #     if i['tag'] == tag:
-                #         await message.reply(np.random.choice(i['responses'])
+                    model = keras.models.load_model('./ai/chat_model')
+                    inp = message.content
+                    result = model.predict(keras.preprocessing.sequence.pad_sequences(tokenizer.texts_to_sequences([inp]), truncating='post', maxlen=max_len))
+                    tag = lbl_encoder.inverse_transform([np.argmax(result)])
 
-                
-
+                    for i in data['intents']:
+                        if i['tag'] == tag:
+                            response = np.random.choice(i['responses'])
+                            
+                            async with message.channel.typing():
+                                await asyncio.sleep(1)
+                                await message.reply(response, mention_author=False)
 
 def setup(client):
     client.add_cog(ai(client))
