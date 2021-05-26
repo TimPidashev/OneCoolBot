@@ -89,7 +89,7 @@ for filename in os.listdir("./cogs"):
 #change presence
 async def change_presence():
         await client.wait_until_ready()
-        statuses = [f"{len(client.guilds)} servers", f"{len(client.users)} members"]
+        statuses = [f"{len(client.guilds)} servers", f"{len(client.users)} members", "Evolving AI"]
         while not client.is_closed():
             status = random.choice(statuses)
             await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
