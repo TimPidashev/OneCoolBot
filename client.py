@@ -10,7 +10,7 @@ import traceback
 import sys
 import aiml
 from glob import glob
-from ai import train
+# from ai import train
 from db import db
 from discord.utils import get
 from datetime import datetime, timedelta
