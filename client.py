@@ -49,14 +49,12 @@ handler = logging.FileHandler(filename="./data/logs/discord.log", encoding="utf-
 handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
 logger.addHandler(handler)  
 
-
 #get_prefix
 async def get_prefix(client, context):
     prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")[0]
     return prefix
 
-#ipc_class
-class OneCoolBot(commands.Bot):
+class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -69,10 +67,13 @@ class OneCoolBot(commands.Bot):
         await log.client_connect(self)
 
     async def on_disconnect(self):
-        pass                
+        await log.client_disconnect(self)
+
+    async def on_shard_ready(self, shard_id):
+        await log.on_shard_ready(self, shard_id)
 
     async def on_ipc_ready(self):
-        print("Ipc is ready.")
+        pass
 
     async def on_ipc_error(self, endpoint, error):
         print(endpoint, "raised", error)

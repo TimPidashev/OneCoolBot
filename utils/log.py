@@ -272,3 +272,17 @@ async def client_connect(self):
     print(colored(f"[{current_time}]", "magenta"), colored("client connected to gateway", "green"))
     message = f"[{current_time}] client connected to gateway"
     logger(message)
+
+async def on_shard_ready(self, shard_id):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("client connected to shard:", "green"), colored(f"{shard_id}", "magenta"))
+    message = f"[{current_time}] client connected to shard: {shard_id}"
+    logger(message)
+
+async def client_disconnect(self):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("client disconnected from gateway, attempting to reconnect...", "red"))
+    message = f"[{current_time}] client disconnected from gateway, attempting to reconnect..."
+    logger(message)
