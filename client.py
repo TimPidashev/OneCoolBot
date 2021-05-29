@@ -23,9 +23,6 @@ from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
 from utils import data, embed, log
 
-#test channel for ai
-channel_name = "timmy-testin" # default channel name
-
 #loading and identifying client token
 load_dotenv()
 Token = os.getenv("BOT_TOKEN")
@@ -33,14 +30,9 @@ Token = os.getenv("BOT_TOKEN")
 #timestamping start_time
 start_time = time.time()
 
-#logging logo and connecting to database
+#logo and connect to database
 log.logo()
 data.connect()
-
-# AIML startup
-# kernel = aiml.Kernel()
-# kernel.learn("std-startup.xml")
-# kernel.respond("LOAD AIML B")
 
 #discord.log
 logger = logging.getLogger("discord")
@@ -72,12 +64,6 @@ class OneCoolBot(commands.AutoShardedBot):
     async def on_shard_ready(self, shard_id):
         await log.on_shard_ready(self, shard_id)
 
-    async def on_ipc_ready(self):
-        pass
-
-    async def on_ipc_error(self, endpoint, error):
-        print(endpoint, "raised", error)
-
 #client setup
 client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all(), case_insensitive=True)
 client.process = psutil.Process(os.getpid())
@@ -95,32 +81,6 @@ async def change_presence():
             status = random.choice(statuses)
             await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
             await asyncio.sleep(10)  
-
-#AIML HANDLER
-# @client.event
-# async def on_message(message):
-#     channel = message.channel
-
-#     if message.author.bot or str(message.channel) != channel_name:
-#         return
-    
-#     if message.author == client.user:
-#         return
-
-#     if message.content is None:
-#         return
-
-#     if "https://" in message.content.lower() or "www." in message.content.lower():
-#         return
-
-#     if message.content == "<@547321575993769984>":
-#         await mesage.reply(f"{mesage.author.mention}")
-#         return
-        
-#     else:
-#         response = kernel.respond(message.content)
-#         await asyncio.sleep(random.randint(0,2))
-#         await channel.send(response)
 
 #commands group: bot
 @client.group(pass_context=True, invoke_without_command=True, aliases=["bt", "b"])
@@ -194,6 +154,13 @@ async def reload(context, extension=None):
 
     else:
         return
+
+@bot.command(aliases=["sh", "s"])
+@commands.is_owner()
+async def shutdown(context, extension=None):
+    await context.reply(f"Your wish is my command | Shutting down.", mention_author=False)
+    await log.client_close()
+    await client.close()
 
 @bot.command(aliases=["hlp", "h"])
 async def help(context, arg=None):

@@ -22,7 +22,7 @@ def logo():
 async def online(self):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[{current_time}]", "magenta"), colored("cog:", "green"), colored(f"{self.qualified_name}", "magenta"), colored("online...", "green"))
+    print(colored(f"[{current_time}]", "magenta"), colored("cog:", "green"), colored(f"{self.qualified_name}", "magenta"), colored("loaded...", "green"))
     message = f"[{current_time}] cog: {self.qualified_name} online..."
     logger(message)
 
@@ -285,4 +285,11 @@ async def client_disconnect(self):
     current_time = now.strftime("%H:%M:%S")
     print(colored(f"[{current_time}]", "magenta"), colored("client disconnected from gateway, attempting to reconnect...", "red"))
     message = f"[{current_time}] client disconnected from gateway, attempting to reconnect..."
+    logger(message)
+
+async def client_close():
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("client process closed by owner", "green"))
+    message = f"[{current_time}] client process closed by owner"
     logger(message)
