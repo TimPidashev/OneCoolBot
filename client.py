@@ -22,6 +22,7 @@ from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
 from utils import data, embed, log
+from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
 
 #loading and identifying client token
 load_dotenv()
@@ -51,6 +52,7 @@ class OneCoolBot(commands.AutoShardedBot):
         super().__init__(*args, **kwargs)
 
     async def on_ready(self):
+        DiscordComponents(self)
         await data.update_users_table(self)
         await data.update_guilds_table(self)
         await data.update_guildconfig_table(self)
@@ -81,6 +83,23 @@ async def change_presence():
             status = random.choice(statuses)
             await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
             await asyncio.sleep(10)  
+
+@client.command(aliases=["btns", "bs"])
+async def buttons(message):
+    embed = discord.Embed(
+        colour=0x9b59b6
+    )
+    embed.add_field(name="Buttons", value="Here are some buttons!", inline=False)
+    await message.reply(embed=embed, 
+        components=[[
+            Button(style=ButtonStyle.blue, label="blue"),
+            Button(style=ButtonStyle.green, label="red"),
+            Button(style=ButtonStyle.grey, label="grey"),
+            Button(style=ButtonStyle.red, label="red"),
+            Button(style=ButtonStyle.URL, label="url", url="https://onecoolbot.xyz")
+            # Button(style=ButtonStyle.emoji, label="emoji", emoji=discord.PartialEmoji(name="joy", animated=False, id=None))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ")
+        ]], mention_author=False
+    )
 
 #commands group: bot
 @client.group(pass_context=True, invoke_without_command=True, aliases=["bt", "b"])
@@ -157,8 +176,8 @@ async def reload(context, extension=None):
 
 @bot.command(aliases=["sh", "s"])
 @commands.is_owner()
-async def shutdown(context, extension=None):
-    await context.reply(f"Your wish is my command | Shutting down.", mention_author=False)
+async def shutdown(context):
+    await context.reply("Your wish is my command | Shutting down.", mention_author=False)
     await log.client_close()
     await client.close()
 
