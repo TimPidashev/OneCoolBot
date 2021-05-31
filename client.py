@@ -237,79 +237,148 @@ async def help(context):
     await log.client_command(context)
     await context.reply("Shows user info.", mention_author=False)
 
+@client.command(aliases=["btns", "bs"])
+async def buttons(message):
+    embed = discord.Embed(
+        colour=0x9b59b6
+    )
+    embed.add_field(name="Buttons", value="Here are some buttons!", inline=False)
+    await message.reply(embed=embed, 
+        components=[[
+            Button(style=ButtonStyle.blue, label="blue"),
+            Button(style=ButtonStyle.green, label="red"),
+            Button(style=ButtonStyle.grey, label="grey"),
+            Button(style=ButtonStyle.red, label="red"),
+            Button(style=ButtonStyle.URL, label="url", url="https://onecoolbot.xyz")
+            # Button(style=ButtonStyle.emoji, label="emoji", emoji=discord.PartialEmoji(name="joy", animated=False, id=None))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ")
+        ]], mention_author=False
+    )
+
 #help
 @client.command(aliases=["hlp", "h"])
 async def help(context, arg=None):
     await log.client_command(context)
+
     if arg is None:
-        message = await context.reply(embed=await embed.help_page_1(context), mention_author=False)
-        await message.add_reaction("◀️")
-        await message.add_reaction("▶️")
-        await message.add_reaction("❌")
+        message = await context.reply(embed=await embed.help_page_1(context),
+            components=[[
+                Button(style=ButtonStyle.grey, label="back", emoji="◀️"),
+                Button(style=ButtonStyle.grey, label="forward", emoji="▶️"),
+                Button(style=ButtonStyle.grey, label="quit", emoji="❌")
+            ]], mention_author=False
+        )
+
         pages = 6
         current_page = 1
+        timeout = False
 
-        def check(reaction, user):
-            return user == context.author and str(reaction.emoji) in ["◀️", "▶️", "❌"]
-
-        while True:
+        while timeout != True:
             try:
-                reaction, user = await context.bot.wait_for("reaction_add", timeout=60, check=check)
+                response = await client.wait_for("button_click", timeout=60)
 
-                if str(reaction.emoji) == "▶️" and current_page != pages:
+                if response.component.label == "forward" and current_page != pages:
                     current_page += 1
-
+                   
                     if current_page == 2:
-                        await message.edit(embed=await embed.help_page_2(context))
-                        await message.remove_reaction(reaction, user)
+                        await message.edit(type=7, embed=await embed.help_page_2(context),
+                            components=[[
+                                Button(style=ButtonStyle.grey, label="back", emoji="◀️"),
+                                Button(style=ButtonStyle.grey, label="forward", emoji="▶️"),
+                                Button(style=ButtonStyle.grey, label="quit", emoji="❌")
+                            ]], mention_author=False
+                        )
                     
                     elif current_page == 3:
-                        await message.edit(embed=await embed.help_page_3(context))
-                        await message.remove_reaction(reaction, user)
+                        await message.edit(type=7, embed=await embed.help_page_3(context),
+                            components=[[
+                                Button(style=ButtonStyle.grey, label="back", emoji="◀️"),
+                                Button(style=ButtonStyle.grey, label="forward", emoji="▶️"),
+                                Button(style=ButtonStyle.grey, label="quit", emoji="❌")
+                            ]], mention_author=False
+                        )
 
                     elif current_page == 4:
-                        await message.edit(embed=await embed.help_page_4(context))
-                        await message.remove_reaction(reaction, user)
+                        await message.edit(type=7, embed=await embed.help_page_4(context),
+                            components=[[
+                                Button(style=ButtonStyle.grey, label="back", emoji="◀️"),
+                                Button(style=ButtonStyle.grey, label="forward", emoji="▶️"),
+                                Button(style=ButtonStyle.grey, label="quit", emoji="❌")
+                            ]], mention_author=False
+                        )
 
                     elif current_page == 5:
-                        await message.edit(embed=await embed.help_page_5(context))
-                        await message.remove_reaction(reaction, user)
-
-                    elif current_page == 6:
-                        await message.edit(embed=await embed.help_page_6(context))
-                        await message.remove_reaction(reaction, user)
-                
-                if str(reaction.emoji) == "◀️" and current_page > 1:
-                    current_page -= 1
+                        await message.edit(type=7, embed=await embed.help_page_5(context),
+                            components=[[
+                                Button(style=ButtonStyle.grey, label="back", emoji="◀️"),
+                                Button(style=ButtonStyle.grey, label="forward", emoji="▶️"),
+                                Button(style=ButtonStyle.grey, label="quit", emoji="❌")
+                            ]], mention_author=False
+                        )
                     
+                    elif current_page == 6:
+                        await message.edit(type=7, embed=await embed.help_page_6(context),
+                            components=[[
+                                Button(style=ButtonStyle.grey, label="back", emoji="◀️"),
+                                Button(style=ButtonStyle.grey, label="forward", emoji="▶️"),
+                                Button(style=ButtonStyle.grey, label="quit", emoji="❌")
+                            ]], mention_author=False
+                        )
+
+                elif response.component.label == "back" and current_page > 1:
+                    current_page -= 1
+
                     if current_page == 1:
-                        await message.edit(embed=await embed.help_page_1(context))
-                        await message.remove_reaction(reaction, user)
+                        await message.edit(type=7, embed=await embed.help_page_1(context),
+                            components=[[
+                                Button(style=ButtonStyle.grey, label="back", emoji="◀️"),
+                                Button(style=ButtonStyle.grey, label="forward", emoji="▶️"),
+                                Button(style=ButtonStyle.grey, label="quit", emoji="❌")
+                            ]], mention_author=False
+                        )
 
                     elif current_page == 2:
-                        await message.edit(embed=await embed.help_page_2(context))
-                        await message.remove_reaction(reaction, user)
-                    
+                        await message.edit(type=7, embed=await embed.help_page_2(context),
+                            components=[[
+                                Button(style=ButtonStyle.grey, label="back", emoji="◀️"),
+                                Button(style=ButtonStyle.grey, label="forward", emoji="▶️"),
+                                Button(style=ButtonStyle.grey, label="quit", emoji="❌")
+                            ]], mention_author=False
+                        )
+
                     elif current_page == 3:
-                        await message.edit(embed=await embed.help_page_3(context))
-                        await message.remove_reaction(reaction, user)
+                        await message.edit(type=7, embed=await embed.help_page_3(context),
+                            components=[[
+                                Button(style=ButtonStyle.grey, label="back", emoji="◀️"),
+                                Button(style=ButtonStyle.grey, label="forward", emoji="▶️"),
+                                Button(style=ButtonStyle.grey, label="quit", emoji="❌")
+                            ]], mention_author=False
+                        )
 
                     elif current_page == 4:
-                        await message.edit(embed=await embed.help_page_4(context))
-                        await message.remove_reaction(reaction, user)
-
+                        await message.edit(type=7, embed=await embed.help_page_4(context),
+                            components=[[
+                                Button(style=ButtonStyle.grey, label="back", emoji="◀️"),
+                                Button(style=ButtonStyle.grey, label="forward", emoji="▶️"),
+                                Button(style=ButtonStyle.grey, label="quit", emoji="❌")
+                            ]], mention_author=False
+                        )
                     elif current_page == 5:
-                        await message.edit(embed=await embed.   help_page_5(context))
-                        await message.remove_reaction(reaction, user)
+                        await message.edit(type=7, embed=await embed.help_page_5(context),
+                                components=[[
+                                    Button(style=ButtonStyle.grey, label="back", emoji="◀️"),
+                                    Button(style=ButtonStyle.grey, label="forward", emoji="▶️"),
+                                    Button(style=ButtonStyle.grey, label="quit", emoji="❌")
+                                ]], mention_author=False
+                            )
 
-                if str(reaction.emoji) == "❌":
+                elif response.component.label == "quit":
                     await message.delete()
                     await context.message.delete()
                     break
 
                 else:
-                    await message.remove_reaction(reaction, user)
-                    
+                    pass
+                
             except asyncio.TimeoutError:
                 await message.delete()
                 await context.message.delete()
