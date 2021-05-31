@@ -23,6 +23,7 @@ from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
 from utils import data, embed, log
 from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
+from discord_slash import SlashCommand, SlashContext
 
 #loading and identifying client token
 load_dotenv()
@@ -74,6 +75,7 @@ class OneCoolBot(commands.AutoShardedBot):
 client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all(), case_insensitive=True)
 client.process = psutil.Process(os.getpid())
 client.remove_command("help")
+slash = SlashCommand(client, sync_commands=True)
 
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
@@ -391,6 +393,10 @@ async def help(context, arg=None):
 
         else:
             return
+
+@slash.slash(description="test slash command")
+async def slashtest(context):
+    await context.send("wow timmy u actually made a slash command work first try!")
 
 client.loop.create_task(change_presence())
 client.run(Token, reconnect=True)
