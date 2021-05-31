@@ -28,7 +28,8 @@ from discord_components import DiscordComponents, Button, ButtonStyle, Interacti
 load_dotenv()
 Token = os.getenv("BOT_TOKEN")
 
-#timestamping start_time
+#start_time
+global start_time
 start_time = time.time()
 
 #logo and connect to database
@@ -63,6 +64,9 @@ class OneCoolBot(commands.AutoShardedBot):
     async def on_disconnect(self):
         await log.client_disconnect(self)
 
+    async def on_reconnect(self):
+        await log.client_reconnect(self)
+
     async def on_shard_ready(self, shard_id):
         await log.on_shard_ready(self, shard_id)
 
@@ -84,43 +88,17 @@ async def change_presence():
             await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
             await asyncio.sleep(10)  
 
-@client.command(aliases=["btns", "bs"])
-async def buttons(message):
-    embed = discord.Embed(
-        colour=0x9b59b6
-    )
-    embed.add_field(name="Buttons", value="Here are some buttons!", inline=False)
-    await message.reply(embed=embed, 
-        components=[[
-            Button(style=ButtonStyle.blue, label="blue"),
-            Button(style=ButtonStyle.green, label="red"),
-            Button(style=ButtonStyle.grey, label="grey"),
-            Button(style=ButtonStyle.red, label="red"),
-            Button(style=ButtonStyle.URL, label="url", url="https://onecoolbot.xyz")
-            # Button(style=ButtonStyle.emoji, label="emoji", emoji=discord.PartialEmoji(name="joy", animated=False, id=None))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ")
-        ]], mention_author=False
-    )
 
-#commands group: bot
-@client.group(pass_context=True, invoke_without_command=True, aliases=["bt", "b"])
-async def bot(context, arg=None): 
-    await log.client_command(context)
-    prefix = await data.get_prefix(context)
-    
-    if arg is not None:
-        if arg == "aliases" or arg == "alias" or arg == "als" or arg == "a": 
-            await context.reply(f"**{prefix}bot** aliases: `bt` `b`", mention_author=False)
 
-        if arg == "prefix" or arg == "prfx" or arg == "prf" or arg == "pr" or arg == "p":
-            await context.reply(f"The current prefix is `{prefix}`", mention_author=False)
+"""Client/general commands below"""
 
-        else:
-            return
+#owner commands
+@client.group(pass_context=True, invoke_without_command=True, aliases=["ownr", "o"])
+async def owner(context):
+    return
 
-    elif arg is None:
-        return
-
-@bot.command(aliases=["ld", "l"])
+#load
+@owner.command(aliases=["ld", "l"])
 @commands.is_owner()
 async def load(context, extension=None):
     if extension is not None:
@@ -138,7 +116,8 @@ async def load(context, extension=None):
     else:
         return
 
-@bot.command(aliases=["ul", "u"])
+#unload
+@owner.command(aliases=["ul", "u"])
 @commands.is_owner()
 async def unload(context, extension=None):
     if extension is not None:
@@ -156,7 +135,8 @@ async def unload(context, extension=None):
     else:
         return
 
-@bot.command(aliases=["rl", "r"])
+#reload
+@owner.command(aliases=["rl", "r"])
 @commands.is_owner()
 async def reload(context, extension=None):
     if extension is not None:
@@ -174,14 +154,91 @@ async def reload(context, extension=None):
     else:
         return
 
-@bot.command(aliases=["sh", "s"])
+#shutdown
+@owner.command(aliases=["sh", "s"])
 @commands.is_owner()
 async def shutdown(context):
     await context.reply("Your wish is my command | Shutting down.", mention_author=False)
     await log.client_close()
     await client.close()
 
-@bot.command(aliases=["hlp", "h"])
+#prefix
+@client.group(pass_context=True, invoke_without_command=True, aliases=["prfx", "prf", "pr", "p"])
+async def prefix(context):
+    await log.client_command(context)
+    prefix = await data.get_prefix(context)
+    await context.reply(f"The current prefix is `{prefix}`", mention_author=False)
+
+@prefix.command(aliases=["alias", "als", "a"])
+async def aliases(context):
+    await log.client_command(context)
+    await context.reply("**prefix** aliases: `prfx` `prf` `pr` `p`", mention_author=False)
+
+@prefix.command(aliases=["hlp", "h"])
+async def help(context):
+    await log.client_command(context)
+    await context.reply(f"Shows server prefix.", mention_author=False)
+
+#info
+@client.group(pass_context=True, invoke_without_command=True, aliases=["inf", "i"])
+async def info(context):
+    await log.client_command(context)
+
+    before = time.monotonic()
+    before_ws = int(round(client.latency * 1000, 1))
+    ping = (time.monotonic() - before) * 1000
+    ramUsage = client.process.memory_full_info().rss / 1024**2
+    current_time = time.time()
+    difference = int(round(current_time - start_time))
+    uptime = str(timedelta(seconds=difference))
+    users = len(client.users)
+
+    await context.reply(embed=await embed.info(context, users, before_ws, ramUsage, uptime), mention_author=False)
+
+@info.command(aliases=["alias", "als", "a"])
+async def aliases(context):
+    await log.client_command(context)
+    await context.reply("**info** aliases: `inf` `i`", mention_author=False)
+
+@info.command(aliases=["hlp", "h"])
+async def help(context):
+    await log.client_command(context)
+    await context.reply(f"Shows bot info", mention_author=False)
+
+#serverinfo
+@client.group(pass_context=True, invoke_without_command=True, aliases=["srvrinf", "si"])
+async def serverinfo(context):
+    await log.client_command(context)
+    await context.reply(embed=await embed.serverinfo(context), mention_author=False)
+
+@serverinfo.command(aliases=["alias", "als", "a"])
+async def aliases(context):
+    await log.client_command(context)
+    await context.reply("**serverinfo** aliases: `srvrinf` `si`", mention_author=False)
+
+@serverinfo.command(aliases=["hlp", "h"])
+async def help(context):
+    await log.client_command(context)
+    await context.reply("Shows server info.")
+
+#userinfo
+@client.group(pass_context=True, invoke_without_command=True, aliases=["usrinf", "ui"])
+async def userinfo(context, user: discord.Member = None):
+    await log.client_command(context)
+    await context.reply(embed=await embed.userinfo(context, user), mention_author=False)
+
+@userinfo.command(aliases=["alias", "als", "a"])
+async def aliases(context):
+    await log.client_command(context)
+    await context.reply("**userinfo** aliases: `usrinf` `ui`", mention_author=False)
+
+@userinfo.command(aliases=["hlp", "h"])
+async def help(context):
+    await log.client_command(context)
+    await context.reply("Shows user info.", mention_author=False)
+
+#help
+@client.command(aliases=["hlp", "h"])
 async def help(context, arg=None):
     await log.client_command(context)
     if arg is None:
@@ -257,31 +314,14 @@ async def help(context, arg=None):
                 await message.delete()
                 await context.message.delete()
                 break
+    
+    elif arg is not None:
+        if arg == "aliases" or arg == "alias" or arg == "als" or arg == "a":
+            await log.client_command(context)
+            await context.reply("**help** aliases: `hlp` `h`", mention_author=False)
 
-@bot.command(aliases=["inf", "i"])
-async def info(context):
-    await log.client_command(context)
-
-    before = time.monotonic()
-    before_ws = int(round(client.latency * 1000, 1))
-    ping = (time.monotonic() - before) * 1000
-    ramUsage = client.process.memory_full_info().rss / 1024**2
-    current_time = time.time()
-    difference = int(round(current_time - start_time))
-    uptime = str(timedelta(seconds=difference))
-    users = len(client.users)
-
-    await context.reply(embed=await embed.info(context, users, before_ws, ramUsage, uptime), mention_author=False)
-
-@bot.command(aliases=["srvrinf", "si"])
-async def serverinfo(context):
-    await log.client_command(context)
-    await context.reply(embed=await embed.serverinfo(context), mention_author=False)
-
-@bot.command(aliases=["usrinf", "ui"])
-async def userinfo(context, user: discord.Member = None):
-    await log.client_command(context)
-    await context.reply(embed=await embed.userinfo(context, user), mention_author=False)
+        else:
+            return
 
 client.loop.create_task(change_presence())
 client.run(Token, reconnect=True)

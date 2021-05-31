@@ -293,3 +293,31 @@ async def client_close():
     print(colored(f"[{current_time}]", "magenta"), colored("client process closed by owner", "green"))
     message = f"[{current_time}] client process closed by owner"
     logger(message)
+
+async def client_reconnect(self):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("client reconnected to gateway", "green"))
+    message = f"[{current_time}] client reconnected to gateway"
+    logger(message)
+
+async def update_users_table():
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("updated users table", "green"))
+    message = f"[{current_time}] updated users table"
+    logger(message)
+
+async def update_guilds_table():
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("updated guilds table", "green"))
+    message = f"[{current_time}] updated guilds table"
+    logger(message)
+
+async def update_guildconfig_table():
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("updated guildconfig table", "green"))
+    message = f"[{current_time}] updated guildconfig table"
+    logger(message)

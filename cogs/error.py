@@ -19,27 +19,7 @@ class error(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         await log.online(self)
-
-    @commands.command()
-    async def help(self, context):
-        await log.help_error(self, context)
-        prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
-            context.guild.id,
-        )[0]
-        embed = discord.Embed(
-            colour=0x9b59b6
-        )
-        embed.add_field(
-            name="**Error :(**", 
-            value=f"Commands are categorized in sections. For more info, type `{prefix}bot help`",
-            inline=False
-        )
-        if context.author == context.guild.owner:
-            embed.set_footer(
-                text=f"To disable error messages, type: {prefix}bot error_notifs off"
-            )
-        await context.reply(embed=embed, mention_author=False)
-
+        
     # @commands.Cog.listener()
     # async def on_command_error(self, context, error):
     #     #gets original error

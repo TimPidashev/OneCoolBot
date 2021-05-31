@@ -165,6 +165,7 @@ async def update_users_table(self):
             if not member.bot
         ),
     )
+    await log.update_users_table()
 
 async def update_guilds_table(self):
     db.multiexec(
@@ -172,6 +173,7 @@ async def update_guilds_table(self):
         ((guild.id,) for guild in self.guilds),
     )
     db.commit()
+    await log.update_guilds_table()
 
 async def update_guildconfig_table(self):
     db.multiexec(
@@ -179,6 +181,7 @@ async def update_guildconfig_table(self):
         ((guild.id,) for guild in self.guilds),
     )
     db.commit()
+    await log.update_guildconfig_table()
 
 #SETTINGS BELOW
 async def fetch_level_settings(context):

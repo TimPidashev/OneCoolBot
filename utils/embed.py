@@ -82,7 +82,7 @@ async def help_page_1(context):
     )
     fields = [("`General`", "**The basic commands for day-to-day tasks.", False),
               ("`Economy`", "A global market and trading system, complete with its own currency!", False),
-              ("`Games`", "Play with friends, compete with strangers, and make some extra :coin: while having fun!", False),
+              ("`Games`", "Play with friends, compete with strangers, and make some extra coins while having fun!", False),
               ("`Music`", "Listen to low-latency music streams for studying and hanging with friends in voice-chat!", False),
               ("`Moderation`", "Make sure your server is always under control, with an advanced toolset for your moderators, and auto-moderation for the tech-savvy!", False),
               ("`Settings`", "Configure OneCoolBot with ease right in discord, with a dashboard coming later.", False)]
@@ -106,13 +106,13 @@ async def help_page_2(context):
         description="The overview of the general commands.", 
         colour=0x9b59b6
     )
-    fields = [("`help`", "If your reading this, you know what this command does :smile:", False),
-              ("`info`", "Displays bot status, ping, and other miscellaneous content.", False),
-              ("`serverinfo`", "Displays server info, such as user count.", False),
-              ("`userinfo`", "Displays user info, such as xp, statistics, and rank.", False)]
+    fields = [("`help`", "Your looking at this command.\n**subcommands:** `aliases`", False),
+              ("`info`", "Displays bot status, ping, and other miscellaneous content.\n**subcommands:** `aliases` `help`", False),
+              ("`serverinfo`", "Displays server info, such as user count.\n**subcommands:** `aliases` `help`", False),
+              ("`userinfo`", "Displays user info, discord stats, and the like.\n**subcommands:** `aliases` `help`", False)]
 
     page_2.set_footer(
-        text=f"To use these commands, type {prefix}bot <command_name>"
+        text=f"Handy tip! To see what a command can do, use the `help` subcommand."
     )
 
     for name, value, inline in fields:
@@ -127,16 +127,10 @@ async def help_page_3(context):
 
     page_3 = discord.Embed(
         title="Economy", 
-        description="A global market and trading system, complete with its own :coin:currency!", 
+        description="A global market and trading system, complete with its own currency!", 
         colour=0x9b59b6
     )
-    fields = [("`wallet`", "Check how many coins you own.", False),
-              ("`market`", "See whats for sale, sell, and trade in a global market.", False),
-              ("`cap`", "Check the current global/local market cap.", False)]
-    
-    page_3.set_footer(
-        text=f"To use these commands, type {prefix}eco <command_name>"
-    )
+    fields = [("Under Construction!", "Economy is currently being polished and completely refactored. Should be complete in a weeek or two.", False)]
 
     for name, value, inline in fields:
         page_3.add_field(name=name, value=value, inline=inline)
@@ -153,14 +147,7 @@ async def help_page_4(context):
         description="Play with friends, compete with strangers, and make some extra coins all while having fun!", 
         colour=0x9b59b6
     )
-    fields = [("`count`", "A counting game with multiple people and different modes for different occasions. More detail found in `game` help menu.", False),
-              ("`chess`", "Match up with people and play for coins, or challenge @OneCoolBot for a very special prize!", False),
-              ("`roll`", "Roll the die with friends to decide your fate, or for coins.", False),
-              ("`cave`", "Play the collosal-cave-adventure terminal classic within discord!", False)] 
-
-    page_4.set_footer(
-        text=f"To use these commands, type {prefix}game <command_name>. For more help on game commands, type {prefix}game help"
-    )
+    fields = [("Under Construction!", "Games are currently being polished and completely refactored. ETA not known yet, be patient!", False)]
 
     for name, value, inline in fields:
         page_4.add_field(name=name, value=value, inline=inline)
@@ -183,7 +170,7 @@ async def help_page_5(context):
         page_5.add_field(name=name, value=value, inline=inline)
 
     page_5.set_footer(
-        text=f"Confused? Use this handy command: {prefix}bot music help"
+        text=f"Music is stable, but will be refactored to use new discord features and spotify integration, including playlists!"
     )
 
     return page_5
@@ -207,24 +194,10 @@ async def help_page_6(context):
         page_6.add_field(name=name, value=value, inline=inline)
 
     page_6.set_footer(
-        text="Moderation commands are not args, and can be used as shown above."
+        text="Is being refactored, as is most of the bot lol. Will be complete and shiny with ai moderation soon!"
     )
 
     return page_6
-
-#super command bot
-async def bot(context, prefix):
-
-    embed = discord.Embed(
-        title=f"{prefix}bot <?>", 
-        description="You have found a *super command!* With this command you can do anything your heart desires, well almost...", 
-        colour=0x9b59b6
-    )   
-    embed.set_footer(
-        text=f"For more information on what this command does, type {prefix}bot help"
-    )
-
-    return embed
 
 async def serverinfo(context):
     embed = discord.Embed(
