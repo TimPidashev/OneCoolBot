@@ -22,10 +22,10 @@ async def info(context, users, before_ws, ramUsage, uptime):
               ("Latency", f"{before_ws}ms", True),
               ("RAM Usage", f"{ramUsage:.2f} MB", True), 
               ("Uptime", uptime, True), 
-              ("Version", "Ver 1.2.6", True)]
+              ("Version", "Ver 1.2.7", True)]
 
     info.set_footer(
-        text="Most recent changes: AI now works!"
+        text="Most recent changes: Command revamp, prep for asyncpg"
     )
 
     for name, value, inline in fields:
