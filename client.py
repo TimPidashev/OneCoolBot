@@ -62,8 +62,8 @@ class OneCoolBot(commands.AutoShardedBot):
     async def on_disconnect(self):
         await log.client_disconnect(self)
 
-    # async def on_reconnect(self):
-    #     await log.client_reconnect(self)
+    async def on_reconnect(self):
+        await log.client_reconnect(self)
 
     async def on_shard_ready(self, shard_id):
         await log.on_shard_ready(self, shard_id)
@@ -233,101 +233,86 @@ async def help(context):
     await log.client_command(context)
     await context.reply("Shows user info.", mention_author=False)
 
-@client.command(aliases=["btns", "bs"])
-async def buttons(message):
-    embed = discord.Embed(
-        colour=0x9b59b6
-    )
-    embed.add_field(name="Buttons", value="Here are some buttons!", inline=False)
-    await message.reply(embed=embed, 
-        components=[[
-            Button(style=ButtonStyle.blue, label="blue"),
-            Button(style=ButtonStyle.green, label="red"),
-            Button(style=ButtonStyle.grey, label="grey"),
-            Button(style=ButtonStyle.red, label="red"),
-            Button(style=ButtonStyle.URL, label="url", url="https://onecoolbot.xyz")
-            # Button(style=ButtonStyle.emoji, label="emoji", emoji=discord.PartialEmoji(name="joy", animated=False, id=None))                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ")
-        ]], mention_author=False
-    )
-
 #help
 @client.command(aliases=["hlp", "h"])
 async def help(context, arg=None):
     await log.client_command(context)
     if arg is None:
-        message = await context.reply(embed=await embed.help_page_1(context), mention_author=False)
-        await message.add_reaction("◀️")
-        await message.add_reaction("▶️")
-        await message.add_reaction("❌")
-        pages = 6
-        current_page = 1
+        async with context.typing():
+            await asyncio.sleep(1)
+            message = await context.reply(embed=await embed.help_page_1(context), mention_author=False)
+            await message.add_reaction("◀️")
+            await message.add_reaction("▶️")
+            await message.add_reaction("❌")
+            pages = 6
+            current_page = 1
 
-        def check(reaction, user):
-            return user == context.author and str(reaction.emoji) in ["◀️", "▶️", "❌"]
+            def check(reaction, user):
+                return user == context.author and str(reaction.emoji) in ["◀️", "▶️", "❌"]
 
-        while True:
-            try:
-                reaction, user = await context.bot.wait_for("reaction_add", timeout=60, check=check)
+            while True:
+                try:
+                    reaction, user = await context.bot.wait_for("reaction_add", timeout=60, check=check)
 
-                if str(reaction.emoji) == "▶️" and current_page != pages:
-                    current_page += 1
+                    if str(reaction.emoji) == "▶️" and current_page != pages:
+                        current_page += 1
 
-                    if current_page == 2:
-                        await message.edit(embed=await embed.help_page_2(context))
-                        await message.remove_reaction(reaction, user)
+                        if current_page == 2:
+                            await message.edit(embed=await embed.help_page_2(context))
+                            await message.remove_reaction(reaction, user)
+                        
+                        elif current_page == 3:
+                            await message.edit(embed=await embed.help_page_3(context))
+                            await message.remove_reaction(reaction, user)
+
+                        elif current_page == 4:
+                            await message.edit(embed=await embed.help_page_4(context))
+                            await message.remove_reaction(reaction, user)
+
+                        elif current_page == 5:
+                            await message.edit(embed=await embed.help_page_5(context))
+                            await message.remove_reaction(reaction, user)
+
+                        elif current_page == 6:
+                            await message.edit(embed=await embed.help_page_6(context))
+                            await message.remove_reaction(reaction, user)
                     
-                    elif current_page == 3:
-                        await message.edit(embed=await embed.help_page_3(context))
-                        await message.remove_reaction(reaction, user)
+                    if str(reaction.emoji) == "◀️" and current_page > 1:
+                        current_page -= 1
+                        
+                        if current_page == 1:
+                            await message.edit(embed=await embed.help_page_1(context))
+                            await message.remove_reaction(reaction, user)
 
-                    elif current_page == 4:
-                        await message.edit(embed=await embed.help_page_4(context))
-                        await message.remove_reaction(reaction, user)
+                        elif current_page == 2:
+                            await message.edit(embed=await embed.help_page_2(context))
+                            await message.remove_reaction(reaction, user)
+                        
+                        elif current_page == 3:
+                            await message.edit(embed=await embed.help_page_3(context))
+                            await message.remove_reaction(reaction, user)
 
-                    elif current_page == 5:
-                        await message.edit(embed=await embed.help_page_5(context))
-                        await message.remove_reaction(reaction, user)
+                        elif current_page == 4:
+                            await message.edit(embed=await embed.help_page_4(context))
+                            await message.remove_reaction(reaction, user)
 
-                    elif current_page == 6:
-                        await message.edit(embed=await embed.help_page_6(context))
-                        await message.remove_reaction(reaction, user)
-                
-                if str(reaction.emoji) == "◀️" and current_page > 1:
-                    current_page -= 1
-                    
-                    if current_page == 1:
-                        await message.edit(embed=await embed.help_page_1(context))
-                        await message.remove_reaction(reaction, user)
+                        elif current_page == 5:
+                            await message.edit(embed=await embed.   help_page_5(context))
+                            await message.remove_reaction(reaction, user)
 
-                    elif current_page == 2:
-                        await message.edit(embed=await embed.help_page_2(context))
-                        await message.remove_reaction(reaction, user)
-                    
-                    elif current_page == 3:
-                        await message.edit(embed=await embed.help_page_3(context))
-                        await message.remove_reaction(reaction, user)
+                    if str(reaction.emoji) == "❌":
+                        await message.delete()
+                        await context.message.delete()
+                        break
 
-                    elif current_page == 4:
-                        await message.edit(embed=await embed.help_page_4(context))
+                    else:
                         await message.remove_reaction(reaction, user)
-
-                    elif current_page == 5:
-                        await message.edit(embed=await embed.   help_page_5(context))
-                        await message.remove_reaction(reaction, user)
-
-                if str(reaction.emoji) == "❌":
+                        
+                except asyncio.TimeoutError:
                     await message.delete()
                     await context.message.delete()
                     break
-
-                else:
-                    await message.remove_reaction(reaction, user)
-                    
-            except asyncio.TimeoutError:
-                await message.delete()
-                await context.message.delete()
-                break
-    
+        
     elif arg is not None:
         if arg == "aliases" or arg == "alias" or arg == "als" or arg == "a":
             await log.client_command(context)
@@ -335,10 +320,6 @@ async def help(context, arg=None):
 
         else:
             return
-
-@client.command()
-async def test(context):
-    await context.reply("testing reply ping", mention_author=False)
 
 client.loop.create_task(change_presence())
 client.run(Token, reconnect=True)
