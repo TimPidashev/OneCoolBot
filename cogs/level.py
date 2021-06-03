@@ -123,30 +123,28 @@ class level(commands.Cog):
         else:
             await context.reply("You are not in the database :(\nDont worry though, you were just added! Try running the command again.", mention_author=False)
     
-    @commands.command()
-    async def rank(self, context, target: Optional[Member]):
+    @commands.command(aliases=["rt"])
+    async def ranktest(self, context, target: Optional[Member]):
         await log.cog_command(self, context)
         target = target or context.author
         if target is not None:
             exp, level = await data.rank_command_target(target)
-
-        if target is None:
-            exp, level = await data.rank_command_context(context)
+            ids = db.column(f"SELECT UserID FROM users WHERE GuildID = {target.guild.id} ORDER BY XP DESC")
+            message_count = db.record(f"SELECT GlobalMessageCount FROM users WHERE UserID = {context.author.id} and GuildID = {context.guild.id}")[0]
 
         if exp or level is not None:
             async with context.typing():
                 await asyncio.sleep(1)
 
-                rank = 5
+                rank = f"{ids.index(target.id)+1}"
                 final_xp = 100
                 xp = exp
                 user_name = str(target.name)
                 discriminator = f"#{target.discriminator}"
 
-                Level = int(((exp) // 42) ** 0.55)
-                print(Level)
+                new_lvl = int(((xp) // 42) ** 0.55)
+                print(new_lvl)
 
-                # background = Image.open("./data/img/rank_cards/neon_simple.png").convert("RGBA").resize(((1000, 240)))
                 background = Image.new("RGB", (1000, 240))
                 async with aiohttp.ClientSession() as session:
                     async with session.get(str(target.avatar_url)) as response:
@@ -156,15 +154,14 @@ class level(commands.Cog):
                         mask = Image.new("L", bigsize, 0)
                         draw = ImageDraw.Draw(mask)
                         draw.ellipse((0, 0) + bigsize, 255)
-                        draw.ellipse((140 * 3, 140 * 3, 189 * 3, 189 * 3), 0)
                         mask = mask.resize(icon.size, Image.ANTIALIAS)
                         icon.putalpha(mask)
                         background.paste(icon, (20, 20), mask=icon)
                         draw = ImageDraw.Draw(background, "RGB")
-                        draw.ellipse((162, 162, 206, 206), fill="#43B581")
-                        big_font = ImageFont.FreeTypeFont("./data/fonts/ABeeZee-Regular.otf", 60)
-                        medium_font = ImageFont.FreeTypeFont("./data/fonts/ABeeZee-Regular.otf", 40)
-                        small_font = ImageFont.FreeTypeFont("./data/fonts/ABeeZee-Regular.otf", 30)
+                        big_font = ImageFont.FreeTypeFont("./data/fonts/ABeeZee-Regular.otf", 60, encoding="utf-8")
+                        medium_font = ImageFont.FreeTypeFont("./data/fonts/ABeeZee-Regular.otf", 40, encoding="utf-8")
+                        small_font = ImageFont.FreeTypeFont("./data/fonts/ABeeZee-Regular.otf", 30, encoding="utf-8")
+
                         text_size = draw.textsize(str(level), font=big_font)
                         offset_x = 1000 - 15 - text_size[0]
                         offset_y = 10
@@ -172,12 +169,19 @@ class level(commands.Cog):
                         text_size = draw.textsize("LEVEL", font=small_font)
                         offset_x -= text_size[0] + 5
                         draw.text((offset_x, offset_y + 27), "LEVEL", font=small_font, fill="#11ebf2")
+
                         text_size = draw.textsize(f"#{rank}", font=big_font)
                         offset_x -= text_size[0] + 15
                         draw.text((offset_x, offset_y), f"#{rank}", font=big_font, fill="#fff")
                         text_size = draw.textsize("RANK", font=small_font)
                         offset_x -= text_size[0] + 5
                         draw.text((offset_x, offset_y + 27), "RANK", font=small_font, fill="#fff")
+                        
+                        # draw.text((offset_x, offset_y), f"#{message_count}", font=big_font, fill="#fff")
+                        # text_size = draw.textsize("KARMA", font=small_font)
+                        # offset_x -= text_size[0] + 15
+                        # draw.text((offset_x, offset_y + 27), "KARMA", font=small_font, fill="#fff")
+
                         bar_offset_x = 320
                         bar_offset_y = 160
                         bar_offset_x_1 = 950
@@ -223,7 +227,7 @@ class level(commands.Cog):
                         await context.reply(file=ffile, mention_author=False)
 
         else:
-            await context.reply("You are not in the database :(\nDont worry though, you were just added! Try running the command again.", mention_author=False)
+            await context.reply("You are not in the database :(\nDon't worry though, you were just added! Try running the command again.", mention_author=False)
     
 
 
