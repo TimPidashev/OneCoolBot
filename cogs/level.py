@@ -64,6 +64,9 @@ class level(commands.Cog):
                         new_lvl = int(((xp + xp_to_add) // 42) ** 0.55)
                         coins_on_xp = random.randint(1, 10)
 
+                        print(exp)
+                        
+
                         await data.update_record(self, message, xp_to_add, new_lvl, coins_on_xp)
 
                         if new_lvl > lvl:
@@ -137,13 +140,11 @@ class level(commands.Cog):
                 await asyncio.sleep(1)
 
                 rank = f"{ids.index(target.id)+1}"
-                final_xp = 100
                 xp = exp
                 user_name = str(target.name)
                 discriminator = f"#{target.discriminator}"
 
-                new_lvl = int(((xp) // 42) ** 0.55)
-                print(new_lvl)
+                final_xp = 1000
 
                 background = Image.new("RGB", (1000, 240))
                 async with aiohttp.ClientSession() as session:
@@ -165,22 +166,24 @@ class level(commands.Cog):
                         text_size = draw.textsize(str(level), font=big_font)
                         offset_x = 1000 - 15 - text_size[0]
                         offset_y = 10
-                        draw.text((offset_x, offset_y), str(level), font=big_font, fill="#11ebf2")
+                        draw.text((offset_x, offset_y), str(level), font=big_font, fill="#9B59B6")
                         text_size = draw.textsize("LEVEL", font=small_font)
                         offset_x -= text_size[0] + 5
-                        draw.text((offset_x, offset_y + 27), "LEVEL", font=small_font, fill="#11ebf2")
+                        draw.text((offset_x, offset_y + 27), "LEVEL", font=small_font, fill="#fff")
 
                         text_size = draw.textsize(f"#{rank}", font=big_font)
                         offset_x -= text_size[0] + 15
-                        draw.text((offset_x, offset_y), f"#{rank}", font=big_font, fill="#fff")
+                        draw.text((offset_x, offset_y), f"{rank}", font=big_font, fill="#9B59B6")
                         text_size = draw.textsize("RANK", font=small_font)
                         offset_x -= text_size[0] + 5
                         draw.text((offset_x, offset_y + 27), "RANK", font=small_font, fill="#fff")
                         
-                        # draw.text((offset_x, offset_y), f"#{message_count}", font=big_font, fill="#fff")
-                        # text_size = draw.textsize("KARMA", font=small_font)
-                        # offset_x -= text_size[0] + 15
-                        # draw.text((offset_x, offset_y + 27), "KARMA", font=small_font, fill="#fff")
+                        text_size = draw.textsize(f"{message_count}", font=big_font)
+                        offset_x -= text_size[0] + 50
+                        draw.text((offset_x, offset_y), f"{message_count}", font=big_font, fill="#9B59B6")
+                        text_size = draw.textsize("KARMA", font=small_font)
+                        offset_x -= text_size[0] + 10
+                        draw.text((offset_x, offset_y + 27), "KARMA", font=small_font, fill="#fff")
 
                         bar_offset_x = 320
                         bar_offset_y = 160
@@ -189,7 +192,7 @@ class level(commands.Cog):
                         circle_size = bar_offset_y_1 - bar_offset_y
                         draw.rectangle((bar_offset_x, bar_offset_y, bar_offset_x_1, bar_offset_y_1), fill="#727175")
                         draw.ellipse(
-                            (bar_offset_x - circle_size // 2, bar_offset_y, bar_offset_x + circle_size // 2, bar_offset_y_1), fill="#727175"
+                            (bar_offset_x - circle_size // 2, bar_offset_y, bar_offset_x + circle_size // 2, bar_offset_y_1), fill="#9B59B6"
                         )
                         draw.ellipse(
                             (bar_offset_x_1 - circle_size // 2, bar_offset_y, bar_offset_x_1 + circle_size // 2, bar_offset_y_1), fill="#727175"
@@ -199,12 +202,12 @@ class level(commands.Cog):
                         progress = 100 - progress
                         progress_bar_length = round(bar_length * progress / 100)
                         bar_offset_x_1 = bar_offset_x + progress_bar_length
-                        draw.rectangle((bar_offset_x, bar_offset_y, bar_offset_x_1, bar_offset_y_1), fill="#11ebf2")
+                        draw.rectangle((bar_offset_x, bar_offset_y, bar_offset_x_1, bar_offset_y_1), fill="#9B59B6")
                         draw.ellipse(
-                            (bar_offset_x - circle_size // 2, bar_offset_y, bar_offset_x + circle_size // 2, bar_offset_y_1), fill="#11ebf2"
+                            (bar_offset_x - circle_size // 2, bar_offset_y, bar_offset_x + circle_size // 2, bar_offset_y_1), fill="#9B59B6"
                         )
                         draw.ellipse(
-                            (bar_offset_x_1 - circle_size // 2, bar_offset_y, bar_offset_x_1 + circle_size // 2, bar_offset_y_1), fill="#11ebf2"
+                            (bar_offset_x_1 - circle_size // 2, bar_offset_y, bar_offset_x_1 + circle_size // 2, bar_offset_y_1), fill="#9B59B6"
                         )
                         text_size = draw.textsize(f"/ {final_xp} XP", font=small_font)
                         offset_x = 950 - text_size[0]
