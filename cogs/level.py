@@ -144,7 +144,8 @@ class level(commands.Cog):
                 user_name = str(target.name)
                 discriminator = f"#{target.discriminator}"
 
-                final_xp = 1000
+                final_xp_calc = int((level + 1) ** (20 / 11) * 42)
+                final_xp = final_xp_calc + xp  
 
                 background = Image.new("RGB", (1000, 240))
                 async with aiohttp.ClientSession() as session:
