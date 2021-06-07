@@ -158,21 +158,21 @@ async def shutdown(context):
     await log.client_close()
     await client.close()
 
-#userinfo
-@client.group(pass_context=True, invoke_without_command=True, aliases=["usrinf", "ui"])
-async def userinfo(context, user: discord.Member = None):
-    await log.client_command(context)
-    await context.reply(embed=await embed.userinfo(context, user), mention_author=False)
+# #userinfo
+# @client.group(pass_context=True, invoke_without_command=True, aliases=["usrinf", "ui"])
+# async def userinfo(context, user: discord.Member = None):
+#     await log.client_command(context)
+#     await context.reply(embed=await embed.userinfo(context, user), mention_author=False)
 
-@userinfo.command(aliases=["alias", "als", "a"])
-async def aliases(context):
-    await log.client_command(context)
-    await context.reply("**userinfo** aliases: `usrinf` `ui`", mention_author=False)
+# @userinfo.command(aliases=["alias", "als", "a"])
+# async def aliases(context):
+#     await log.client_command(context)
+#     await context.reply("**userinfo** aliases: `usrinf` `ui`", mention_author=False)
 
-@userinfo.command(aliases=["hlp", "h"])
-async def help(context):
-    await log.client_command(context)
-    await context.reply("Shows user info.", mention_author=False)
+# @userinfo.command(aliases=["hlp", "h"])
+# async def help(context):
+#     await log.client_command(context)
+#     await context.reply("Shows user info.", mention_author=False)
 
 #help
 @client.command(aliases=["hlp", "h"])
