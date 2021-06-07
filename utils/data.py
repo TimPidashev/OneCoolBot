@@ -110,7 +110,7 @@ async def update_record(self, message, xp_to_add, new_lvl, coins_on_xp):
         xp_to_add,
         new_lvl,
         coins_on_xp,
-        (datetime.utcnow() + timedelta(seconds=1)).isoformat(),
+        (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
     )
     db.commit()
     await log.exp_add(self, message, xp_to_add)
