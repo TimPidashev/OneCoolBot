@@ -7,25 +7,6 @@ import os
 
 db.connect("./data/database.db")
 
-async def serverinfo(context):
-    embed = discord.Embed(
-        title="Server Info",
-        colour=0x9b59b6
-    )
-    embed.set_thumbnail(
-        url=context.guild.icon_url
-    )
-
-    fields = [("Owner", context.guild.owner, False),
-              ("Region", context.guild.region, False),
-              ("Created At", context.guild.created_at.strftime("%d/%m/%Y %H:%M:%S"), True),
-              ("Members", len(context.guild.members), False)]
-
-    for name, value, inline in fields:
-            embed.add_field(name=name, value=value, inline=inline)
-
-    return embed
-
 async def settings(context, prefix):
     embed = discord.Embed(
         title=f"{prefix}settings <?>", 
