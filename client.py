@@ -22,6 +22,7 @@ from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
 from utils import data, embed, log
+from discord_slash import SlashCommand
 
 #loading and identifying client token
 load_dotenv()
@@ -67,6 +68,7 @@ class OneCoolBot(commands.AutoShardedBot):
 #client setup
 client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all(), case_insensitive=True)
 client.process = psutil.Process(os.getpid())
+slash = SlashCommand(client, sync_commands=True, sync_on_cog_reload=True)
 client.remove_command("help")
 
 for filename in os.listdir("./cogs"):
