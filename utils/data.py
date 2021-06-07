@@ -128,20 +128,6 @@ async def on_message_send(self, message):
     db.commit()
     await log.member_redundant_add_db(self, message)
 
-async def rank_command_target(target):
-    exp, level = db.record(f"SELECT XP, Level FROM users WHERE (guildID, UserID) = (?, ?)",
-        target.guild.id,
-        target.id
-    )
-    return exp, level
-
-async def rank_command_context(context):
-    exp, level = db.record(f"SELECT XP, Level FROM users WHERE (guildID, UserID) = (?, ?)",
-        context.guild.id,
-        context.author.id
-    )
-    return exp, level
-
 async def update_coins_if_levels_off(self, message, coins_on_xp):
     
     db.execute(f"UPDATE users SET Coins = Coins + ?, XPLock = ? WHERE GuildID = {message.guild.id} AND UserID = {message.author.id}",
