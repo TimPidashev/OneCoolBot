@@ -369,7 +369,7 @@ class help(commands.Cog):
                     await context.message.delete()
                     break
 
-@cog_ext.cog_slash(name="help alias", description="A descriptive help command for everything!")
+@cog_ext.cog_slash(name="help aliases", description="shows help aliases")
     async def help_alias(self, context: SlashContext):
         await log.slash_command(self, context)
         await context.reply("**help** aliases: `hlp` `h`", mention_author=False)
