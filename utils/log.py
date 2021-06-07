@@ -23,7 +23,14 @@ async def online(self):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
     print(colored(f"[{current_time}]", "magenta"), colored("cog:", "green"), colored(f"{self.qualified_name}", "magenta"), colored("loaded...", "green"))
-    message = f"[{current_time}] cog: {self.qualified_name} online..."
+    message = f"[{current_time}] cog: {self.qualified_name} loaded..."
+    logger(message)
+
+async def on_command_ready(self):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("command:", "green"), colored(f"{self.qualified_name}", "magenta"), colored("loaded...", "green"))
+    message = f"[{current_time}] command: {self.qualified_name} loaded..."
     logger(message)
 
 #music_node_connection
