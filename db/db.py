@@ -9,14 +9,6 @@ BUILD_PATH = "./db/build.sql"
 cxn = connect(DB_PATH, check_same_thread=False)
 cur = cxn.cursor()
 
-def with_commit(func):
-    def inner(*args, **kwargs):
-        func(*args, **kwargs)
-        commit()
-
-    return inner
-
-@with_commit
 def build():
     if isfile(BUILD_PATH):
         scriptexec(BUILD_PATH)
