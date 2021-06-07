@@ -27,10 +27,6 @@ from utils import data, embed, log
 load_dotenv()
 Token = os.getenv("BOT_TOKEN")
 
-#start_time
-# global start_time
-start_time = time.time()
-
 #logo and connect to database
 log.logo()
 data.connect()
@@ -76,6 +72,10 @@ client.remove_command("help")
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
         client.load_extension(f"cogs.{filename[:-3]}")
+
+for filename in os.listdir("./cogs/commands"):
+    if filename.endswith(".py"):
+        client.load_extension(f"cogs.commands.{filename[:-3]}")
 
 #change presence
 async def change_presence():
@@ -174,32 +174,6 @@ async def aliases(context):
 async def help(context):
     await log.client_command(context)
     await context.reply(f"Shows server prefix.", mention_author=False)
-
-#info
-@client.group(pass_context=True, invoke_without_command=True, aliases=["inf", "i"])
-async def info(context):
-    await log.client_command(context)
-
-    before = time.monotonic()
-    before_ws = int(round(client.latency * 1000, 1))
-    ping = (time.monotonic() - before) * 1000
-    ramUsage = client.process.memory_full_info().rss / 1024**2
-    current_time = time.time()
-    difference = int(round(current_time - start_time))
-    uptime = str(timedelta(seconds=difference))
-    users = len(client.users)
-
-    await context.reply(embed=await embed.info(context, users, before_ws, ramUsage, uptime), mention_author=False)
-
-@info.command(aliases=["alias", "als", "a"])
-async def aliases(context):
-    await log.client_command(context)
-    await context.reply("**info** aliases: `inf` `i`", mention_author=False)
-
-@info.command(aliases=["hlp", "h"])
-async def help(context):
-    await log.client_command(context)
-    await context.reply(f"Shows bot info", mention_author=False)
 
 #serverinfo
 @client.group(pass_context=True, invoke_without_command=True, aliases=["srvrinf", "si"])
