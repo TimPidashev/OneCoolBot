@@ -11,6 +11,11 @@ def logger(message):
         log.write(f"{message}\n")
         log.close()
 
+def querylogger(message):
+    with open("./data/logs/database.log", "a+") as log:
+        log.write(f"{message}\n")
+        log.close()
+
 #logo
 def logo():
     logo = Figlet(font="graffiti")
@@ -335,3 +340,46 @@ async def update_guildconfig_table():
     print(colored(f"[{current_time}]", "magenta"), colored("updated guildconfig table", "green"))
     message = f"[{current_time}] updated guildconfig table"
     logger(message)
+
+#QUERY LOGGING FOR DATABASE
+def build(BUILD_PATH):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    message = f"[{current_time}] database built at {BUILD_PATH}"
+    querylogger(message)
+
+def commit():
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    message = f"[{current_time}] commit"
+    querylogger(message)
+
+def close():
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    message = f"[{current_time}] cursor connection closed"
+    querylogger(message)
+
+def record(command, *values):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    message = f"[{current_time}] {command} | {values}"
+    querylogger(message)
+
+def execute(command, *values):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    message = f"[{current_time}] {command} | {values}"
+    querylogger(message)
+
+def multiexec(command, valueset):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    message = f"[{current_time}] {command} | {valueset}"
+    querylogger(message)
+
+def scriptexec(path):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    message = f"[{current_time}] {path}"
+    querylogger(message)

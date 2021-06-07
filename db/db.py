@@ -1,6 +1,7 @@
 from os.path import isfile
 from sqlite3 import connect
 from apscheduler.triggers.cron import CronTrigger
+from utils import log
 import asyncio
 
 DB_PATH = "./data/database.db"
@@ -12,6 +13,7 @@ cursor = connection.cursor()
 def build():
     if isfile(BUILD_PATH):
         scriptexec(BUILD_PATH)
+        log.build(BUILD_PATH)
 
 def commit():
     connection.commit()
