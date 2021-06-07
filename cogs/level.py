@@ -229,8 +229,6 @@ class level(commands.Cog):
 
         else:
             await context.reply("You are not in the database :(\nDon't worry though, you were just added! Try running the command again.", mention_author=False)
-    
-
 
 def setup(client):
     client.add_cog(level(client))
