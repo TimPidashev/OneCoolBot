@@ -88,18 +88,13 @@ async def change_presence():
 
 """Client/general commands below"""
 
-#owner commands
-@client.group(pass_context=True, invoke_without_command=True, aliases=["ownr", "o"])
-async def owner(context):
-    await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
-
 #load
-@owner.command(aliases=["ld", "l"])
+@client.command(aliases=["ld", "l"])
 @commands.is_owner()
 async def load(context, extension=None):
     if extension is not None:
         try:
-            client.load_extension(f'cogs.{extension}')
+            client.load_extension(f"cogs.{extension}")
             await log.client_command(context)
             await context.reply(f"Your wish is my command | Loaded cogs.**{extension}**", mention_author=False)
 
@@ -113,12 +108,12 @@ async def load(context, extension=None):
         return
 
 #unload
-@owner.command(aliases=["ul", "u"])
+@client.command(aliases=["ul", "u"])
 @commands.is_owner()
 async def unload(context, extension=None):
     if extension is not None:
         try:
-            client.unload_extension(f'cogs.{extension}')
+            client.unload_extension(f"cogs.{extension}")
             await log.client_command(context)
             await context.reply(f"Your wish is my command | Unloaded cogs.**{extension}**", mention_author=False)
 
@@ -132,12 +127,12 @@ async def unload(context, extension=None):
         return
 
 #reload
-@owner.command(aliases=["rl", "r"])
+@client.command(aliases=["rl", "r"])
 @commands.is_owner()
 async def reload(context, extension=None):
     if extension is not None:
         try:
-            client.reload_extension(f'cogs.{extension}')
+            client.reload_extension(f"cogs.{extension}")
             await log.client_command(context)
             await context.reply(f"Your wish is my command | Reloaded cogs.**{extension}**", mention_author=False)
 
@@ -150,8 +145,65 @@ async def reload(context, extension=None):
     else:
         return
 
+#load command
+@client.command(aliases=["ldc", "lc"])
+@commands.is_owner()
+async def loadcommand(context, extension=None):
+    if extension is not None:
+        try:
+            client.load_extension(f"cogs.commands.{extension}")
+            await log.client_command(context)
+            await context.reply(f"Your wish is my command | Loaded cogs.commands.**{extension}**", mention_author=False)
+
+        except Exception as error:
+            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+    
+    elif extension is None:
+        await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
+
+    else:
+        return
+
+#unload command
+@client.command(aliases=["ulc", "uc"])
+@commands.is_owner()
+async def unloadcommmand(context, extension=None):
+    if extension is not None:
+        try:
+            client.unload_extension(f"cogs.commands{extension}")
+            await log.client_command(context)
+            await context.reply(f"Your wish is my command | Unloaded cogs.commands.**{extension}**", mention_author=False)
+
+        except Exception as error:
+            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+    
+    elif extension is None:
+        await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
+
+    else:
+        return
+
+#reload command
+@client.command(aliases=["rlc", "rc"])
+@commands.is_owner()
+async def reloadcommand(context, extension=None):
+    if extension is not None:
+        try:
+            client.reload_extension(f"cogs.commands.{extension}")
+            await log.client_command(context)
+            await context.reply(f"Your wish is my command | Reloaded cogs.commands.**{extension}**", mention_author=False)
+
+        except Exception as error:
+            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+
+    elif extension is None:
+        await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
+
+    else:
+        return
+
 #shutdown
-@owner.command(aliases=["sh", "s"])
+@client.command(aliases=["sh"])
 @commands.is_owner()
 async def shutdown(context):
     await context.reply("Your wish is my command | Shutting down.", mention_author=False)
