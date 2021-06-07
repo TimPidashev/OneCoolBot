@@ -64,9 +64,6 @@ class level(commands.Cog):
                         new_lvl = int(((xp + xp_to_add) // 42) ** 0.55)
                         coins_on_xp = random.randint(1, 10)
 
-                        print(exp)
-                        
-
                         await data.update_record(self, message, xp_to_add, new_lvl, coins_on_xp)
 
                         if new_lvl > lvl:
