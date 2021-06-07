@@ -9,6 +9,9 @@ from datetime import datetime, timedelta
 #global runtime process
 start_time = time.time()
 
+#version
+__VERSION__ = "1.2.8"
+
 class info(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -43,10 +46,10 @@ class info(commands.Cog):
                 ("Latency", f"{before_ws}ms", True),
                 ("RAM Usage", f"{ramUsage:.2f} MB", True), 
                 ("Uptime", uptime, True), 
-                ("Version", "Ver 1.2.7", True)]
+                ("Version", __VERSION__, True)]
 
         info.set_footer(
-            text="Most recent changes: Command revamp, prep for asyncpg"
+            text="Most recent changes: help slash commands in testing"
         )
 
         for name, value, inline in fields:
