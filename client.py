@@ -158,22 +158,6 @@ async def shutdown(context):
     await log.client_close()
     await client.close()
 
-#serverinfo
-@client.group(pass_context=True, invoke_without_command=True, aliases=["srvrinf", "si"])
-async def serverinfo(context):
-    await log.client_command(context)
-    await context.reply(embed=await embed.serverinfo(context), mention_author=False)
-
-@serverinfo.command(aliases=["alias", "als", "a"])
-async def aliases(context):
-    await log.client_command(context)
-    await context.reply("**serverinfo** aliases: `srvrinf` `si`", mention_author=False)
-
-@serverinfo.command(aliases=["hlp", "h"])
-async def help(context):
-    await log.client_command(context)
-    await context.reply("Shows server info.")
-
 #userinfo
 @client.group(pass_context=True, invoke_without_command=True, aliases=["usrinf", "ui"])
 async def userinfo(context, user: discord.Member = None):
