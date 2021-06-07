@@ -158,23 +158,6 @@ async def shutdown(context):
     await log.client_close()
     await client.close()
 
-#prefix
-@client.group(pass_context=True, invoke_without_command=True, aliases=["prfx", "prf", "pr", "p"])
-async def prefix(context):
-    await log.client_command(context)
-    prefix = await data.get_prefix(context)
-    await context.reply(f"The current prefix is `{prefix}`", mention_author=False)
-
-@prefix.command(aliases=["alias", "als", "a"])
-async def aliases(context):
-    await log.client_command(context)
-    await context.reply("**prefix** aliases: `prfx` `prf` `pr` `p`", mention_author=False)
-
-@prefix.command(aliases=["hlp", "h"])
-async def help(context):
-    await log.client_command(context)
-    await context.reply(f"Shows server prefix.", mention_author=False)
-
 #serverinfo
 @client.group(pass_context=True, invoke_without_command=True, aliases=["srvrinf", "si"])
 async def serverinfo(context):
