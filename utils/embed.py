@@ -7,32 +7,6 @@ import os
 
 db.connect("./data/database.db")
 
-#info
-async def info(context, users, before_ws, ramUsage, uptime):
-    info = discord.Embed(
-        title="Bot Info",
-        description="Everything about me!",
-        colour=0x9b59b6
-    )
-    info.set_thumbnail(
-        url=context.bot.user.avatar_url
-    )
-    fields = [("Developer", "𝓣𝓲𝓶𝓶𝔂#6955", True), 
-              ("Users", f"{users}", True),
-              ("Latency", f"{before_ws}ms", True),
-              ("RAM Usage", f"{ramUsage:.2f} MB", True), 
-              ("Uptime", uptime, True), 
-              ("Version", "Ver 1.2.7", True)]
-
-    info.set_footer(
-        text="Most recent changes: Command revamp, prep for asyncpg"
-    )
-
-    for name, value, inline in fields:
-        info.add_field(name=name, value=value, inline=inline)
-    
-    return info
-
 #userinfo
 async def userinfo(context, user):
     if isinstance(context.channel, discord.DMChannel):
