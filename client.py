@@ -23,10 +23,12 @@ from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
 from utils import data, embed, log
 from discord_slash import SlashCommand
+import statcord
 
 #loading and identifying client token
 load_dotenv()
 Token = os.getenv("BOT_TOKEN")
+Statcord_Token = os.getenv("STATCORD")
 
 #logo and connect to database
 log.logo()
@@ -70,6 +72,8 @@ client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all(), ca
 client.process = psutil.Process(os.getpid())
 slash = SlashCommand(client, sync_commands=True, sync_on_cog_reload=True)
 client.remove_command("help")
+api = statcord.Client(client, Statcord_Token)
+api.start_loop()
 
 for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
@@ -89,6 +93,10 @@ async def change_presence():
             await asyncio.sleep(10)  
 
 """Client/general commands below"""
+
+@client.event
+async def on_command(context):
+    api.command_run(context)
 
 #load
 @client.command(aliases=["ld", "l"])
