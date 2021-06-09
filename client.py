@@ -94,6 +94,7 @@ async def change_presence():
 
 """Client/general commands below"""
 
+#statcord handling
 @client.event
 async def on_command(context):
     api.command_run(context)
