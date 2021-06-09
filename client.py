@@ -79,9 +79,9 @@ for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
         client.load_extension(f"cogs.{filename[:-3]}")
 
-for filename in os.listdir("./cogs/commands"):
+for filename in os.listdir("./commands"):
     if filename.endswith(".py"):
-        client.load_extension(f"cogs.commands.{filename[:-3]}")
+        client.load_extension(f"commands.{filename[:-3]}")
 
 #change presence
 async def change_presence():
@@ -162,9 +162,9 @@ async def reload(context, extension=None):
 async def loadcommand(context, extension=None):
     if extension is not None:
         try:
-            client.load_extension(f"cogs.commands.{extension}")
+            client.load_extension(f"commands.{extension}")
             await log.client_command(context)
-            await context.reply(f"Your wish is my command | Loaded cogs.commands.**{extension}**", mention_author=False)
+            await context.reply(f"Your wish is my command | Loaded commands.**{extension}**", mention_author=False)
 
         except Exception as error:
             await context.reply(f"**error :(**\n```{error}```", mention_author=False)
@@ -181,9 +181,9 @@ async def loadcommand(context, extension=None):
 async def unloadcommmand(context, extension=None):
     if extension is not None:
         try:
-            client.unload_extension(f"cogs.commands{extension}")
+            client.unload_extension(f"commands{extension}")
             await log.client_command(context)
-            await context.reply(f"Your wish is my command | Unloaded cogs.commands.**{extension}**", mention_author=False)
+            await context.reply(f"Your wish is my command | Unloaded commands.**{extension}**", mention_author=False)
 
         except Exception as error:
             await context.reply(f"**error :(**\n```{error}```", mention_author=False)
@@ -200,9 +200,9 @@ async def unloadcommmand(context, extension=None):
 async def reloadcommand(context, extension=None):
     if extension is not None:
         try:
-            client.reload_extension(f"cogs.commands.{extension}")
+            client.reload_extension(f"commands.{extension}")
             await log.client_command(context)
-            await context.reply(f"Your wish is my command | Reloaded cogs.commands.**{extension}**", mention_author=False)
+            await context.reply(f"Your wish is my command | Reloaded commands.**{extension}**", mention_author=False)
 
         except Exception as error:
             await context.reply(f"**error :(**\n```{error}```", mention_author=False)
