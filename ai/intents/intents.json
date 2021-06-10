@@ -38,6 +38,10 @@
     {"tag": "joke",
     "patterns": ["Tell me a joke.", "Say something funny.", "Make me laugh."],
     "responses": ["Nah, I dont feel like it.", "Ask someone else, sorry :(", "𝓣𝓲𝓶𝓶𝔂 is still working on this feature."]
+    },
+    {"tag": "mee6",
+    "patterns": ["Are you cooler then mee6?", "Mee6 is better!", "mee6"],
+    "responses": ["What? Mee6 can't talk, so its not even a bot!", "Mee6 = BigGAY", "Mee6???!?!?!?!?!?!!?!?!?!? Well now im angry :frown:"]
     }
 ]
 }
