@@ -17,7 +17,7 @@ import sqlite3
 import time
 from utils import log
 
-guild_id = [791160100567384094]
+guild_id = (791160100567384094)
 
 class devthings(commands.Cog):
     def __init__(self, client):
@@ -29,7 +29,7 @@ class devthings(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        if member.guild == guild_id:
+        if member.guild.id == guild_id:
             
             role = member.guild.get_role(846972672402915348)
             await member.add_roles(role)
@@ -81,8 +81,6 @@ class devthings(commands.Cog):
             if emoji == "typescript":
                 role = member.guild.get_role(815301223623426069)
                 await member.add_roles(role)
-
-            #figure out a simple elif to remove emoji on raw_reaction_remove if possible here...
 
             else:
                 return
