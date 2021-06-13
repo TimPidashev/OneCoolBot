@@ -31,6 +31,30 @@ class events(commands.Cog):
     async def on_ready(self):
         await log.online(self)
 
+        db.multiexec(
+            "INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
+            (
+                (member.guild.id, member.id,)
+                for guild in self.guilds
+                for member in guild.members
+                if not member.bot
+            ),
+        )
+
+        db.multiexec(
+        "INSERT OR IGNORE INTO guilds (GuildID) VALUES (?)",
+        ((guild.id,) for guild in self.guilds),
+        )
+        db.commit()
+
+        db.multiexec(
+        "INSERT OR IGNORE INTO guildconfig (GuildID) VALUES (?)",
+        ((guild.id,) for guild in self.guilds),
+        )
+        db.commit()
+
+
+
     @commands.Cog.listener()
     async def on_member_join(self, member):
         await log.on_member_join(self, member)
