@@ -51,9 +51,7 @@ class OneCoolBot(commands.AutoShardedBot):
         super().__init__(*args, **kwargs)
 
     async def on_ready(self):
-        await data.update_users_table(self)
-        await data.update_guilds_table(self)
-        await data.update_guildconfig_table(self)
+        pass
     
     async def on_connect(self):
         await log.client_connect(self)
