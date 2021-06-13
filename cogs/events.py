@@ -1,13 +1,11 @@
 import discord
 import asyncio
-import json
 import os
 from db import db
 from os.path import isfile
 from datetime import datetime
 from discord.ext import commands
 from discord.utils import get
-from termcolor import colored, cprint
 from typing import Optional
 from random import choice
 from discord.ext.menus import MenuPages, ListPageSource
