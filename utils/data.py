@@ -54,13 +54,5 @@ async def update_guildconfig_table(self):
     db.commit()
     await log.update_guildconfig_table()
 
-#AI STUFF HERE
-async def fetch_ailock(message):
-    ailock = db.record("SELECT AILock FROM users WHERE UserID = (?)", message.author.id)[0]
-    return ailock
-
-async def update_ailock(message):
-    db.execute(f"UPDATE users SET AILock = ? WHERE UserID = {message.author.id}", (datetime.utcnow() + timedelta(seconds=8)).isoformat())
-    db.commit()
 
 
