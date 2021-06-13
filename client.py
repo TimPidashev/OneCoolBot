@@ -21,7 +21,7 @@ from dotenv import load_dotenv
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
-from utils import data, embed, log
+from utils import log
 from discord_slash import SlashCommand
 import statcord
 
@@ -32,7 +32,7 @@ Statcord_Token = os.getenv("STATCORD")
 
 #logo and connect to database
 log.logo()
-data.connect()
+db.connect("./data/database.db")
 
 #discord.log
 logger = logging.getLogger("discord")
