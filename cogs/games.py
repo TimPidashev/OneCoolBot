@@ -1,5 +1,5 @@
 import discord
-from discvord.ext import commands
+from discord.ext import commands
 
 class games(commands.Cog):
     def __init__(self, client, *args, **kwargs):

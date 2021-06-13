@@ -10,7 +10,7 @@ class moderation(commands.Cog):
     #on_ready
     @commands.Cog.listener()
     async def on_ready(self):
-       await log.online(self)
+       pass
 
     #clear for development
     @commands.command()
