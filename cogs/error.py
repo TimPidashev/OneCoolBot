@@ -1,4 +1,5 @@
 import discord
+from discord.ext import commands
 
 class error(commands.Cog):
     def __init__(self, client):

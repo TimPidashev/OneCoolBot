@@ -1,4 +1,5 @@
 import discord
+from discord.ext import commands
 
 class settings(commands.Cog):
     def __init__(self, client):
