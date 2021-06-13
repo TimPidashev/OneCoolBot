@@ -54,11 +54,6 @@ async def update_guildconfig_table(self):
     db.commit()
     await log.update_guildconfig_table()
 
-#SETTINGS BELOW
-async def fetch_level_settings(context):
-    levels = db.record(f"SELECT Levels FROM guildconfig WHERE GuildID = {context.guild.id}")[0]
-    return levels
-
 #AI STUFF HERE
 async def fetch_ailock(message):
     ailock = db.record("SELECT AILock FROM users WHERE UserID = (?)", message.author.id)[0]
