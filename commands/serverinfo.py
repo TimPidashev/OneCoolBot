@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from utils import data, embed, log
+from utils import log
 
 class serverinfo(commands.Cog):
     def __init__(self, client):

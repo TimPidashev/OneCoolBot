@@ -3,7 +3,7 @@ import time
 import asyncio
 import psutil
 from discord.ext import commands
-from utils import data, embed, log
+from utils import log
 from datetime import datetime, timedelta
 
 #global runtime process

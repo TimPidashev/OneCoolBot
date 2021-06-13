@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from utils import data, embed, log
+from utils import log
 from db import db
 import asyncio
 from discord_slash import cog_ext
