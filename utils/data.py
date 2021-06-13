@@ -25,62 +25,7 @@ async def update_prefix(context, arg):
 
     prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?", context.guild.id)[0]
     return prefix
-
-#LEVEL STUFF BELOW
-async def level_check(message):
-    level_check = db.record(f"SELECT Levels FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
-    return level_check
-
-async def find_record(message):
-    result = db.record("SELECT GuildID, UserID FROM users WHERE (GuildID, UserId) = (?, ?)",
-        message.guild.id,
-        message.author.id
-    )   
-    return result
-
-async def fetch_record(message):
-    xp, lvl, xplock = db.record("SELECT XP, Level, XPLock FROM users WHERE (GuildID, UserID) = (?, ?)", 
-        message.guild.id, 
-        message.author.id
-    )
-    return xp, lvl, xplock
-
-async def update_record(self, message, xp_to_add, new_lvl, coins_on_xp):
-    db.execute(f"UPDATE users SET XP = XP + ?, Level = ?, Coins = Coins + ?, XPLock = ? WHERE GuildID = {message.guild.id} AND UserID = {message.author.id}",
-        xp_to_add,
-        new_lvl,
-        coins_on_xp,
-        (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
-    )
-    db.commit()
-    await log.exp_add(self, message, xp_to_add)
-    await log.coin_add(self, message, coins_on_xp)
-
-async def level_up_check(message):
-    levelmessages, levelmessagechannel = db.record(f"SELECT LevelMessages, LevelMessageChannel FROM guildconfig WHERE GuildID = {message.guild.id}")
-    return levelmessages, levelmessagechannel
-
-async def on_message_send(self, message):
-    db.execute("INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
-        message.guild.id,
-        message.author.id
-    )
-    db.commit()
-    await log.member_redundant_add_db(self, message)
-
-async def update_coins_if_levels_off(self, message, coins_on_xp):
     
-    db.execute(f"UPDATE users SET Coins = Coins + ?, XPLock = ? WHERE GuildID = {message.guild.id} AND UserID = {message.author.id}",
-        coins_on_xp,
-        (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
-    )
-    db.commit()
-    await log.coin_add(self, message, coins_on_xp)
-
-async def fetch_levelmessage(message):
-    levelmessage = db.record(f"SELECT LevelMessage FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
-    return levelmessage
-
 async def update_users_table(self):
     db.multiexec(
         "INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
