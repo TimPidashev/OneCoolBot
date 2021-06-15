@@ -14,7 +14,7 @@ from discord.ext.commands import Cog
 from discord import Embed, Emoji
 from discord.ext import commands, tasks
 import asyncio
-import sqlite3
+import asyncpg
 import time
 from db import db
 from utils import log
