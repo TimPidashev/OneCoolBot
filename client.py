@@ -28,9 +28,8 @@ load_dotenv()
 Token = os.getenv("BOT_TOKEN")
 Statcord_Token = os.getenv("STATCORD")
 
-#logo and connect to database
+#logo
 log.logo()
-db.connect("./data/database.db")
 
 #discord.log
 logger = logging.getLogger("discord")
@@ -64,7 +63,7 @@ class OneCoolBot(commands.AutoShardedBot):
         await log.on_shard_ready(self, shard_id)
 
 #client setup
-client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all(), case_insensitive=True)
+client = OneCoolBot(command_prefix=".", intents=discord.Intents.all(), case_insensitive=True)
 client.process = psutil.Process(os.getpid())
 slash = SlashCommand(client, sync_commands=True, sync_on_cog_reload=True)
 client.remove_command("help")
@@ -218,4 +217,9 @@ async def shutdown(context):
     await client.close()
 
 client.loop.create_task(change_presence())
-client.run(Token, reconnect=True)
+
+try:
+    client.run(Token, reconnect=True)
+
+except KeyboardInterrupt:
+    client.close()
