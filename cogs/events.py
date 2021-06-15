@@ -19,8 +19,6 @@ import time
 from db import db
 from utils import log
 
-db.connect("./data/database.db")
-
 class events(commands.Cog):
     def __init__(self, client, *args, **kwargs):
         self.client = client
