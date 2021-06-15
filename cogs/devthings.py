@@ -25,7 +25,6 @@ class devthings(commands.Cog):
 
     async def on_ready(self):
         await log.online(self)
-        db.connect("./data/database.db")
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
