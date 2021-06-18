@@ -1,4 +1,4 @@
 CREATE TABLE IF NOT EXISTS guilds(
     GuildID BIGINT PRIMARY KEY,
-    Prefix VARCHAR(5)
+    Prefix TEXT DEFAULT '.'
 );
