@@ -25,27 +25,27 @@ class events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        pass
+        await log.online(self)
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
         await log.on_member_join(self, member)
-        pass
+        await data.on_member_join(self, member)
 
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         await log.on_member_remove(self, member)
-        pass
+        await data.on_member_remove(self, member)
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
         await log.on_guild_join(self, guild)
-        pass
+        await data.on_guild_join(self, guild)
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
         await log.on_guild_remove(self, guild)
-        pass
-
+        await data.on_guild_remove(self, guild)
+        
 def setup(client):
     client.add_cog(events(client))
