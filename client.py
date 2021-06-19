@@ -9,6 +9,7 @@ import aiosqlite
 import sqlite3
 import traceback
 import sys
+import json
 from glob import glob
 from db import db
 from discord.utils import get
@@ -24,10 +25,14 @@ from utils import log
 from discord_slash import SlashCommand
 import statcord
 
-#loading and identifying client token
-load_dotenv()
-Token = os.getenv("BOT_TOKEN")
-Statcord_Token = os.getenv("STATCORD")
+#loading bot config
+with open("config.json") as file:
+    data = json.load(file)
+    Token = data["client_token"]
+    Statcord_Token = data["statcord_token"]
+    # for i in data["owner_ids":
+    #     responses = dict(owners)
+    owners = [598625004279693460, 782203096658870272]
 
 #logo
 log.logo()
@@ -51,9 +56,7 @@ class OneCoolBot(commands.AutoShardedBot):
     async def on_ready(self):
         pass
     
-    async def on_connect(self):
-        await log.client_connect(self)
-
+    async def on_connect(self):    if context.author.id
     async def on_disconnect(self):
         await log.client_disconnect(self)
 
@@ -97,7 +100,6 @@ async def on_command(context):
 
 #load
 @client.command(aliases=["ld", "l"])
-@commands.is_owner()
 async def load(context, extension=None):
     if extension is not None:
         try:
