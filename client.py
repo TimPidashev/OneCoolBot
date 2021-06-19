@@ -216,13 +216,7 @@ async def shutdown(context):
     await context.reply("Your wish is my command | Shutting down.", mention_author=False)
     await log.client_close()
     await client.close()
-
-# @client.event
-# async def on_message(context):
-#     await db.execute("INSERT OR IGNORE INTO guilds (GuildID) VALUES (?)", context.guild.id)
-#     await db.commit()
-#     await context.reply(f"{context.guild.name} inserted into database!!!!! woooooohooooo im back!!!!!!!!!!!! thx Timmy!!!!!!!!", mention_author=False)
-
+    
 client.loop.create_task(change_presence())
 
 try:
