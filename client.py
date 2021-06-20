@@ -17,7 +17,6 @@ from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from quart import Quart, redirect, url_for, render_template, request
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from dotenv import load_dotenv
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
@@ -27,12 +26,9 @@ import statcord
 
 #loading bot config
 with open("config.json") as file:
-    data = json.load(file)
-    Token = data["client_token"]
-    Statcord_Token = data["statcord_token"]
-    # for i in data["owner_ids":
-    #     responses = dict(owners)
-    owners = [598625004279693460, 782203096658870272]
+    config = json.load(file)
+    Token = config["client_token"]
+    Statcord_Token = config["statcord_token"]
 
 #logo
 log.logo()
@@ -49,6 +45,11 @@ async def get_prefix(client, context):
     prefix = await db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")
     return prefix[0]
 
+#check if owner
+async def is_owner(context):
+    global config
+    return context.message.author.id in config["owner_ids"]
+
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -56,7 +57,9 @@ class OneCoolBot(commands.AutoShardedBot):
     async def on_ready(self):
         pass
     
-    async def on_connect(self):    if context.author.id
+    async def on_connect(self):
+        await log.client_connect(self)
+
     async def on_disconnect(self):
         await log.client_disconnect(self)
 
@@ -69,6 +72,7 @@ class OneCoolBot(commands.AutoShardedBot):
 #client setup
 client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all(), case_insensitive=True)
 client.process = psutil.Process(os.getpid())
+client.config = config
 slash = SlashCommand(client, sync_commands=True, sync_on_cog_reload=True)
 client.remove_command("help")
 api = statcord.Client(client, Statcord_Token)
@@ -118,7 +122,7 @@ async def load(context, extension=None):
 
 #unload
 @client.command(aliases=["ul", "u"])
-@commands.is_owner()
+@commands.check(is_owner)
 async def unload(context, extension=None):
     if extension is not None:
         try:
@@ -137,7 +141,7 @@ async def unload(context, extension=None):
 
 #reload
 @client.command(aliases=["rl", "r"])
-@commands.is_owner()
+@commands.check(is_owner)
 async def reload(context, extension=None):
     if extension is not None:
         try:
@@ -156,7 +160,7 @@ async def reload(context, extension=None):
 
 #load command
 @client.command(aliases=["ldc", "lc"])
-@commands.is_owner()
+@commands.check(is_owner)
 async def loadcommand(context, extension=None):
     if extension is not None:
         try:
@@ -175,7 +179,7 @@ async def loadcommand(context, extension=None):
 
 #unload command
 @client.command(aliases=["ulc", "uc"])
-@commands.is_owner()
+@commands.check(is_owner)
 async def unloadcommmand(context, extension=None):
     if extension is not None:
         try:
@@ -194,7 +198,7 @@ async def unloadcommmand(context, extension=None):
 
 #reload command
 @client.command(aliases=["rlc", "rc"])
-@commands.is_owner()
+@commands.check(is_owner)
 async def reloadcommand(context, extension=None):
     if extension is not None:
         try:
@@ -213,16 +217,11 @@ async def reloadcommand(context, extension=None):
 
 #shutdown
 @client.command(aliases=["sh"])
-@commands.is_owner()
+@commands.check(is_owner)
 async def shutdown(context):
     await context.reply("Your wish is my command | Shutting down.", mention_author=False)
     await log.client_close()
     await client.close()
     
 client.loop.create_task(change_presence())
-
-try:
-    client.run(Token, reconnect=True)
-
-except KeyboardInterrupt:
-    client.close()
+client.run(Token, reconnect=True)
