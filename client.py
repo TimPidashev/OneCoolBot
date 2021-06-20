@@ -103,7 +103,8 @@ async def on_command(context):
     api.command_run(context)
 
 #load
-@client.command(aliases=["ld", "l"])
+@client.command(hidden=True, pass_context=True, aliases=["ld", "l"])
+@commands.check(is_owner)
 async def load(context, extension=None):
     if extension is not None:
         try:
@@ -121,7 +122,7 @@ async def load(context, extension=None):
         return
 
 #unload
-@client.command(aliases=["ul", "u"])
+@client.command(hidden=True, pass_context=True, aliases=["ul", "u"])
 @commands.check(is_owner)
 async def unload(context, extension=None):
     if extension is not None:
@@ -140,7 +141,7 @@ async def unload(context, extension=None):
         return
 
 #reload
-@client.command(aliases=["rl", "r"])
+@client.command(hidden=True, pass_context=True, aliases=["rl", "r"])
 @commands.check(is_owner)
 async def reload(context, extension=None):
     if extension is not None:
@@ -159,7 +160,7 @@ async def reload(context, extension=None):
         return
 
 #load command
-@client.command(aliases=["ldc", "lc"])
+@client.command(hidden=True, pass_context=True, aliases=["ldc", "lc"])
 @commands.check(is_owner)
 async def loadcommand(context, extension=None):
     if extension is not None:
@@ -178,7 +179,7 @@ async def loadcommand(context, extension=None):
         return
 
 #unload command
-@client.command(aliases=["ulc", "uc"])
+@client.command(hidden=True, pass_context=True, aliases=["ulc", "uc"])
 @commands.check(is_owner)
 async def unloadcommmand(context, extension=None):
     if extension is not None:
@@ -197,9 +198,10 @@ async def unloadcommmand(context, extension=None):
         return
 
 #reload command
-@client.command(aliases=["rlc", "rc"])
+@client.command(hidden=True, pass_context=True, aliases=["rlc", "rc"])
 @commands.check(is_owner)
 async def reloadcommand(context, extension=None):
+
     if extension is not None:
         try:
             client.reload_extension(f"commands.{extension}")
@@ -216,7 +218,7 @@ async def reloadcommand(context, extension=None):
         return
 
 #shutdown
-@client.command(aliases=["sh"])
+@client.command(hidden=True, pass_context=True, aliases=["sh"])
 @commands.check(is_owner)
 async def shutdown(context):
     await context.reply("Your wish is my command | Shutting down.", mention_author=False)
