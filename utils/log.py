@@ -341,45 +341,10 @@ async def update_guildconfig_table():
     message = f"[{current_time}] updated guildconfig table"
     logger(message)
 
-#QUERY LOGGING FOR DATABASE
-def build(BUILD_PATH):
+async def is_owner_false(self, context, error):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    message = f"[{current_time}] database built at {BUILD_PATH}"
-    querylogger(message)
+    print(colored(f"[{current_time}]", "magenta"), colored("member:", "yellow"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("attempted to use sudo command:", "yellow"), colored(f"{context.command}", "magenta"), colored("in guild:", "yellow"), colored(f"{context.guild.name}#{context.guild.id}", "magenta"))
+    message = f"[{current_time}] member: {context.author.name}#{context.author.discriminator} attempted to use sudo command: {context.command} in guild: {context.guild.name}#{context.guild.id}"
+    logger(message)
 
-def commit():
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    message = f"[{current_time}] commit"
-    querylogger(message)
-
-def close():
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    message = f"[{current_time}] cursor connection closed"
-    querylogger(message)
-
-def record(command, *values):
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    message = f"[{current_time}] {command} | {values}"
-    querylogger(message)
-
-def execute(command, *values):
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    message = f"[{current_time}] {command} | {values}"
-    querylogger(message)
-
-def multiexec(command, valueset):
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    message = f"[{current_time}] {command} | {valueset}"
-    querylogger(message)
-
-def scriptexec(path):
-    now = datetime.now()
-    current_time = now.strftime("%H:%M:%S")
-    message = f"[{current_time}] {path}"
-    querylogger(message)
