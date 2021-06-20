@@ -322,10 +322,10 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
         nodes = {
             'MAIN':{
-                'host': '192.53.127.214',
+                'host': '127.0.0.1',
                 'port': 2333,
-                'rest_uri': 'http://192.53.127.214:2333',
-                'password': '23264011215931',
+                'rest_uri': 'http://127.0.0.1:2333',
+                'password': 'youshallnotpass',
                 'identifier': 'Main',
                 'region': 'US-West',
                 'heartbeat': 5
