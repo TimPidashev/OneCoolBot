@@ -47,8 +47,8 @@ handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)  
 
 async def get_prefix(client, context):
-    prefix = await db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")
-    return prefix[0]
+    prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")[0]
+    return prefix
 
 async def get_uptime():
     current_time = time.time()
