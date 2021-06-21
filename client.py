@@ -20,7 +20,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
-from utils import log, test
+from utils import log
 from discord_slash import SlashCommand
 import statcord
 
@@ -109,9 +109,9 @@ class OneCoolBot(commands.AutoShardedBot):
         super().__init__(*args, **kwargs)
 
     async def on_ready(self):
-        await test.update_users_table(self)
-        await test.update_guilds_table(self)
-        await test.update_guildconfig_table(self)
+        await update_users_table(self)
+        await update_guilds_table(self)
+        await update_guildconfig_table(self)
     
     async def on_connect(self):
         await log.client_connect(self)
