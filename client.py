@@ -20,9 +20,15 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
-from utils import log
+from utils import log, test
 from discord_slash import SlashCommand
 import statcord
+
+#version
+__VERSION__ = "1.2.8"
+
+#global runtime process
+start_time = time.time()
 
 #loading bot config
 with open("config.json") as file:
@@ -40,22 +46,72 @@ handler = logging.FileHandler(filename="./data/logs/discord.log", encoding="utf-
 handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
 logger.addHandler(handler)  
 
-#get_prefix
 async def get_prefix(client, context):
     prefix = await db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")
     return prefix[0]
 
-#check if owner
+async def get_uptime():
+    current_time = time.time()
+    difference = int(round(current_time - start_time))
+    uptime = str(timedelta(seconds=difference))
+    return uptime
+
+async def get_version():
+    version == __VERSION__
+    return version
+
+async def get_latency():
+    before = time.monotonic()
+    before_ws = int(round(self.client.latency * 1000, 1))
+    latency = (time.monotonic() - before) * 1000
+    return latency
+
+async def get_ram_usage():
+    ram_usage = self.client.process.memory_full_info().rss / 1024**2
+    return ram_usage
+
 async def is_owner(context):
     global config
     return context.message.author.id in config["owner_ids"]
+
+async def get_user_count():
+    users = len(self.client.users)
+    return users
+
+async def update_users_table(self):
+    await db.multiexec(
+        "INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
+        (
+            (member.guild.id, member.id,)
+            for guild in self.guilds
+            for member in guild.members
+            if not member.bot
+        ),
+    )
+    await db.commit()
+
+async def update_guilds_table(self):
+    await db.multiexec(
+        "INSERT OR IGNORE INTO guilds (GuildID) VALUES (?)",
+        ((guild.id,) for guild in self.guilds),
+    )
+    await db.commit()
+
+async def update_guildconfig_table(self):
+    await db.multiexec(
+        "INSERT OR IGNORE INTO guildconfig (GuildID) VALUES (?)",
+        ((guild.id,) for guild in self.guilds),
+    )
+    await db.commit()
 
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     async def on_ready(self):
-        pass
+        await test.update_users_table(self)
+        await test.update_guilds_table(self)
+        await test.update_guildconfig_table(self)
     
     async def on_connect(self):
         await log.client_connect(self)
