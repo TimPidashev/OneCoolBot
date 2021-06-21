@@ -79,7 +79,7 @@ async def get_user_count():
     return users
 
 async def update_users_table(self):
-    await db.multiexec(
+    db.multiexec(
         "INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
         (
             (member.guild.id, member.id,)
@@ -88,21 +88,21 @@ async def update_users_table(self):
             if not member.bot
         ),
     )
-    await db.commit()
+    db.commit()
 
 async def update_guilds_table(self):
-    await db.multiexec(
+    db.multiexec(
         "INSERT OR IGNORE INTO guilds (GuildID) VALUES (?)",
         ((guild.id,) for guild in self.guilds),
     )
-    await db.commit()
+    db.commit()
 
 async def update_guildconfig_table(self):
-    await db.multiexec(
+    db.multiexec(
         "INSERT OR IGNORE INTO guildconfig (GuildID) VALUES (?)",
         ((guild.id,) for guild in self.guilds),
     )
-    await db.commit()
+    db.commit()
 
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):

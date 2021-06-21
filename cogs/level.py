@@ -9,9 +9,5 @@ class level(commands.Cog):
     async def on_ready(self):
         pass
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        pass
-
 def setup(client):
     client.add_cog(level(client))

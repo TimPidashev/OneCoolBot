@@ -16,8 +16,8 @@ class events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member):
         try:
-            await db.execute("INSERT INTO users (UserID, GuildID) VALUES (?, ?)", member.id, member.guild.id)
-            await db.commit()
+            db.execute("INSERT INTO users (UserID, GuildID) VALUES (?, ?)", member.id, member.guild.id)
+            db.commit()
             await log.member_add_db(self, member)
 
         except Exception as error:
@@ -26,8 +26,8 @@ class events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         try:
-            await db.execute("DELETE FROM users WHERE (UserID = ?)", member.id)
-            await db.commit()
+            db.execute("DELETE FROM users WHERE (UserID = ?)", member.id)
+            db.commit()
             await log.member_remove_db(self, member)
 
         except Exception as error:
@@ -36,13 +36,13 @@ class events(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_join(self, member):
         try:
-            await db.execute("INSERT INTO guilds (GuildID) VALUES (?)", guild.id)
-            await db.commit()
+            db.execute("INSERT INTO guilds (GuildID) VALUES (?)", guild.id)
+            db.commit()
             await log.guild_add_db(self, guild)
 
             try:
-                await db.execute("INSERT INTO guildconfig (GuildID) VALUES (?)", guild.id)
-                await db.commit()
+                db.execute("INSERT INTO guildconfig (GuildID) VALUES (?)", guild.id)
+                db.commit()
                 await log.guildconfig_add_db(self, guild)
 
             except Exception as error:
@@ -54,13 +54,13 @@ class events(commands.Cog):
     @commands.Cog.listener()
     async def on_guild_remove(self, member):
         try:
-            await db.execute("DELETE FROM guilds WHERE (GuildID = ?)", guild.id)
-            await db.commit()
+            db.execute("DELETE FROM guilds WHERE (GuildID = ?)", guild.id)
+            db.commit()
             await log.on_guild_remove_db(self, guild)
 
             try:
-                await db.execute("DELETE FROM guildconfig WHERE (GuildID = ?)", guild.id)
-                await db.commit()
+                db.execute("DELETE FROM guildconfig WHERE (GuildID = ?)", guild.id)
+                db.commit()
                 await log.on_guild_remove_guildconfig(self, guild)
 
             except:
