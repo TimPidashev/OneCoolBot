@@ -1,50 +1,62 @@
 from os.path import isfile
-import aiosqlite
-from utils import log
+from sqlite3 import connect
+from apscheduler.triggers.cron import CronTrigger
 import asyncio
 
 DB_PATH = "./data/database.db"
 BUILD_PATH = "./db/build.sql"
 
-async def build():
-    async with aiosqlite.connect(DB_PATH) as db:
-        if isfile(BUILD_PATH):
-            await scriptexec(BUILD_PATH)
+cxn = connect(DB_PATH, check_same_thread=False)
+cur = cxn.cursor()
 
-async def commit():
-    async with aiosqlite.connect(DB_PATH) as db:
-        await db.commit()
+def with_commit(func):
+    def inner(*args, **kwargs):
+        func(*args, **kwargs)
+        commit()
 
-async def record(command, *values):
-    async with aiosqlite.connect(DB_PATH) as db:
-        async with db.execute(command, tuple(values)) as cursor:
-            return await cursor.fetchone()
+    return inner
 
-async def field(command, *values):
-    async with aiosqlite.connect(DB_PATH) as db:
-        async with db.execute(command, tuple(values)) as cursor:
-            if (fetch := cursor.fetchone()) is not None:
-                return fetch[0]
+@with_commit
+def build():
+    if isfile(BUILD_PATH):
+        scriptexec(BUILD_PATH)
 
-async def records(command, *values):
-    async with aiosqlite.connect(DB_PATH) as db:
-        async with db.execute(command, tuple(values)) as cursor:
-            return await cursor.fetchall()
+def commit():
+    cxn.commit()
 
-async def column(command, *values):
-    async with aiosqlite.connect(DB_PATH) as db:
-        async with db.execute(command, tuple(values)) as cursor:
-            return [item[0] for item in await cursor.fetchall()]
+def autosave(sched):
+    sched.add_job(commit, CronTrigger(second=0))
 
-async def execute(command, *values):
-    async with aiosqlite.connect(DB_PATH) as db:
-        await db.execute(command, tuple(values))
+def close():
+    cxn.close()
 
-async def multiexec(command, valueset):
-    async with aiosqlite.connect(DB_PATH) as db:
-        await db.executemany(command, valueset)
+def field(command, *values):
+    cur.execute(command, tuple(values))
 
-async def scriptexec(path):
-    async with aiosqlite.connect(DB_PATH) as db:
-        with open(path, "r", encoding="utf-8") as script:
-            await db.executescript(script.read())
+    if (fetch := cur.fetchone()) is not None:
+        return fetch[0]
+
+def record(command, *values):
+    cur.execute(command, tuple(values))
+
+    return cur.fetchone()
+
+def records(command, *values):
+    cur.execute(command, tuple(values))
+
+    return cur.fetchall()
+
+def column(command, *values):
+    cur.execute(command, tuple(values))
+
+    return [item[0] for item in cur.fetchall()]
+
+def execute(command, *values):
+    cur.execute(command, tuple(values))
+
+def multiexec(command, valueset):
+    cur.executemany(command, valueset)
+
+def scriptexec(path):
+    with open(path, "r", encoding="utf-8") as script:
+        cur.executescript(script.read())
