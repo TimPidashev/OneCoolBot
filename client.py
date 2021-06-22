@@ -24,12 +24,6 @@ from utils import log
 from discord_slash import SlashCommand
 import statcord
 
-#version
-__VERSION__ = "1.2.8"
-
-#global runtime process
-start_time = time.time()
-
 #loading bot config
 with open("config.json") as file:
     config = json.load(file)
@@ -50,33 +44,9 @@ async def get_prefix(client, context):
     prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")[0]
     return prefix
 
-async def get_uptime():
-    current_time = time.time()
-    difference = int(round(current_time - start_time))
-    uptime = str(timedelta(seconds=difference))
-    return uptime
-
-async def get_version():
-    version == __VERSION__
-    return version
-
-async def get_latency():
-    before = time.monotonic()
-    before_ws = int(round(self.client.latency * 1000, 1))
-    latency = (time.monotonic() - before) * 1000
-    return latency
-
-async def get_ram_usage():
-    ram_usage = self.client.process.memory_full_info().rss / 1024**2
-    return ram_usage
-
 async def is_owner(context):
     global config
     return context.message.author.id in config["owner_ids"]
-
-async def get_user_count():
-    users = len(self.client.users)
-    return users
 
 async def update_users_table(self):
     db.multiexec(
