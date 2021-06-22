@@ -128,7 +128,7 @@ async def change_presence():
 async def on_command(context):
     api.command_run(context)
 
-#load
+#load cog
 @client.command(hidden=True, pass_context=True, aliases=["ld", "l"])
 @commands.check(is_owner)
 async def load(context, extension=None):
@@ -147,7 +147,7 @@ async def load(context, extension=None):
     else:
         return
 
-#unload
+#unload cog
 @client.command(hidden=True, pass_context=True, aliases=["ul", "u"])
 @commands.check(is_owner)
 async def unload(context, extension=None):
@@ -166,7 +166,7 @@ async def unload(context, extension=None):
     else:
         return
 
-#reload
+#reload cog
 @client.command(hidden=True, pass_context=True, aliases=["rl", "r"])
 @commands.check(is_owner)
 async def reload(context, extension=None):
