@@ -3,10 +3,10 @@
     <div>
       <logo />
       <h1 class="title">
-        nuxtjs
+        OneCoolBot
       </h1>
       <h2 class="subtitle">
-        My astonishing Nuxt.js project
+        An advanced and extremely capable cyberpunk discord bot that's out of this world! 
       </h2>
       <div class="links">
         <a
