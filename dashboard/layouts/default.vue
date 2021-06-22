@@ -27,7 +27,7 @@ html {
 .button--green {
   display: inline-block;
   border-radius: 4px;
-  border: 1px solid #3b8070;
+  border: 1px solid #9B59B6;
   color: #3b8070;
   text-decoration: none;
   padding: 10px 30px;
@@ -35,13 +35,13 @@ html {
 
 .button--green:hover {
   color: #fff;
-  background-color: #3b8070;
+  background-color: #9B59B6;
 }
 
 .button--grey {
   display: inline-block;
   border-radius: 4px;
-  border: 1px solid #35495e;
+  border: 1px solid #9B59B6;
   color: #35495e;
   text-decoration: none;
   padding: 10px 30px;
@@ -50,6 +50,6 @@ html {
 
 .button--grey:hover {
   color: #fff;
-  background-color: #35495e;
+  background-color: #9B59B6;
 }
 </style>
