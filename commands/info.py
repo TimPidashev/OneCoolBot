@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 start_time = time.time()
 
 #version
-__VERSION__ = "1.2.8"
+__VERSION__ = "1.2.9"
 
 class info(commands.Cog):
     def __init__(self, client):
@@ -49,7 +49,7 @@ class info(commands.Cog):
                 ("Version", __VERSION__, True)]
 
         info.set_footer(
-            text="Most recent changes: help slash commands in testing"
+            text="Fix backend for the most part."
         )
 
         for name, value, inline in fields:
