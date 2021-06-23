@@ -44,6 +44,23 @@
   text-align: center;
 }
 
+.container::after{
+  content:'';
+  height:300px;
+  width:100%;
+  display:block;
+  background-image:linear-gradient(90deg, rgba(252,25,154,.1) 1px, rgba(0,0,0,0) 1px), linear-gradient(0deg, rgba(252,25,154,.1) 1px, rgba(0,0,0,0) 1px);
+  background-position:bottom;
+  background-repeat:repeat;
+  background-size:20px 20px;
+  left: -25px;
+  position: absolute;
+  pointer-events: none;
+  bottom: 0;
+  transform: perspective(100px) rotateX(60deg);
+  z-index: 0;
+}
+
 .title {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
