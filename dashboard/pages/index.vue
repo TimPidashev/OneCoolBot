@@ -60,8 +60,4 @@
   padding-top: 15px;
 }
 
-.background-image {
-  background: url('~/static/images/background.png');
-}
-
 </style>
