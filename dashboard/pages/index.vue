@@ -30,6 +30,7 @@
 
 <style>
 .container {
+  background-image: url("~assets/background.png");
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
