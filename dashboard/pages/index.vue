@@ -61,6 +61,19 @@
   z-index: 0;
 }
 
+.container:before {
+    background-image: repeating-linear-gradient(to bottom, transparent 0 ,transparent 2px, #FFF 2px, #FFF 4px);
+    background-size: 100% 4px cover;
+    transform-origin: 50% 50%;
+    content: '';
+    opacity: 0.02;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
 .title {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
