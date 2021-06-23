@@ -68,14 +68,14 @@
   display: block;
   font-weight: 300;
   font-size: 100px;
-  color: #35495e;
+  color: #9B59B6;
   letter-spacing: 1px;
 }
 
 .subtitle {
   font-weight: 300;
   font-size: 42px;
-  color: #526488;
+  color: #3d0b43;
   word-spacing: 5px;
   padding-bottom: 15px;
 }
