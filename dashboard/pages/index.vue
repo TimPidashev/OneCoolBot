@@ -59,6 +59,7 @@
   bottom: 0;
   transform: perspective(100px) rotateX(60deg);
   z-index: 0;
+  overflow: hidden;
 }
 
 .title {
