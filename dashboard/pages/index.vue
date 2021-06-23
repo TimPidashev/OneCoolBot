@@ -52,9 +52,9 @@
   background-image:linear-gradient(90deg, rgba(252,25,154,.1) 1px, rgba(0,0,0,0) 1px), linear-gradient(0deg, rgba(252,25,154,.1) 1px, rgba(0,0,0,0) 1px);
   background-position:bottom;
   background-repeat:repeat;
-  background-size:10px 10px;
+  background-size:20px 20px;
   left: -25px;
-  position: absolute;
+  position: relative;
   pointer-events: none;
   bottom: 0;
   transform: perspective(100px) rotateX(60deg);
