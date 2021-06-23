@@ -54,7 +54,7 @@
   background-repeat:repeat;
   background-size:20px 20px;
   left: -25px;
-  position: relative;
+  position: fixed;
   pointer-events: none;
   bottom: 0;
   transform: perspective(100px) rotateX(60deg);
