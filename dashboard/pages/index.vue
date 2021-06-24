@@ -79,14 +79,14 @@
   display: block;
   font-weight: 300;
   font-size: 100px;
-  color: #9B59B6;
+  color: #FF2965;
   letter-spacing: 1px;
 }
 
 .subtitle {
   font-weight: 300;
   font-size: 42px;
-  color: #3d0b43;
+  color: #FF2965;
   word-spacing: 5px;
   padding-bottom: 15px;
 }
