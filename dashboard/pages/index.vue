@@ -61,7 +61,7 @@
   z-index: 0;
 }
 
-.container {
+.container::backdrop {
     background-image: repeating-linear-gradient(to bottom, transparent 0 ,transparent 2px, #FFF 2px, #FFF 4px);
     background-size: 100% 4px cover;
     transform-origin: 50% 50%;
