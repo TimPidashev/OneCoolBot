@@ -12,14 +12,14 @@
         <a
           href="https://discord.gg/EDRjZdkGBG"
           target="_blank"
-          class="button--green"
+          class="button--test"
         >
           Discord Server
         </a>
         <a
           href="https://put_invite_link_here_when_ready"
           target="_blank"
-          class="button--grey"
+          class="button--test"
         >
           Invite Me!
         </a>
