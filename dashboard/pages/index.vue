@@ -10,8 +10,6 @@
       </h2>
       <button class="cybr-btn">
         Discord Server<span aria-hidden>_</span>
-        <span aria-hidden class="cybr-btn__glitch">Cyber_</span>
-        <span aria-hidden class="cybr-btn__tag">R25</span>
       </button>
     </div>
   </div>
