@@ -10,18 +10,18 @@
       </h2>
       <div class="links">
         <a
-          href="https://nuxtjs.org/"
+          href="https://discord.gg/EDRjZdkGBG"
           target="_blank"
           class="button--green"
         >
-          Documentation
+          Discord Server
         </a>
         <a
-          href="https://github.com/nuxt/nuxt.js"
+          href="https://put_invite_link_here_when_ready"
           target="_blank"
           class="button--grey"
         >
-          GitHub
+          Invite Me!
         </a>
       </div>
     </div>
@@ -75,7 +75,7 @@
 }
 
 .title {
-  font-family: 'New_Zelek', 'arial';
+  font-family: 'New_Zelek';
   display: block;
   font-weight: 300;
   font-size: 100px;
