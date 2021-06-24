@@ -75,7 +75,7 @@
 }
 
 .title {
-  font-family: 'New_Zelek';
+  font-family: 'New_Zelek', 'arial';
   display: block;
   font-weight: 300;
   font-size: 100px;
