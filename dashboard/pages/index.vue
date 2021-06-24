@@ -91,8 +91,4 @@
   padding-bottom: 15px;
 }
 
-.links {
-  padding-top: 15px;
-}
-
 </style>
