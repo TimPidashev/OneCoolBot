@@ -20,7 +20,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
-from utils import log
+from utils import checks, log
 from discord_slash import SlashCommand
 import statcord
 
@@ -39,14 +39,6 @@ logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename="./data/logs/discord.log", encoding="utf-8", mode="w")
 handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
 logger.addHandler(handler)  
-
-async def get_prefix(client, context):
-    prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")[0]
-    return prefix
-
-async def is_owner(context):
-    global config
-    return context.message.author.id in config["owner_ids"]
 
 async def update_users_table(self):
     db.multiexec(
@@ -73,6 +65,10 @@ async def update_guildconfig_table(self):
         ((guild.id,) for guild in self.guilds),
     )
     db.commit()
+
+async def get_prefix(client, context):
+    prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")[0]
+    return prefix
 
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
@@ -130,7 +126,7 @@ async def on_command(context):
 
 #load cog
 @client.command(hidden=True, pass_context=True, aliases=["ld", "l"])
-@commands.check(is_owner)
+@commands.check(checks.is_owner)
 async def load(context, extension=None):
     if extension is not None:
         try:
@@ -149,7 +145,7 @@ async def load(context, extension=None):
 
 #unload cog
 @client.command(hidden=True, pass_context=True, aliases=["ul", "u"])
-@commands.check(is_owner)
+@commands.check(checks.is_owner)
 async def unload(context, extension=None):
     if extension is not None:
         try:
@@ -168,7 +164,7 @@ async def unload(context, extension=None):
 
 #reload cog
 @client.command(hidden=True, pass_context=True, aliases=["rl", "r"])
-@commands.check(is_owner)
+@commands.check(checks.is_owner)
 async def reload(context, extension=None):
     if extension is not None:
         try:
@@ -187,7 +183,7 @@ async def reload(context, extension=None):
 
 #load command
 @client.command(hidden=True, pass_context=True, aliases=["ldc", "lc"])
-@commands.check(is_owner)
+@commands.check(checks.is_owner)
 async def loadcommand(context, extension=None):
     if extension is not None:
         try:
@@ -206,7 +202,7 @@ async def loadcommand(context, extension=None):
 
 #unload command
 @client.command(hidden=True, pass_context=True, aliases=["ulc", "uc"])
-@commands.check(is_owner)
+@commands.check(checks.is_owner)
 async def unloadcommmand(context, extension=None):
     if extension is not None:
         try:
@@ -225,7 +221,7 @@ async def unloadcommmand(context, extension=None):
 
 #reload command
 @client.command(hidden=True, pass_context=True, aliases=["rlc", "rc"])
-@commands.check(is_owner)
+@commands.check(checks.is_owner)
 async def reloadcommand(context, extension=None):
 
     if extension is not None:
@@ -245,7 +241,7 @@ async def reloadcommand(context, extension=None):
 
 #shutdown
 @client.command(hidden=True, pass_context=True, aliases=["sh"])
-@commands.check(is_owner)
+@commands.check(checks.is_owner)
 async def shutdown(context):
     await context.reply("Your wish is my command | Shutting down.", mention_author=False)
     await log.client_close()
