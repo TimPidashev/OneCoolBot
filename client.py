@@ -92,11 +92,10 @@ class OneCoolBot(commands.AutoShardedBot):
         await log.on_shard_ready(self, shard_id)
 
 #client setup
-client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all(), case_insensitive=True)
+client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all(), case_insensitive=True, help_command=None)
 client.process = psutil.Process(os.getpid())
 client.config = config
 slash = SlashCommand(client, sync_commands=True, sync_on_cog_reload=True)
-client.remove_command("help")
 api = statcord.Client(client, Statcord_Token)
 api.start_loop()
 
