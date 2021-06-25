@@ -8,8 +8,6 @@ from discord_slash.context import SlashContext
 from discord_slash.model import SlashCommandOptionType
 from discord_slash.utils.manage_commands import create_option
 
-EXCLUDED_COMMANDS = ['help']
-# db.connect("./data/database.db")
 guild_ids = [791160100567384094]
 
 class help(commands.Cog):
