@@ -134,7 +134,7 @@ async def load(context, extension=None):
             await context.reply(f"Your wish is my command | Loaded cogs.**{extension}**", mention_author=False)
 
         except Exception as error:
-            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
     
     elif extension is None:
         await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
@@ -153,7 +153,7 @@ async def unload(context, extension=None):
             await context.reply(f"Your wish is my command | Unloaded cogs.**{extension}**", mention_author=False)
 
         except Exception as error:
-            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
     
     elif extension is None:
         await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
@@ -172,7 +172,7 @@ async def reload(context, extension=None):
             await context.reply(f"Your wish is my command | Reloaded cogs.**{extension}**", mention_author=False)
 
         except Exception as error:
-            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
 
     elif extension is None:
         await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
@@ -191,7 +191,7 @@ async def loadcommand(context, extension=None):
             await context.reply(f"Your wish is my command | Loaded commands.**{extension}**", mention_author=False)
 
         except Exception as error:
-            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
     
     elif extension is None:
         await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
@@ -210,7 +210,7 @@ async def unloadcommmand(context, extension=None):
             await context.reply(f"Your wish is my command | Unloaded commands.**{extension}**", mention_author=False)
 
         except Exception as error:
-            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
     
     elif extension is None:
         await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
@@ -230,7 +230,7 @@ async def reloadcommand(context, extension=None):
             await context.reply(f"Your wish is my command | Reloaded commands.**{extension}**", mention_author=False)
 
         except Exception as error:
-            await context.reply(f"**error :(**\n```{error}```", mention_author=False)
+            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
 
     elif extension is None:
         await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
