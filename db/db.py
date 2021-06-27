@@ -6,8 +6,8 @@ import asyncio
 DB_PATH = "./data/database.db"
 BUILD_PATH = "./db/build.sql"
 
-cxn = connect(DB_PATH, check_same_thread=False)
-cur = cxn.cursor()
+connection = connect(DB_PATH, check_same_thread=False)
+cursor = connection.cursor()
 
 def with_commit(func):
     def inner(*args, **kwargs):
@@ -22,41 +22,41 @@ def build():
         scriptexec(BUILD_PATH)
 
 def commit():
-    cxn.commit()
+    connection.commit()
 
 def autosave(sched):
     sched.add_job(commit, CronTrigger(second=0))
 
 def close():
-    cxn.close()
+    connection.close()
 
 def field(command, *values):
-    cur.execute(command, tuple(values))
+    cursor.execute(command, tuple(values))
 
-    if (fetch := cur.fetchone()) is not None:
+    if (fetch := cursor.fetchone()) is not None:
         return fetch[0]
 
 def record(command, *values):
-    cur.execute(command, tuple(values))
+    cursor.execute(command, tuple(values))
 
-    return cur.fetchone()
+    return cursor.fetchone()
 
 def records(command, *values):
-    cur.execute(command, tuple(values))
+    cursor.execute(command, tuple(values))
 
-    return cur.fetchall()
+    return cursor.fetchall()
 
 def column(command, *values):
-    cur.execute(command, tuple(values))
+    cursor.execute(command, tuple(values))
 
-    return [item[0] for item in cur.fetchall()]
+    return [item[0] for item in cursor.fetchall()]
 
 def execute(command, *values):
-    cur.execute(command, tuple(values))
+    cursor.execute(command, tuple(values))
 
 def multiexec(command, valueset):
-    cur.executemany(command, valueset)
+    cursor.executemany(command, valueset)
 
 def scriptexec(path):
     with open(path, "r", encoding="utf-8") as script:
-        cur.executescript(script.read())
+        cursor.executescript(script.read())
