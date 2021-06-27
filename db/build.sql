@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS guildconfig(
     Levels text DEFAULT "off",
     LevelMessageCheck text DEFAULT "off",
     LevelMessage text DEFAULT "This is a level message!",
-    LevelMessageChannel integer DEFAULT 0
+    LevelMessageChannel integer DEFAULT 0,
+    LevelMessageChannelDirect text DEFAULT "off"
 );
 
 CREATE TABLE IF NOT EXISTS users(
