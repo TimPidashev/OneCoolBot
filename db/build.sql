@@ -5,16 +5,10 @@ CREATE TABLE IF NOT EXISTS guilds(
 
 CREATE TABLE IF NOT EXISTS guildconfig(
     GuildID integer PRIMARY KEY,
-    Levels text DEFAULT "OFF",
-    LevelMessages text DEFAULT "OFF",
+    Levels text DEFAULT "off",
+    LevelMessageCheck text DEFAULT "off",
     LevelMessage text DEFAULT "This is a level message!",
-    LevelMessageChannel integer DEFAULT 0,
-    UpdateMessage text DEFAULT "NONE",
-    Economy text DEFAULT "OFF",
-    Games text Default "OFF",
-    Music text DEFAULT "OFF",
-    BotAI text DEFAULT "OFF",
-    ErrorMessages text DEFAULT "On"
+    LevelMessageChannel integer DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS users(
