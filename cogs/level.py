@@ -80,21 +80,22 @@ class level(commands.Cog):
                         db.commit()
 
                         if new_lvl > lvl:
-                            levelmessages, levelmessagechannel = db.record(f"SELECT LevelMessages, LevelMessageChannel FROM guildconfig WHERE GuildID = {message.guild.id}")
-                            levelmessage = db.record(f"SELECT LevelMessage FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
+                            pass
+                            # levelmessages, levelmessagechannel = db.record(f"SELECT LevelMessages, LevelMessageChannel FROM guildconfig WHERE GuildID = {message.guild.id}")
+                            # levelmessage = db.record(f"SELECT LevelMessage FROM guildconfig WHERE GuildID = {message.guild.id}")[0]
 
-                            if levelmessages == "OFF":
-                                return
+                            # if levelmessages == "OFF":
+                            #     return
 
-                            if levelmessages == "ON":
-                                if levelmessagechannel == 0:
-                                    await message.reply(f":partying_face: {message.author.mention} is now level **{new_lvl:,}**!", mention_author=False)
-                                    await log.level_up(self, message, new_lvl)
+                            # if levelmessages == "ON":
+                            #     if levelmessagechannel == 0:
+                            #         await message.reply(f":partying_face: {message.author.mention} is now level **{new_lvl:,}**!", mention_author=False)
+                            #         await log.level_up(self, message, new_lvl)
 
-                                else:
-                                    messagechannel = self.client.get_channel(levelmessagechannel)
-                                    await message.channel.send(f"{levelmessage}")
-                                    await log.level_up(self, message, new_lvl)
+                            #     else:
+                            #         messagechannel = self.client.get_channel(levelmessagechannel)
+                            #         await message.channel.send(f"{levelmessage}")
+                            #         await log.level_up(self, message, new_lvl)
 
                     else:
                         return
