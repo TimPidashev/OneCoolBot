@@ -86,6 +86,7 @@ class levelmessages(commands.Cog):
 
     @levelmessage.command(aliases=["als", "a"])
     async def aliases(self, context):
+        await log.cog_command(self, context)
         embed = discord.Embed(colour=0x9b59b6)
         embed.add_field(
             name="***Command:*** `levelmessage`",
@@ -95,7 +96,7 @@ class levelmessages(commands.Cog):
         await context.reply(embed=embed, mention_author=False)
 
     @levelmessage.command(aliases=["st", "s"])
-    async def set(self, context, arg1=None, arg2=None):
+    async def set(self, context, arg1=None, arg2=None, arg3=None):
         await log.cog_command(self, context)
 
         if context.author != context.guild.owner:
@@ -127,27 +128,30 @@ class levelmessages(commands.Cog):
                 if arg2 is None:
                     await context.reply("**:| oops**\nMake sure to input your intended command options.", mention_author=False)
 
-                if arg2 == "on":
-                    # try:
-                    db.execute(f"UPDATE guildconfig SET LevelMessageCheck = ? WHERE GuildID = {context.guild.id}", arg2)
-                    db.commit()
-                    await context.reply(f"**:) success**\nLevel Messages were turned `{arg2}`", mention_author=False)
+                elif arg2 == "on":
+                    try:
+                        db.execute(f"UPDATE guildconfig SET LevelMessageCheck = ? WHERE GuildID = {context.guild.id}", arg2)
+                        db.commit()
+                        await context.reply(f"**:) success**\nLevel Messages were turned `{arg2}`", mention_author=False)
 
-                    # except:
-                    #     await context.reply("**:( error**\nAn internal error occured. How about giving that command another go?", mention_author=False)
+                    except:
+                        await context.reply("**:( error**\nAn internal error occured. How about giving that command another go?", mention_author=False)
 
-                if arg2 == "off":
-                    # try:
-                    db.execute(f"UPDATE guildconfig SET LevelMessageCheck = ? WHERE GuildID = {context.guild.id}", arg2)
-                    db.commit()
-                    await context.reply(f"**:) success**\nLevel Messages were turned `{arg2}`", mention_author=False)
+                elif arg2 == "off":
+                    try:
+                        db.execute(f"UPDATE guildconfig SET LevelMessageCheck = ? WHERE GuildID = {context.guild.id}", arg2)
+                        db.commit()
+                        await context.reply(f"**:) success**\nLevel Messages were turned `{arg2}`", mention_author=False)
 
-                    # except:
-                        # await context.reply("**:( error**\nAn internal error occured. How about giving that command another go?", mention_author=False)
+                    except:
+                        await context.reply("**:( error**\nAn internal error occured. How about giving that command another go?", mention_author=False)
 
                 else:
                     await context.reply("**:| oops**\nThis option does not exist, see `lm set help`", mention_author=False)
-            
+
+
+
+
 
 
 
