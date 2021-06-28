@@ -11,8 +11,8 @@ class levelmessages(commands.Cog):
     async def on_ready(self):
         pass
 
-
-    @commands.group(pass_context=True, invoke_without_command=True, aliases=["lvlmsgs", "lvlms", "lmsg", "lm"])
+    @commands.group(pass_context=True, invoke_without_command=True, aliases=["lmsg", "lm"])
+    @commands.check(checks.is_owner)
     async def levelmessage(self, context, arg=None):
         await log.cog_command(self, context)
         level_message_check = db.record(
@@ -68,14 +68,15 @@ class levelmessages(commands.Cog):
         await context.reply(embed=embed, mention_author=False)
 
     @levelmessage.command(aliases=["hlp", "h"])
+    @commands.check(checks.is_owner)
     async def help(self, context):
         embed = discord.Embed(colour=0x9b59b6)
 
-        fields=[("***Command:***", "`levelmessage`", True),
-                ("***Options:***", "`set` `help` `aliases`", True),
-                ("`set`: ***Usage:*** see `lm set help`", "Set the levelmessage, turn levelmessages *on* or *off*, and *change* level message channel.", False),
-                ("`aliases`:", "Shows command aliases.", False),
-                ("`help`:", "Shows this message.", False)]
+        fields=[("***Command***", "`levelmessage`", True),
+                ("***Options***", "`set` `help`", True),
+                ("***Aliases***", "`lmsg` `lm`", True),
+                ("`set`", "Set the levelmessage, turn levelmessages *on/off*, and *change* level message channel. See `levelmessage set help`", False),
+                ("`help`", "Shows this message.", False)]
 
         embed.set_footer(text="Use this command to configure levelmessages")
 
@@ -85,6 +86,7 @@ class levelmessages(commands.Cog):
         await context.reply(embed=embed, mention_author=False)
 
     @levelmessage.command(aliases=["als", "a"])
+    @commands.check(checks.is_owner)
     async def aliases(self, context):
         await log.cog_command(self, context)
         embed = discord.Embed(colour=0x9b59b6)
@@ -96,6 +98,7 @@ class levelmessages(commands.Cog):
         await context.reply(embed=embed, mention_author=False)
 
     @levelmessage.command(aliases=["st", "s"])
+    @commands.check(checks.is_owner)
     async def set(self, context, arg1=None, arg2=None, arg3=None):
         await log.cog_command(self, context)
 
@@ -106,17 +109,18 @@ class levelmessages(commands.Cog):
         if arg1 == "help" or arg1 == "hlp" or arg1 == "h":
             embed = discord.Embed(colour=0x9b59b6)
             
-            fields = [("***Command:***", "`levelmessage set`", True),
-                      ("***Options:***", "`levelmessage` `levelmessagechannel` `help`", True),
-                      ("`levelmessage:` ***Options:***", "`on/off:` turn levelmessages on/off.\n`your level message:` type a new level message after command to change your servers level message.", False),
-                      ("`levelmessagechannel:` ***Options:***", "`direct` *on/off*: send levelmessages in the same channel as the user.\n`#channel_name:` sets specified channel as the levelmessagechannel.", False),
-                      ("`levelmessagecard:` ***Options:***", "`Coming soon!`\nLevel message cards are a unique way of rewarding a member for their chat activity!", False),
-                      ("`help`:", "Shows this message.", False)]
+            fields = [("***Command***", "*levelmessage* `set`", True),
+                      ("***Options***", "`levelmessage` `levelmessagechannel` `levelmessagecard` `help`", True),
+                      ("***Aliases***", "`st` `s`", True),
+                      ("*levelmessage*", "`on/off` turn levelmessages on/off.\n`your level message` type a new level message after command to change your servers level message.", False),
+                      ("*levelmessagechannel*", "`direct` *on/off* send levelmessages in the same channel as the user.\n`#channel_name` sets specified channel as the levelmessagechannel.", False),
+                      ("*levelmessagecard*", "`Coming soon!`\nLevel message cards are a unique way of rewarding a member for their chat activity!", False),
+                      ("*help*", "Shows this message.", False)]
 
             for name, value, inline in fields:
                 embed.add_field(name=name, value=value, inline=inline)  
 
-            embed.set_footer(text="Input a prefix after command to change server prefix.")
+            embed.set_footer(text=f"Stuck? Try adding `help` after the command your confused about.")
 
             await context.reply(embed=embed, mention_author=False)
         
