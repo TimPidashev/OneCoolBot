@@ -10,6 +10,7 @@ class prefix(commands.Cog):
 
     async def on_ready(self):
         pass
+
     #dynamic helper function per user???? Where user gets the help output if they are new to the command or have never used it before
     @commands.group(pass_context=True, invoke_without_command=True, aliases=["prfx", "prf", "pr", "p"])
     async def prefix(self, context, arg=None):
@@ -17,10 +18,21 @@ class prefix(commands.Cog):
             try:
                 db.execute(f"UPDATE guilds SET Prefix = ? WHERE GuildID = {context.guild.id}", arg)
                 db.commit()
-                await context.reply(f"**:) success**\nPrefix was changed to `{arg}`", mention_author=False)
+                embed = discord.Embed(colour=0x9b59b6)
+                embed.add_field(
+                    name="**:) success**",
+                    value=f"Prefix was changed to `{arg}`",
+                    inline=True
+                )
+                await context.reply(embed=embed, mention_author=False)
 
             except:
-                await context.reply("**:( error**\nAn internal error occured. How about giving that command another go?", mention_author=False)
+                embed = discord.Embed(colour=0x9b59b6)
+                embed.add_field(
+                    name="**:( error**",
+                    value=f"An internal error occured, how about giving that command another go?"
+                )
+                await context.reply(embed=embed, mention_author=False)
 
         if arg is None:        
             await log.cog_command(self, context)
