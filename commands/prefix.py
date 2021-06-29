@@ -27,10 +27,11 @@ class prefix(commands.Cog):
                 await context.reply(embed=embed, mention_author=False)
 
             except:
-                embed = discord.Embed(colour=await colours.colour(context))
+                embed = discord.Embed(colour=0x9b59b6)
                 embed.add_field(
                     name="**:( error**",
-                    value=f"An internal error occured, how about giving that command another go?"
+                    value=f"An internal error occured, how about giving that command another go?",
+                    inline=True
                 )
                 await context.reply(embed=embed, mention_author=False)
 
