@@ -1,7 +1,7 @@
 import discord
 import asyncio
 from discord.ext import commands
-from utils import checks, log
+from utils import checks, colours, log
 from db import db
 
 class prefix(commands.Cog):
@@ -11,9 +11,9 @@ class prefix(commands.Cog):
     async def on_ready(self):
         pass
 
-    #dynamic helper function per user???? Where user gets the help output if they are new to the command or have never used it before
     @commands.group(pass_context=True, invoke_without_command=True, aliases=["prfx", "prf", "pr", "p"])
     async def prefix(self, context, arg=None):
+        await log.cog_command(self, context)
         if arg is not None:
             try:
                 db.execute(f"UPDATE guilds SET Prefix = ? WHERE GuildID = {context.guild.id}", arg)
@@ -27,7 +27,7 @@ class prefix(commands.Cog):
                 await context.reply(embed=embed, mention_author=False)
 
             except:
-                embed = discord.Embed(colour=0x9b59b6)
+                embed = discord.Embed(colour=await colours.colour(context))
                 embed.add_field(
                     name="**:( error**",
                     value=f"An internal error occured, how about giving that command another go?"
