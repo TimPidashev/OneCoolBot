@@ -366,10 +366,5 @@ class help(commands.Cog):
                 await message.delete()
                 break
 
-    @cog_ext.cog_slash(name="help-aliases", description="Shows command aliases.", guild_ids=guild_ids)
-    async def help_aliases(self, context: SlashContext):
-        await log.slash_command(self, context)
-        await context.send("**help** aliases: `hlp` `h`")
-
 def setup(client):
     client.add_cog(help(client))
