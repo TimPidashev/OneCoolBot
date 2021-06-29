@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS guildconfig(
     Levels text DEFAULT "off",
     LevelMessage text DEFAULT "This is a level message!",
     LevelMessageChannel integer DEFAULT 0,
-    LevelMessageChannelDirect text DEFAULT "off"
+    LevelMessageChannelDirect text DEFAULT "off",
+    EmbedColour text DEFAULT "0x9b59b6"
 );
 
 CREATE TABLE IF NOT EXISTS users(
