@@ -124,7 +124,7 @@ async def on_command(context):
     api.command_run(context)
 
 #load cog
-@client.command(hidden=True, pass_context=True, aliases=["ld", "l"])
+@client.command(hidden=True, pass_context=True, aliases=["ld"])
 @commands.check(checks.is_owner)
 async def load(context, extension=None):
     if extension is not None:
