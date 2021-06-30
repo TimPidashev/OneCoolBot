@@ -18,7 +18,8 @@ class prefix(commands.Cog):
             try:
                 db.execute(f"UPDATE guilds SET Prefix = ? WHERE GuildID = {context.guild.id}", arg)
                 db.commit()
-                embed = discord.Embed(colour=0x9b59b6)
+
+                embed = discord.Embed(colour=await colours.colour(context))
                 embed.add_field(
                     name="**:) success**",
                     value=f"Prefix was changed to `{arg}`",
@@ -26,14 +27,15 @@ class prefix(commands.Cog):
                 )
                 await context.reply(embed=embed, mention_author=False)
 
-            except:
-                embed = discord.Embed(colour=0x9b59b6)
+            except Exception as error:
+                print(error)
+                embed = discord.Embed(colour=await colours.colour(context))
                 embed.add_field(
                     name="**:( error**",
                     value=f"An internal error occured, how about giving that command another go?",
                     inline=True
                 )
-                await context.reply(embed=embed, mention_author=False)
+                await context.reply(embed=embed, mention_author=False)  
 
         if arg is None:        
             await log.cog_command(self, context)
@@ -43,7 +45,7 @@ class prefix(commands.Cog):
     @prefix.command(aliases=["hlp", "h"])
     async def help(self, context):
         await log.cog_command(self, context)
-        embed = discord.Embed(colour=0x9b59b6)
+        embed = discord.Embed(colour=await colours.colour(context))
 
         fields=[("***Command***", "`prefix`", True),
                 ("***Options***", "`change` `help`", True),
