@@ -29,7 +29,7 @@ from db import db
 
 async def colour(self, context):
     colour = db.record(f"SELECT EmbedColour FROM guildconfig WHERE GuildID = {context.guild.id}")[0]
-    return colour
+    return int(colour, base=16)
     
 async def change_colour(colour, context):
     pass
