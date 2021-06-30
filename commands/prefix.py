@@ -12,9 +12,10 @@ class prefix(commands.Cog):
         pass
 
     @commands.group(pass_context=True, invoke_without_command=True, aliases=["prfx", "prf", "pr", "p"])
+    @commands.is_owner()
     async def prefix(self, context, arg=None):
         await log.cog_command(self, context)
-        if arg is not None:
+        if arg is not None and context.author == context.guild.owner:
             try:
                 db.execute(f"UPDATE guilds SET Prefix = ? WHERE GuildID = {context.guild.id}", arg)
                 db.commit()
@@ -37,7 +38,16 @@ class prefix(commands.Cog):
                 )
                 await context.reply(embed=embed, mention_author=False)  
 
-        if arg is None:        
+        elif arg is not None and context.author != context.guild.owner:
+            embed = discord.Embed(colour=await colours.colour(context))
+            embed.add_field(
+                name="**:| oops**",
+                value=f"This command is only available to `server owners`, sorry!",
+                inline=True
+            )
+            await context.reply(embed=embed, mention_author=False)  
+
+        elif arg is None:        
             await log.cog_command(self, context)
             prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")[0]
             await context.reply(f"The current prefix is `{prefix}`", mention_author=False)
