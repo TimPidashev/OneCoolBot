@@ -17,5 +17,8 @@ class error(commands.Cog):
             await context.reply(f"**oops :|**\nYou are not priveleged enough to use this command.", mention_author=False)
             await log.is_owner_false(self, context, error)
 
+        else:
+            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
+
 def setup(client):
     client.add_cog(error(client))
