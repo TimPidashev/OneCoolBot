@@ -52,6 +52,18 @@ async def update_users_table(self):
     )
     db.commit()
 
+async def update_usersettings_table(self):
+    db.multiexec(
+        "INSERT OR IGNORE INTO usersettings (UserID) VALUES (?)",
+        (
+            (member.id,)
+            for guild in self.guilds
+            for member in guild.members
+            if not member.bot
+        ),
+    )
+    db.commit()
+
 async def update_guildconfig_table(self):
     db.multiexec(
         "INSERT OR IGNORE INTO guildconfig (GuildID) VALUES (?)",
@@ -66,6 +78,7 @@ class OneCoolBot(commands.AutoShardedBot):
     async def on_ready(self):
         await update_users_table(self)
         await update_guildconfig_table(self)
+        await update_usersettings_table(self)
     
     async def on_connect(self):
         await log.client_connect(self)
@@ -111,7 +124,6 @@ async def change_presence():
 async def on_command(context):
     api.command_run(context)
 
-#load cog
 @client.command(hidden=True, pass_context=True, aliases=["ld"])
 @commands.check(checks.is_owner)
 async def load(context, extension=None):
