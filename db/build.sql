@@ -3,8 +3,7 @@ CREATE TABLE IF NOT EXISTS guildconfig(
     Levels text DEFAULT "off",
     LevelMessage text DEFAULT "This is a level message!",
     LevelMessageChannel integer DEFAULT 0,
-    LevelMessageChannelDirect text DEFAULT "off",
-    EmbedColour text DEFAULT "0x9b59b6"
+    LevelMessageChannelDirect text DEFAULT "off"
 );
 
 CREATE TABLE IF NOT EXISTS users(
@@ -19,4 +18,9 @@ CREATE TABLE IF NOT EXISTS users(
     XPLock text DEFAULT CURRENT_TIMESTAMP,
     AILock text DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY("GuildID", "UserID")
+);
+
+CREATE TABLE IF NOT EXISTS usersettings(
+    UserID integer PRIMARY KEY,
+    ColorTheme text DEFAULT "0x71368a"
 )
