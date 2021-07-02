@@ -17,10 +17,6 @@ class help(commands.Cog):
     @slash_commands.command(name="help", description="A descriptive help command.", guild_ids=guild_ids)
     async def help(self, context):
         #help
-        prefix = db.record("SELECT Prefix FROM guilds WHERE GuildID = ?",
-            context.guild.id,
-        )[0]
-        
         page_1 = discord.Embed(
             title="Index",
             description="The home page of the help command!", 
@@ -96,10 +92,10 @@ class help(commands.Cog):
             description="Make sure your server is always under control, with an advanced toolset for your moderators, and auto-moderation for the tech-savvy!", 
             colour=await colours.colour(context)
         )
-        fields = [(f"`{prefix}clear` <message_amount>", "Clear messages from a channel.", False),
-                (f"`{prefix}kick` <@member> <reason>", "Kick mentioned member from server.", False),
-                (f"`{prefix}ban` <@member> <reason>", "Ban mentioned member from server.", False),
-                (f"`{prefix}unban` <@member> <reason>", "Unbans mentioned member from server.", False)]
+        fields = [(f"`clear` <message_amount>", "Clear messages from a channel.", False),
+                (f"`kick` <@member> <reason>", "Kick mentioned member from server.", False),
+                (f"`ban` <@member> <reason>", "Ban mentioned member from server.", False),
+                (f"`unban` <@member> <reason>", "Unbans mentioned member from server.", False)]
 
         for name, value, inline in fields:
             page_6.add_field(name=name, value=value, inline=inline)
