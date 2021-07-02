@@ -1,8 +1,3 @@
-CREATE TABLE IF NOT EXISTS guilds(
-    GuildID integer PRIMARY KEY,
-    Prefix text DEFAULT "."
-);
-
 CREATE TABLE IF NOT EXISTS guildconfig(
     GuildID integer PRIMARY KEY,
     Levels text DEFAULT "off",

@@ -52,13 +52,6 @@ async def update_users_table(self):
     )
     db.commit()
 
-async def update_guilds_table(self):
-    db.multiexec(
-        "INSERT OR IGNORE INTO guilds (GuildID) VALUES (?)",
-        ((guild.id,) for guild in self.guilds),
-    )
-    db.commit()
-
 async def update_guildconfig_table(self):
     db.multiexec(
         "INSERT OR IGNORE INTO guildconfig (GuildID) VALUES (?)",
@@ -66,17 +59,12 @@ async def update_guildconfig_table(self):
     )
     db.commit()
 
-async def get_prefix(client, context):
-    prefix = db.record(f"SELECT Prefix FROM guilds WHERE GuildID = {context.guild.id}")[0]
-    return prefix
-
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     async def on_ready(self):
         await update_users_table(self)
-        await update_guilds_table(self)
         await update_guildconfig_table(self)
     
     async def on_connect(self):
@@ -92,7 +80,7 @@ class OneCoolBot(commands.AutoShardedBot):
         await log.on_shard_ready(self, shard_id)
 
 #client setup
-client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all(), case_insensitive=True, help_command=None)
+client = OneCoolBot(command_prefix=".", intents=discord.Intents.all(), case_insensitive=True, help_command=None)
 client.process = psutil.Process(os.getpid())
 client.config = config
 slash = slash_commands.SlashClient(client)
