@@ -64,8 +64,8 @@ async def client_command(context):
 async def cog_command(self, context):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[{current_time}]", "magenta"), colored(f"{context.slash_command}", "magenta"), colored("used by:", "green"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("in guild:", "green"), colored(f"{context.guild.name}", "magenta"))
-    message = f"[{current_time}] {context.slash_command} used by: {context.author.name}#{context.author.discriminator} in guild: {context.guild.name}#{context.guild.id}"
+    print(colored(f"[{current_time}]", "magenta"), colored(f"{context.command}", "magenta"), colored("used by:", "green"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("in guild:", "green"), colored(f"{context.guild.name}", "magenta"))
+    message = f"[{current_time}] {context.command} used by: {context.author.name}#{context.author.discriminator} in guild: {context.guild.name}#{context.guild.id}"
     logger(message)
 
 async def slash_command(self, context):
