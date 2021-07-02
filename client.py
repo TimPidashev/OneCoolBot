@@ -22,6 +22,7 @@ from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
 from utils import checks, log
 from dislash import *
+from discord_slash import SlashCommand
 import statcord
 
 #loading bot config
@@ -96,7 +97,9 @@ class OneCoolBot(commands.AutoShardedBot):
 client = OneCoolBot(command_prefix=".", intents=discord.Intents.all(), case_insensitive=True, help_command=None)
 client.process = psutil.Process(os.getpid())
 client.config = config
-slash = slash_commands.SlashClient(client)
+# SlashClient(client)
+slash = SlashCommand(client, sync_commands=True, sync_on_cog_reload=True)
+
 api = statcord.Client(client, Statcord_Token)
 api.start_loop()
 
