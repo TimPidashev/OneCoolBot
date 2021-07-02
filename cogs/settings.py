@@ -140,7 +140,8 @@ class Settings(commands.Cog):
     )
 
     async def settings(self, context: SlashContext, colortheme: str):
-       if colortheme:
+        await log.slash_command(self, context)
+        if colortheme:
            #add rainbow and custom colorthemes as purchases in economy
            color, value = colortheme.split(",")
            await send_embed(context, color, value)
