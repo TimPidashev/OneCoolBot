@@ -9,16 +9,6 @@ from discord_slash.utils.manage_commands import create_option, create_choice
 
 guild_ids = [791160100567384094, 788629323044093973]
 
-async def send_embed(context, color, value):
-    await colours.change_colour(context, value)
-    embed = discord.Embed(colour=await colours.colour(context))
-    embed.add_field(
-        name="Color Theme",
-        value=f"Color theme changed to `{color}`",
-        inline=True
-    )
-    await context.send(embed=embed)
-
 class Settings(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -142,9 +132,16 @@ class Settings(commands.Cog):
     async def settings(self, context: SlashContext, colortheme: str):
         await log.slash_command(self, context)
         if colortheme:
-           #add rainbow and custom colorthemes as purchases in economy
-           color, value = colortheme.split(",")
-           await send_embed(context, color, value)
+            #add rainbow and custom colorthemes as purchases in economy later!
+            color, value = colortheme.split(",")
+            await colours.change_colour(context, value)
+            embed = discord.Embed(colour=await colours.colour(context))
+            embed.add_field(
+                name="Color Theme",
+                value=f"Color theme changed to `{color}`",
+                inline=True
+            )
+            await context.send(embed=embed)
         
         else:
             return
