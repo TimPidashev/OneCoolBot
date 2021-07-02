@@ -21,7 +21,7 @@ from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
 from utils import checks, log
-from discord_slash import SlashCommand
+from dislash import *
 import statcord
 
 #loading bot config
@@ -83,7 +83,7 @@ class OneCoolBot(commands.AutoShardedBot):
         await log.client_connect(self)
 
     async def on_disconnect(self):
-        await log.client_disconnect(self)
+        pass
 
     async def on_reconnect(self):
         await log.client_reconnect(self)
@@ -95,7 +95,7 @@ class OneCoolBot(commands.AutoShardedBot):
 client = OneCoolBot(command_prefix=get_prefix, intents=discord.Intents.all(), case_insensitive=True, help_command=None)
 client.process = psutil.Process(os.getpid())
 client.config = config
-slash = SlashCommand(client, sync_commands=True, sync_on_cog_reload=True)
+slash = slash_commands.SlashClient(client)
 api = statcord.Client(client, Statcord_Token)
 api.start_loop()
 
