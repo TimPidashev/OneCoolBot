@@ -26,11 +26,11 @@ class Color(commands.Cog):
         pass
 
     @slash_commands.command(
-        name="color", 
+        name="colortheme", 
         description="Change my color theme!",
         guild_ids=guild_ids
     )
-    async def color(self, context):
+    async def colortheme(self, context):
         message = await context.send(
             "Choose a color theme below!",
             components=[
@@ -68,7 +68,7 @@ class Color(commands.Cog):
             ]
         )
         def check(inter):
-            return inter.author == context.author and context.author == context.guild.owner
+            return inter.author == context.author
 
         inter = await message.wait_for_dropdown(check)
         labels = [option.label for option in inter.select_menu.selected_options]
@@ -167,7 +167,7 @@ class Color(commands.Cog):
             await send_embed(colour, context, message, value)
 
         else:
-            return
+            await context.reply("This command is for server owners only, sorry!")
 
 def setup(client):
     client.add_cog(Color(client))
