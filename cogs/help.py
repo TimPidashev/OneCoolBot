@@ -1,22 +1,29 @@
 import discord
 from discord.ext import commands
-from utils import colours, log
 from db import db
-import asyncio
-from dislash import *
+from utils import checks, colours, log
+from discord_slash import cog_ext
+from discord_slash.context import SlashContext
+from discord_slash.model import SlashCommandOptionType
+from discord_slash.utils.manage_commands import create_option, create_choice
 
-guild_ids = [791160100567384094]
+guild_ids = [791160100567384094, 788629323044093973]
 
-class help(commands.Cog):
+class Help(commands.Cog):
     def __init__(self, client):
         self.client = client
-    
+
     async def on_ready(self):
         pass
-        
-    @slash_commands.command(name="help", description="A descriptive help command.", guild_ids=guild_ids)
-    async def help(self, context):
-        #help
+    
+    @cog_ext.cog_slash(
+        name="help",
+        description="A complete manual of help for the helpless!",
+        guild_ids=guild_ids
+    )
+    async def help(self, context: SlashContext):
+        await log.slash_command(self, context)
+
         page_1 = discord.Embed(
             title="Index",
             description="The home page of the help command!", 
@@ -176,4 +183,4 @@ class help(commands.Cog):
                 break
 
 def setup(client):
-    client.add_cog(help(client))
+    client.add_cog(Help(client))
