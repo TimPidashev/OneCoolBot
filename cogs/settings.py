@@ -17,8 +17,8 @@ class Settings(commands.Cog):
         pass
     
     @cog_ext.cog_slash(
-        name="settings", 
-        description="configure me to your liking", 
+        name="colortheme", 
+        description="Per-user color customizability!", 
         guild_ids=guild_ids,
         options=[
             create_option(
@@ -125,7 +125,7 @@ class Settings(commands.Cog):
             )
         ],
         connector={
-            "colortheme": "colortheme",
+            "colortheme": "colortheme"
         }
     )
 
