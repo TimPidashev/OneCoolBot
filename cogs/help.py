@@ -6,6 +6,8 @@ from discord_slash import cog_ext
 from discord_slash.context import SlashContext
 from discord_slash.model import SlashCommandOptionType
 from discord_slash.utils.manage_commands import create_option, create_choice
+from discord_slash.utils.manage_components import create_select, create_select_option, create_actionrow, wait_for_component
+from discord_slash.utils import manage_components
 
 guild_ids = [791160100567384094, 788629323044093973]
 
@@ -23,7 +25,6 @@ class Help(commands.Cog):
     )
     async def help(self, context: SlashContext):
         await log.slash_command(self, context)
-
         page_1 = discord.Embed(
             title="Index",
             description="The home page of the help command!", 
@@ -86,7 +87,7 @@ class Help(commands.Cog):
             colour=await colours.colour(context)
         )
         fields = [("Commands", "`connect` connect bot to voice chat\n`play` <search song to play>\n`pause` pause player\n`resume` resume player\n`skip` skip current song\n`stop`\n`volume` change volume\n`shuffle` shuffle queue\n`equalizer` change equalizer\n`queue` see songs queue\n`current` see currently played song\n`swap` swap song\n`music` see music status\n`spotify` see spotify rich presence", False)]
-        
+
         for name, value, inline in fields:
             page_5.add_field(name=name, value=value, inline=inline)
 
@@ -110,7 +111,7 @@ class Help(commands.Cog):
         page_6.set_footer(
             text="Is being refactored, as is most of the bot lol. Will be complete and shiny with ai moderation soon!"
         )
-        
+
         message = await context.send(embed=page_1)
         await message.add_reaction("◀️")
         await message.add_reaction("▶️")
