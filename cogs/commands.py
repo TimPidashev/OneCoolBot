@@ -8,16 +8,21 @@ from discord_slash.model import SlashCommandOptionType
 from discord_slash.utils.manage_commands import create_option, create_choice
 from discord_slash.utils.manage_components import create_select, create_select_option, create_actionrow, wait_for_component
 from discord_slash.utils import manage_components
+import time
+from datetime import datetime, timedelta
+import asyncio
+import psutil
 
-guild_ids = [791160100567384094, 788629323044093973]
+guild_ids = [791160100567384094]
 
-class Help(commands.Cog):
+class Commands(commands.Cog):
     def __init__(self, client):
         self.client = client
 
     async def on_ready(self):
         pass
-    
+
+    #HELP COMMAND
     @cog_ext.cog_slash(
         name="help",
         description="A complete manual of help for the helpless!",
@@ -183,5 +188,84 @@ class Help(commands.Cog):
                 await message.delete()
                 break
 
+    #INFO
+    @commands.command(aliases=["inf", "i"])
+    async def info(self, context):
+        await log.cog_command(self, context)
+
+        before = time.monotonic()
+        before_ws = int(round(self.client.latency * 1000, 1))
+        ping = (time.monotonic() - before) * 1000
+        ramUsage = self.client.process.memory_full_info().rss / 1024**2
+        current_time = time.time()
+        difference = int(round(current_time - self.client.start_time))
+        uptime = str(timedelta(seconds=difference))
+        users = len(self.client.users)
+
+        info = discord.Embed(
+        title="Bot Info",
+        description="Everything about me!",
+        colour=0x9b59b6
+        )
+        info.set_thumbnail(
+            url=context.bot.user.avatar_url
+        )
+        fields = [("Developer", "𝓣𝓲𝓶𝓶𝔂#6955", True), 
+                ("Users", f"{users}", True),
+                ("Latency", f"{before_ws}ms", True),
+                ("RAM Usage", f"{ramUsage:.2f} MB", True), 
+                ("Uptime", uptime, True), 
+                ("Version", self.client.version, True)]
+
+        info.set_footer(
+            text="Fix backend for the most part."
+        )
+
+        for name, value, inline in fields:
+            info.add_field(name=name, value=value, inline=inline)
+
+        await context.reply(embed=info, mention_author=False)
+
+    
+    #USER INFO
+    @commands.command(aliases=["usrinf", "ui"])
+    async def userinfo(self, context, user: discord.Member = None):
+        await log.cog_command(self, context)
+
+        if isinstance(context.channel, discord.DMChannel):
+            return
+
+        if user is None:
+            user = context.author 
+
+        embed = discord.Embed(
+            colour=0x9b59b6
+        )
+        embed.set_author(
+            name=str(user), 
+            icon_url=user.avatar_url
+        )
+        
+        perm_string = ', '.join([str(p[0]).replace("_", " ").title() for p in user.guild_permissions if p[1]])
+        members = sorted(context.guild.members, key=lambda m: m.joined_at)
+        date_format = "%a, %d %b %Y at %I:%M %p"
+
+        top_role = user.top_role
+        
+        fields = [("Joined this server at", user.joined_at.strftime(date_format), True),
+                  ("Registered this account at", user.created_at.strftime(date_format), False),
+                  ("Server join position", str(members.index(user)+1), True),
+                  ("Roles [{}]".format(len(user.roles)-1), top_role.mention, True)]
+        
+        for name, value, inline in fields:
+            embed.add_field(name=name, value=value, inline=inline)
+
+        embed.set_footer(
+            text="ID: " + str(user.id)
+        )
+        await context.reply(embed=embed, mention_author=False)
+
+
+
 def setup(client):
-    client.add_cog(Help(client))
+    client.add_cog(Commands(client))

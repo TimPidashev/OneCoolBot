@@ -7,7 +7,7 @@ from discord_slash.context import SlashContext
 from discord_slash.model import SlashCommandOptionType
 from discord_slash.utils.manage_commands import create_option, create_choice
 
-guild_ids = [791160100567384094, 788629323044093973]
+guild_ids = [791160100567384094]
 
 class Settings(commands.Cog):
     def __init__(self, client):

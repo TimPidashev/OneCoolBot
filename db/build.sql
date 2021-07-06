@@ -1,11 +1,3 @@
-CREATE TABLE IF NOT EXISTS guildconfig(
-    GuildID integer PRIMARY KEY,
-    Levels text DEFAULT "off",
-    LevelMessage text DEFAULT "This is a level message!",
-    LevelMessageChannel integer DEFAULT 0,
-    LevelMessageChannelDirect text DEFAULT "off"
-);
-
 CREATE TABLE IF NOT EXISTS users(
     GuildID integer,
     UserID integer,

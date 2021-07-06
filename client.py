@@ -25,6 +25,8 @@ from dislash import *
 from discord_slash import SlashCommand
 import statcord
 
+__VERSION__ = "1.2.9"
+
 #loading bot config
 with open("config.json") as file:
     config = json.load(file)
@@ -65,20 +67,14 @@ async def update_usersettings_table(self):
     )
     db.commit()
 
-async def update_guildconfig_table(self):
-    db.multiexec(
-        "INSERT OR IGNORE INTO guildconfig (GuildID) VALUES (?)",
-        ((guild.id,) for guild in self.guilds),
-    )
-    db.commit()
-
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.version = __VERSION__
+        self.start_time = time.time()
 
     async def on_ready(self):
         await update_users_table(self)
-        await update_guildconfig_table(self)
         await update_usersettings_table(self)
     
     async def on_connect(self):
@@ -97,8 +93,9 @@ class OneCoolBot(commands.AutoShardedBot):
 client = OneCoolBot(command_prefix=".", intents=discord.Intents.all(), case_insensitive=True, help_command=None)
 client.process = psutil.Process(os.getpid())
 client.config = config
+
 # SlashClient(client)
-slash = SlashCommand(client, sync_commands=True, sync_on_cog_reload=True)
+slash = SlashCommand(client, sync_on_cog_reload=True)
 
 api = statcord.Client(client, Statcord_Token)
 api.start_loop()
@@ -107,14 +104,10 @@ for filename in os.listdir("./cogs"):
     if filename.endswith(".py"):
         client.load_extension(f"cogs.{filename[:-3]}")
 
-for filename in os.listdir("./commands"):
-    if filename.endswith(".py"):
-        client.load_extension(f"commands.{filename[:-3]}")
-
 #change presence
 async def change_presence():
         await client.wait_until_ready()
-        statuses = [f"{len(client.guilds)} servers", f"{len(client.users)} members", "Evolving AI"]
+        statuses = ["Evolving AI", f"{len(client.users)} members", "𝓣𝓲𝓶𝓶𝔂 code..."]
         while not client.is_closed():
             status = random.choice(statuses)
             await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
@@ -173,64 +166,6 @@ async def reload(context, extension=None):
             client.reload_extension(f"cogs.{extension}")
             await log.client_command(context)
             await context.reply(f"Your wish is my command | Reloaded cogs.**{extension}**", mention_author=False)
-
-        except Exception as error:
-            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
-
-    elif extension is None:
-        await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
-
-    else:
-        return
-
-#load command
-@client.command(hidden=True, pass_context=True, aliases=["ldc", "lc"])
-@commands.check(checks.is_owner)
-async def loadcommand(context, extension=None):
-    if extension is not None:
-        try:
-            client.load_extension(f"commands.{extension}")
-            await log.client_command(context)
-            await context.reply(f"Your wish is my command | Loaded commands.**{extension}**", mention_author=False)
-
-        except Exception as error:
-            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
-    
-    elif extension is None:
-        await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
-
-    else:
-        return
-
-#unload command
-@client.command(hidden=True, pass_context=True, aliases=["ulc", "uc"])
-@commands.check(checks.is_owner)
-async def unloadcommmand(context, extension=None):
-    if extension is not None:
-        try:
-            client.unload_extension(f"commands{extension}")
-            await log.client_command(context)
-            await context.reply(f"Your wish is my command | Unloaded commands.**{extension}**", mention_author=False)
-
-        except Exception as error:
-            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
-    
-    elif extension is None:
-        await context.reply("**oops :|**\nPlease provide me with more context.", mention_author=False)
-
-    else:
-        return
-
-#reload command
-@client.command(hidden=True, pass_context=True, aliases=["rlc", "rc"])
-@commands.check(checks.is_owner)
-async def reloadcommand(context, extension=None):
-
-    if extension is not None:
-        try:
-            client.reload_extension(f"commands.{extension}")
-            await log.client_command(context)
-            await context.reply(f"Your wish is my command | Reloaded commands.**{extension}**", mention_author=False)
 
         except Exception as error:
             await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
