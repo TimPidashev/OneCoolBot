@@ -37,7 +37,7 @@ class Menu(ListPageSource):
             colour=self.context.author.colour,
         )
 
-        embed.set_thumbnail(url=self.context.guild.me.avatar_url)
+        embed.set_thumbnail(url=self.context.guild.icon_url)
         embed.set_footer(
             text=f"{offset:,} - {min(len_data, offset+self.per_page-1):,} of {len_data:,} members."
         )
