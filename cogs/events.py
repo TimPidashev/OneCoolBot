@@ -6,10 +6,10 @@ from discord.utils import get
 from discord.ext.commands import Cog
 from discord import Embed, Emoji
 from utils import log
-from db import db
+from db import db   
 
 #DevelopingThings GuildID
-guild_id = (791160100567384094)
+devthings_guild_id = (791160100567384094)
 
 class events(commands.Cog):
     def __init__(self, client, *args, **kwargs):
@@ -96,13 +96,15 @@ class events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        if member.guild.id == guild_id:
+        if member.guild.id == devthings_guild_id:
             
             role = member.guild.get_role(846972672402915348)
             await member.add_roles(role)
 
         else:
             return
+
+
 
 def setup(client):
     client.add_cog(events(client))

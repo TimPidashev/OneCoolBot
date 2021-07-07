@@ -64,8 +64,8 @@ async def client_command(context):
 async def cog_command(self, context):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[{current_time}]", "magenta"), colored(f"{context.command}", "magenta"), colored("used by:", "green"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("in guild:", "green"), colored(f"{context.guild.name}", "magenta"))
-    message = f"[{current_time}] {context.command} used by: {context.author.name}#{context.author.discriminator} in guild: {context.guild.name}#{context.guild.id}"
+    print(colored(f"[{current_time}]", "magenta"), colored("command:", "green"), colored(f"{context.command}", "magenta"), colored("used by:", "green"), colored(f"{context.author.name}#{context.author.discriminator}", "magenta"), colored("in guild:", "green"), colored(f"{context.guild.name}", "magenta"))
+    message = f"[{current_time}] command: {context.command} used by: {context.author.name}#{context.author.discriminator} in guild: {context.guild.name}#{context.guild.id}"
     logger(message)
 
 async def slash_command(self, context):
@@ -173,11 +173,11 @@ async def exp_add(self, message, xp_to_add):
     message = f"[{current_time}] added {xp_to_add} xp to member: {message.author} in guild: {message.guild.name}#{message.guild.id}"
     logger(message)
 
-async def coin_add(self, message, coins_on_xp):
+async def coin_add(self, message, coins):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[{current_time}]", "magenta"), colored("added", "blue"), colored(f"{coins_on_xp}", "magenta"), colored("coins to member:", "blue"), colored(f"{message.author}", "magenta"), colored("in guild:", "blue"), colored(f"{message.guild.name}", "magenta"))
-    message = f"[{current_time}] added {coins_on_xp} coins to member: {message.author} in guild: {message.guild.name}#{message.guild.id}"
+    print(colored(f"[{current_time}]", "magenta"), colored("added", "blue"), colored(f"{coins}", "magenta"), colored("coins to member:", "blue"), colored(f"{message.author}", "magenta"), colored("in guild:", "blue"), colored(f"{message.guild.name}", "magenta"))
+    message = f"[{current_time}] added {coins} coins to member: {message.author} in guild: {message.guild.name}#{message.guild.id}"
     logger(message)
 
 async def level_up(self, message, new_lvl):
@@ -348,3 +348,9 @@ async def is_owner_false(self, context, error):
     message = f"[{current_time}] member: {context.author.name}#{context.author.discriminator} attempted to use sudo command: {context.command} in guild: {context.guild.name}#{context.guild.id}"
     logger(message)
 
+async def add_role(self, message, role_id):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("added role:", "green"), colored(f"{role_id.name}", "magenta"), colored("to member:", "green"), colored(f"{message.author.name}#{message.author.discriminator}", "magenta"), colored("in guild:", "green"), colored(f"{message.guild.name}#{message.guild.id}", "magenta"))
+    message = f"[{current_time}] added role: {role_id.name} to member: {message.author.name}#{message.author.discriminator} in guild: {message.guild.name}#{message.guild.id}"
+    logger(message)

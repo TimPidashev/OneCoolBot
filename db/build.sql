@@ -12,6 +12,14 @@ CREATE TABLE IF NOT EXISTS users(
     PRIMARY KEY("GuildID", "UserID")
 );
 
+CREATE TABLE IF NOT EXISTS guildsettings(
+    GuildID integer,
+    RoleLevel integer,
+    LevelRoleID integer,
+    LevelCoins integer,
+    PRIMARY KEY("GuildID", "LevelRoleID")
+);
+
 CREATE TABLE IF NOT EXISTS usersettings(
     UserID integer PRIMARY KEY,
     ColorTheme text DEFAULT "0x71368a"

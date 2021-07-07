@@ -113,12 +113,12 @@ async def change_presence():
             await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
             await asyncio.sleep(10)  
 
-"""Client/general commands below"""
-
 #statcord handling
 @client.event
 async def on_command(context):
     api.command_run(context)
+
+"""Admin commands below"""
 
 @client.command(hidden=True, pass_context=True, aliases=["ld"])
 @commands.check(checks.is_owner)
