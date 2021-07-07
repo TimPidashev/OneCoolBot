@@ -16,7 +16,6 @@ from discord.utils import get
 from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from quart import Quart, redirect, url_for, render_template, request
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
