@@ -21,7 +21,6 @@ from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
 from utils import checks, log
-from dislash import *
 from discord_slash import SlashCommand
 import statcord
 
