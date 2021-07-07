@@ -23,8 +23,6 @@ from utils import checks, log
 from discord_slash import SlashCommand
 import statcord
 
-__VERSION__ = "1.2.9"
-
 #loading bot config
 with open("config.json") as file:
     config = json.load(file)
@@ -68,7 +66,7 @@ async def update_usersettings_table(self):
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.version = __VERSION__
+        self.version = "1.2.9"
         self.start_time = time.time()
 
     async def on_ready(self):
