@@ -8,12 +8,52 @@ from discord_slash.model import SlashCommandOptionType
 from discord_slash.utils.manage_commands import create_option, create_choice
 from discord_slash.utils.manage_components import create_select, create_select_option, create_actionrow, wait_for_component
 from discord_slash.utils import manage_components
+from discord.ext.menus import MenuPages, ListPageSource
+from discord import Member, Embed
 import time
 from datetime import datetime, timedelta
 import asyncio
 import psutil
 
 guild_ids = [791160100567384094]
+
+#LEADERBOARD GENERATOR
+class Menu(ListPageSource):
+    def __init__(self, context, data):
+        self.context = context
+
+        super().__init__(data, per_page=10)
+
+    async def write_page(self, menu, offset, fields=[]):
+        offset = (menu.current_page * self.per_page) + 1
+        len_data = len(self.entries)
+
+        embed = Embed(
+            title="Leaderboard",
+            colour=self.context.author.colour,
+        )
+
+        embed.set_thumbnail(url=self.context.guild.me.avatar_url)
+        embed.set_footer(
+            text=f"{offset:,} - {min(len_data, offset+self.per_page-1):,} of {len_data:,} members."
+        )
+
+        for name, value in fields:
+            embed.add_field(name=name, value=value, inline=False)
+
+        return embed
+
+    async def format_page(self, menu, entries):
+        offset = (menu.current_page * self.per_page) + 1
+        fields = []
+        table = "\n".join(
+            f"{idx+offset}. **{self.context.guild.get_member(entry[0]).name}** ~ `{entry[1]}`"
+            for idx, entry in enumerate(entries)
+        )
+
+        fields.append(("Top members:", table))
+
+        return await self.write_page(menu, offset, fields)
 
 class Commands(commands.Cog):
     def __init__(self, client):
@@ -22,7 +62,7 @@ class Commands(commands.Cog):
     async def on_ready(self):
         pass
 
-    #HELP COMMAND
+    #HELP 
     @cog_ext.cog_slash(
         name="help",
         description="A complete manual of help for the helpless!",
@@ -227,7 +267,7 @@ class Commands(commands.Cog):
         await context.reply(embed=info, mention_author=False)
 
     
-    #USER INFO
+    #USER
     @commands.command(aliases=["usrinf", "ui"])
     async def userinfo(self, context, user: discord.Member = None):
         await log.cog_command(self, context)
@@ -264,6 +304,148 @@ class Commands(commands.Cog):
             text="ID: " + str(user.id)
         )
         await context.reply(embed=embed, mention_author=False)
+
+    #LEADERBOARD
+    @commands.command(aliases=["lb"])
+    async def leaderboard(self, context):
+        await log.cog_command(self, context)
+        async with context.typing():
+            await asyncio.sleep(1)
+            records = db.records("SELECT UserID, XP FROM users ORDER BY XP DESC")
+            menu = MenuPages(source=Menu(context, records), clear_reactions_after=True, timeout=100.0)
+            await menu.start(context)
+
+
+    #COLORTHEME
+    @cog_ext.cog_slash(
+        name="colortheme", 
+        description="Per-user color customizability!", 
+        guild_ids=guild_ids,
+        options=[
+            create_option(
+                name="colortheme",
+                description="Change my color theme!",
+                required=False,
+                option_type=3,
+                choices=[
+                    create_choice(
+                        name="black",
+                        value="black,0"
+                    ),
+                    create_choice(
+                        name="teal",
+                        value="teal,0x1abc9c"
+                    ),
+                    create_choice(
+                        name="dark teal",
+                        value="dark teal,0x11806a"
+                    ),
+                    create_choice(
+                        name="green",
+                        value="green,0x2ecc71"
+                    ),
+                    create_choice(
+                        name="dark green",
+                        value="dark green,0x1f8b4c"
+                    ),
+                    create_choice(
+                        name="blue",
+                        value="blue,0x3498db"
+                    ),
+                    create_choice(
+                        name="dark blue",
+                        value="dark blue,0x206694"
+                    ),
+                    create_choice(
+                        name="purple",
+                        value="purple,0x9b59b6"
+                    ),
+                    create_choice(
+                        name="dark purple",
+                        value="dark purple,0x71368a"
+                    ),
+                    create_choice(
+                        name="magenta",
+                        value="magenta,0xe91e63"
+                    ),
+                    create_choice(
+                        name="dark magenta",
+                        value="dark magenta,0xad1457"
+                    ),
+                    create_choice(
+                        name="gold",
+                        value="gold,0xf1c40f"
+                    ),
+                    create_choice(
+                        name="dark gold",
+                        value="dark gold,0xc27c0e"
+                    ),
+                    create_choice(
+                        name="orange",
+                        value="orange,0xe67e22"
+                    ),
+                    create_choice(
+                        name="dark orange",
+                        value="dark orange,0xa84300"
+                    ),
+                    create_choice(
+                        name="red",
+                        value="red,0xe74c3c"
+                    ),
+                    create_choice(
+                        name="dark red",
+                        value="dark red,0x992d22"
+                    ),
+                    create_choice(
+                        name="lighter grey",
+                        value="lighter grey,0x95a5a6s"
+                    ),
+                    create_choice(
+                        name="light grey",
+                        value="light grey,0x979c9f"
+                    ),
+                    create_choice(
+                        name="dark grey",
+                        value="dark grey,0x607d8b"
+                    ),
+                    create_choice(
+                        name="darker grey",
+                        value="darker grey,0x546e7a"
+                    ),
+                    create_choice(
+                        name="greyple",
+                        value="greyple,0x99aab5"
+                    ),
+                    create_choice(
+                        name="blurple",
+                        value="blurple,0x7289da"
+                    )
+
+                ]
+    
+            )
+        ],
+        connector={
+            "colortheme": "colortheme"
+        }
+    )
+
+    async def settings(self, context: SlashContext, colortheme: str):
+        await log.slash_command(self, context)
+        if colortheme:
+            #add rainbow and custom colorthemes as purchases in economy later!
+            color, value = colortheme.split(",")
+            await colours.change_colour(context, value)
+            embed = discord.Embed(colour=await colours.colour(context))
+            embed.add_field(
+                name="Color Theme",
+                value=f"Color theme changed to `{color}`",
+                inline=True
+            )
+            await context.send(embed=embed)
+        
+        else:
+            return
 
 
 
