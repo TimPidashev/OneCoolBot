@@ -21,10 +21,6 @@ from io import BytesIO
 
 guild_ids = [791160100567384094]
 
-
-async def open_image(rank_background):
-    return rank_background
-
 #LEADERBOARD GENERATOR
 class Menu(ListPageSource):
     def __init__(self, context, data):
@@ -38,7 +34,7 @@ class Menu(ListPageSource):
 
         embed = Embed(
             title="Leaderboard",
-            colour=self.context.author.colour,
+            colour=await colours.colour(self.context),
         )
 
         embed.set_thumbnail(url=self.context.guild.icon_url)
