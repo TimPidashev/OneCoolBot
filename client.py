@@ -16,16 +16,12 @@ from discord.utils import get
 from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from quart import Quart, redirect, url_for, render_template, request
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
 from utils import checks, log
-from dislash import *
 from discord_slash import SlashCommand
 import statcord
-
-__VERSION__ = "1.2.9"
 
 #loading bot config
 with open("config.json") as file:
@@ -70,7 +66,7 @@ async def update_usersettings_table(self):
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.version = __VERSION__
+        self.version = "1.2.9"
         self.start_time = time.time()
         self.maintenance = False
 
