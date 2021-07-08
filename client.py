@@ -72,6 +72,7 @@ class OneCoolBot(commands.AutoShardedBot):
         super().__init__(*args, **kwargs)
         self.version = __VERSION__
         self.start_time = time.time()
+        self.maintenance = False
 
     async def on_ready(self):
         await update_users_table(self)
@@ -107,10 +108,10 @@ for filename in os.listdir("./cogs"):
 #change presence
 async def change_presence():
         await client.wait_until_ready()
-        statuses = ["Evolving AI", f"{len(client.users)} members", "𝓣𝓲𝓶𝓶𝔂 code..."]
+        statuses = ["/help"]
         while not client.is_closed():
             status = random.choice(statuses)
-            await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
+            await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=status))
             await asyncio.sleep(10)  
 
 #statcord handling

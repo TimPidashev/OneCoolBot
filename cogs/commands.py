@@ -14,12 +14,16 @@ import time
 from datetime import datetime, timedelta
 import asyncio
 import psutil
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFile, ImageFilter, ImagePath
 import aiohttp
 from typing import Optional
 from io import BytesIO
 
 guild_ids = [791160100567384094]
+
+
+async def open_image(rank_background):
+    return rank_background
 
 #LEADERBOARD GENERATOR
 class Menu(ListPageSource):
@@ -449,7 +453,6 @@ class Commands(commands.Cog):
         else:
             return
 
-
     #RANK
     @commands.command(aliases=["rnk"])
     async def rank(self, context, target: Optional[Member]):
@@ -466,13 +469,22 @@ class Commands(commands.Cog):
         if exp or level is not None:
             rank = f"{ids.index(target.id)+1}"
             xp = exp
-            user_name = str(target.name)
+            user_name = str(target.nick or target.display_name)
             discriminator = f"#{target.discriminator}"
 
             final_xp_calc = int((level + 1) ** (20 / 11) * 42)
             final_xp = final_xp_calc + xp  
+            
+            rank_background = db.record(f"SELECT RankBackground FROM usersettings WHERE UserID = {target.id}")[0]
 
-            background = Image.new("RGB", (1000, 240))
+            if rank_background == "None":
+                background = Image.new("RGB", (1000, 240))
+
+            else:
+                with Image.open(rank_background, "r") as f:
+                    background = f.convert("RGB")
+                
+    
             async with aiohttp.ClientSession() as session:
                 async with session.get(str(target.avatar_url)) as response:
                     image = await response.read()
@@ -492,21 +504,21 @@ class Commands(commands.Cog):
                     text_size = draw.textsize(str(level), font=big_font)
                     offset_x = 1000 - 15 - text_size[0]
                     offset_y = 10
-                    draw.text((offset_x, offset_y), str(level), font=big_font, fill="#9B59B6")
+                    draw.text((offset_x, offset_y), str(level), font=big_font, fill=await colours.colour_hex(context, target))
                     text_size = draw.textsize("LEVEL", font=small_font)
                     offset_x -= text_size[0] + 5
                     draw.text((offset_x, offset_y + 27), "LEVEL", font=small_font, fill="#fff")
 
                     text_size = draw.textsize(f"#{rank}", font=big_font)
                     offset_x -= text_size[0] + 15
-                    draw.text((offset_x, offset_y), f"{rank}", font=big_font, fill="#9B59B6")
+                    draw.text((offset_x, offset_y), f"{rank}", font=big_font, fill=await colours.colour_hex(context, target))
                     text_size = draw.textsize("RANK", font=small_font)
                     offset_x -= text_size[0] + 5
                     draw.text((offset_x, offset_y + 27), "RANK", font=small_font, fill="#fff")
                     
                     text_size = draw.textsize(f"{message_count}", font=big_font)
                     offset_x -= text_size[0] + 50
-                    draw.text((offset_x, offset_y), f"{message_count}", font=big_font, fill="#9B59B6")
+                    draw.text((offset_x, offset_y), f"{message_count}", font=big_font, fill=await colours.colour_hex(context, target))
                     text_size = draw.textsize("KARMA", font=small_font)
                     offset_x -= text_size[0] + 10
                     draw.text((offset_x, offset_y + 27), "KARMA", font=small_font, fill="#fff")
@@ -518,7 +530,7 @@ class Commands(commands.Cog):
                     circle_size = bar_offset_y_1 - bar_offset_y
                     draw.rectangle((bar_offset_x, bar_offset_y, bar_offset_x_1, bar_offset_y_1), fill="#727175")
                     draw.ellipse(
-                        (bar_offset_x - circle_size // 2, bar_offset_y, bar_offset_x + circle_size // 2, bar_offset_y_1), fill="#9B59B6"
+                        (bar_offset_x - circle_size // 2, bar_offset_y, bar_offset_x + circle_size // 2, bar_offset_y_1), fill=await colours.colour_hex(context, target)
                     )
                     draw.ellipse(
                         (bar_offset_x_1 - circle_size // 2, bar_offset_y, bar_offset_x_1 + circle_size // 2, bar_offset_y_1), fill="#727175"
@@ -528,12 +540,12 @@ class Commands(commands.Cog):
                     progress = 100 - progress
                     progress_bar_length = round(bar_length * progress / 100)
                     bar_offset_x_1 = bar_offset_x + progress_bar_length
-                    draw.rectangle((bar_offset_x, bar_offset_y, bar_offset_x_1, bar_offset_y_1), fill="#9B59B6")
+                    draw.rectangle((bar_offset_x, bar_offset_y, bar_offset_x_1, bar_offset_y_1), fill=await colours.colour_hex(context, target))
                     draw.ellipse(
-                        (bar_offset_x - circle_size // 2, bar_offset_y, bar_offset_x + circle_size // 2, bar_offset_y_1), fill="#9B59B6"
+                        (bar_offset_x - circle_size // 2, bar_offset_y, bar_offset_x + circle_size // 2, bar_offset_y_1), fill=await colours.colour_hex(context, target)
                     )
                     draw.ellipse(
-                        (bar_offset_x_1 - circle_size // 2, bar_offset_y, bar_offset_x_1 + circle_size // 2, bar_offset_y_1), fill="#9B59B6"
+                        (bar_offset_x_1 - circle_size // 2, bar_offset_y, bar_offset_x_1 + circle_size // 2, bar_offset_y_1), fill=await colours.colour_hex(context, target)
                     )
                     text_size = draw.textsize(f"/ {final_xp} XP", font=small_font)
                     offset_x = 950 - text_size[0]
@@ -554,9 +566,46 @@ class Commands(commands.Cog):
                     background.save("./data/img/imgswap.png")
                     ffile = discord.File("./data/img/imgswap.png")
                     await context.reply(file=ffile, mention_author=False)
-
+                       
         else:
             await context.reply("You are not in the database :(\nDon't worry though, you were just added! Try running the command again.", mention_author=False)
+
+    #test rank_background
+    @commands.command()
+    @commands.check(checks.is_owner)
+    async def rb(self, context, arg, target: Optional[Member]):
+        target = target or context.author
+
+        db.execute(f"UPDATE usersettings SET RankBackground = ? WHERE UserID = ?",
+            arg,
+            target.id
+        )
+
+    @commands.command(aliases=["atm"])
+    @commands.check(checks.is_owner)
+    async def add_to_market(self, context, name, category, quantity, price):
+        embed = discord.Embed(colour=await colours.colour(context))
+
+        db.execute(f"INSERT INTO globalmarket (ItemName, Category, QuantityLimit, QuantityAvailable, Price) VALUES (?, ?, ?, ?, ?)", 
+            name, 
+            category, 
+            quantity, 
+            quantity,
+            price
+        )
+        db.commit()
+
+         
+        fields = [("`Market`", f"New item added by {context.author.name}", True),
+                  ("`Name`", name, False),
+                  ("`category`", category, True),
+                  ("`quantity`", quantity, True),
+                  ("`price`", f":coin: {price}", True)]
+
+        for name, value, inline in fields:
+            embed.add_field(name=name, value=value, inline=inline)
+
+        await context.reply(embed=embed, mention_author=False)
 
 def setup(client):
     client.add_cog(Commands(client))
