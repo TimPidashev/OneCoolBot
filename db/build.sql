@@ -27,22 +27,38 @@ CREATE TABLE IF NOT EXISTS usersettings(
 );
 
 CREATE TABLE IF NOT EXISTS userinventory(
-    UserID integer,
+    UserID integer PRIMARY KEY,
     ItemID VARCHAR(50) NOT NULL,
-    DateBought date NOT NULL,
+    DateBought DEFAULT CURRENT_DATE,
     Quantity VARCHAR(50) NOT NULL,
     AverageValue VARCHAR(50) NOT NULL
-
 );
+
+-- CREATE TABLE IF NOT EXISTS usershop(
+--     UserID integer PRIMARY KEY,
+--     ShopName VARCHAR(50) NOT NULL,
+--     DateOpened DEFAULT CURRENT_DATE
+-- );
+
+-- CREATE TABLE IF NOT EXISTS usershopinventory(
+--     UserID integer PRIMARY KEY
+--     ItemID VARCHAR(50) NOT NULL,
+--     Quantity VARCHAR(50) NOT NULL,
+--     DatePosted DEFAULT CURRENT_DATE
+-- );
 
 CREATE TABLE IF NOT EXISTS globalmarket(
     ItemID integer PRIMARY KEY AUTOINCREMENT,
     ItemName VARCHAR(50) NOT NULL,
     Category VARCHAR(50) NOT NULL,
     DateReleased DEFAULT CURRENT_DATE,
-    QuantityLimit VARCHAR(50) NOT NULL,
     QuantityAvailable Varchar(50) NOT NULL,
+    QuantityLimit VARCHAR(50) NOT NULL,
     Price int NOT NULL,
+    Popularity integer DEFAULT 0,
     WhoBoughtLast TEXT DEFAULT "Nobody"
 )
+
+-- DROP TABLE globalmarket;
+-- DROP TABLE userinventory;
 
