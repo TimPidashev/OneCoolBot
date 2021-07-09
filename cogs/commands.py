@@ -582,7 +582,7 @@ class Commands(commands.Cog):
     async def add_to_market(self, context, name, category, quantity, price):
         embed = discord.Embed(colour=await colours.colour(context))
 
-        db.execute(f"INSERT INTO globalmarket (ItemName, Category, QuantityLimit, QuantityAvailable, Price) VALUES (?, ?, ?, ?, ?)", 
+        db.execute(f"INSERT INTO globalmarket (ItemName, Category, QuantityAvailable, QuantityLimit, Price) VALUES (?, ?, ?, ?, ?)", 
             name, 
             category, 
             quantity, 
@@ -590,7 +590,6 @@ class Commands(commands.Cog):
             price
         )
         db.commit()
-
          
         fields = [("`Market`", f"New item added by {context.author.name}", True),
                   ("`Name`", name, False),

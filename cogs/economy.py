@@ -66,9 +66,20 @@ class economy(commands.Cog):
     @commands.command(aliases=["mrk", "m"])
     async def market(self, context):
         await log.cog_command(self, context)
-        records = db.records("SELECT ItemName, Category, DateReleased, QuantityLimit, QuantityAvailable, Price, WhoBoughtLast FROM globalmarket ORDER BY QuantityAvailable DESC")
-        menu = MenuPages(source=Market(context, records), clear_reactions_after=True, timeout=100.0)
-        await menu.start(context)
+        item_name, category, date_released, quantity_available, quantity_limit, price, popularity, who_bought_last = db.records("SELECT ItemName, Category, DateReleased, QuantityAvailable, QuantityLimit, Price, Popularity, WhoBoughtLast FROM globalmarket")
+
+        embed = discord.Embed(
+            title="Global Market",
+            description="Buy, sell, and trade cool bot features and minigame items.",
+            colour=await colours.colour(context)      
+        )
+
+        fields = [("`Categories`", "`rank cards`", True)]
+
+        for name, value, inline in fields:
+            page_6.add_field(name=name, value=value, inline=inline)
+
+        await context.reply(embed=embed, mention_author=False)
         
 
 def setup(client):
