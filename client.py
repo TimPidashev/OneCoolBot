@@ -180,6 +180,15 @@ async def shutdown(context):
     await context.reply("Your wish is my command | Shutting down.", mention_author=False)
     await log.client_close()
     await client.close()
-    
+
+#restart
+@client.command(hidden=True, pass_context=True, aliases=["re", "rst"])
+@commands.check(checks.is_owner)
+async def restart(context):
+    await context.reply("Your wish is my command | Restarting.", mention_author=False)
+    await log.client_close()
+    await client.close()
+    os.execl(sys.executable, sys.executable, *sys.argv)
+
 client.loop.create_task(change_presence())
 client.run(Token, reconnect=True)
