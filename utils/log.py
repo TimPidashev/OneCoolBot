@@ -306,11 +306,18 @@ async def client_disconnect(self):
     message = f"[{current_time}] client disconnected from gateway, attempting to reconnect..."
     logger(message)
 
-async def client_close():
+async def client_close(context):
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    print(colored(f"[{current_time}]", "magenta"), colored("client process closed by owner", "green"))
-    message = f"[{current_time}] client process closed by owner"
+    print(colored(f"[{current_time}]", "magenta"), colored("client process closed by:", "green"), colored(f"{context.author.name}", "magenta"))
+    message = f"[{current_time}] client process closed by: {context.author.name}"
+    logger(message)
+
+async def client_restart(context):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("client process restarted by:", "green"), colored(f"{context.author.name}", "magenta"))
+    message = f"[{current_time}] client process restarted by: {context.author.name}"
     logger(message)
 
 async def client_reconnect(self):
@@ -354,3 +361,27 @@ async def add_role(self, message, role_id):
     print(colored(f"[{current_time}]", "magenta"), colored("added role:", "green"), colored(f"{role_id.name}", "magenta"), colored("to member:", "green"), colored(f"{message.author.name}#{message.author.discriminator}", "magenta"), colored("in guild:", "green"), colored(f"{message.guild.name}#{message.guild.id}", "magenta"))
     message = f"[{current_time}] added role: {role_id.name} to member: {message.author.name}#{message.author.discriminator} in guild: {message.guild.name}#{message.guild.id}"
     logger(message)
+
+async def reload_cog(extension):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("reloaded cog:", "green"), colored(f"{extension}", "magenta"))
+    message = f"[{current_time}] reloaded cog: {extension}"
+    logger(message)
+
+#unload_cog
+async def unload_cog(extension):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("unloaded cog:", "green"), colored(f"{extension}", "magenta"))
+    message = f"[{current_time}] unloaded cog: {extension}"
+    logger(message)
+
+#load_cog
+async def load_cog(extension):
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    print(colored(f"[{current_time}]", "magenta"), colored("loaded cog:", "green"), colored(f"{extension}", "magenta"))
+    message = f"[{current_time}] loaded cog: {extension}"
+    logger(message)
+    

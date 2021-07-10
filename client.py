@@ -124,6 +124,7 @@ async def load(context, extension=None):
         try:
             client.load_extension(f"cogs.{extension}")
             await log.client_command(context)
+            await log.load_cog(extension)
             await context.reply(f"Your wish is my command | Loaded cogs.**{extension}**", mention_author=False)
 
         except Exception as error:
@@ -143,6 +144,7 @@ async def unload(context, extension=None):
         try:
             client.unload_extension(f"cogs.{extension}")
             await log.client_command(context)
+            await log.unload_cog(extension)
             await context.reply(f"Your wish is my command | Unloaded cogs.**{extension}**", mention_author=False)
 
         except Exception as error:
@@ -162,6 +164,7 @@ async def reload(context, extension=None):
         try:
             client.reload_extension(f"cogs.{extension}")
             await log.client_command(context)
+            await log.reload_cog(extension)
             await context.reply(f"Your wish is my command | Reloaded cogs.**{extension}**", mention_author=False)
 
         except Exception as error:
@@ -178,7 +181,7 @@ async def reload(context, extension=None):
 @commands.check(checks.is_owner)
 async def shutdown(context):
     await context.reply("Your wish is my command | Shutting down.", mention_author=False)
-    await log.client_close()
+    await log.client_close(context)
     await client.close()
 
 #restart
@@ -186,7 +189,7 @@ async def shutdown(context):
 @commands.check(checks.is_owner)
 async def restart(context):
     await context.reply("Your wish is my command | Restarting.", mention_author=False)
-    await log.client_close()
+    await log.client_restart(context)
     await client.close()
     os.execl(sys.executable, sys.executable, *sys.argv)
 
