@@ -602,5 +602,39 @@ class Commands(commands.Cog):
 
         await context.reply(embed=embed, mention_author=False)
 
+    # #TICKETS
+    # @cog_ext.cog_slash(
+    #     name="ticket",
+    #     description="Send an request to become a @project maintainer",
+    #     guild_ids=guild_ids,
+    #     options=[
+    #         create_option(
+    #             name="project name",
+    #             description="What is the name of the project you would like to share?",
+    #             required=True,
+    #             option_type=3,
+    #         ),
+    #         create_option(
+    #             name="project description",
+    #             description="What is the description of the project you would like to share?",
+    #             required=True,
+    #             option_type=3,
+    #         )
+    #     ]
+    # )
+    # async def ticket(self, context: SlashContext):
+    #     await log.slash_command(self, context)
+    #     project_name = context.options["project name"]
+    #     project_description = context.options["project description"]
+
+    #     db.execute(f"INSERT INTO tickets (UserID, ProjectName, ProjectDescription) VALUES (?, ?, ?)",
+    #         context.author.id,
+    #         project_name,
+    #         project_description
+    #     )
+    #     db.commit()
+
+    #     await context.send("Your ticket has been sent! You will be notified when someone responds to your ticket.")
+        
 def setup(client):
     client.add_cog(Commands(client))

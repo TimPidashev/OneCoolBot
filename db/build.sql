@@ -34,18 +34,16 @@ CREATE TABLE IF NOT EXISTS userinventory(
     AverageValue VARCHAR(50) NOT NULL
 );
 
--- CREATE TABLE IF NOT EXISTS usershop(
---     UserID integer PRIMARY KEY,
---     ShopName VARCHAR(50) NOT NULL,
---     DateOpened DEFAULT CURRENT_DATE
--- );
-
--- CREATE TABLE IF NOT EXISTS usershopinventory(
---     UserID integer PRIMARY KEY
---     ItemID VARCHAR(50) NOT NULL,
---     Quantity VARCHAR(50) NOT NULL,
---     DatePosted DEFAULT CURRENT_DATE
--- );
+CREATE TABLE IF NOT EXISTS tickets(
+    TicketID integer PRIMARY KEY AUTOINCREMENT,
+    UserID integer NOT NULL,
+    ProjectName VARCHAR(50) NOT NULL,
+    ProjectDescription text NOT NULL,
+    DateOpened DEFAULT CURRENT_DATE,
+    DateClosed DEFAULT CURRENT_DATE,
+    AdminVotes integer NOT NULL,
+    Status VARCHAR(50) DEFAULT "Open"
+);
 
 CREATE TABLE IF NOT EXISTS globalmarket(
     ItemID integer PRIMARY KEY AUTOINCREMENT,
@@ -59,6 +57,15 @@ CREATE TABLE IF NOT EXISTS globalmarket(
     WhoBoughtLast TEXT DEFAULT "Nobody"
 )
 
--- DROP TABLE globalmarket;
--- DROP TABLE userinventory;
+-- CREATE TABLE IF NOT EXISTS usershop(
+--     UserID integer PRIMARY KEY,
+--     ShopName VARCHAR(50) NOT NULL,
+--     DateOpened DEFAULT CURRENT_DATE
+-- );
 
+-- CREATE TABLE IF NOT EXISTS usershopinventory(
+--     UserID integer PRIMARY KEY
+--     ItemID VARCHAR(50) NOT NULL,
+--     Quantity VARCHAR(50) NOT NULL,
+--     DatePosted DEFAULT CURRENT_DATE
+-- );

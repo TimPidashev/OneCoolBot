@@ -91,8 +91,8 @@ client = OneCoolBot(command_prefix=".", intents=discord.Intents.all(), case_inse
 client.process = psutil.Process(os.getpid())
 client.config = config
 
-# SlashClient(client)
-slash = SlashCommand(client, sync_on_cog_reload=True)
+#slash client
+slash = SlashCommand(client, sync_commands=True)
 
 api = statcord.Client(client, Statcord_Token)
 api.start_loop()
