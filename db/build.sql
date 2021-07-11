@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS tickets(
     ProjectDescription text NOT NULL,
     DateOpened DEFAULT CURRENT_DATE,
     DateClosed DEFAULT CURRENT_DATE,
-    AdminVotes integer NOT NULL,
+    AdminVotes integer DEFAULT 0,
     Status VARCHAR(50) DEFAULT "Open"
 );
 
