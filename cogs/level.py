@@ -31,6 +31,11 @@ class level(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         if not message.author.bot:
+            context = await self.client.get_context(message)
+            
+            if context.command:
+                return
+
             result = db.record("SELECT GuildID, UserID FROM users WHERE (GuildID, UserId) = (?, ?)",
                 message.guild.id,
                 message.author.id
@@ -65,13 +70,17 @@ class level(commands.Cog):
                     pass
 
             else:
+                try:
                 
-                db.execute("INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
-                    message.guild.id,
-                    message.author.id
-                )
-                db.commit()
-                await log.member_redundant_add_db(self, message)
+                    db.execute("INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
+                        message.guild.id,
+                        message.author.id
+                    )
+                    db.commit()
+                    await log.member_redundant_add_db(self, message)
+
+                except:
+                    pass #so dms are not flagged as errors
                 
 def setup(client):
     client.add_cog(level(client))
