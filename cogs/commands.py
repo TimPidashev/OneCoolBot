@@ -14,12 +14,17 @@ import time
 from datetime import datetime, timedelta
 import asyncio
 import psutil
+import json
 from PIL import Image, ImageDraw, ImageFont, ImageFile, ImageFilter, ImagePath
 import aiohttp
 from typing import Optional
 from io import BytesIO
 
 guild_ids = [791160100567384094]
+
+#loading bot config
+with open("config.json") as file:
+    config = json.load(file)
 
 #LEADERBOARD GENERATOR
 class Menu(ListPageSource):
@@ -602,39 +607,68 @@ class Commands(commands.Cog):
 
         await context.reply(embed=embed, mention_author=False)
 
-    # #TICKETS
-    # @cog_ext.cog_slash(
-    #     name="ticket",
-    #     description="Send an request to become a @project maintainer",
-    #     guild_ids=guild_ids,
-    #     options=[
-    #         create_option(
-    #             name="project name",
-    #             description="What is the name of the project you would like to share?",
-    #             required=True,
-    #             option_type=3,
-    #         ),
-    #         create_option(
-    #             name="project description",
-    #             description="What is the description of the project you would like to share?",
-    #             required=True,
-    #             option_type=3,
-    #         )
-    #     ]
-    # )
-    # async def ticket(self, context: SlashContext):
-    #     await log.slash_command(self, context)
-    #     project_name = context.options["project name"]
-    #     project_description = context.options["project description"]
+    #TICKETS
+    @cog_ext.cog_slash(
+        name="ticket",
+        description="Send an request to become a @project maintainer",
+        guild_ids=guild_ids,
+        options=[
+            create_option(
+                name="name",
+                description="What is the name of the project you would like to share?",
+                required=True,
+                option_type=3
+            ),
+            create_option(
+                name="description",
+                description="What is the description of the project you would like to share?",
+                required=True,
+                option_type=3
+            )
+        ]
+    )
+    async def ticket(self, context: SlashContext, name: str, description: str):
+        await log.slash_command(self, context)
+        db.execute(f"INSERT INTO tickets (UserID, ProjectName, ProjectDescription) VALUES (?, ?, ?)",
+            context.author.id,
+            name,
+            description
+        )
+        db.commit()
 
-    #     db.execute(f"INSERT INTO tickets (UserID, ProjectName, ProjectDescription) VALUES (?, ?, ?)",
-    #         context.author.id,
-    #         project_name,
-    #         project_description
-    #     )
-    #     db.commit()
+        await context.send("Your ticket has been sent! You will be notified when an admin responds to your ticket.")
 
-    #     await context.send("Your ticket has been sent! You will be notified when someone responds to your ticket.")
+        embed = discord.Embed(colour=await colours.colour(context))
+        embed.add_field(name=f"Ticket for a project", value=f"**Name:** `{name}`\n**Description:**\n{description}", inline=False)
+        embed.set_author(name=f"Requested by: {context.author.name}", icon_url=context.author.avatar_url)
+        embed.set_footer(text=f"Vote if this project will become a part of the DevelopingThings watchlist.")
+        
+        admins = self.client.get_channel(863918584366104627)
+
+        message = await admins.send(embed=embed)
+        await message.add_reaction("✔️")
+        await message.add_reaction("❌")
+
+        def check(reaction, user):
+            return user in config["owner_ids"] and str(reaction.emoji) in ["✔️", "❌"]
+
+        while True:
+            try:
+                reaction, user = await context.bot.wait_for("reaction_add", timeout=60, check=check)
+
+                if str(reaction.emoji) == "✔️":
+                    pass
+
+                if str(reaction.emoji) == "❌":
+                    pass
+
+                else:
+                    await message.remove_reaction(reaction, user)
+
+            except asyncio.TimeoutError:
+                break
+        
+
         
 def setup(client):
     client.add_cog(Commands(client))
