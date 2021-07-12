@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS guildsettings(
     RoleLevel integer,
     LevelRoleID integer,
     LevelCoins integer,
+    LevelChannel integer,
     PRIMARY KEY("GuildID", "LevelRoleID")
 );
 
@@ -55,7 +56,7 @@ CREATE TABLE IF NOT EXISTS globalmarket(
     Price int NOT NULL,
     Popularity integer DEFAULT 0,
     WhoBoughtLast TEXT DEFAULT "Nobody"
-)
+);
 
 -- CREATE TABLE IF NOT EXISTS usershop(
 --     UserID integer PRIMARY KEY,
