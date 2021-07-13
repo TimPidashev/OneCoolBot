@@ -26,37 +26,47 @@ async def level_up_process(self, message, new_lvl):
     await log.coin_add(self, message, coins)
 
 async def level_up(self, message, new_lvl):
-    await message.reply(f":partying_face: {message.author.mention} is now level **{new_lvl:,}**!", mention_author=False)
-    await log.level_up(self, message, new_lvl)
+    async with message.channel.typing():
+        await asyncio.sleep(1)
 
-    if message.guild.id in config["devthings"]:
-        if new_lvl == 5:
-            await level_up_process(self, message, new_lvl)
-
-        if new_lvl == 10:
-            await level_up_process(self, message, new_lvl)
-
-        if new_lvl == 20:
-            await level_up_process(self, message, new_lvl)
-
-        if new_lvl == 30:
-            await level_up_process(self, message, new_lvl)
-
-        if new_lvl == 40:
-            await level_up_process(self, message, new_lvl)
-
-        if new_lvl == 50:
-            await level_up_process(self, message, new_lvl)
-
-        if new_lvl == 75:
-            await level_up_process(self, message, new_lvl)
-            #make sure this is one user with most exp!
-
-    else:
-        coins = random.randint(10, 1000)
-
-        db.execute("UPDATE users SET Coins = Coins + ? WHERE UserID = ?",
-            coins_to_add,
-            message.author.id
+        level_channel = db.execute(f"SELECT LevelChannel FROM guildsettings WHERE GuildID = ?",
+            message.guild.id
         )
-        db.commit()
+
+        if level_channel is not None:
+            channel = message.guild.get_channel(level_channel)
+            await channel.send(f"{message.author.mention} has reached level **{new_lvl:,}!**")
+
+        await log.level_up(self, message, new_lvl)
+
+        if message.guild.id in config["devthings"]:
+            if new_lvl == 5:
+                await level_up_process(self, message, new_lvl)
+
+            if new_lvl == 10:
+                await level_up_process(self, message, new_lvl)
+
+            if new_lvl == 20:
+                await level_up_process(self, message, new_lvl)
+
+            if new_lvl == 30:
+                await level_up_process(self, message, new_lvl)
+
+            if new_lvl == 40:
+                await level_up_process(self, message, new_lvl)
+
+            if new_lvl == 50:
+                await level_up_process(self, message, new_lvl)
+
+            if new_lvl == 75:
+                await level_up_process(self, message, new_lvl)
+                #make sure this is one user with most exp!
+
+        else:
+            coins = random.randint(10, 1000)
+
+            db.execute("UPDATE users SET Coins = Coins + ? WHERE UserID = ?",
+                coins_to_add,
+                message.author.id
+            )
+            db.commit()
