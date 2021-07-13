@@ -69,7 +69,7 @@ class Commands(commands.Cog):
         self.client = client
 
     async def on_ready(self):
-        pass
+        await log.online(self)
 
     #HELP 
     @cog_ext.cog_slash(

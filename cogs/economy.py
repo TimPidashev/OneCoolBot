@@ -87,7 +87,7 @@ class economy(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        pass
+        await log.online(self)
 
 
     @commands.command(aliases=["mrk", "m"])

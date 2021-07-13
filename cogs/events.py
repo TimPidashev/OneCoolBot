@@ -11,13 +11,13 @@ from db import db
 #DevelopingThings GuildID
 devthings_guild_id = (791160100567384094)
 
-class events(commands.Cog):
+class Events(commands.Cog):
     def __init__(self, client, *args, **kwargs):
         self.client = client
 
     @commands.Cog.listener()
     async def on_ready(self):
-        pass
+        await log.online(self)
     
     #ON_MEMBER_JOIN
     @commands.Cog.listener()
@@ -107,4 +107,4 @@ class events(commands.Cog):
 
 
 def setup(client):
-    client.add_cog(events(client))
+    client.add_cog(Events(client))
