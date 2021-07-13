@@ -87,7 +87,7 @@ class Commands(commands.Cog):
         fields = [("`General`", "**The basic commands for day-to-day tasks.", False),
                 ("`Economy`", "A global market and trading system, complete with its own currency!", False),
                 ("`Games`", "Play with friends, compete with strangers, and make some extra coins while having fun!", False),
-                ("`Music`", "Listen to low-latency music streams for studying and hanging with friends in voice-chat!", False),
+                ("`Music`", "Listen to low-latency music streams for studying and hanging out with friends in voice-chat!", False),
                 ("`Moderation`", "Make sure your server is always under control, with an advanced toolset for your moderators, and auto-moderation for the tech-savvy!", False),
                 ("`Settings`", "Configure OneCoolBot with ease right in discord, with a dashboard coming later.", False)]
 
@@ -455,9 +455,13 @@ class Commands(commands.Cog):
             return
 
     #RANK
-    @commands.command(aliases=["rnk"])
-    async def rank(self, context, target: Optional[Member]):
-        await log.cog_command(self, context)
+    @cog_ext.cog_slash(
+        name="rank",
+        description="Displays a member's level, rank, and karma in a cooool way!",
+        guild_ids=guild_ids
+    )
+    async def rank(self, context: SlashContext, target: discord.Member=None):
+        await log.slash_command(self, context)
         target = target or context.author
         if target is not None:
             exp, level = db.record(f"SELECT XP, Level FROM users WHERE (guildID, UserID) = (?, ?)",
@@ -568,10 +572,10 @@ class Commands(commands.Cog):
 
                     background.save("./data/img/imgswap.png")
                     ffile = discord.File("./data/img/imgswap.png")
-                    await context.reply(file=ffile, mention_author=False)
+                    await context.send(file=ffile)
                        
         else:
-            await context.reply("You are not in the database :(\nDon't worry though, you were just added! Try running the command again.", mention_author=False)
+            await context.send("You are not in the database :(\nDon't worry though, you were just added! Try running the command again.", mention_author=False)
 
     #test rank_background
     @commands.command()
