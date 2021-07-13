@@ -22,6 +22,9 @@ from discord.ext import commands, tasks, ipc
 from utils import checks, log
 from discord_slash import SlashCommand
 import statcord
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+import threading
 
 #loading bot config
 with open("config.json") as file:
@@ -29,7 +32,7 @@ with open("config.json") as file:
     Token = config["client_token"]
     Statcord_Token = config["statcord_token"]
 
-#logo
+# logo
 log.logo()
 
 #discord.log
@@ -69,6 +72,8 @@ class OneCoolBot(commands.AutoShardedBot):
         self.version = "1.2.9"
         self.start_time = time.time()
         self.maintenance = False
+        self.log_channel = 864207029097463818
+        self.running = True
 
     async def on_ready(self):
         await update_users_table(self)
@@ -115,8 +120,12 @@ async def change_presence():
 async def on_command(context):
     api.command_run(context)
 
-"""Admin commands below"""
+@client.event
+async def on_new_log(last_line):
+    channel = await client.fetch_channel(864207029097463818)
+    message = await channel.send(last_line)
 
+"""Admin commands below"""
 @client.command(hidden=True, pass_context=True, aliases=["ld"])
 @commands.check(checks.is_owner)
 async def load(context, extension=None):
@@ -180,18 +189,72 @@ async def reload(context, extension=None):
 @client.command(hidden=True, pass_context=True, aliases=["sh"])
 @commands.check(checks.is_owner)
 async def shutdown(context):
-    await context.reply("Your wish is my command | Shutting down.", mention_author=False)
-    await log.client_close(context)
-    await client.close()
+    try:
+        await context.reply("Your wish is my command | Shutting down.", mention_author=False)
+        await log.client_close(context)
+        await client.close()
+        sys.exit() #very lazy shutdown, clean up later
+
+    except Exception as error:
+        await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
 
 #restart
 @client.command(hidden=True, pass_context=True, aliases=["re", "rst"])
 @commands.check(checks.is_owner)
 async def restart(context):
-    await context.reply("Your wish is my command | Restarting.", mention_author=False)
-    await log.client_restart(context)
-    await client.close()
-    os.execl(sys.executable, sys.executable, *sys.argv)
+    try:
+        await context.reply("Your wish is my command | Restarting.", mention_author=False)
+        await log.client_restart(context)
+        await client.close()
+        os.execl(sys.executable, sys.executable, *sys.argv)
+
+    except Exception as error:
+        await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
+
+#watchdog process
+class EventHandler(FileSystemEventHandler):
+    def on_any_event(self, event):
+        pass
+
+    def on_created(self, event):
+        pass
+
+    def on_deleted(self, event):
+        pass
+
+    def on_modified(self, event):
+        if(event.src_path == "./data/logs/client.log"):
+            with open('./data/logs/client.log', 'rb') as log:
+                log.seek(-2, os.SEEK_END)
+
+                while log.read(1) != b'\n':
+                    log.seek(-2, os.SEEK_CUR)
+
+                last_line = log.readline().decode()
+                log.close()
+
+                client.dispatch("new_log", last_line)
+
+    def on_moved(self, event):
+        pass
+
+def watchdog():
+    event_handler = EventHandler()
+    observer = Observer()
+    observer.schedule(event_handler, path="./data/logs/client.log", recursive=False)
+    observer.start()
+    while True:
+        try:
+            pass
+        
+        except SystemExit:
+            print("working...")
+            observer.stop()
+            break
+    
+watchdog = threading.Thread(target=watchdog)
+watchdog.daemon = True
+watchdog.start()
 
 client.loop.create_task(change_presence())
 client.run(Token, reconnect=True)
