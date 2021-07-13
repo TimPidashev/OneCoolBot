@@ -230,7 +230,7 @@ class EventHandler(FileSystemEventHandler):
 def watchdog():
     event_handler = EventHandler()
     observer = Observer()
-    observer.schedule(event_handler, path="./data/database.db", recursive=False)
+    observer.schedule(event_handler, path=".", recursive=False)
     observer.start()
     while True:
         try:
