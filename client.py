@@ -121,9 +121,8 @@ async def on_command(context):
     api.command_run(context)
 
 @client.event
-async def on_new_log(last_line):
-    channel = await client.fetch_channel(864207029097463818)
-    message = await channel.send(last_line)
+async def on_fatal_error(event):
+    sys.exit()
 
 """Admin commands below"""
 @client.command(hidden=True, pass_context=True, aliases=["ld"])
@@ -220,20 +219,10 @@ class EventHandler(FileSystemEventHandler):
         pass
 
     def on_deleted(self, event):
-        pass
+        client.dispatch("fatal_error", event)
 
     def on_modified(self, event):
-        if(event.src_path == "./data/logs/client.log"):
-            with open('./data/logs/client.log', 'rb') as log:
-                log.seek(-2, os.SEEK_END)
-
-                while log.read(1) != b'\n':
-                    log.seek(-2, os.SEEK_CUR)
-
-                last_line = log.readline().decode()
-                log.close()
-
-                client.dispatch("new_log", last_line)
+      pass
 
     def on_moved(self, event):
         pass
@@ -241,7 +230,7 @@ class EventHandler(FileSystemEventHandler):
 def watchdog():
     event_handler = EventHandler()
     observer = Observer()
-    observer.schedule(event_handler, path="./data/logs/client.log", recursive=False)
+    observer.schedule(event_handler, path="./data/database.db", recursive=False)
     observer.start()
     while True:
         try:
