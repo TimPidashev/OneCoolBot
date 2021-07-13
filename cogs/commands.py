@@ -493,7 +493,9 @@ class Commands(commands.Cog):
                     bigsize = (icon.size[0] * 3, icon.size[1] * 3)
                     mask = Image.new("L", bigsize, 0)
                     draw = ImageDraw.Draw(mask)
-                    draw.ellipse((0, 0) + bigsize, 255)
+                    # draw.ellipse((0, 0) + bigsize, 255)
+                    draw.polygon(xy=[(0, 0), (0, bigsize[1]), (bigsize[0], bigsize[1]), (bigsize[0], 0)], fill=255)
+
                     mask = mask.resize(icon.size, Image.ANTIALIAS)
                     icon.putalpha(mask)
                     background.paste(icon, (20, 20), mask=icon)
