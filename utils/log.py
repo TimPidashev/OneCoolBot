@@ -1,6 +1,8 @@
 from termcolor import colored
 from pyfiglet import Figlet
 from datetime import datetime, timedelta
+import discord
+from discord.ext import commands
 import asyncio
 import os
 import sys
@@ -8,11 +10,6 @@ import sys
 #logger
 def logger(message):
     with open("./data/logs/client.log", "a+") as log:
-        log.write(f"{message}\n")
-        log.close()
-
-def querylogger(message):
-    with open("./data/logs/database.log", "a+") as log:
         log.write(f"{message}\n")
         log.close()
 
