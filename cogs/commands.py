@@ -276,10 +276,14 @@ class Commands(commands.Cog):
         await context.reply(embed=info, mention_author=False)
 
     
-    #USER
-    @commands.command(aliases=["usrinf", "ui"])
-    async def userinfo(self, context, user: discord.Member = None):
-        await log.cog_command(self, context)
+    #USER-INFO
+    @cog_ext.cog_slash(
+        name="user-info",
+        description="Gets user info and other handy information.",
+        guild_ids=guild_ids
+    )
+    async def userinfo(self, context: SlashContext, user: discord.Member=None):
+        await log.slash_command(self, context)
 
         if isinstance(context.channel, discord.DMChannel):
             return
@@ -312,15 +316,52 @@ class Commands(commands.Cog):
         embed.set_footer(
             text="ID: " + str(user.id)
         )
-        await context.reply(embed=embed, mention_author=False)
+        await context.send(embed=embed)
+
+    #SERVER-INFO
+    @cog_ext.cog_slash(
+        name="server-info",
+        description="Gets server info and other handy information.",
+        guild_ids=guild_ids
+    )
+    async def serverinfo(self, context: SlashContext):
+        await log.slash_command(self, context)
+
+        embed = discord.Embed(
+        title="Server Info",
+        colour=0x9b59b6
+        )
+        embed.set_thumbnail(
+            url=context.guild.icon_url
+        )
+
+        fields = [("Owner", context.guild.owner, False),
+                  ("Created At", context.guild.created_at.strftime("%d/%m/%Y %H:%M:%S"), True),
+                  ("Region", context.guild.region, False),
+                  ("Members", len(context.guild.members), False)]
+
+        for name, value, inline in fields:
+                embed.add_field(name=name, value=value, inline=inline)
+
+        embed.set_footer(
+            text=f"ID: {context.guild.id}"
+        )
+
+        await context.send(embed=embed)
+
 
     #LEADERBOARD
-    @commands.command(aliases=["lb"])
-    async def leaderboard(self, context):
-        await log.cog_command(self, context)
+    @cog_ext.cog_slash(
+        name="leaderboard",
+        description="Gets the top 10 ranked users in the server, or if you really want to scroll...",
+        guild_ids=guild_ids
+    )
+    async def leaderboard(self, context: SlashContext):
+        await log.slash_command(self, context)
         records = db.records("SELECT UserID, XP FROM users ORDER BY XP DESC")
         menu = MenuPages(source=Menu(context, records), clear_reactions_after=True, timeout=100.0)
         await menu.start(context)
+        #fix this command with the whole interaction failed thing and add a way to get the top 10 users by whatever a user wants, not just exp
 
 
     #COLORTHEME
@@ -673,8 +714,6 @@ class Commands(commands.Cog):
 
             except asyncio.TimeoutError:
                 break
-        
-
         
 def setup(client):
     client.add_cog(Commands(client))
