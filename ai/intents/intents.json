@@ -1,11 +1,11 @@
 {"intents": [
     {"tag": "greeting",
-     "patterns": ["Hi", "Hey", "Is anyone there?", "Hello", "Hay"],
-     "responses": ["Hello", "Hi", "Hi there"]
+     "patterns": ["Hi", "Hey", "Is anyone there?", "Hello"],
+     "responses": ["Hello", "Hey", "Hello there", "Hello, how are you?"]
     },
     {"tag": "goodbye",
-     "patterns": ["Bye", "See you later", "Goodbye"],
-     "responses": ["See you later", "Have a nice day", "Bye! Come back again"]
+     "patterns": ["Bye", "See you later", "Goodbye", "Have a nice day", "ttyl", "cya"],
+     "responses": ["See you later", "Have a nice day", "Bye! Come back again", "cya", "Bye, and remember to come back soon!"]
     },
     {"tag": "thanks",
      "patterns": ["Thanks", "Thank you", "That's helpful", "Thanks for the help"],
@@ -13,7 +13,7 @@
     },
     {"tag": "about",
      "patterns": ["Who are you?", "What are you?", "Who you are?" ],
-     "responses": ["My name is OneCoolBot", "I'm OneCoolBot"]
+     "responses": ["My name is OneCoolBot", "I'm OneCoolBot", ""]
     },
     {"tag": "name",
     "patterns": ["what is your name", "what should I call you", "whats your name?"],
@@ -37,11 +37,11 @@
     },
     {"tag": "joke",
     "patterns": ["Tell me a joke.", "Say something funny.", "Make me laugh."],
-    "responses": ["Nah, I dont feel like it.", "Ask someone else, sorry :(", "𝓣𝓲𝓶𝓶𝔂 is still working on this feature."]
+    "responses": ["Have you heard about the new restaurant called **Karma?**\n`There’s no menu—you get what you deserve.`", "Will glass coffins be a success? Remains to be seen.", "The man who invented Velcro has died. **RIP** :rofl:", "Refusing to go to the gym is a form of resistance training.", "Adam & Eve were the first ones to ignore the Apple terms and conditions.", "Two wifi engineers got married. `The reception was fantastic.`", "People who take care of chickens are **literally** chicken tenders.", "If a parsley farmer gets sued, can they garnish his wages?", "Maybe if we start telling people their brain is an app, they’ll want to use it.", "Atheism is a non-prophet organization.", "Doctor, there’s a patient on line one that says he’s invisible.\n||Well, tell him I can’t see him right now.||", "I’m reading a book about anti-gravity. `It’s impossible to put down.`", "Today a man knocked on my door and asked for a small donation toward the local swimming pool. `I gave him a glass of water.`", "Nah, I dont feel like it.", "Ask someone else, sorry :(", "I'm not funny :cry:", "Sorry, I'm not funny :cry:", "Well, I used to have a handle on life, but then it broke.", "When life gives you melons, you might be dyslexic.", "Don’t you hate it when someone answers their own questions? I do.", "It takes a lot of balls to golf the way I do.", "I know they say that money talks, but all mine says is `Goodbye.`", "Never trust atoms; they make up everything.", "Light travels faster than sound, which is the reason that some people appear bright before you hear them speak.", "Two fish are in a tank. One says, `How do you drive this thing?`", "Always borrow money from a pessimist. They’ll never expect it back.", "Build a man a fire and he’ll be warm for a day. Set a man on fire and he’ll be warm for the rest of his life."]
     },
-    {"tag": "mee6",
-    "patterns": ["Are you cooler then mee6?", "Mee6 is better!", "mee6"],
-    "responses": ["What? Mee6 can't talk, so its not even a bot!", "Mee6 = BigGAY", "Mee6???!?!?!?!?!?!!?!?!?!? Well now im angry :frown:"]
+    {"tag": "roast",
+    "patterns": ["Someone roast this dude plz!", "Somebody please roast me...", "make fun of me", "roast"],
+    "responses": ["<:bruh:856796163869114388>", "Before you criticize someone, walk a mile in their shoes. `That way, when you do criticize them, you’re a mile away and you have their shoes.`", "The problem isn’t that obesity runs in your family. `It’s that no one runs in your family.`"]
     }
 ]
 }
