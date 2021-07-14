@@ -105,6 +105,38 @@ class Economy(commands.Cog):
 
         await menu.start(context)
 
+    @cog_ext.cog_slash(
+        name="wallet",
+        description="Manage your funds, i guess",
+        guild_ids=guild_ids
+    )
+    async def wallet(self, context: SlashContext, user: discord.Member=None):
+        await log.slash_command(self, context)
+
+        user = user or context.author
+        balance = db.record("SELECT Coins FROM users WHERE UserID = ?", user.id)[0]
+        embed = discord.Embed(colour=await colours.colour(context))
+        embed.set_author(name=f"{user.name}", icon_url=user.avatar_url)
+        embed.add_field(
+            name="Balance:",
+            value=f":coin: {balance}",
+            inline=True
+        )
+
+        await context.send(embed=embed)
+
+
+    @cog_ext.cog_slash(
+        name="market-cap",
+        description="See how many :coin: are widespread globally!",
+        guild_ids=guild_ids
+    )
+    async def market_cap(self, context: SlashContext):
+        cap = db.record("SELECT sum(Coins) FROM users")[0]
+        embed = discord.Embed(colour=await colours.colour(context))
+        embed.add_field(name=f"**Current Market Cap:**", value=f"There are currently :coin: **{cap}** coins widespread globally")
+        await context.send(embed=embed)
+
 
 
 def setup(client):
