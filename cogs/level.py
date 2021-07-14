@@ -19,7 +19,7 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 
-class level(commands.Cog):
+class Level(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -83,4 +83,4 @@ class level(commands.Cog):
                     pass #so dms are not flagged as errors
                 
 def setup(client):
-    client.add_cog(level(client))
+    client.add_cog(Level(client))

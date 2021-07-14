@@ -8,17 +8,17 @@ class error(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        pass
+        await log.online(self)
 
-    # @commands.Cog.listener()
-    # async def on_command_error(self, context, error):
+    @commands.Cog.listener()
+    async def on_command_error(self, context, error):
 
-    #     if isinstance(error, commands.CheckFailure):
-    #         await context.reply(f"**oops :|**\nYou are not priveleged enough to use this command.", mention_author=False)
-    #         await log.is_owner_false(self, context, error)
+        if isinstance(error, commands.CheckFailure):
+            await context.reply(f"**oops :|**\nYou are not priveleged enough to use this command.", mention_author=False)
+            await log.is_owner_false(self, context, error)
 
-    #     else:
-    #         await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
+        else:
+            await context.reply(f"@Timmy **fix this error :(**\n```diff\n- {error}```", mention_author=False)
 
 def setup(client):
     client.add_cog(error(client))

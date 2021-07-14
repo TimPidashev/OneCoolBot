@@ -81,7 +81,7 @@ class Market(ListPageSource):
 
 
 
-class economy(commands.Cog):
+class Economy(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -108,4 +108,4 @@ class economy(commands.Cog):
 
 
 def setup(client):
-    client.add_cog(economy(client))
+    client.add_cog(Economy(client))
