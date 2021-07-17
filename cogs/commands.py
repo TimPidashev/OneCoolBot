@@ -84,7 +84,7 @@ class Commands(commands.Cog):
             description="The home page of the help command!", 
             colour=await colours.colour(context)
         )
-        fields = [("`General`", "**The basic commands for day-to-day tasks.", False),
+        fields = [("`General`", "**Basic commands for day-to-day tasks.", False),
                 ("`Economy`", "A global market and trading system, complete with its own currency!", False),
                 ("`Games`", "Play with friends, compete with strangers, and make some extra coins while having fun!", False),
                 ("`Music`", "Listen to low-latency music streams for studying and hanging out with friends in voice-chat!", False),
@@ -238,14 +238,18 @@ class Commands(commands.Cog):
                 break
 
     #INFO
-    @commands.command(aliases=["inf", "i"])
+    @cog_ext.cog_slash(
+        name="info",
+        description="See detailed information about me... wait may I ask why you need this info?",
+        guild_ids=guild_ids
+    )
     async def info(self, context):
         await log.cog_command(self, context)
 
         before = time.monotonic()
         before_ws = int(round(self.client.latency * 1000, 1))
         ping = (time.monotonic() - before) * 1000
-        ramUsage = self.client.process.memory_full_info().rss / 1024**2
+        ram_usage = self.client.process.memory_full_info().rss / 1024**2
         current_time = time.time()
         difference = int(round(current_time - self.client.start_time))
         uptime = str(timedelta(seconds=difference))
@@ -259,21 +263,21 @@ class Commands(commands.Cog):
         info.set_thumbnail(
             url=context.bot.user.avatar_url
         )
-        fields = [("Developer", "𝓣𝓲𝓶𝓶𝔂#6955", True), 
+        fields = [("Developer", "Timmy", True), 
                 ("Users", f"{users}", True),
                 ("Latency", f"{before_ws}ms", True),
-                ("RAM Usage", f"{ramUsage:.2f} MB", True), 
+                ("RAM Usage", f"{ram_usage:.2f} MB", True), 
                 ("Uptime", uptime, True), 
                 ("Version", self.client.version, True)]
 
         info.set_footer(
-            text="Fix backend for the most part."
+            text="Latest changes: Fix backend for the most part."
         )
 
         for name, value, inline in fields:
             info.add_field(name=name, value=value, inline=inline)
 
-        await context.reply(embed=info, mention_author=False)
+        await context.send(embed=info)
 
     
     #USER-INFO
