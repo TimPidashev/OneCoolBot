@@ -73,7 +73,6 @@ class OneCoolBot(commands.AutoShardedBot):
         self.start_time = time.time()
         self.maintenance = False
         self.log_channel = 864207029097463818
-        self.running = True
 
     async def on_ready(self):
         await update_users_table(self)
@@ -110,10 +109,17 @@ for filename in os.listdir("./cogs"):
 async def change_presence():
         await client.wait_until_ready()
         statuses = ["/help"]
+        maintenance = ["Undergoing maintenance"]
         while not client.is_closed():
-            status = random.choice(statuses)
-            await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=status))
-            await asyncio.sleep(10)  
+            if client.maintenance == False:
+                status = random.choice(statuses)
+                await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name=status))
+                await asyncio.sleep(10)  
+
+            if client.maintenance == True:
+                status = random.choice(maintenance)
+                await client.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=status))
+                await asyncio.sleep(10)  
 
 #statcord handling
 @client.event
@@ -209,6 +215,28 @@ async def restart(context):
 
     except Exception as error:
         await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
+
+@client.command(hidden=True, pass_context=True, aliases=["m"])
+@commands.check(checks.is_owner)
+async def maintenance(context, arg):
+    if arg == "on" and client.maintenance == False:
+        try:
+            client.maintenance = True
+            await context.reply("Your wish is my command | Going into maintenance mode", mention_author=False)
+
+        except Exception as error:
+            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
+
+    if arg == "off" and client.maintenance == True:
+        try:
+            client.maintenance = False
+            await context.reply("Your wish is my command | Updating and exiting maintenance mode", mention_author=False)
+
+        except Exception as error:
+            await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
+
+    else:
+        pass
 
 #watchdog process
 class EventHandler(FileSystemEventHandler):
