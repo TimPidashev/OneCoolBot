@@ -104,7 +104,20 @@ class Events(commands.Cog):
         else:
             return
 
+    @commands.Cog.listener()
+    async def on_message(self, message):
+         if not message.author.bot:
+            context = await self.client.get_context(message)
 
+            if context.command:
+                return
+
+            else:
+                message = 1
+                db.execute(f"UPDATE users SET GlobalMessageCount = GlobalMessageCount + ?",
+                    message
+                )
+                db.commit()
 
 def setup(client):
     client.add_cog(Events(client))
