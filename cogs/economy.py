@@ -90,7 +90,11 @@ class Economy(commands.Cog):
         await log.online(self)
 
 
-    @commands.command(aliases=["mrk", "m"])
+    @cog_ext.cog_slash(
+        name="market",
+        description="A global market and trading system, complete with its own currency!",
+        guild_ids=guild_ids
+    )
     async def market(self, context):
         await log.cog_command(self, context)
         records = db.records("SELECT ItemName, Category, DateReleased, QuantityAvailable, QuantityLimit, Price, Popularity, WhoBoughtLast FROM globalmarket ORDER BY Popularity DESC")
@@ -104,6 +108,7 @@ class Economy(commands.Cog):
         )
 
         await menu.start(context)
+        return
 
     @cog_ext.cog_slash(
         name="wallet",
