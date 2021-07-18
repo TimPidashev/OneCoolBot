@@ -514,7 +514,7 @@ class Commands(commands.Cog):
                 target.id
             )
             ids = db.column(f"SELECT UserID FROM users WHERE GuildID = {target.guild.id} ORDER BY XP DESC")
-            message_count = db.record(f"SELECT GlobalMessageCount FROM users WHERE UserID = {context.author.id} and GuildID = {context.guild.id}")[0]
+            message_count = db.record(f"SELECT GlobalMessageCount FROM users WHERE UserID = {target.id} and GuildID = {target.guild.id}")[0]
 
         if exp or level is not None:
             rank = f"{ids.index(target.id)+1}"

@@ -112,12 +112,11 @@ class Events(commands.Cog):
             if context.command:
                 return
 
-            else:
-                message = 1
-                db.execute(f"UPDATE users SET GlobalMessageCount = GlobalMessageCount + ?",
-                    message
-                )
-                db.commit()
+            message = 1
+            db.execute(f"UPDATE users SET GlobalMessageCount = GlobalMessageCount + ? WHERE UserID = {context.author.id}",
+                message
+            )
+            db.commit()
 
 def setup(client):
     client.add_cog(Events(client))
