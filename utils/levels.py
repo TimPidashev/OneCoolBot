@@ -175,9 +175,9 @@ async def next_level_details(current_level: int) -> tuple:
     if temp > 100:
         temp = 100
     key = str(temp)
-    val = LEVELS_AND_XP[key]
-    Details = namedtuple('Details', ['level', 'xp_needed'])
-    return Details(level=int(key), xp_needed=val)
+    value = LEVELS_AND_XP[key]
+    Details = namedtuple("Details", ["level", "xp_needed"])
+    return Details(level=int(key), xp_needed=value)
 
 async def find_level(current_total_xp: int) -> int:
     if current_total_xp in LEVELS_AND_XP.values():
