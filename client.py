@@ -69,7 +69,7 @@ async def update_usersettings_table(self):
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.version = "1.2.9"
+        self.version = "1.3.0"
         self.start_time = time.time()
         self.maintenance = False
         self.log_channel = 864207029097463818
