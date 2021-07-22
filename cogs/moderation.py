@@ -1,11 +1,9 @@
 import discord
 import asyncio
 import re
-import sqlite3
 from utils import embed, log
 from discord.ext import commands, tasks
 from discord.utils import get
-from termcolor import colored
 
 class moderation(commands.Cog):
     def __init__(self, client):
