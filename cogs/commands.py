@@ -271,7 +271,7 @@ class Commands(commands.Cog):
                 ("Version", self.client.version, True)]
 
         info.set_footer(
-            text="Latest changes: Fix backend for the most part."
+            text="Latest changes: Fix levelling."
         )
 
         for name, value, inline in fields:
