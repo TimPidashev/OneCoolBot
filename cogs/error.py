@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from utils import log
 
-class error(commands.Cog):
+class Error(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -17,8 +17,10 @@ class error(commands.Cog):
             await context.reply(f"**oops :|**\nYou are not priveleged enough to use this command.", mention_author=False)
             await log.is_owner_false(self, context, error)
 
+        #error handler is atm pretty pointless...
+
         else:
-            await context.reply(f"@Timmy **fix this error :(**\n```diff\n- {error}```", mention_author=False)
+            pass
 
 def setup(client):
-    client.add_cog(error(client))
+    client.add_cog(Error(client))
