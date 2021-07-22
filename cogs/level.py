@@ -1,23 +1,13 @@
 import discord
-import time
 import asyncio
 import random
-import os
-import aiohttp
-import io
-from io import BytesIO
 from discord import Member, Embed
 from discord.ext.commands import Cog
 from typing import Optional
-from os.path import isfile
 from datetime import datetime, timedelta
-from discord.ext.menus import MenuPages, ListPageSource
 from discord.ext import commands
 from utils import levels, log
 from db import db
-from PIL import Image
-from PIL import ImageFont
-from PIL import ImageDraw
 
 class Level(commands.Cog):
     def __init__(self, client):
