@@ -56,7 +56,7 @@ class Level(commands.Cog):
                         xp_to_add,
                         current_level,
                         coins_on_xp,
-                        (datetime.utcnow() + timedelta(seconds=1)).isoformat(),
+                        (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
                     )
 
                     db.commit()
