@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from db import db
-from utils import checks, colours, log
+from utils import checks, colours, log, levels
 from discord_slash import cog_ext
 from discord_slash.context import SlashContext
 from discord_slash.model import SlashCommandOptionType
@@ -522,8 +522,8 @@ class Commands(commands.Cog):
             user_name = str(target.nick or target.display_name)
             discriminator = f"#{target.discriminator}"
 
-            final_xp_calc = int((level + 1) ** (20 / 11) * 42)
-            final_xp = final_xp_calc + xp  
+            next_level, final_xp = await levels.next_level_details(level)
+            level = await levels.find_level(xp)
             
             rank_background = db.record(f"SELECT RankBackground FROM usersettings WHERE UserID = {target.id}")[0]
 

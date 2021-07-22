@@ -10,8 +10,6 @@ with open("config.json") as file:
     config = json.load(file)
     devthings = config["devthings"]
 
-__all__ = ("LEVELS_AND_XP", "MAX_XP", "MAX_LEVEL", "_next_level_details", "_find_level")
-
 LEVELS_AND_XP = {
     "0": 0,
     "1": 100,
@@ -181,7 +179,7 @@ async def level_up(self, message, new_lvl):
             )
             db.commit()
 
-def _next_level_details(current_level: int) -> tuple:
+async def next_level_details(current_level: int) -> tuple:
     temp = current_level + 1
     if temp > 100:
         temp = 100
@@ -190,13 +188,7 @@ def _next_level_details(current_level: int) -> tuple:
     Details = namedtuple('Details', ['level', 'xp_needed'])
     return Details(level=int(key), xp_needed=val)
 
-def _find_level(current_total_xp: int) -> int:
-    """Return the members current level based on their total XP
-    NOTE: Do not use this with detecting level ups in :meth:`award_xp`. Pretty much only made for :meth:`add_xp`, :meth:`remove_xp`
-    
-        .. added:: v0.0.2
-    """
-    # check if the current xp matches the xp_needed exactly
+async def find_level(current_total_xp: int) -> int:
     if current_total_xp in LEVELS_AND_XP.values():
         for level, xp_needed in LEVELS_AND_XP.items():
             if current_total_xp == xp_needed:

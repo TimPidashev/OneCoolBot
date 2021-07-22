@@ -47,24 +47,24 @@ class Level(commands.Cog):
                 )
                 
                 if datetime.utcnow() > datetime.fromisoformat(xplock):
-
                     xp_to_add = random.randint(10, 20)
-                    new_lvl = int(((xp + xp_to_add) // 42) ** 0.55)
+                    new_lvl, xp_needed = await levels.next_level_details(lvl)
+                    current_level = await levels.find_level(xp + xp_to_add)
                     coins_on_xp = random.randint(1, 10)
-
+                    
                     db.execute(f"UPDATE users SET XP = XP + ?, Level = ?, Coins = Coins + ?, XPLock = ? WHERE GuildID = {message.guild.id} AND UserID = {message.author.id}",
                         xp_to_add,
-                        new_lvl,
+                        current_level,
                         coins_on_xp,
-                        (datetime.utcnow() + timedelta(seconds=50)).isoformat(),
+                        (datetime.utcnow() + timedelta(seconds=1)).isoformat(),
                     )
 
                     db.commit()
                     await log.exp_add(self, message, xp_to_add)
                     await log.coin_add(self, message, coins_on_xp)
 
-                    if new_lvl > lvl:
-                        await levels.level_up(self, message, new_lvl)
+                    if current_level > lvl:
+                        await levels.level_up(self, message, current_level)
     
                 else:
                     pass
