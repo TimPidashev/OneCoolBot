@@ -5,6 +5,7 @@ from db import db
 from . import log
 import asyncio
 import json
+import random
 
 with open("config.json") as file:
     config = json.load(file)
@@ -135,16 +136,6 @@ async def level_up_process(self, message, new_lvl):
 
 async def level_up(self, message, new_lvl):
     async with message.channel.typing():
-        await asyncio.sleep(1)
-
-        level_channel = db.execute(f"SELECT LevelChannel FROM guildsettings WHERE GuildID = ?",
-            message.guild.id
-        )
-
-        if level_channel is not None:
-            channel = message.guild.get_channel(level_channel)
-            await channel.send(f"{message.author.mention} has reached level **{new_lvl:,}!**")
-
         await log.level_up(self, message, new_lvl)
 
         if message.guild.id in config["devthings"]:
@@ -174,7 +165,7 @@ async def level_up(self, message, new_lvl):
             coins = random.randint(10, 1000)
 
             db.execute("UPDATE users SET Coins = Coins + ? WHERE UserID = ?",
-                coins_to_add,
+                coins,
                 message.author.id
             )
             db.commit()
