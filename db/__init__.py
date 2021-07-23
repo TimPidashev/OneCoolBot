@@ -1,3 +1,7 @@
 from . import db
+import asyncio
 
-db.build()
+async def build():
+    await db.build()
+
+asyncio.run(build())
