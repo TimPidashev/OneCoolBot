@@ -10,6 +10,7 @@ A discord bot built using [discord.py](https://github.com/Rapptz/discord.py) for
 * Levelling
 * Moderation
 * Music
+* Basic ai
 * Broken Economy
 
 # Usage
