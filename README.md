@@ -70,7 +70,30 @@ async def level_up(self, message, new_lvl):
             if new_lvl == 75:
                 await level_up_process(self, message, new_lvl)
 ```
-3. Delete **[./cogs/devthings.py](https://github.com/timothypidashev/OneCoolBot/blob/main/cogs/devthings.py)** or change contents to match your server
+3. modify **[./cogs/events.py](https://github.com/timothypidashev/OneCoolBot/blob/main/cogs/events.py)** to match your server
+* change the `server_id`
+```#DevelopingThings GuildID
+devthings_guild_id = (change_to_your_server_name)
+```
+
+* change or delete `role_emoji` function:
+```python
+if emoji == "emoji_name_as_defined_in_your_server":
+    role = member.guild.get_role(role_id)
+    await member.add_roles(role)
+```
+* change or delete `join_role`:
+```
+@commands.Cog.listener()
+    async def on_member_join(self, member):
+        if member.guild.id == devthings_guild_id:
+            
+            role = member.guild.get_role(your_role_id)
+            await member.add_roles(role)
+
+        else:
+            return
+```
 
 That's about it for usage. Again I strongly recommend to not use this bot, as it is the worst example of a python project, but feel free to use the code in any way you want! If you like what you see, consider joining my discord server:
 
