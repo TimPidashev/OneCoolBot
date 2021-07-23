@@ -87,6 +87,7 @@ if emoji == "emoji_name_as_defined_in_your_server":
 @commands.Cog.listener()
 async def on_member_join(self, member):
     if member.guild.id == devthings_guild_id:
+    
         role = member.guild.get_role(your_role_id)
         await member.add_roles(role)
 
