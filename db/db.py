@@ -1,107 +1,80 @@
-
-# async def main():
-#     async with asqlite.connect('example.db') as conn:
-#         async with conn.cursor() as cursor:
-#             # Create table
-#             await cursor.execute('''CREATE TABLE stocks
-#                                     (date text, trans text, symbol text, qty real, price real)''')
-#
-#             # Insert a row of data
-#             await cursor.execute("INSERT INTO stocks VALUES ('2006-01-05','BUY','RHAT',100,35.14)")
-#
-#             # Save (commit) the changes
-#             await conn.commit()
-#
-# asyncio.run(main())
-
-
 from os.path import isfile
-from apscheduler.triggers.cron import CronTrigger
 import asyncio
 import asqlite
 
 DB_PATH = "./data/database.db"
 BUILD_PATH = "./db/build.sql"
 
-def with_commit(func):
-    def inner(*args, **kwargs):
-        func(*args, **kwargs)
-        commit()
-
-    return inner
-
-@with_commit
 async def build():
-    if isfile(BUILD_PATH):
-        await scriptexec(BUILD_PATH)
+    async with asqlite.connect(DB_PATH) as connection:
+        async with connection.cursor() as cursor:
+            if isfile(BUILD_PATH):
+                await scriptexec(BUILD_PATH)
 
+async def commit():
+    async with asqlite.connect(DB_PATH) as connection:
+        await connection.commit()
 
 async def scriptexec(path):
-     async with asqlite.connect('example.db') as conn:
-        async with conn.cursor() as cursor:
+    async with asqlite.connect(DB_PATH) as connection:
+        async with connection.cursor() as cursor:
             with open(path, "r", encoding="utf-8") as script:
-                cursor.executescript(script.read())
+                await cursor.executescript(script.read())
+
+async def close():
+    async with asqlite.connect(DB_PATH) as connection:
+        await connection.close()
 
 
-# from os.path import isfile
-# from apscheduler.triggers.cron import CronTrigger
-# import asyncio
-# import asqlite
-#
-# DB_PATH = "./data/database.db"
-# BUILD_PATH = "./db/build.sql"
-#
-# connection = connect(DB_PATH, check_same_thread=False)
-# cursor = connection.cursor()
-#
-# def with_commit(func):
-#     def inner(*args, **kwargs):
-#         func(*args, **kwargs)
-#         commit()
-#
-#     return inner
-#
-# @with_commit
-# def build():
-#     if isfile(BUILD_PATH):
-#         scriptexec(BUILD_PATH)
-#
-# def commit():
-#     connection.commit()
-#
-# def autosave(sched):
-#     sched.add_job(commit, CronTrigger(second=0))
-#
-# def close():
-#     connection.close()
-#
-# def field(command, *values):
-#     cursor.execute(command, tuple(values))
-#
-#     if (fetch := cursor.fetchone()) is not None:
-#         return fetch[0]
-#
-# def record(command, *values):
-#     cursor.execute(command, tuple(values))
-#
-#     return cursor.fetchone()
-#
-# def records(command, *values):
-#     cursor.execute(command, tuple(values))
-#
-#     return cursor.fetchall()
-#
-# def column(command, *values):
-#     cursor.execute(command, tuple(values))
-#
-#     return [item[0] for item in cursor.fetchall()]
-#
-# def execute(command, *values):
-#     cursor.execute(command, tuple(values))
-#
-# def multiexec(command, valueset):
-#     cursor.executemany(command, valueset)
-#
-# def scriptexec(path):
-#     with open(path, "r", encoding="utf-8") as script:
-#         cursor.executescript(script.read())
+async def field(command, *values):
+    async with asqlite.connect(DB_PATH) as connection:
+        async with connection.cursor() as cursor:
+            await cursor.execute(command, tuple(values))
+
+            if (fetch := await cursor.fetchone()) is not None:
+                return fetch[0]
+
+async def record(command, *values):
+    async with asqlite.connect(DB_PATH) as connection:
+        async with connection.cursor() as cursor:
+            await cursor.execute(command, tuple(values))
+
+            return await cursor.fetchone()
+
+async def records(command, *values):
+    async with asqlite.connect(DB_PATH) as connection:
+        async with connection.cursor() as cursor:
+            await cursor.execute(command, tuple(values))
+
+            return await cursor.fetchall()
+
+async def column(command, *values):
+     async with asqlite.connect(DB_PATH) as connection:
+        async with connection.cursor() as cursor:
+            await cursor.execute(command, tuple(values))
+
+            return [item[0] for item in await cursor.fetchall()]
+
+async def execute(command, *values):
+    async with asqlite.connect(DB_PATH) as connection:
+        async with connection.cursor() as cursor:
+            await cursor.execute(command, tuple(values))
+
+async def multiexec(command, valueset):
+    async with asqlite.connect(DB_PATH) as connection:
+        async with connection.cursor() as cursor:
+            await cursor.executemany(command, valueset)
+
+
+# if __name__ == "__main__":
+#     loop = asyncio.get_event_loop()
+#     loop.run_forever(build())
+#     loop.run_forever(commit())
+#     loop.run_forever(scriptexec())
+#     loop.run_forever(close())
+#     loop.run_forever(field())
+#     loop.run_forever(record())
+#     loop.run_forever(records())
+#     loop.run_forever(column())
+#     loop.run_forever(execute())
+#     loop.run_forever(multiexec())
