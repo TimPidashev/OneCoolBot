@@ -1,3 +1,8 @@
+"""
+Example training script taken from a tutorial on the web somewhere as a test mostly. Not my work, So dont give me credit!
+"""
+
+
 import json 
 import os
 import numpy as np 

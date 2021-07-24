@@ -1,3 +1,8 @@
+"""
+Not my work, taken from the pythonista wavelink example. Will be used as a base for a more complex model.
+"""
+
+
 import asyncio
 import async_timeout
 import copy

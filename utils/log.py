@@ -1,3 +1,10 @@
+"""
+MIT License
+
+Copyright (c) 2021 Timothy Pidashev
+"""
+
+
 from termcolor import colored
 from pyfiglet import Figlet
 from datetime import datetime, timedelta

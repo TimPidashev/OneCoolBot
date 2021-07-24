@@ -1,3 +1,10 @@
+"""
+MIT License
+
+Copyright (c) 2021 Timothy Pidashev
+"""
+
+
 from os.path import isfile
 import asyncio
 import asqlite

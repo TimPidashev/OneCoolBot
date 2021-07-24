@@ -1,3 +1,10 @@
+"""
+MIT License
+
+Copyright (c) 2021 Timothy Pidashev
+"""
+
+
 from . import db
 import asyncio
 

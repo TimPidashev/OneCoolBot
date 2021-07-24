@@ -1,3 +1,12 @@
+"""
+MIT License
+
+Copyright (c) 2021 Timothy Pidashev
+
+Exempt lines 183-203(taken from the DiscordLevellingSystem to reduce dependencies)
+"""
+
+
 import discord
 from discord.ext import commands
 from collections import namedtuple

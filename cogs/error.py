@@ -1,3 +1,10 @@
+"""
+MIT License
+
+Copyright (c) 2021 Timothy Pidashev
+"""
+
+
 import discord
 from discord.ext import commands
 from utils import log
