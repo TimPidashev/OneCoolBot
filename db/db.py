@@ -25,20 +25,19 @@ async def close():
     async with asqlite.connect(DB_PATH) as connection:
         await connection.close()
 
-
 async def field(command, *values):
     async with asqlite.connect(DB_PATH) as connection:
         async with connection.cursor() as cursor:
             await cursor.execute(command, tuple(values))
 
-            if (fetch := await cursor.fetchone()) is not None:
+            if (fetch := await cursor.fetchone()) is not None: 
                 return fetch[0]
 
 async def record(command, *values):
     async with asqlite.connect(DB_PATH) as connection:
         async with connection.cursor() as cursor:
             await cursor.execute(command, tuple(values))
-
+            
             return await cursor.fetchone()
 
 async def records(command, *values):
@@ -64,17 +63,3 @@ async def multiexec(command, valueset):
     async with asqlite.connect(DB_PATH) as connection:
         async with connection.cursor() as cursor:
             await cursor.executemany(command, valueset)
-
-
-# if __name__ == "__main__":
-#     loop = asyncio.get_event_loop()
-#     loop.run_forever(build())
-#     loop.run_forever(commit())
-#     loop.run_forever(scriptexec())
-#     loop.run_forever(close())
-#     loop.run_forever(field())
-#     loop.run_forever(record())
-#     loop.run_forever(records())
-#     loop.run_forever(column())
-#     loop.run_forever(execute())
-#     loop.run_forever(multiexec())

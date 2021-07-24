@@ -10,7 +10,6 @@ from db import db
 
 #DevelopingThings GuildID
 devthings_guild_id = (791160100567384094)
-
 class Events(commands.Cog):
     def __init__(self, client, *args, **kwargs):
         self.client = client
@@ -23,8 +22,8 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member):
         try:
-            db.execute("INSERT INTO users (UserID, GuildID) VALUES (?, ?)", member.id, member.guild.id)
-            db.commit()
+            await db.execute("INSERT INTO users (UserID, GuildID) VALUES (?, ?)", member.id, member.guild.id)
+            await db.commit()
             await log.member_add_db(self, member)
 
         except Exception as error:
@@ -34,8 +33,8 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         try:
-            db.execute("DELETE FROM users WHERE (UserID = ?)", member.id)
-            db.commit()
+            await db.execute("DELETE FROM users WHERE (UserID = ?)", member.id)
+            await db.commit()
             await log.member_remove_db(self, member)
 
         except Exception as error:
@@ -113,10 +112,10 @@ class Events(commands.Cog):
                 return
 
             message = 1
-            db.execute(f"UPDATE users SET GlobalMessageCount = GlobalMessageCount + ? WHERE UserID = {context.author.id}",
+            await db.execute(f"UPDATE users SET GlobalMessageCount = GlobalMessageCount + ? WHERE UserID = {context.author.id}",
                 message
             )
-            db.commit()
+            await db.commit()
 
 def setup(client):
     client.add_cog(Events(client))

@@ -5,8 +5,6 @@ import time
 import random
 import asyncio
 import logging
-import aiosqlite
-import sqlite3
 import traceback
 import sys
 import json
@@ -43,7 +41,7 @@ handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)  
 
 async def update_users_table(self):
-    db.multiexec(
+    await db.multiexec(
         "INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
         (
             (member.guild.id, member.id,)
@@ -52,10 +50,10 @@ async def update_users_table(self):
             if not member.bot
         ),
     )
-    db.commit()
+    await db.commit()
 
 async def update_usersettings_table(self):
-    db.multiexec(
+    await db.multiexec(
         "INSERT OR IGNORE INTO usersettings (UserID) VALUES (?)",
         (
             (member.id,)
@@ -64,7 +62,7 @@ async def update_usersettings_table(self):
             if not member.bot
         ),
     )
-    db.commit()
+    await db.commit()
 
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
@@ -72,12 +70,11 @@ class OneCoolBot(commands.AutoShardedBot):
         self.version = "1.3.0"
         self.start_time = time.time()
         self.maintenance = False
-        self.log_channel = 864207029097463818
 
     async def on_ready(self):
         await update_users_table(self)
         await update_usersettings_table(self)
-    
+
     async def on_connect(self):
         await log.client_connect(self)
 
