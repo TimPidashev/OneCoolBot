@@ -10,7 +10,7 @@ A discord bot built using [discord.py](https://github.com/Rapptz/discord.py) for
 * Levelling
 * Moderation
 * Music
-* Colorfull Logging
+* Colorful Logging
 * Basic ai
 * Broken Economy
 
