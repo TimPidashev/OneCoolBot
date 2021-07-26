@@ -46,9 +46,6 @@ from discord.ext import commands, tasks, ipc
 from utils import checks, log
 from discord_slash import SlashCommand
 import statcord
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
-import threading
 
 #loading bot config
 with open("config.json") as file:
@@ -260,41 +257,6 @@ async def maintenance(context, arg):
 
     else:
         pass
-
-#watchdog process
-class EventHandler(FileSystemEventHandler):
-    def on_any_event(self, event):
-        pass
-
-    def on_created(self, event):
-        pass
-
-    def on_deleted(self, event):
-        client.dispatch("fatal_error", event)
-
-    def on_modified(self, event):
-      pass
-
-    def on_moved(self, event):
-        pass
-
-def watchdog():
-    event_handler = EventHandler()
-    observer = Observer()
-    observer.schedule(event_handler, path=".", recursive=False)
-    observer.start()
-    while True:
-        try:
-            pass
-        
-        except SystemExit:
-            print("working...")
-            observer.stop()
-            break
-    
-watchdog = threading.Thread(target=watchdog)
-watchdog.daemon = True
-watchdog.start()
 
 client.loop.create_task(change_presence())
 client.run(Token, reconnect=True)
