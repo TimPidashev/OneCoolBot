@@ -7,7 +7,7 @@ Copyright (c) 2021 Timothy Pidashev
 
 import discord
 from discord.ext import commands
-from db import db
+import ez_db as db
 from utils import checks, colours, log
 from discord_slash import cog_ext
 from discord_slash.context import SlashContext
@@ -17,6 +17,8 @@ from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 
 guild_ids = [791160100567384094]
+
+db = db.DB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
 
 # class Market(ListPageSource):
 #     def __init__(self, context, data):
@@ -102,7 +104,7 @@ class Economy(commands.Cog):
     )
     async def market(self, context):
         await log.cog_command(self, context)
-        records = (await db.records("SELECT ItemName, Category, DateReleased, QuantityAvailable, QuantityLimit, Price, Popularity, WhoBoughtLast FROM globalmarket ORDER BY Popularity DESC"))
+        records = db.records("SELECT ItemName, Category, DateReleased, QuantityAvailable, QuantityLimit, Price, Popularity, WhoBoughtLast FROM globalmarket ORDER BY Popularity DESC")
         records = [record for record in records]
         records.insert(0, ("Item", "Category", "Date Released", "Quantity Available", "Quantity Limit", "Price", "Popularity", "Who Bought Last"))
 
@@ -124,7 +126,7 @@ class Economy(commands.Cog):
         await log.slash_command(self, context)
 
         user = user or context.author
-        balance = (await db.record("SELECT Coins FROM users WHERE UserID = ?", user.id))[0]
+        balance = db.record("SELECT Coins FROM users WHERE UserID = ?", user.id)[0]
         embed = discord.Embed(colour=await colours.colour(context))
         embed.set_author(name=f"{user.name}", icon_url=user.avatar_url)
         embed.add_field(
@@ -141,7 +143,7 @@ class Economy(commands.Cog):
         guild_ids=guild_ids
     )
     async def market_cap(self, context: SlashContext):
-        cap = (await db.record("SELECT sum(Coins) FROM users"))[0]
+        cap = db.record("SELECT sum(Coins) FROM users")[0]
         embed = discord.Embed(colour=await colours.colour(context))
         embed.add_field(name=f"**Current Market Cap:**", value=f"There are currently :coin: **{cap}** coins widespread globally")
         await context.send(embed=embed)

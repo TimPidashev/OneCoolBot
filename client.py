@@ -35,7 +35,6 @@ import traceback
 import sys
 import json
 from glob import glob
-from db import db
 from discord.utils import get
 from datetime import datetime, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -46,6 +45,11 @@ from discord.ext import commands, tasks, ipc
 from utils import checks, log
 from discord_slash import SlashCommand
 import statcord
+import ez_db as db
+
+#setup db
+db = db.DB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
+db.build()
 
 #loading bot config
 with open("config.json") as file:
@@ -64,7 +68,7 @@ handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)  
 
 async def update_users_table(self):
-    await db.multiexec(
+    db.multiexec(
         "INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
         (
             (member.guild.id, member.id,)
@@ -73,10 +77,10 @@ async def update_users_table(self):
             if not member.bot
         ),
     )
-    await db.commit()
+    db.commit()
 
 async def update_usersettings_table(self):
-    await db.multiexec(
+    db.multiexec(
         "INSERT OR IGNORE INTO usersettings (UserID) VALUES (?)",
         (
             (member.id,)
@@ -85,7 +89,7 @@ async def update_usersettings_table(self):
             if not member.bot
         ),
     )
-    await db.commit()
+    db.commit()
 
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):

@@ -13,7 +13,9 @@ from discord.utils import get
 from discord.ext.commands import Cog
 from discord import Embed, Emoji
 from utils import log
-from db import db   
+import ez_db as db
+
+db = db.DB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
 
 #DevelopingThings GuildID
 devthings_guild_id = (791160100567384094)
@@ -29,8 +31,8 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member):
         try:
-            await db.execute("INSERT INTO users (UserID, GuildID) VALUES (?, ?)", member.id, member.guild.id)
-            await db.commit()
+            db.execute("INSERT INTO users (UserID, GuildID) VALUES (?, ?)", member.id, member.guild.id)
+            db.commit()
             await log.member_add_db(self, member)
 
         except Exception as error:
@@ -40,8 +42,8 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_member_remove(self, member):
         try:
-            await db.execute("DELETE FROM users WHERE (UserID = ?)", member.id)
-            await db.commit()
+            db.execute("DELETE FROM users WHERE (UserID = ?)", member.id)
+            db.commit()
             await log.member_remove_db(self, member)
 
         except Exception as error:
@@ -119,10 +121,10 @@ class Events(commands.Cog):
                 return
 
             message = 1
-            await db.execute(f"UPDATE users SET GlobalMessageCount = GlobalMessageCount + ? WHERE UserID = {context.author.id}",
+            db.execute(f"UPDATE users SET GlobalMessageCount = GlobalMessageCount + ? WHERE UserID = {context.author.id}",
                 message
             )
-            await db.commit()
+            db.commit()
 
 def setup(client):
     client.add_cog(Events(client))

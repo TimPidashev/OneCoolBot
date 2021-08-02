@@ -9,7 +9,6 @@ import discord
 import asyncio
 import json
 from discord.ext import commands
-from db import db
 
 #loading bot config
 with open("config.json") as file:
