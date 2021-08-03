@@ -48,8 +48,7 @@ import statcord
 import ez_db as db
 
 #setup db
-db = db.DB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
-db.build()
+db = db.AsyncDB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
 
 #loading bot config
 with open("config.json") as file:
@@ -67,8 +66,11 @@ handler = logging.FileHandler(filename="./data/logs/discord.log", encoding="utf-
 handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
 logger.addHandler(handler)  
 
+async def build_db():
+    await db.build()
+
 async def update_users_table(self):
-    db.multiexec(
+    await db.multiexec(
         "INSERT OR IGNORE INTO users (GuildID, UserID) VALUES (?, ?)",
         (
             (member.guild.id, member.id,)
@@ -77,10 +79,10 @@ async def update_users_table(self):
             if not member.bot
         ),
     )
-    db.commit()
+    await db.commit()
 
 async def update_usersettings_table(self):
-    db.multiexec(
+    await db.multiexec(
         "INSERT OR IGNORE INTO usersettings (UserID) VALUES (?)",
         (
             (member.id,)
@@ -89,7 +91,7 @@ async def update_usersettings_table(self):
             if not member.bot
         ),
     )
-    db.commit()
+    await db.commit()
 
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
@@ -99,6 +101,7 @@ class OneCoolBot(commands.AutoShardedBot):
         self.maintenance = False
 
     async def on_ready(self):
+        await build_db()
         await update_users_table(self)
         await update_usersettings_table(self)
 

@@ -16,7 +16,7 @@ import asyncio
 import json
 import random
 
-db = db.DB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
+db = db.AsyncDB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
 
 with open("config.json") as file:
     config = json.load(file)
@@ -130,19 +130,19 @@ MAX_XP = LEVELS_AND_XP["100"]
 MAX_LEVEL = 100
 
 async def level_up_process(self, message, new_lvl):
-    role, coins = db.record(f"SELECT LevelRoleID, LevelCoins FROM guildsettings WHERE GuildID = ? AND RoleLevel = ?",
+    role, coins = (await db.record(f"SELECT LevelRoleID, LevelCoins FROM guildsettings WHERE GuildID = ? AND RoleLevel = ?",
         message.guild.id,
         new_lvl
-    )
+    ))
     role_id = message.guild.get_role(role)
     await message.author.add_roles(role_id)
     await log.add_role(self, message, role_id)
 
-    db.execute("UPDATE users SET Coins = Coins + ? WHERE UserID = ?",
+    await db.execute("UPDATE users SET Coins = Coins + ? WHERE UserID = ?",
         coins,
         message.author.id
     )
-    db.commit()
+    await db.commit()
     await log.coin_add(self, message, coins)
 
 async def level_up(self, message, new_lvl):
@@ -175,11 +175,11 @@ async def level_up(self, message, new_lvl):
         else:
             coins = random.randint(10, 1000)
 
-            db.execute("UPDATE users SET Coins = Coins + ? WHERE UserID = ?",
+            await db.execute("UPDATE users SET Coins = Coins + ? WHERE UserID = ?",
                 coins,
                 message.author.id
             )
-            db.commit()
+            await db.commit()
 
 async def next_level_details(current_level: int) -> tuple:
     temp = current_level + 1
