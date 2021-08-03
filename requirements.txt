@@ -15,3 +15,4 @@ statcord-py == 3.1.0
 tensorflow == 2.5.0
 the1owl == 0.0.8
 wavelink == 0.9.9
+ez-db == 0.0.2
