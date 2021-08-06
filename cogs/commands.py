@@ -726,6 +726,77 @@ class Commands(commands.Cog):
 
             except asyncio.TimeoutError:
                 break
+
+    #giveway command
+    @cog_ext.cog_slash(
+            name="giveaway",
+            description="What Timmy uses to giveaway nitro, but you can use it too!",
+            guild_ids=guild_ids,
+            options=[
+                create_option(
+                    name="link",
+                    description="Paste nitro code here!",
+                    required=True,
+                    option_type=3
+                )
+            ]
+        )
+    async def giveaway(self, context: SlashContext, link: str):
+        channel = self.client.get_channel(792595912668479528)
+        emoji = self.client.get_emoji(873351111988359238)
+        start_timer = int(86400)
+        timer = 86400
+
+        embed = discord.Embed(name="Nitro Giveaway", colour=0x9b59b6)
+        embed.insert_field_at(
+            index=0,
+            name=":tada:React below to enter Discord Nitro giveaway!",
+            value=f":stopwatch:Time left: {start_timer}'s",
+            inline=False
+        )
+
+        message = await channel.send(embed=embed)
+        await message.add_reaction(emoji)
+
+        while timer != 0:
+            timer = timer - 1
+            embed.remove_field(index=0)
+            embed.insert_field_at(
+                index=0,
+                name=":tada:React below to enter Discord Nitro giveaway!",
+                value=f":stopwatch:Time left: {timer}'s",
+                inline=False
+            )
+            await message.edit(embed=embed)
+            
+            time.sleep(1)
+                
+            if timer == 0:
+                fetch_message = await channel.fetch_message(message.id)
+                users = await fetch_message.reactions[0].users().flatten()
+                users.pop(users.index(self.client.user))
+                
+                if len(users) > 0:
+                    winner = choice(users)
+
+                    embed = discord.Embed(name="Giveaway Winner", colour=0x9b59b6)
+                    embed.add_field(
+                        name=":tada:Congratulations!",
+                        value=f":partying_face:{winner.mention} won the giveaway!",
+                    )
+                    await message.edit(embed=embed)
+                    
+                    embed = discord.Embed(name=":tada:Congratulations!", colour=0x9b59b6)
+                    embed.add_field(
+                        name=":partying_face:You won a giveaway! Here is your reward:",
+                        value=link,
+                        inline=False
+                    )
+
+                    await winner.send(embed=embed)
+                
+                else:
+                    pass
         
 def setup(client):
     client.add_cog(Commands(client))
