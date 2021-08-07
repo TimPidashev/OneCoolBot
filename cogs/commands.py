@@ -742,10 +742,10 @@ class Commands(commands.Cog):
             ]
         )
     async def giveaway(self, context: SlashContext, link: str):
-        channel = self.client.get_channel(792595912668479528)
+        channel = self.client.get_channel(802019457257963551)
         emoji = self.client.get_emoji(873351111988359238)
-        start_timer = int(86400)
-        timer = 86400
+        start_timer = int(1000)
+        timer = 1000
 
         embed = discord.Embed(name="Nitro Giveaway", colour=0x9b59b6)
         embed.insert_field_at(
