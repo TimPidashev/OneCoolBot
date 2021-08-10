@@ -4,3 +4,4 @@
     "owner_ids": [598625004279693460, 782203096658870272, 438111061535621130, 734301865579380819, 616582088845688843, 790486122693394433],
     "devthings": [791160100567384094]
 }
+Note: These are invalid tokens and will be put in the database instead of configs like this!!!
