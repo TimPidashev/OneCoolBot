@@ -35,12 +35,10 @@ class Events(commands.Cog):
             await db.commit()
             await log.member_add_db(self, member)
             
-            try:
-                
-
-            except:
-                pass
-
+            
+            general = self.client.get_channel(791160100567384098)
+            await general.send(f"Hi there :wave: Thank You for joining the server! If you have any questions, just ask me a question. Be sure to ping me for me to reply!")
+            print("test")
         except Exception as error:
             await log.member_add_db_error(self, member)
     
