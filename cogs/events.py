@@ -34,6 +34,12 @@ class Events(commands.Cog):
             await db.execute("INSERT INTO users (UserID, GuildID) VALUES (?, ?)", member.id, member.guild.id)
             await db.commit()
             await log.member_add_db(self, member)
+            
+            try:
+                pass
+
+            except:
+                pass
 
         except Exception as error:
             await log.member_add_db_error(self, member)

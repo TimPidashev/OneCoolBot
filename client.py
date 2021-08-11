@@ -50,21 +50,11 @@ import ez_db as db
 #setup db
 db = db.AsyncDB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
 
-#loading bot config
-with open("config.json") as file:
-    config = json.load(file)
-    Token = config["client_token"]
-    Statcord_Token = config["statcord_token"]
-
 # logo
 log.logo()
 
-#discord.log
-logger = logging.getLogger("discord")
-logger.setLevel(logging.DEBUG)
-handler = logging.FileHandler(filename="./data/logs/discord.log", encoding="utf-8", mode="w")
-handler.setFormatter(logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s"))
-logger.addHandler(handler)  
+async def config()
+    Token, Statcord_Token = (await db.record("SELECT FROM botconfig ClientToken, StatcordToken"))
 
 async def build_db():
     await db.build()

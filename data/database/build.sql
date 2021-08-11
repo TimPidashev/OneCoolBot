@@ -58,6 +58,13 @@ CREATE TABLE IF NOT EXISTS globalmarket(
     WhoBoughtLast TEXT DEFAULT "Nobody"
 );
 
+CREATE TABLE IF NOT EXISTS botconfig(
+    ClientToken VARCHAR(100) NOT NULL,
+    StatcordToken VARCHAR(50) NOT NULL,
+    OwnerIDS TEXT DEFAULT "0",
+    ServerID TEXT DEFAULT "0"
+)
+
 -- CREATE TABLE IF NOT EXISTS usershop(
 --     UserID integer PRIMARY KEY,
 --     ShopName VARCHAR(50) NOT NULL,
