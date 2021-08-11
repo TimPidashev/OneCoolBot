@@ -55,22 +55,22 @@ async def level_up(self, message, new_lvl):
             if new_lvl == 5:
                 await level_up_process(self, message, new_lvl)
 
-            if new_lvl == 10:
+            elif new_lvl == 10:
                 await level_up_process(self, message, new_lvl)
 
-            if new_lvl == 20:
+            elif new_lvl == 20:
                 await level_up_process(self, message, new_lvl)
 
-            if new_lvl == 30:
+            elif new_lvl == 30:
                 await level_up_process(self, message, new_lvl)
 
-            if new_lvl == 40:
+            elif new_lvl == 40:
                 await level_up_process(self, message, new_lvl)
 
-            if new_lvl == 50:
+            elif new_lvl == 50:
                 await level_up_process(self, message, new_lvl)
 
-            if new_lvl == 75:
+            elif new_lvl == 75:
                 await level_up_process(self, message, new_lvl)
 ```
 3. modify **[./cogs/events.py](https://github.com/timothypidashev/OneCoolBot/blob/main/cogs/events.py)** to match your server
