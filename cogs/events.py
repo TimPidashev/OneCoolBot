@@ -36,7 +36,7 @@ class Events(commands.Cog):
             await log.member_add_db(self, member)
             
             try:
-                pass
+                
 
             except:
                 pass
