@@ -18,4 +18,4 @@ owner_ids = map(int, owner_id_str.split(","))
 
 #checks if invoked command is run by owner
 async def is_owner(context):
-    return context.message.author.id in owner_ids
+    return context.message.author.id in map(int, owner_id_str.split(","))      
