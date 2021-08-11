@@ -53,10 +53,9 @@ db = db.DB(db_path="./data/database/database.db", build_path="./data/database/bu
 # logo
 log.logo()
 
-#obtaining config from db
-global guild_ids
-Token, Statcord_Token, ServerID = db.records("SELECT ClientToken, StatcordToken, ServerID FROM botconfig")[0]
-guild_ids = list(ServerID)
+#obtaining tokens from db
+Token = db.record("SELECT ClientToken FROM botconfig")[0]
+Statcord_Token = db.record("SELECT StatcordToken FROM botconfig")[0]
 
 async def build_db():
     db.build()
@@ -85,6 +84,8 @@ async def update_usersettings_table(self):
     )
     db.commit()
 
+print(Token, StatcordToken)
+
 class OneCoolBot(commands.AutoShardedBot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -112,6 +113,7 @@ class OneCoolBot(commands.AutoShardedBot):
 #client setup
 client = OneCoolBot(command_prefix=".", intents=discord.Intents.all(), case_insensitive=True, help_command=None)
 client.process = psutil.Process(os.getpid())
+client.config = config
 
 #slash client
 slash = SlashCommand(client, sync_commands=True)

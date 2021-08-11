@@ -30,10 +30,6 @@ from io import BytesIO
 guild_ids = [791160100567384094]
 db = db.AsyncDB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
 
-#loading bot config
-with open("config.json") as file:
-    config = json.load(file)
-
 #LEADERBOARD GENERATOR
 class Menu(ListPageSource):
     def __init__(self, context, data):

@@ -18,9 +18,7 @@ import random
 
 db = db.AsyncDB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
 
-with open("config.json") as file:
-    config = json.load(file)
-    devthings = config["devthings"]
+devthings = 791160100567384094
 
 LEVELS_AND_XP = {
     "0": 0,
