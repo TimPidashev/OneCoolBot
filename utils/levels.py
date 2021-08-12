@@ -18,8 +18,6 @@ import random
 
 db = db.AsyncDB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
 
-devthings = 791160100567384094
-
 LEVELS_AND_XP = {
     "0": 0,
     "1": 100,
@@ -147,28 +145,27 @@ async def level_up(self, message, new_lvl):
     async with message.channel.typing():
         await log.level_up(self, message, new_lvl)
 
-        if message.guild.id in config["devthings"]:
-            if new_lvl == 5:
-                await level_up_process(self, message, new_lvl)
+        if new_lvl == 5:
+            await level_up_process(self, message, new_lvl)
 
-            elif new_lvl == 10:
-                await level_up_process(self, message, new_lvl)
+        elif new_lvl == 10:
+            await level_up_process(self, message, new_lvl)
 
-            elif new_lvl == 20:
-                await level_up_process(self, message, new_lvl)
+        elif new_lvl == 20:
+            await level_up_process(self, message, new_lvl)
 
-            elif new_lvl == 30:
-                await level_up_process(self, message, new_lvl)
+        elif new_lvl == 30:
+            await level_up_process(self, message, new_lvl)
 
-            elif new_lvl == 40:
-                await level_up_process(self, message, new_lvl)
+        elif new_lvl == 40:
+            await level_up_process(self, message, new_lvl)
 
-            elif new_lvl == 50:
-                await level_up_process(self, message, new_lvl)
+        elif new_lvl == 50:
+            await level_up_process(self, message, new_lvl)
 
-            elif new_lvl == 75:
-                await level_up_process(self, message, new_lvl)
-                #make sure this is one user with most exp!
+        elif new_lvl == 75:
+            await level_up_process(self, message, new_lvl)
+            #make sure this is one user with most exp!
 
         else:
             coins = random.randint(10, 1000)
