@@ -1,6 +1,21 @@
-/data/logs
+# Bot logs
+/data/logs/
+
+# Pycache
 __pycache__/
+
+# Temporary imgs.
 /data/img/imgswap.png
+
+# .env in the event they are left in the file tree for testing
 .env
+
+# Virtual env.
 /venv
+
+# vscode config
 .vscode/*
+
+# Temporary database files
+/data/database/database.db-shm
+/data/database/database.db-wal
