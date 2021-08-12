@@ -16,6 +16,8 @@ A discord bot built using [discord.py](https://github.com/Rapptz/discord.py) for
 * Broken Economy
 
 # Usage
+***The below usage is curently being simplified and rewritten for ease of use. Please do not use this bot in these stages because of upcoming breaking changes!***
+
 Note: This was the first project I ever started, and as such is cluttered with messy code and buggy features. It is also by no means something you can just grab and use, as most of the codebase and database is made in a way that my servers can benefit from. If you really want to use this bot, a lot of editing and configurations will need to be made in order for the bot to function properly.
 
 If you are crazy enough to consider using this, follow the steps below:
