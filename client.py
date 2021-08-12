@@ -251,18 +251,6 @@ async def maintenance(context, arg):
 
     else:
         pass
-
-#build_db
-@client.command(hidden=True, pass_context=True, aliases=["bd"])
-@commands.check(checks.is_owner)
-async def build_database(context):
-    try:
-        await log.client_command(context)
-        await context.reply("Your wish is my command | Building database", mention_author=False)
-        await build_db()
-
-    except Exception as error:
-        await context.reply(f"**error :(**\n```diff\n- {error}```", mention_author=False)
         
 client.loop.create_task(change_presence())
 client.run(Token, reconnect=True)
