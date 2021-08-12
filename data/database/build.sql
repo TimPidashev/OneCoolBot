@@ -63,6 +63,16 @@ CREATE TABLE IF NOT EXISTS botconfig(
     StatcordToken VARCHAR(50) NOT NULL,
     OwnerIDS TEXT DEFAULT "0",
     ServerID TEXT DEFAULT "0"
+);
+
+CREATE TABLE IF NOT EXISTS commands(
+    Name VARCHAR(20) NOT NULL,
+    Status TEXT DEFAULT "OFF"
+);
+
+CREATE TABLE IF NOT EXISTS modules(
+    Name VARCHAR(20) NOT NULL,
+    Status TEXT DEFAULT "OFF"
 )
 
 -- CREATE TABLE IF NOT EXISTS usershop(
