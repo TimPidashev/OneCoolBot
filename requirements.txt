@@ -2,7 +2,7 @@ aiohttp==3.7.4.post0
 apscheduler==3.7.0
 discord==1.7.3
 ez_db==0.0.3
-numpy==1.21.1
+numpy==1.21.2
 Pillow==8.3.1
 psutil==5.8.0
 pyfiglet==0.8.post1
