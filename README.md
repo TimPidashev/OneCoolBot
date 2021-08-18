@@ -7,8 +7,6 @@
 
 A discord bot built using [discord.py](https://github.com/Rapptz/discord.py) for my personal servers.
 
-***THIS BRANCH IS FOR DEVELOPING THINGS DISCORD SERVER SO MAIN CAN BE CLUTTER FREE! JOIN THE SERVER [HERE.](https://discord.gg/Ax2KMUreyv)***
-
 # Features
 * Levelling
 * Moderation
