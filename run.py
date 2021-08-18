@@ -1,3 +1,0 @@
-from OneCoolBot
-
-OneCoolBot.run()
