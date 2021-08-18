@@ -19,3 +19,6 @@ __pycache__/
 # Temporary database files
 /data/database/database.db-shm
 /data/database/database.db-wal
+
+#The database file(very important to not share with anyone)
+/data/database/database.db
