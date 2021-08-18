@@ -19,3 +19,7 @@ owner_ids = map(int, owner_id_str.split(","))
 #checks if invoked command is run by owner
 async def is_owner(context):
     return context.message.author.id in map(int, owner_id_str.split(","))
+
+#add initial support for command-toggles
+async def is_on(context):
+    pass
