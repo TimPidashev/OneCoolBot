@@ -1,4 +1,4 @@
-<img src="./data/img/OneCoolBot.png" title="OneCoolBot"/>
+<img src="./OneCoolBot/data/img/OneCoolBot.png" title="OneCoolBot"/>
 
 [![CodeFactor](https://www.codefactor.io/repository/github/timothypidashev/onecoolbot/badge?s=381c4994d3a6749b6562fa6140bea03309e8fd85)](https://www.codefactor.io/repository/github/timothypidashev/onecoolbot)
 [![Discord](https://discord.com/api/guilds/791160100567384094/embed.png)](https://discord.gg/EDRjZdkGBG)
