@@ -1,12 +1,10 @@
 aiohttp==3.7.4.post0
-apscheduler==3.7.0
 discord==1.7.3
 ez_db==0.0.3
 numpy==1.21.2
 Pillow==8.3.1
 psutil==5.8.0
 pyfiglet==0.8.post1
-quart==0.15.1
 scikit_learn==0.24.2
 tensorflow==2.6.0
 termcolor==1.1.0
