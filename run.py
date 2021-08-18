@@ -1,0 +1,3 @@
+from OneCoolBot
+
+OneCoolBot.run()
