@@ -1,5 +1,5 @@
 # Bot logs
-/data/logs/
+*.log
 
 # Pycache
 __pycache__/
@@ -16,9 +16,8 @@ __pycache__/
 # vscode config
 .vscode/*
 
-# Temporary database files
-/data/database/database.db-shm
-/data/database/database.db-wal
+# Temporary database files and database
+*.db-shm
+*.db-wal
+*.db
 
-#The database file(very important to not share with anyone)
-/data/database/database.db
