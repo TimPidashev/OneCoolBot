@@ -1,6 +1,6 @@
 <img src=".github/OneCoolBot.png" title="OneCoolBot"/>
 
-[![CodeFactor](https://www.codefactor.io/repository/github/onecoolbot/cli/badge)](https://www.codefactor.io/repository/github/onecoolbot/cli)
+[![CodeFactor](https://www.codefactor.io/repository/github/timothypidashev/onecoolbot/badge)](https://www.codefactor.io/repository/github/timothypidashev/onecoolbot)
 [![Discord](https://discord.com/api/guilds/791160100567384094/embed.png)](https://discord.gg/EDRjZdkGBG)
 [![Python](https://img.shields.io/pypi/pyversions/discord.py.svg)](https://pypi.python.org/pypi/discord.py)
 [![wakatime](https://wakatime.com/badge/github/timothypidashev/OneCoolBot.svg)](https://wakatime.com/badge/github/timothypidashev/OneCoolBot)
