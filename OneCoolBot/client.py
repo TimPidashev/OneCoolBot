@@ -36,24 +36,20 @@ from datetime import datetime, timedelta
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
 from discord.ext import commands, tasks, ipc
-from utils import checks, log
+from utils import checks, db, log
 from discord_slash import SlashCommand
 import statcord
-import ez_db as db
-
-#setup db
-db = db.DB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
 
 # logo
 log.logo()
+
+#update database to match current build file
+db.build()
 
 #obtaining config from db
 global guild_ids
 Token, Statcord_Token, ServerID = db.records("SELECT ClientToken, StatcordToken, ServerID FROM botconfig")[0]
 guild_ids = list(ServerID)
-
-async def build_db():
-    db.build()
 
 async def update_users_table(self):
     db.multiexec(
@@ -87,7 +83,6 @@ class OneCoolBot(commands.AutoShardedBot):
         self.maintenance = False
 
     async def on_ready(self):
-        await build_db()
         await update_users_table(self)
         await update_usersettings_table(self)
 

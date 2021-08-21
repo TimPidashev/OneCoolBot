@@ -8,9 +8,7 @@ Copyright (c) 2021 Timothy Pidashev
 import discord
 import asyncio
 from discord.ext import commands
-import ez_db as db
-
-db = db.DB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
+from . import db
 
 #owner_ids
 owner_id_str = db.record("SELECT OwnerIDS FROM botconfig")[0]

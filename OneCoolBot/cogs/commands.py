@@ -7,8 +7,7 @@ Copyright (c) 2021 Timothy Pidashev
 
 import discord
 from discord.ext import commands
-import ez_db as db
-from utils import checks, colours, log, levels
+from utils import checks, db, colours, log, levels
 from discord_slash import cog_ext
 from discord_slash.context import SlashContext
 from discord_slash.model import SlashCommandOptionType
@@ -28,7 +27,6 @@ from typing import Optional
 from io import BytesIO
 
 guild_ids = [791160100567384094]
-db = db.AsyncDB(db_path="./data/database/database.db", build_path="./data/database/build.sql")
 
 #LEADERBOARD GENERATOR
 class Menu(ListPageSource):
@@ -366,7 +364,7 @@ class Commands(commands.Cog):
     )
     async def leaderboard(self, context: SlashContext):
         await log.slash_command(self, context)
-        records = await db.records("SELECT UserID, XP FROM users ORDER BY XP DESC")
+        records = db.records("SELECT UserID, XP FROM users ORDER BY XP DESC")
         menu = MenuPages(source=Menu(context, records), clear_reactions_after=True, timeout=100.0)
         await menu.start(context)
         #fix this command with the whole interaction failed thing and add a way to get the top 10 users by whatever a user wants, not just exp
@@ -513,12 +511,12 @@ class Commands(commands.Cog):
         await log.slash_command(self, context)
         target = target or context.author
         if target is not None:
-            exp, level = (await db.record(f"SELECT XP, Level FROM users WHERE (guildID, UserID) = (?, ?)",
+            exp, level = db.record(f"SELECT XP, Level FROM users WHERE (guildID, UserID) = (?, ?)",
                 target.guild.id,
                 target.id
-            ))
-            ids = (await db.column(f"SELECT UserID FROM users WHERE GuildID = {target.guild.id} ORDER BY XP DESC"))
-            message_count = (await db.record(f"SELECT GlobalMessageCount FROM users WHERE UserID = {target.id} and GuildID = {target.guild.id}"))[0]
+            )
+            ids = db.column(f"SELECT UserID FROM users WHERE GuildID = {target.guild.id} ORDER BY XP DESC")
+            message_count = db.record(f"SELECT GlobalMessageCount FROM users WHERE UserID = {target.id} and GuildID = {target.guild.id}")[0]
 
         if exp or level is not None:
             rank = f"{ids.index(target.id)+1}"
@@ -529,7 +527,7 @@ class Commands(commands.Cog):
             next_level, final_xp = await levels.next_level_details(level)
             level = await levels.find_level(xp)
             
-            rank_background = (await db.record(f"SELECT RankBackground FROM usersettings WHERE UserID = {target.id}"))[0]
+            rank_background = db.record(f"SELECT RankBackground FROM usersettings WHERE UserID = {target.id}")[0]
 
             if rank_background == "None":
                 background = Image.new("RGB", (1000, 240))
@@ -631,25 +629,25 @@ class Commands(commands.Cog):
     async def rb(self, context, arg, target: Optional[Member]):
         target = target or context.author
 
-        await db.execute(f"UPDATE usersettings SET RankBackground = ? WHERE UserID = ?",
+        db.execute(f"UPDATE usersettings SET RankBackground = ? WHERE UserID = ?",
             arg,
             target.id
         )
-        await db.commit()
+        db.commit()
 
     @commands.command(aliases=["atm"])
     @commands.check(checks.is_owner)
     async def add_to_market(self, context, name, category, quantity, price):
         embed = discord.Embed(colour=await colours.colour(context))
 
-        await db.execute(f"INSERT INTO globalmarket (ItemName, Category, QuantityAvailable, QuantityLimit, Price) VALUES (?, ?, ?, ?, ?)", 
+        db.execute(f"INSERT INTO globalmarket (ItemName, Category, QuantityAvailable, QuantityLimit, Price) VALUES (?, ?, ?, ?, ?)", 
             name, 
             category, 
             quantity, 
             quantity,
             price
         )
-        await db.commit()
+        db.commit()
          
         fields = [("`Market`", f"New item added by {context.author.name}", True),
                   ("`Name`", name, False),
@@ -684,12 +682,12 @@ class Commands(commands.Cog):
     )
     async def ticket(self, context: SlashContext, name: str, description: str):
         await log.slash_command(self, context)
-        await db.execute(f"INSERT INTO tickets (UserID, ProjectName, ProjectDescription) VALUES (?, ?, ?)",
+        db.execute(f"INSERT INTO tickets (UserID, ProjectName, ProjectDescription) VALUES (?, ?, ?)",
             context.author.id,
             name,
             description
         )
-        await db.commit()
+        db.commit()
 
         await context.send("Your ticket has been sent! You will be notified when an admin responds to your ticket.")
 
