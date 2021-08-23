@@ -104,4 +104,4 @@ That's about it for usage. Again I strongly recommend to not use this bot, as it
 
 # WIP! Join the discord server for updates
 
-[![Conside joining my Discord server!](https://invidget.switchblade.xyz/EDRjZdkGBG)](https://discord.gg/EDRjZdkGBG)
+[![Consider joining my Discord server!](https://invidget.switchblade.xyz/EDRjZdkGBG)](https://discord.gg/EDRjZdkGBG)
