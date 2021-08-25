@@ -102,6 +102,6 @@ async def on_member_join(self, member):
 
 That's about it for usage. Again I strongly recommend to not use this bot, as it is the worst example of a python project, but feel free to use the code in any way you want! If you like what you see, consider joining my discord server: -->
 
-# WIP! Join the discord server for updates
+<!-- # WIP! Join the discord server for updates
 
-[![Consider joining my Discord server!](https://invidget.switchblade.xyz/EDRjZdkGBG)](https://discord.gg/EDRjZdkGBG)
+[![Consider joining my Discord server!](https://invidget.switchblade.xyz/EDRjZdkGBG)](https://discord.gg/EDRjZdkGBG) -->
