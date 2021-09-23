@@ -4,8 +4,8 @@
 # Pycache
 __pycache__/
 
-# Temporary imgs.
-/data/img/imgswap.png
+# Temporary imgs
+*.png
 
 # .env in the event they are left in the file tree for testing
 .env
