@@ -5,7 +5,6 @@
 [![Python](https://img.shields.io/pypi/pyversions/discord.py.svg)](https://pypi.python.org/pypi/discord.py)
 [![wakatime](https://wakatime.com/badge/github/timothypidashev/OneCoolBot.svg)](https://wakatime.com/badge/github/timothypidashev/OneCoolBot)
 
-Due to the sudden archival of [discord.py](https://github.com/Rapptz/discord.py), my lack of enthusiasm for bot development, and the future of Discord's api, the development of this bot is currently postponed until further notice.
 
 <!-- A discord bot built using [discord.py](https://github.com/Rapptz/discord.py) for my personal servers.
 
