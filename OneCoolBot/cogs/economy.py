@@ -14,6 +14,8 @@ from discord_slash.model import SlashCommandOptionType
 from discord_slash.utils.manage_commands import create_option, create_choice
 from discord.ext.menus import MenuPages, ListPageSource
 from discord import Member, Embed
+import random
+import time
 
 guild_ids = [791160100567384094]
 
@@ -144,6 +146,64 @@ class Economy(commands.Cog):
         embed = discord.Embed(colour=await colours.colour(context))
         embed.add_field(name=f"**Current Market Cap:**", value=f"There are currently :coin: **{cap}** coins widespread globally")
         await context.send(embed=embed)
+
+    @cog_ext.cog_slash(
+        name="spin",
+        description="Risk some coins for a chance to win something cool!",
+        guild_ids=guild_ids
+    )
+    async def spin(self, context: SlashContext, user: discord.Member=None):
+        await log.slash_command(self, context)
+
+        user = user or context.author
+        embed = discord.Embed(title="Spinning...", colour=await colours.colour(context))
+        list = ["test", "kjkljl", "jlkjkl", "jkljlkj", "kkjhk"]
+        index = 0
+        for items in list:
+            index += 1
+            embed.insert_field_at(
+                index=index,
+                name=f"Item",
+                value=f"`{items}`",
+                inline=False
+            )
+        spin_counter = random.randint(10, 15)
+        index = -1
+
+        message = await context.send(embed=embed)
+
+        while spin_counter != 0:
+            spin_counter -= 1
+            index += 1
+            embed.remove_field(index=index)
+            embed.insert_field_at(
+                index=index,
+                name="Item",
+                value=f"**<**{list[index]}**>**",
+                inline=False
+            )
+            await message.edit(embed=embed)
+
+            embed.remove_field(index=index)
+            embed.insert_field_at(
+                index=index,
+                name="Item",
+                value=f"{list[index]}",
+                inline=False
+            )
+            time.sleep(1)
+            
+            if index == 4:
+                index -= 5
+
+        won = index
+        # print(list[won])    
+        await context.send(f"You won: {list[won]}!\nThis command is still a work in progress. Nothing was won or lost :)")
+        
+
+
+
+            
 
 def setup(client):
     client.add_cog(Economy(client))
