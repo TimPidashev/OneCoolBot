@@ -105,13 +105,13 @@ class Commands(commands.Cog):
             description="The overview of the general commands.", 
             colour=await colours.colour(context)
         )
-        fields = [("`help`", "Your looking at this command.\n**subcommands:** `aliases`", False),
-                ("`info`", "Displays bot status, ping, and other miscellaneous content.\n**subcommands:** `aliases` `help`", False),
-                ("`serverinfo`", "Displays server info, such as user count.\n**subcommands:** `aliases` `help`", False),
-                ("`userinfo`", "Displays user info, discord stats, and the like.\n**subcommands:** `aliases` `help`", False)]
+        fields = [("`help`", "Your looking at this command.", False),
+                ("`info`", "Displays bot status, latency, and other miscellaneous content.", False),
+                ("`serverinfo`", "Displays server info, such as user count.", False),
+                ("`userinfo`", "Displays user info, discord stats, and the like.", False)]
 
         page_2.set_footer(
-            text=f"Handy tip! To see what a command can do, use the `help` subcommand."
+            text=f"Handy tip! Put handy tip here :D"
         )
 
         for name, value, inline in fields:
